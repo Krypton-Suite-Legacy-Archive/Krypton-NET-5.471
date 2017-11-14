@@ -20,12 +20,17 @@
   * null-propogating code
 * Local Variable can be const (And rename to upper case to follow the rest of the codebase.)
 * ﻿Join declaration and assignment
-* Now you can add the pre-compiled binary files straight to your projects
 
-## Next (No particular order)
-* Remove Severity Code Description Project File Line Suppression State Warning CS0618 'SecurityAction.RequestMinimum' is obsolete: 'Assembly level declarative security is obsolete and is no longer enforced by the CLR by default. See http://go.microsoft.com/fwlink/?LinkID=155570 for more information.' Basic Events 2015 #Path to source code#\Krypton-NET-4.7.1\Source\Krypton Navigator Examples\Basic Events\Properties\AssemblyInfo.cs 35 Active
+## 2017-11-05 Commits:
+* Pre-compiled binaries for use in projects
+
+## 2017-11-13 Toolkit solution changes:
 * Change Get Set functions to be inlined
-* Some syntactic sugar for initialisers
-* Usage of Lync
+* Merge Sequential Checks
+* Clarify precedence with brackets
+* Work out why clipping is the default for "DrawText" 
+  - Applies to buttons, lLabels, Form Titles
+  - Create test project - has theme selection, for type testing
+* Remove Severity Code Description Project File Line Suppression State Warning CS0618 'SecurityAction.RequestMinimum' is obsolete: 'Assembly level declarative security is obsolete and is no longer enforced by the CLR by default. See http://go.microsoft.com/fwlink/?LinkID=155570 for more information.' Basic Events 2015 [Source Path]\Krypton-NET-4.7\Source\Krypton Navigator Examples\Basic Events\Properties\AssemblyInfo.cs 35 Active
 
 ## NOTE: This is a mirror of the Krypton-NET-4.7 repository, therefore it may take a day or two to update this repository with the .NET 4.7.1 framework. Thank you for your patientce. 
