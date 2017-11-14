@@ -9,14 +9,11 @@
 // *****************************************************************************
 
 using System;
-using System.IO;
 using System.Xml;
-using System.Text;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using System.ComponentModel;
-using ComponentFactory.Krypton.Toolkit;
 using ComponentFactory.Krypton.Navigator;
 
 namespace ComponentFactory.Krypton.Docking
@@ -34,7 +31,7 @@ namespace ComponentFactory.Krypton.Docking
         #endregion
 
         #region Instance Fields
-        private Control _control;
+
         private ObscureControl _obscure;
         private IDockingElement _innerElement;
         private Size _innerMinimum;
@@ -51,7 +48,9 @@ namespace ComponentFactory.Krypton.Docking
             : base(name)
         {
             if (control == null)
+            {
                 throw new ArgumentNullException("control");
+            }
 
             Construct(control, null);
         }
@@ -66,10 +65,14 @@ namespace ComponentFactory.Krypton.Docking
             : base(name)
         {
             if (control == null)
+            {
                 throw new ArgumentNullException("control");
+            }
 
             if (navigator == null)
+            {
                 throw new ArgumentNullException("navigator");
+            }
 
             Construct(control, navigator);
         }
@@ -84,10 +87,14 @@ namespace ComponentFactory.Krypton.Docking
             : base(name)
         {
             if (control == null)
+            {
                 throw new ArgumentNullException("control");
+            }
 
             if (workspace == null)
+            {
                 throw new ArgumentNullException("workspace");
+            }
 
             Construct(control, workspace);
         }
@@ -97,17 +104,14 @@ namespace ComponentFactory.Krypton.Docking
         /// <summary>
         /// Gets the control this element is managing.
         /// </summary>
-        public Control Control
-        {
-            get { return _control; }
-        }
+        public Control Control { get; private set; }
 
         /// <summary>
         /// Gets and sets the minimum size for the inner area of the control that docking should not overlap.
         /// </summary>
         public Size InnerMinimum
         {
-            get { return _innerMinimum; }
+            get => _innerMinimum;
 
             set
             {
@@ -165,7 +169,10 @@ namespace ComponentFactory.Krypton.Docking
                     // Ensure that showing extra pages does not trespass on the inner minimum
                     if ((action == DockingPropogateAction.ShowPages) ||
                         (action == DockingPropogateAction.ShowAllPages))
+                    {
                         EnforceInnerMinimum();
+                    }
+
                     break;
                 default:
                     // Let base class perform actual requested actions
@@ -187,8 +194,12 @@ namespace ComponentFactory.Krypton.Docking
             // Create a list of pages that are allowed to be transferred into a dockspace
             List<KryptonPage> transferPages = new List<KryptonPage>();
             foreach (KryptonPage page in dragData.Pages)
+            {
                 if (page.AreFlagsSet(KryptonPageFlags.DockingAllowDocked))
+                {
                     transferPages.Add(page);
+                }
+            }
 
             // Only generate targets if we have some valid pages to transfer
             if (transferPages.Count > 0)
@@ -212,6 +223,7 @@ namespace ComponentFactory.Krypton.Docking
                     Size tl = Size.Empty;
                     Size br = Control.ClientSize;
                     foreach (Control c in Control.Controls)
+                    {
                         if (c.Visible)
                         {
                             switch (c.Dock)
@@ -230,6 +242,7 @@ namespace ComponentFactory.Krypton.Docking
                                     break;
                             }
                         }
+                    }
 
                     // If there is inner space available
                     Rectangle innerRect = new Rectangle(tl.Width, tl.Height, br.Width - tl.Width, br.Height - tl.Height);
@@ -244,9 +257,8 @@ namespace ComponentFactory.Krypton.Docking
                         targets.Add(new DragTargetControlEdge(innerScreenRect, innerRectsHot[3], innerRectsDraw[3], DragTargetHint.EdgeBottom, this, KryptonPageFlags.DockingAllowDocked, false));
                     }
                 }
-                else if (_innerElement is KryptonDockingNavigator)
+                else if (_innerElement is KryptonDockingNavigator dockingNavigator)
                 {
-                    KryptonDockingNavigator dockingNavigator = (KryptonDockingNavigator)_innerElement;
 
                     // If there is inner space available
                     Rectangle innerScreenRect = dockingNavigator.DockableNavigatorControl.RectangleToScreen(dockingNavigator.DockableNavigatorControl.ClientRectangle);
@@ -271,10 +283,7 @@ namespace ComponentFactory.Krypton.Docking
         /// <summary>
         /// Gets the xml element name to use when saving.
         /// </summary>
-        protected override string XmlElementName
-        {
-            get { return "DC"; }
-        }
+        protected override string XmlElementName => "DC";
 
         /// <summary>
         /// Loads docking configuration information using a provider xml reader.
@@ -297,7 +306,9 @@ namespace ComponentFactory.Krypton.Docking
             
                 // Request each dockspace in ordering sequence reposition itself
                 for (int i = 0; i <= largestOrder; i++)
+                {
                     PropogateAction(DockingPropogateAction.RepositionDockspace, i);
+                }
             }
         }
         #endregion
@@ -309,15 +320,17 @@ namespace ComponentFactory.Krypton.Docking
             _innerMinimum = INNER_MINIMUM;
 
             // Hook into events on the target control
-            _control = control;
-            _control.SizeChanged += new EventHandler(OnControlSizeChanged);
-            _control.Disposed += new EventHandler(OnControlDisposed);
+            Control = control;
+            Control.SizeChanged += new EventHandler(OnControlSizeChanged);
+            Control.Disposed += new EventHandler(OnControlDisposed);
 
             // Create and add a control we use to obscure the client area during multi-part operations
-            _obscure = new ObscureControl();
-            _obscure.Anchor = (AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom);
-            _obscure.Visible = false;
-            _control.Controls.Add(_obscure);
+            _obscure = new ObscureControl
+            {
+                Anchor = (AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom),
+                Visible = false
+            };
+            Control.Controls.Add(_obscure);
 
             // Create docking elements for managing each of the four control edges
             Add(new KryptonDockingEdge("Top", control, DockingEdge.Top));
@@ -329,8 +342,8 @@ namespace ComponentFactory.Krypton.Docking
         private void OnControlDisposed(object sender, EventArgs e)
         {
             // Unhook events to allow garbage collection
-            _control.SizeChanged -= new EventHandler(OnControlSizeChanged);
-            _control.Disposed -= new EventHandler(OnControlDisposed);
+            Control.SizeChanged -= new EventHandler(OnControlSizeChanged);
+            Control.Disposed -= new EventHandler(OnControlDisposed);
         }
 
         private void OnControlSizeChanged(object sender, EventArgs e)
@@ -341,7 +354,9 @@ namespace ComponentFactory.Krypton.Docking
 
                 // When the control is inside a minimized form we do not enforce the minimum
                 if ((ownerForm != null) && (ownerForm.WindowState != FormWindowState.Minimized))
+                {
                     EnforceInnerMinimum();
+                }
             }
         }
 
@@ -352,11 +367,15 @@ namespace ComponentFactory.Krypton.Docking
 
             // Do we need to adjust the left/right edge controls?
             if (innerRect.Width < InnerMinimum.Width)
+            {
                 EnforceInnerMinimum(InnerMinimum.Width - innerRect.Width, Orientation.Horizontal);
+            }
 
             // Do we need to adjust the top/bottom edge controls?
             if (innerRect.Height < InnerMinimum.Height)
+            {
                 EnforceInnerMinimum(InnerMinimum.Height - innerRect.Height, Orientation.Vertical);
+            }
         }
 
         private void EnforceInnerMinimum(int remove, Orientation orientation)
@@ -366,20 +385,25 @@ namespace ComponentFactory.Krypton.Docking
             List<KryptonDockspace> controls = new List<KryptonDockspace>();
             foreach (Control c in Control.Controls)
             {
-                KryptonDockspace dockspace = c as KryptonDockspace;
-                if ((dockspace != null) && c.Visible)
+                if ((c is KryptonDockspace dockspace) && c.Visible)
                 {
                     switch (c.Dock)
                     {
                         case DockStyle.Left:
                         case DockStyle.Right:
                             if (orientation == Orientation.Horizontal)
+                            {
                                 controls.Add(dockspace);
+                            }
+
                             break;
                         case DockStyle.Top:
                         case DockStyle.Bottom:
                             if (orientation == Orientation.Vertical)
+                            {
                                 controls.Add(dockspace);
+                            }
+
                             break;
                     }
                 }
@@ -400,20 +424,30 @@ namespace ComponentFactory.Krypton.Docking
 
                     // Find how much we can subtract from the dockspace without violating the minimum size
                     if (orientation == Orientation.Horizontal)
+                    {
                         dockDelta = dockspace.Width - Math.Max(dockspace.MinimumSize.Width, dockspace.Width - delta);
+                    }
                     else
+                    {
                         dockDelta = dockspace.Height - Math.Max(dockspace.MinimumSize.Height, dockspace.Height - delta);
+                    }
 
                     // We cannot remove any more from the dockspace control, then we are done with that control
                     if (dockDelta == 0)
+                    {
                         controls.Remove(dockspace);
+                    }
                     else
                     {
                         // Reduce the dockspace size
                         if (orientation == Orientation.Horizontal)
+                        {
                             dockspace.Width -= dockDelta;
+                        }
                         else
+                        {
                             dockspace.Height -= dockDelta;
+                        }
 
                         // Update total amount to be removed
                         remove -= dockDelta;
@@ -434,14 +468,16 @@ namespace ComponentFactory.Krypton.Docking
                                     new Rectangle(area.X, area.Y, area.Width, length),
                                     new Rectangle(area.X, area.Bottom - length, area.Width, length),
                                     new Rectangle(area.X + length, area.Y + length, 
-                                                  area.Width - length * 2, area.Height - length * 2)};
+                                                  area.Width - (length * 2), area.Height - (length * 2))};
         }
 
         private void DebugOutput(string title)
         {
             Console.WriteLine("\n{0}", title);
             foreach (Control c in Control.Controls)
+            {
                 Console.WriteLine("    {0} {1} {2} {3}", c.GetType().Name, c.Visible, c.Size, c.Dock);
+            }
         }
         #endregion
     }

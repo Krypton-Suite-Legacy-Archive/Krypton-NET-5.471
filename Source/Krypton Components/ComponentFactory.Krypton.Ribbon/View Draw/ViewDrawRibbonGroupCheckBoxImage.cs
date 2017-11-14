@@ -8,12 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Imaging;
-using System.Drawing.Drawing2D;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Diagnostics;
 using ComponentFactory.Krypton.Toolkit;
@@ -80,8 +75,8 @@ namespace ComponentFactory.Krypton.Ribbon
         /// </summary>
         public override bool Enabled
         {
-            get { return _drawCheckBox.Enabled; }
-            set { _drawCheckBox.Enabled = value; }
+            get => _drawCheckBox.Enabled;
+            set => _drawCheckBox.Enabled = value;
         }
         #endregion
 
@@ -91,8 +86,8 @@ namespace ComponentFactory.Krypton.Ribbon
         /// </summary>
         public CheckState CheckState
         {
-            get { return _drawCheckBox.CheckState; }
-            set { _drawCheckBox.CheckState = value; }
+            get => _drawCheckBox.CheckState;
+            set => _drawCheckBox.CheckState = value;
         }
         #endregion
 
@@ -102,8 +97,8 @@ namespace ComponentFactory.Krypton.Ribbon
         /// </summary>
         public bool Tracking
         {
-            get { return _drawCheckBox.Tracking; }
-            set { _drawCheckBox.Tracking = value; }
+            get => _drawCheckBox.Tracking;
+            set => _drawCheckBox.Tracking = value;
         }
         #endregion
 
@@ -113,8 +108,8 @@ namespace ComponentFactory.Krypton.Ribbon
         /// </summary>
         public bool Pressed
         {
-            get { return _drawCheckBox.Pressed; }
-            set { _drawCheckBox.Pressed = value; }
+            get => _drawCheckBox.Pressed;
+            set => _drawCheckBox.Pressed = value;
         }
         #endregion
 
@@ -126,9 +121,13 @@ namespace ComponentFactory.Krypton.Ribbon
         public override Size GetPreferredSize(ViewLayoutContext context)
         {
             if (_large)
+            {
                 return _largeSize;
+            }
             else
+            {
                 return _smallSize;
+            }
         }
 
         /// <summary>
@@ -147,14 +146,14 @@ namespace ComponentFactory.Krypton.Ribbon
             if (_large)
             {
                 // Place horizontal centered at the bottom of area
-                checkBoxRect.X = ClientLocation.X + (ClientWidth - checkBoxRect.Width) / 2;
+                checkBoxRect.X = ClientLocation.X + ((ClientWidth - checkBoxRect.Width) / 2);
                 checkBoxRect.Y = ClientRectangle.Bottom - checkBoxRect.Height;
             }
             else
             {
                 // Place vertically centered at the right of area
                 checkBoxRect.X = ClientRectangle.Right - checkBoxRect.Width;
-                checkBoxRect.Y = ClientLocation.Y + (ClientHeight - checkBoxRect.Height) / 2;
+                checkBoxRect.Y = ClientLocation.Y + ((ClientHeight - checkBoxRect.Height) / 2);
             }
 
             // Layout the check box draw element

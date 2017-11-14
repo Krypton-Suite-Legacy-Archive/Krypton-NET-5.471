@@ -8,9 +8,6 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.ComponentModel;
-
 namespace ComponentFactory.Krypton.Toolkit
 {
     /// <summary>
@@ -19,9 +16,7 @@ namespace ComponentFactory.Krypton.Toolkit
     internal class HeaderGroupCollapsedTargetConverter : StringLookupConverter
     {
         #region Static Fields
-        private Pair[] _pairs = new Pair[] { new Pair(HeaderGroupCollapsedTarget.CollapsedToPrimary,   "Collapse to Primary Header"),
-                                             new Pair(HeaderGroupCollapsedTarget.CollapsedToSecondary, "Collapse to Secondary Header"),
-                                             new Pair(HeaderGroupCollapsedTarget.CollapsedToBoth,      "Collapse to Both Headers") };
+
         #endregion
 
         #region Identity
@@ -38,10 +33,11 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Gets an array of lookup pairs.
         /// </summary>
-        protected override Pair[] Pairs 
-        {
-            get { return _pairs; }
-        }
+        protected override Pair[] Pairs { get; } =
+        { new Pair(HeaderGroupCollapsedTarget.CollapsedToPrimary,   "Collapse to Primary Header"),
+            new Pair(HeaderGroupCollapsedTarget.CollapsedToSecondary, "Collapse to Secondary Header"),
+            new Pair(HeaderGroupCollapsedTarget.CollapsedToBoth,      "Collapse to Both Headers") };
+
         #endregion
     }
 }

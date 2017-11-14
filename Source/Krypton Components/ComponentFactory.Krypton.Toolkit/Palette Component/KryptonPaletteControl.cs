@@ -8,14 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
-using System.Drawing;
-using System.Drawing.Design;
-using System.Windows.Forms;
 using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Collections.Generic;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -49,10 +42,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining common control appearance that other states can override.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public PaletteDoubleRedirect StateCommon
-        {
-            get { return _stateCommon; }
-        }
+        public PaletteDoubleRedirect StateCommon => _stateCommon;
 
         private bool ShouldSerializeStateCommon()
         {
@@ -68,10 +58,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining disabled control appearance.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public PaletteDouble StateDisabled
-        {
-            get { return _stateDisabled; }
-        }
+        public PaletteDouble StateDisabled => _stateDisabled;
 
         private bool ShouldSerializeStateDisabled()
         {
@@ -87,10 +74,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining normal control appearance.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public PaletteDouble StateNormal
-        {
-            get { return _stateNormal; }
-        }
+        public PaletteDouble StateNormal => _stateNormal;
 
         private bool ShouldSerializeStateNormal()
         {

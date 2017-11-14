@@ -9,11 +9,7 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Diagnostics;
 
 namespace ComponentFactory.Krypton.Toolkit
@@ -24,9 +20,8 @@ namespace ComponentFactory.Krypton.Toolkit
 	public class ViewLayoutStack : ViewComposite
 	{
 		#region Instance Fields
-		private bool _horizontal;
-        private bool _fillLastChild;
-        #endregion
+
+	    #endregion
 
 		#region Identity
 		/// <summary>
@@ -35,10 +30,10 @@ namespace ComponentFactory.Krypton.Toolkit
         public ViewLayoutStack(bool horizontal)
         {
             // Create child to dock style lookup
-            _horizontal = horizontal;
+            Horizontal = horizontal;
 
             // By default we fill the remainder area with the last child
-            _fillLastChild = true;
+            FillLastChild = true;
         }
 
 		/// <summary>
@@ -56,23 +51,17 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Gets and sets the stack orientation.
         /// </summary>
-        public bool Horizontal
-        {
-            get { return _horizontal; }
-            set { _horizontal = value; }
-        }
-        #endregion
+        public bool Horizontal { get; set; }
+
+	    #endregion
 
         #region FillLastChild
         /// <summary>
         /// Gets and sets if the last child fills the remainder of the space.
         /// </summary>
-        public bool FillLastChild
-        {
-            get { return _fillLastChild; }
-            set { _fillLastChild = value; }
-        }
-        #endregion
+        public bool FillLastChild { get; set; }
+
+	    #endregion
 
         #region Layout
         /// <summary>
@@ -127,14 +116,16 @@ namespace ComponentFactory.Krypton.Toolkit
             // Find the last visible child
             ViewBase lastVisible = null;
             foreach(ViewBase child in this.Reverse())
+            {
                 if (child.Visible)
                 {
                     lastVisible = child;
                     break;
                 }
+            }
 
             // Position each entry, with last entry filling remaining of space
-			foreach (ViewBase child in this)
+            foreach (ViewBase child in this)
 			{
                 if (child.Visible)
 				{

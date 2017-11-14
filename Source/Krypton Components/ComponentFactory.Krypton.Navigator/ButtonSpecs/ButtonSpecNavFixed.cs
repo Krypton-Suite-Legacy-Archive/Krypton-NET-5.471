@@ -8,14 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
-using System.Drawing;
-using System.Drawing.Design;
-using System.Windows.Forms;
 using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Collections.Generic;
 using System.Diagnostics;
 using ComponentFactory.Krypton.Toolkit;
 
@@ -28,7 +21,7 @@ namespace ComponentFactory.Krypton.Navigator
     public abstract class ButtonSpecNavFixed : ButtonSpec
     {
         #region Instance Fields
-        private KryptonNavigator _navigator;
+
         private HeaderLocation _location;
         #endregion
 
@@ -44,7 +37,7 @@ namespace ComponentFactory.Krypton.Navigator
             Debug.Assert(navigator != null);
 
             // Remember back reference to owning navigator.
-            _navigator = navigator;
+            Navigator = navigator;
 
             // Fix the type
             ProtectedType = fixedStyle;
@@ -59,14 +52,9 @@ namespace ComponentFactory.Krypton.Navigator
         /// Gets a value indicating if all values are default.
         /// </summary>
         [Browsable(false)]
-        public override bool IsDefault
-        {
-            get
-            {
-                return (base.IsDefault && 
-                        HeaderLocation == HeaderLocation.PrimaryHeader);
-            }
-        }
+        public override bool IsDefault => (base.IsDefault && 
+                                           (HeaderLocation == HeaderLocation.PrimaryHeader));
+
         #endregion
 
         #region AllowComponent
@@ -75,10 +63,8 @@ namespace ComponentFactory.Krypton.Navigator
         /// </summary>
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool AllowComponent
-        {
-            get { return false; }
-        }
+        public override bool AllowComponent => false;
+
         #endregion
 
         #region HeaderLocation
@@ -92,7 +78,7 @@ namespace ComponentFactory.Krypton.Navigator
         [DefaultValue(typeof(HeaderLocation), "PrimaryHeader")]
         public HeaderLocation HeaderLocation
         {
-            get { return _location; }
+            get => _location;
 
             set
             {
@@ -122,7 +108,7 @@ namespace ComponentFactory.Krypton.Navigator
         public override HeaderLocation GetLocation(IPalette palette)
         {
             // Ask the view builder to recover the correct location
-            return _navigator.ViewBuilder.GetFixedButtonLocation(this);
+            return Navigator.ViewBuilder.GetFixedButtonLocation(this);
         }
         #endregion
 
@@ -130,10 +116,8 @@ namespace ComponentFactory.Krypton.Navigator
         /// <summary>
         /// Gets access to the owning navigator control.
         /// </summary>
-        protected KryptonNavigator Navigator
-        {
-            get { return _navigator; }
-        }
+        protected KryptonNavigator Navigator { get; }
+
         #endregion
     }
 }

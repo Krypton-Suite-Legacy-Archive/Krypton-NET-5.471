@@ -8,13 +8,6 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
-using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using System.Diagnostics;
 using ComponentFactory.Krypton.Toolkit;
 
 namespace ComponentFactory.Krypton.Ribbon
@@ -41,10 +34,12 @@ namespace ComponentFactory.Krypton.Ribbon
                                            NeedPaintHandler needPaint)
         {
             _groupButton = new ViewDrawRibbonGroupDialogButton(ribbon, ribbonGroup, needPaint);
-            _centerButton = new ViewLayoutRibbonCenter();
+            _centerButton = new ViewLayoutRibbonCenter
+            {
 
-            // Fill remainder with the actual button, but centered within space
-            _centerButton.Add(_groupButton);
+                // Fill remainder with the actual button, but centered within space
+                _groupButton
+            };
             Add(_centerButton, ViewDockStyle.Fill);
         }
 
@@ -63,10 +58,8 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <summary>
         /// Gets access to the controller used for the button.
         /// </summary>
-        public DialogLauncherButtonController DialogButtonController
-        {
-            get { return _groupButton.DialogButtonController; }
-        }
+        public DialogLauncherButtonController DialogButtonController => _groupButton.DialogButtonController;
+
         #endregion
 
         #region GetFocusView
@@ -77,9 +70,13 @@ namespace ComponentFactory.Krypton.Ribbon
         public ViewBase GetFocusView()
         {
             if (Visible && Enabled && _groupButton.Visible && _groupButton.Enabled)
+            {
                 return _groupButton;
+            }
             else
+            {
                 return null;
+            }
         }
         #endregion
     }

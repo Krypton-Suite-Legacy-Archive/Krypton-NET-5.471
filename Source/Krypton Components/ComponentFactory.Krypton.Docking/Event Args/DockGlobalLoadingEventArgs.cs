@@ -9,10 +9,7 @@
 // *****************************************************************************
 
 using System;
-using System.IO;
 using System.Xml;
-using System.Drawing;
-using System.Diagnostics;
 
 namespace ComponentFactory.Krypton.Docking
 {
@@ -22,9 +19,8 @@ namespace ComponentFactory.Krypton.Docking
 	public class DockGlobalLoadingEventArgs : EventArgs
 	{
 		#region Instance Fields
-        private KryptonDockingManager _manager;
-        private XmlReader _xmlReader;
-		#endregion
+
+	    #endregion
 
 		#region Identity
 		/// <summary>
@@ -35,8 +31,8 @@ namespace ComponentFactory.Krypton.Docking
         public DockGlobalLoadingEventArgs(KryptonDockingManager manager,
                                           XmlReader xmlReading)
 		{
-            _manager = manager;
-            _xmlReader = xmlReading;
+            DockingManager = manager;
+            XmlReader = xmlReading;
 		}
 		#endregion
 
@@ -44,18 +40,13 @@ namespace ComponentFactory.Krypton.Docking
 		/// <summary>
         /// Gets the docking manager reference.
 		/// </summary>
-        public KryptonDockingManager DockingManager
-		{
-            get { return _manager; }
-		}
+        public KryptonDockingManager DockingManager { get; }
 
-        /// <summary>
+	    /// <summary>
         /// Gets the xml reader.
         /// </summary>
-        public XmlReader XmlReader
-        {
-            get { return _xmlReader; }
-        }
-        #endregion
+        public XmlReader XmlReader { get; }
+
+	    #endregion
 	}
 }

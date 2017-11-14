@@ -9,10 +9,8 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Diagnostics;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -70,7 +68,9 @@ namespace ComponentFactory.Krypton.Toolkit
 
                     // If this is a change in value then update now
                     if (_drawTB.ViewDrawTrackBar.Value != newTargetValue)
+                    {
                         _drawTB.ViewDrawTrackBar.ScrollValue = Math.Max(_drawTB.ViewDrawTrackBar.Minimum, Math.Min(newTargetValue, _drawTB.ViewDrawTrackBar.Maximum));
+                    }
                 }
             }
 		}
@@ -132,11 +132,9 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Should the left mouse down be ignored when present on a visual form border area.
         /// </summary>
-        public virtual bool IgnoreVisualFormLeftButtonDown
-        {
-            get { return false; }
-        }
-        #endregion
+        public virtual bool IgnoreVisualFormLeftButtonDown => false;
+
+	    #endregion
 
         #region Implementation
         private void UpdateTargetState()
@@ -146,9 +144,13 @@ namespace ComponentFactory.Krypton.Toolkit
             if (_mouseOver)
             {
                 if (_captured)
+                {
                     newState = PaletteState.Pressed;
+                }
                 else
+                {
                     newState = PaletteState.Tracking;
+                }
             }
 
             if (_drawTB.ViewDrawTrackPosition.ElementState != newState)

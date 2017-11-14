@@ -11,8 +11,6 @@
 using System;
 using System.Drawing;
 using System.ComponentModel;
-using System.Windows.Forms;
-using System.Diagnostics;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -22,9 +20,8 @@ namespace ComponentFactory.Krypton.Toolkit
 	public class ViewControlHitTestArgs : CancelEventArgs
 	{
 		#region Instance Fields
-        private Point _pt;
-        private IntPtr _result;
-        #endregion
+
+	    #endregion
 
 		#region Identity
         /// <summary>
@@ -34,8 +31,8 @@ namespace ComponentFactory.Krypton.Toolkit
         public ViewControlHitTestArgs(Point pt)
             : base(true)
         {
-            _pt = pt;
-            _result = IntPtr.Zero;
+            Point = pt;
+            Result = IntPtr.Zero;
         }
         #endregion
 
@@ -43,19 +40,13 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// <summary>
 		/// Gets access to the point.
 		/// </summary>
-        public Point Point
-		{
-			get { return _pt; }
-		}
+        public Point Point { get; }
 
-        /// <summary>
+	    /// <summary>
         /// Gets and sets the result.
         /// </summary>
-        public IntPtr Result
-        {
-            get { return _result; }
-            set { _result = value; }
-        }
-        #endregion
+        public IntPtr Result { get; set; }
+
+	    #endregion
 	}
 }

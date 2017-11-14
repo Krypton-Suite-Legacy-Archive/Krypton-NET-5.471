@@ -8,12 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
-using System.Drawing;
-using System.Drawing.Text;
 using System.ComponentModel;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Diagnostics;
 
@@ -28,9 +23,8 @@ namespace ComponentFactory.Krypton.Toolkit
 		#region Instance Fields
         private PaletteRedirect _redirect;
         private InheritBool _overlayHeaders;
-		private PaletteHeaderPaddingRedirect _paletteHeaderPrimary;
-		private PaletteHeaderPaddingRedirect _paletteHeaderSecondary;
-        #endregion
+
+	    #endregion
 
 		#region Identity
 		/// <summary>
@@ -66,8 +60,8 @@ namespace ComponentFactory.Krypton.Toolkit
             _redirect = redirectHeaderGroup;
 
             // Create the palette storage
-            _paletteHeaderPrimary = new PaletteHeaderPaddingRedirect(redirectHeaderPrimary, PaletteBackStyle.HeaderPrimary, PaletteBorderStyle.HeaderPrimary, PaletteContentStyle.HeaderPrimary, needPaint);
-            _paletteHeaderSecondary = new PaletteHeaderPaddingRedirect(redirectHeaderSecondary, PaletteBackStyle.HeaderSecondary, PaletteBorderStyle.HeaderSecondary, PaletteContentStyle.HeaderSecondary, needPaint);
+            HeaderPrimary = new PaletteHeaderPaddingRedirect(redirectHeaderPrimary, PaletteBackStyle.HeaderPrimary, PaletteBorderStyle.HeaderPrimary, PaletteContentStyle.HeaderPrimary, needPaint);
+            HeaderSecondary = new PaletteHeaderPaddingRedirect(redirectHeaderSecondary, PaletteBackStyle.HeaderSecondary, PaletteBorderStyle.HeaderSecondary, PaletteContentStyle.HeaderSecondary, needPaint);
 
 			// Default other values
 			_overlayHeaders = InheritBool.Inherit;
@@ -79,17 +73,12 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// Gets a value indicating if all values are default.
 		/// </summary>
 		[Browsable(false)]
-		public override bool IsDefault
-		{
-			get 
-			{ 
-				return (base.IsDefault &&
-				        _paletteHeaderPrimary.IsDefault &&
-                        _paletteHeaderSecondary.IsDefault &&
-                        (OverlayHeaders == InheritBool.Inherit)); 
-			}
-		}
-		#endregion
+		public override bool IsDefault => (base.IsDefault &&
+		                                   HeaderPrimary.IsDefault &&
+		                                   HeaderSecondary.IsDefault &&
+		                                   (OverlayHeaders == InheritBool.Inherit));
+
+	    #endregion
 
         #region HeaderPrimary
         /// <summary>
@@ -98,14 +87,11 @@ namespace ComponentFactory.Krypton.Toolkit
 		[Category("Visuals")]
 		[Description("Overrides for defining primary header appearance.")]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-		public PaletteHeaderPaddingRedirect HeaderPrimary
-		{
-			get { return _paletteHeaderPrimary; }
-		}
+		public PaletteHeaderPaddingRedirect HeaderPrimary { get; }
 
-        private bool ShouldSerializeHeaderPrimary()
+	    private bool ShouldSerializeHeaderPrimary()
 		{
-			return !_paletteHeaderPrimary.IsDefault;
+			return !HeaderPrimary.IsDefault;
 		}
 		#endregion
 
@@ -116,14 +102,11 @@ namespace ComponentFactory.Krypton.Toolkit
 		[Category("Visuals")]
 		[Description("Overrides for defining secondary header appearance.")]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-		public PaletteHeaderPaddingRedirect HeaderSecondary
-		{
-			get { return _paletteHeaderSecondary; }
-		}
+		public PaletteHeaderPaddingRedirect HeaderSecondary { get; }
 
-        private bool ShouldSerializeHeaderSecondary()
+	    private bool ShouldSerializeHeaderSecondary()
 		{
-			return !_paletteHeaderSecondary.IsDefault;
+			return !HeaderSecondary.IsDefault;
 		}
 		#endregion
 
@@ -137,9 +120,9 @@ namespace ComponentFactory.Krypton.Toolkit
 		[RefreshPropertiesAttribute(RefreshProperties.All)]
 		public InheritBool OverlayHeaders
 		{
-			get { return _overlayHeaders; }
+			get => _overlayHeaders;
 
-			set
+            set
 			{
 				if (_overlayHeaders != value)
 				{
@@ -176,7 +159,9 @@ namespace ComponentFactory.Krypton.Toolkit
             {
                 // If the user has defined an actual value to use
                 if (OverlayHeaders != InheritBool.Inherit)
+                {
                     return OverlayHeaders;
+                }
             }
 
             // Pass onto the inheritance

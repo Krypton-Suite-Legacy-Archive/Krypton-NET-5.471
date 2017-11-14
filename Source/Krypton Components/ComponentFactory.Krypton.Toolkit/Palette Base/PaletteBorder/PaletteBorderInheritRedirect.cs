@@ -8,12 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
 using System.Drawing;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.ComponentModel;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -24,9 +19,8 @@ namespace ComponentFactory.Krypton.Toolkit
 	{
 		#region Instance Fields
 		private PaletteRedirect _redirect;
-		private PaletteBorderStyle _style;
-        private bool _overrideBorderToFalse;
-		#endregion
+
+	    #endregion
 
 		#region Identity
 		/// <summary>
@@ -47,7 +41,7 @@ namespace ComponentFactory.Krypton.Toolkit
 											PaletteBorderStyle style)
 		{
 			_redirect = redirect;
-			_style = style;
+			Style = style;
 		}
 		#endregion
 
@@ -55,12 +49,9 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Gets and sets the overriding of the border draw to always be false.
         /// </summary>
-        public bool OverrideBorderToFalse
-        {
-            get { return _overrideBorderToFalse; }
-            set { _overrideBorderToFalse = value; }
-        }
-        #endregion
+        public bool OverrideBorderToFalse { get; set; }
+
+	    #endregion
 
         #region GetRedirector
         /// <summary>
@@ -88,12 +79,9 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// <summary>
 		/// Gets and sets the style to use when inheriting.
 		/// </summary>
-		public PaletteBorderStyle Style
-		{
-			get { return _style; }
-			set { _style = value; }
-		}
-		#endregion
+		public PaletteBorderStyle Style { get; set; }
+
+	    #endregion
 
 		#region IPaletteBorder
 		/// <summary>
@@ -103,11 +91,15 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// <returns>InheritBool value.</returns>
 		public override InheritBool GetBorderDraw(PaletteState state)
 		{
-            if (_overrideBorderToFalse)
+            if (OverrideBorderToFalse)
+            {
                 return InheritBool.False;
+            }
             else
-			    return _redirect.GetBorderDraw(_style, state);
-		}
+            {
+                return _redirect.GetBorderDraw(Style, state);
+            }
+        }
 
         /// <summary>
         /// Gets a value indicating which borders to draw.
@@ -116,7 +108,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <returns>PaletteDrawBorders value.</returns>
         public override PaletteDrawBorders GetBorderDrawBorders(PaletteState state)
         {
-            return _redirect.GetBorderDrawBorders(_style, state);
+            return _redirect.GetBorderDrawBorders(Style, state);
         }
 
 		/// <summary>
@@ -126,7 +118,7 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// <returns>PaletteGraphicsHint value.</returns>
 		public override PaletteGraphicsHint GetBorderGraphicsHint(PaletteState state)
 		{
-			return _redirect.GetBorderGraphicsHint(_style, state);
+			return _redirect.GetBorderGraphicsHint(Style, state);
 		}
 
 		/// <summary>
@@ -136,7 +128,7 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// <returns>Color value.</returns>
 		public override Color GetBorderColor1(PaletteState state)
 		{
-			return _redirect.GetBorderColor1(_style, state);
+			return _redirect.GetBorderColor1(Style, state);
 		}
 
 		/// <summary>
@@ -146,7 +138,7 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// <returns>Color value.</returns>
 		public override Color GetBorderColor2(PaletteState state)
 		{
-			return _redirect.GetBorderColor2(_style, state);
+			return _redirect.GetBorderColor2(Style, state);
 		}
 
 		/// <summary>
@@ -156,7 +148,7 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// <returns>Color drawing style.</returns>
 		public override PaletteColorStyle GetBorderColorStyle(PaletteState state)
 		{
-			return _redirect.GetBorderColorStyle(_style, state);
+			return _redirect.GetBorderColorStyle(Style, state);
 		}
 
 		/// <summary>
@@ -166,7 +158,7 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// <returns>Color alignment style.</returns>
 		public override PaletteRectangleAlign GetBorderColorAlign(PaletteState state)
 		{
-			return _redirect.GetBorderColorAlign(_style, state);
+			return _redirect.GetBorderColorAlign(Style, state);
 		}
 
 		/// <summary>
@@ -176,7 +168,7 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// <returns>Angle used for color drawing.</returns>
 		public override float GetBorderColorAngle(PaletteState state)
 		{
-			return _redirect.GetBorderColorAngle(_style, state);
+			return _redirect.GetBorderColorAngle(Style, state);
 		}
 
 		/// <summary>
@@ -186,7 +178,7 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// <returns>Border width.</returns>
 		public override int GetBorderWidth(PaletteState state)
 		{
-			return _redirect.GetBorderWidth(_style, state);
+			return _redirect.GetBorderWidth(Style, state);
 		}
 
 		/// <summary>
@@ -196,7 +188,7 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// <returns>Border rounding.</returns>
 		public override int GetBorderRounding(PaletteState state)
 		{
-			return _redirect.GetBorderRounding(_style, state);
+			return _redirect.GetBorderRounding(Style, state);
 		}
 
 		/// <summary>
@@ -206,7 +198,7 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// <returns>Image instance.</returns>
 		public override Image GetBorderImage(PaletteState state)
 		{
-			return _redirect.GetBorderImage(_style, state);
+			return _redirect.GetBorderImage(Style, state);
 		}
 
 		/// <summary>
@@ -216,7 +208,7 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// <returns>Image style value.</returns>
 		public override PaletteImageStyle GetBorderImageStyle(PaletteState state)
 		{
-			return _redirect.GetBorderImageStyle(_style, state);
+			return _redirect.GetBorderImageStyle(Style, state);
 		}
 
 		/// <summary>
@@ -226,7 +218,7 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// <returns>Image alignment style.</returns>
 		public override PaletteRectangleAlign GetBorderImageAlign(PaletteState state)
 		{
-			return _redirect.GetBorderImageAlign(_style, state);
+			return _redirect.GetBorderImageAlign(Style, state);
 		}
         #endregion
 	}

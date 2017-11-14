@@ -9,7 +9,6 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Diagnostics;
@@ -24,8 +23,8 @@ namespace ComponentFactory.Krypton.Ribbon
                                              IMouseController
 	{
 		#region Instance Fields
-        private ViewBase _target;
-        private bool _pressed;
+
+	    private bool _pressed;
         private bool _mouseOver;
 		private NeedPaintHandler _needPaint;
         private Timer _repeatTimer;
@@ -51,13 +50,15 @@ namespace ComponentFactory.Krypton.Ribbon
 		{
 			Debug.Assert(target != null);
 
-			_target = target;
+			Target = target;
             NeedPaint = needPaint;
 
             if (repeatTimer)
             {
-                _repeatTimer = new Timer();
-                _repeatTimer.Interval = 250;
+                _repeatTimer = new Timer
+                {
+                    Interval = 250
+                };
                 _repeatTimer.Tick += new EventHandler(OnRepeatTick);
             }
         }
@@ -74,8 +75,7 @@ namespace ComponentFactory.Krypton.Ribbon
                 _pressed = false;
                 _mouseOver = false;
                 UpdateTargetState(new Point(int.MaxValue, int.MaxValue));
-                if (_repeatTimer != null)
-                    _repeatTimer.Stop();
+                _repeatTimer?.Stop();
             }
         }
         #endregion
@@ -115,11 +115,10 @@ namespace ComponentFactory.Krypton.Ribbon
                 _pressed = true;
                 UpdateTargetState(pt);
 
-                if (_target.Enabled)
+                if (Target.Enabled)
                 {
                     OnClick(new MouseEventArgs(MouseButtons.Left, 1, pt.X, pt.Y, 0));
-                    if (_repeatTimer != null)
-                        _repeatTimer.Start();
+                    _repeatTimer?.Start();
                 }
             }
 
@@ -139,8 +138,7 @@ namespace ComponentFactory.Krypton.Ribbon
             {
                 _pressed = false;
                 UpdateTargetState(pt);
-                if (_repeatTimer != null)
-                    _repeatTimer.Stop();
+                _repeatTimer?.Stop();
             }
 		}
 
@@ -152,13 +150,12 @@ namespace ComponentFactory.Krypton.Ribbon
         public virtual void MouseLeave(Control c, ViewBase next)
 		{
             // Only if mouse is leaving all the children monitored by controller.
-            if (!_target.ContainsRecurse(next))
+            if (!Target.ContainsRecurse(next))
             {
                 _pressed = false;
                 _mouseOver = false;
                 UpdateTargetState(c);
-                if (_repeatTimer != null)
-                    _repeatTimer.Stop();
+                _repeatTimer?.Stop();
             }
 		}
 
@@ -174,11 +171,9 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <summary>
         /// Should the left mouse down be ignored when present on a visual form border area.
         /// </summary>
-        public virtual bool IgnoreVisualFormLeftButtonDown
-        {
-            get { return false; }
-        }
-        #endregion
+        public virtual bool IgnoreVisualFormLeftButtonDown => false;
+
+	    #endregion
 
         #region Public
         /// <summary>
@@ -186,7 +181,7 @@ namespace ComponentFactory.Krypton.Ribbon
         /// </summary>
         public NeedPaintHandler NeedPaint
         {
-            get { return _needPaint; }
+            get => _needPaint;
 
             set
             {
@@ -201,12 +196,9 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <summary>
         /// Gets access to the associated target of the controller.
         /// </summary>
-        public ViewBase Target
-        {
-            get { return _target; }
-        }
+        public ViewBase Target { get; }
 
-		/// <summary>
+	    /// <summary>
 		/// Fires the NeedPaint event.
 		/// </summary>
 		public void PerformNeedPaint()
@@ -256,30 +248,35 @@ namespace ComponentFactory.Krypton.Ribbon
             PaletteState newState;
 
             // If the button is disabled then show as disabled
-            if (!_target.Enabled)
+            if (!Target.Enabled)
             {
                 newState = PaletteState.Disabled;
-                if (_repeatTimer != null)
-                    _repeatTimer.Stop();
+                _repeatTimer?.Stop();
             }
             else
             {
                 if (_mouseOver)
                 {
                     if (_pressed)
+                    {
                         newState = PaletteState.Pressed;
+                    }
                     else
+                    {
                         newState = PaletteState.Tracking;
+                    }
                 }
                 else
+                {
                     newState = PaletteState.Normal;
+                }
             }
 
             // If state has changed or change in (inside split area)
-            if (_target.ElementState != newState)
+            if (Target.ElementState != newState)
             {
                 // Update target to reflect new state
-                _target.ElementState = newState;
+                Target.ElementState = newState;
 
                 // Redraw to show the change in visual state
                 OnNeedPaint(true);
@@ -292,9 +289,8 @@ namespace ComponentFactory.Krypton.Ribbon
 		/// <param name="e">A MouseEventArgs containing the event data.</param>
 		protected virtual void OnClick(MouseEventArgs e)
 		{
-			if (Click != null)
-				Click(_target, e);
-		}
+            Click?.Invoke(Target, e);
+        }
 
 		/// <summary>
 		/// Raises the NeedPaint event.
@@ -302,18 +298,21 @@ namespace ComponentFactory.Krypton.Ribbon
 		/// <param name="needLayout">Does the palette change require a layout.</param>
 		protected virtual void OnNeedPaint(bool needLayout)
 		{
-            if (_needPaint != null)
-                _needPaint(this, new NeedLayoutEventArgs(needLayout, _target.ClientRectangle));
-		}
+            _needPaint?.Invoke(this, new NeedLayoutEventArgs(needLayout, Target.ClientRectangle));
+        }
 		#endregion
 
         #region Private
         private void OnRepeatTick(object sender, EventArgs e)
         {
-            if (_target.Enabled)
+            if (Target.Enabled)
+            {
                 OnClick(new MouseEventArgs(MouseButtons.Left, 1, 0, 0, 0));
+            }
             else
+            {
                 _repeatTimer.Stop();
+            }
         }
             
         #endregion

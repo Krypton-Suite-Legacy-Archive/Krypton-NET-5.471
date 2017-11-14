@@ -9,11 +9,7 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
-using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Diagnostics;
 
 namespace ComponentFactory.Krypton.Toolkit
@@ -26,9 +22,8 @@ namespace ComponentFactory.Krypton.Toolkit
 		#region Instance Fields
 		internal IPaletteBack _paletteBack;
         private IDisposable _memento;
-        private VisualOrientation _orientation;
-        private bool _ignoreRender;
-		#endregion
+
+	    #endregion
 
 		#region Identity
         /// <summary>
@@ -36,8 +31,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public ViewDrawPanel()
         {
-            _orientation = VisualOrientation.Top;
-            _ignoreRender = false;
+            VisualOrientation = VisualOrientation.Top;
+            IgnoreRender = false;
         }
         
         /// <summary>
@@ -48,7 +43,7 @@ namespace ComponentFactory.Krypton.Toolkit
 		{
 			Debug.Assert(paletteBack != null);
 			_paletteBack = paletteBack;
-            _orientation = VisualOrientation.Top;
+            VisualOrientation = VisualOrientation.Top;
         }
 
 		/// <summary>
@@ -84,23 +79,17 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Gets and sets the rendering status.
         /// </summary>
-        public bool IgnoreRender
-        {
-            get { return _ignoreRender; }
-            set { _ignoreRender = value; }
-        }
-        #endregion
+        public bool IgnoreRender { get; set; }
+
+	    #endregion
 
         #region Orientation
         /// <summary>
         /// Gets and sets the orientation of the panel.
         /// </summary>
-        public VisualOrientation VisualOrientation
-        {
-            get { return _orientation; }
-            set { _orientation = value; }
-        }
-        #endregion
+        public VisualOrientation VisualOrientation { get; set; }
+
+	    #endregion
 
         #region SetPalettes
         /// <summary>
@@ -150,7 +139,10 @@ namespace ComponentFactory.Krypton.Toolkit
             Debug.Assert(context != null);
 
             // Validate incoming reference
-            if (context == null) throw new ArgumentNullException("context");
+            if (context == null)
+            {
+                throw new ArgumentNullException("context");
+            }
 
             // We take on all the available display area
             ClientRectangle = context.DisplayRectangle;
@@ -170,7 +162,10 @@ namespace ComponentFactory.Krypton.Toolkit
 			Debug.Assert(context != null);
 
             // Validate incoming reference
-            if (context == null) throw new ArgumentNullException("context");
+            if (context == null)
+            {
+                throw new ArgumentNullException("context");
+            }
 
             if (!IgnoreRender)
             {

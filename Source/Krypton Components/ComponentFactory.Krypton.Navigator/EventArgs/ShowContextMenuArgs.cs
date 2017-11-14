@@ -8,7 +8,6 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
 using System.Windows.Forms;
 using ComponentFactory.Krypton.Toolkit;
 
@@ -20,9 +19,8 @@ namespace ComponentFactory.Krypton.Navigator
     public class ShowContextMenuArgs : KryptonPageCancelEventArgs
 	{
 		#region Instance Fields
-        private ContextMenuStrip _cms;
-        private KryptonContextMenu _kcm; 
-		#endregion
+
+	    #endregion
 
 		#region Identity
 		/// <summary>
@@ -33,8 +31,8 @@ namespace ComponentFactory.Krypton.Navigator
         public ShowContextMenuArgs(KryptonPage page, int index)
 			: base(page, index)
 		{
-            _cms = page.ContextMenuStrip;
-            _kcm = page.KryptonContextMenu;
+            ContextMenuStrip = page.ContextMenuStrip;
+            KryptonContextMenu = page.KryptonContextMenu;
 		}
 		#endregion
 
@@ -42,22 +40,16 @@ namespace ComponentFactory.Krypton.Navigator
         /// <summary>
 		/// Gets and sets the context menu strip.
 		/// </summary>
-        public ContextMenuStrip ContextMenuStrip
-		{
-            get { return _cms; }
-            set { _cms = value; }
-		}
-		#endregion
+        public ContextMenuStrip ContextMenuStrip { get; set; }
+
+	    #endregion
 
         #region KryptonContextMenu
         /// <summary>
         /// Gets and sets the context menu strip.
         /// </summary>
-        public KryptonContextMenu KryptonContextMenu
-        {
-            get { return _kcm; }
-            set { _kcm = value; }
-        }
-        #endregion
+        public KryptonContextMenu KryptonContextMenu { get; set; }
+
+	    #endregion
     }
 }

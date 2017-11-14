@@ -8,14 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
-using System.Drawing;
-using System.Drawing.Design;
-using System.Windows.Forms;
 using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Collections.Generic;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -25,16 +18,7 @@ namespace ComponentFactory.Krypton.Toolkit
     public class KryptonPaletteCheckButton : Storage
     {
         #region Instance Fields
-        private PaletteTripleRedirect _stateDefault;
-        private PaletteTripleRedirect _stateFocus;
-        private PaletteTripleRedirect _stateCommon;
-        private PaletteTriple _stateDisabled;
-        private PaletteTriple _stateNormal;
-        private PaletteTriple _stateTracking;
-        private PaletteTriple _statePressed;
-        private PaletteTriple _stateCheckedNormal;
-        private PaletteTriple _stateCheckedTracking;
-        private PaletteTriple _stateCheckedPressed;
+
         #endregion
 
         #region Identity
@@ -53,16 +37,16 @@ namespace ComponentFactory.Krypton.Toolkit
                                          NeedPaintHandler needPaint) 
 		{
             // Create the storage objects
-            _stateDefault = new PaletteTripleRedirect(redirect, backStyle, borderStyle, contentStyle, needPaint);
-            _stateFocus = new PaletteTripleRedirect(redirect, backStyle, borderStyle, contentStyle, needPaint);
-            _stateCommon = new PaletteTripleRedirect(redirect, backStyle, borderStyle, contentStyle, needPaint);
-            _stateDisabled = new PaletteTriple(_stateCommon, needPaint);
-            _stateNormal = new PaletteTriple(_stateCommon, needPaint);
-            _stateTracking = new PaletteTriple(_stateCommon, needPaint);
-            _statePressed = new PaletteTriple(_stateCommon, needPaint);
-            _stateCheckedNormal = new PaletteTriple(_stateCommon, needPaint);
-            _stateCheckedTracking = new PaletteTriple(_stateCommon, needPaint);
-            _stateCheckedPressed = new PaletteTriple(_stateCommon, needPaint);
+            OverrideDefault = new PaletteTripleRedirect(redirect, backStyle, borderStyle, contentStyle, needPaint);
+            OverrideFocus = new PaletteTripleRedirect(redirect, backStyle, borderStyle, contentStyle, needPaint);
+            StateCommon = new PaletteTripleRedirect(redirect, backStyle, borderStyle, contentStyle, needPaint);
+            StateDisabled = new PaletteTriple(StateCommon, needPaint);
+            StateNormal = new PaletteTriple(StateCommon, needPaint);
+            StateTracking = new PaletteTriple(StateCommon, needPaint);
+            StatePressed = new PaletteTriple(StateCommon, needPaint);
+            StateCheckedNormal = new PaletteTriple(StateCommon, needPaint);
+            StateCheckedTracking = new PaletteTriple(StateCommon, needPaint);
+            StateCheckedPressed = new PaletteTriple(StateCommon, needPaint);
         }
         #endregion
 
@@ -73,9 +57,9 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <param name="redirect">Target redirector.</param>
         public void SetRedirector(PaletteRedirect redirect)
         {
-            _stateDefault.SetRedirector(redirect);
-            _stateFocus.SetRedirector(redirect);
-            _stateCommon.SetRedirector(redirect);
+            OverrideDefault.SetRedirector(redirect);
+            OverrideFocus.SetRedirector(redirect);
+            StateCommon.SetRedirector(redirect);
         }
         #endregion
 
@@ -84,23 +68,18 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// Gets a value indicating if all values are default.
 		/// </summary>
 		[Browsable(false)]
-		public override bool IsDefault
-		{
-			get
-			{
-                return _stateCommon.IsDefault &&
-                       _stateDefault.IsDefault &&
-                       _stateFocus.IsDefault &&
-                       _stateDisabled.IsDefault &&
-                       _stateNormal.IsDefault &&
-                       _stateTracking.IsDefault &&
-                       _statePressed.IsDefault &&
-                       _stateCheckedNormal.IsDefault &&
-                       _stateCheckedTracking.IsDefault &&
-                       _stateCheckedPressed.IsDefault;
-            }
-		}
-		#endregion
+		public override bool IsDefault => StateCommon.IsDefault &&
+		                                  OverrideDefault.IsDefault &&
+		                                  OverrideFocus.IsDefault &&
+		                                  StateDisabled.IsDefault &&
+		                                  StateNormal.IsDefault &&
+		                                  StateTracking.IsDefault &&
+		                                  StatePressed.IsDefault &&
+		                                  StateCheckedNormal.IsDefault &&
+		                                  StateCheckedTracking.IsDefault &&
+		                                  StateCheckedPressed.IsDefault;
+
+        #endregion
 
         #region PopulateFromBase
         /// <summary>
@@ -109,15 +88,15 @@ namespace ComponentFactory.Krypton.Toolkit
         public void PopulateFromBase()
         {
             // Populate only the designated styles
-            _stateDefault.PopulateFromBase(PaletteState.NormalDefaultOverride);
-            _stateFocus.PopulateFromBase(PaletteState.FocusOverride);
-            _stateDisabled.PopulateFromBase(PaletteState.Disabled);
-            _stateNormal.PopulateFromBase(PaletteState.Normal);
-            _stateTracking.PopulateFromBase(PaletteState.Tracking);
-            _statePressed.PopulateFromBase(PaletteState.Pressed);
-            _stateCheckedNormal.PopulateFromBase(PaletteState.CheckedNormal);
-            _stateCheckedTracking.PopulateFromBase(PaletteState.CheckedTracking);
-            _stateCheckedPressed.PopulateFromBase(PaletteState.CheckedPressed);
+            OverrideDefault.PopulateFromBase(PaletteState.NormalDefaultOverride);
+            OverrideFocus.PopulateFromBase(PaletteState.FocusOverride);
+            StateDisabled.PopulateFromBase(PaletteState.Disabled);
+            StateNormal.PopulateFromBase(PaletteState.Normal);
+            StateTracking.PopulateFromBase(PaletteState.Tracking);
+            StatePressed.PopulateFromBase(PaletteState.Pressed);
+            StateCheckedNormal.PopulateFromBase(PaletteState.CheckedNormal);
+            StateCheckedTracking.PopulateFromBase(PaletteState.CheckedTracking);
+            StateCheckedPressed.PopulateFromBase(PaletteState.CheckedPressed);
         }
         #endregion
 
@@ -129,14 +108,11 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining common button appearance that other states can override.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public PaletteTripleRedirect StateCommon
-        {
-            get { return _stateCommon; }
-        }
+        public PaletteTripleRedirect StateCommon { get; }
 
         private bool ShouldSerializeStateCommon()
         {
-            return !_stateCommon.IsDefault;
+            return !StateCommon.IsDefault;
         }
         #endregion
 
@@ -148,14 +124,11 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining disabled button appearance.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public PaletteTriple StateDisabled
-        {
-            get { return _stateDisabled; }
-        }
+        public PaletteTriple StateDisabled { get; }
 
         private bool ShouldSerializeStateDisabled()
         {
-            return !_stateDisabled.IsDefault;
+            return !StateDisabled.IsDefault;
         }
         #endregion
 
@@ -167,14 +140,11 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining normal button appearance.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public PaletteTriple StateNormal
-        {
-            get { return _stateNormal; }
-        }
+        public PaletteTriple StateNormal { get; }
 
         private bool ShouldSerializeStateNormal()
         {
-            return !_stateNormal.IsDefault;
+            return !StateNormal.IsDefault;
         }
         #endregion
 
@@ -186,14 +156,11 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining hot tracking button appearance.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public PaletteTriple StateTracking
-        {
-            get { return _stateTracking; }
-        }
+        public PaletteTriple StateTracking { get; }
 
         private bool ShouldSerializeStateTracking()
         {
-            return !_stateTracking.IsDefault;
+            return !StateTracking.IsDefault;
         }
         #endregion
 
@@ -205,14 +172,11 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining pressed button appearance.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public PaletteTriple StatePressed
-        {
-            get { return _statePressed; }
-        }
+        public PaletteTriple StatePressed { get; }
 
         private bool ShouldSerializeStatePressed()
         {
-            return !_statePressed.IsDefault;
+            return !StatePressed.IsDefault;
         }
         #endregion
 
@@ -224,14 +188,11 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining normal checked button appearance.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public PaletteTriple StateCheckedNormal
-        {
-            get { return _stateCheckedNormal; }
-        }
+        public PaletteTriple StateCheckedNormal { get; }
 
         private bool ShouldSerializeStateCheckedNormal()
         {
-            return !_stateCheckedNormal.IsDefault;
+            return !StateCheckedNormal.IsDefault;
         }
         #endregion
 
@@ -243,14 +204,11 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining hot tracking checked button appearance.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public PaletteTriple StateCheckedTracking
-        {
-            get { return _stateCheckedTracking; }
-        }
+        public PaletteTriple StateCheckedTracking { get; }
 
         private bool ShouldSerializeStateCheckedTracking()
         {
-            return !_stateCheckedTracking.IsDefault;
+            return !StateCheckedTracking.IsDefault;
         }
         #endregion
 
@@ -262,14 +220,11 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining pressed checked button appearance.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public PaletteTriple StateCheckedPressed
-        {
-            get { return _stateCheckedPressed; }
-        }
+        public PaletteTriple StateCheckedPressed { get; }
 
         private bool ShouldSerializeStateCheckedPressed()
         {
-            return !_stateCheckedPressed.IsDefault;
+            return !StateCheckedPressed.IsDefault;
         }
         #endregion
 
@@ -281,14 +236,11 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining normal button appearance when default.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public PaletteTripleRedirect OverrideDefault
-        {
-            get { return _stateDefault; }
-        }
+        public PaletteTripleRedirect OverrideDefault { get; }
 
         private bool ShouldSerializeOverrideDefault()
         {
-            return !_stateDefault.IsDefault;
+            return !OverrideDefault.IsDefault;
         }
         #endregion
 
@@ -300,14 +252,11 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining button appearance when it has focus.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public PaletteTripleRedirect OverrideFocus
-        {
-            get { return _stateFocus; }
-        }
+        public PaletteTripleRedirect OverrideFocus { get; }
 
         private bool ShouldSerializeOverrideFocus()
         {
-            return !_stateFocus.IsDefault;
+            return !OverrideFocus.IsDefault;
         }
         #endregion
     }

@@ -9,10 +9,7 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Diagnostics;
 
@@ -27,7 +24,6 @@ namespace ComponentFactory.Krypton.Toolkit
         private ScrollBar _scrollBar;
         private bool _vertical;
         private bool _removing;
-        private bool _shortSize;
         private int _min;
         private int _max;
         private int _largeChange;
@@ -54,7 +50,7 @@ namespace ComponentFactory.Krypton.Toolkit
 
             //Default other properties
             _removing = false;
-            _shortSize = false;
+            ShortSize = false;
             _min = 0;
             _max = 100;
             _largeChange = 20;
@@ -89,7 +85,9 @@ namespace ComponentFactory.Krypton.Toolkit
 
                     // Cannot destroy control in a different thread
                     if (!_scrollBar.InvokeRequired)
+                    {
                         RemoveScrollBar();
+                    }
                 }
             }
 
@@ -104,7 +102,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public bool Vertical
         {
-            get { return _vertical; }
+            get => _vertical;
 
             set
             {
@@ -125,11 +123,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Gets and sets a value indicating if the scroll should short size.
         /// </summary>
-        public bool ShortSize
-        {
-            get { return _shortSize; }
-            set { _shortSize = value; }
-        }
+        public bool ShortSize { get; set; }
+
         #endregion
 
         #region SetScrollValues
@@ -175,9 +170,13 @@ namespace ComponentFactory.Krypton.Toolkit
             get
             {
                 if (_scrollBar != null)
+                {
                     return _scrollBar.Value;
+                }
                 else
+                {
                     return 0;
+                }
             }
         }
         #endregion
@@ -217,18 +216,29 @@ namespace ComponentFactory.Krypton.Toolkit
                     CreateScrollBar(context.Control);
 
                     // If we need to hide/disable the control then do it before position changes
-                    if (!Visible) _scrollBar.Hide();
-                    if (!Enabled) _scrollBar.Enabled = false;
+                    if (!Visible)
+                    {
+                        _scrollBar.Hide();
+                    }
+
+                    if (!Enabled)
+                    {
+                        _scrollBar.Enabled = false;
+                    }
 
                     // Should the scrollbar is shorter than then the entire client area?
                     if (ShortSize)
                     {
                         if (Vertical)
+                        {
                             _scrollBar.SetBounds(ClientLocation.X, ClientLocation.Y,
                                                  ClientWidth, ClientHeight - SystemInformation.HorizontalScrollBarHeight);
+                        }
                         else
+                        {
                             _scrollBar.SetBounds(ClientLocation.X, ClientLocation.Y,
                                                  ClientWidth - SystemInformation.VerticalScrollBarWidth, ClientHeight);
+                        }
                     }
                     else
                     {
@@ -238,8 +248,15 @@ namespace ComponentFactory.Krypton.Toolkit
                     }
 
                     // If we need to show/enable control then do it after position changes
-                    if (Visible) _scrollBar.Show();
-                    if (Enabled) _scrollBar.Enabled = true;
+                    if (Visible)
+                    {
+                        _scrollBar.Show();
+                    }
+
+                    if (Enabled)
+                    {
+                        _scrollBar.Enabled = true;
+                    }
                 }
             }
         }
@@ -253,9 +270,13 @@ namespace ComponentFactory.Krypton.Toolkit
             {
                 // Create the correct type of control
                 if (Vertical)
+                {
                     _scrollBar = new VScrollBar();
+                }
                 else
+                {
                     _scrollBar = new HScrollBar();
+                }
 
                 // Hook into scroll position changes
                 _scrollBar.Scroll += new ScrollEventHandler(OnScrollBarChange);
@@ -307,8 +328,7 @@ namespace ComponentFactory.Krypton.Toolkit
             // Update with the new scroll value
             _scrollBar.Value = e.NewValue;
 
-            if (ScrollChanged != null)
-                ScrollChanged(this, EventArgs.Empty);
+            ScrollChanged?.Invoke(this, EventArgs.Empty);
         }
         #endregion
     }

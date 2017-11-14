@@ -8,14 +8,8 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
-using System.Drawing;
-using System.Drawing.Design;
 using System.Windows.Forms;
 using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace ComponentFactory.Krypton.Toolkit
@@ -66,18 +60,13 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// Gets a value indicating if all values are default.
 		/// </summary>
 		[Browsable(false)]
-		public override bool IsDefault
-		{
-            get
-            {
-                return PrimaryHeaderPadding.Equals(CommonHelper.InheritPadding) &&
-                       SecondaryHeaderPadding.Equals(CommonHelper.InheritPadding) &&
-                       DockInactiveHeaderPadding.Equals(CommonHelper.InheritPadding) &&
-                       DockActiveHeaderPadding.Equals(CommonHelper.InheritPadding) &&
-                       (OverlayHeaders == InheritBool.Inherit);
-            }
-		}
-		#endregion
+		public override bool IsDefault => PrimaryHeaderPadding.Equals(CommonHelper.InheritPadding) &&
+		                                  SecondaryHeaderPadding.Equals(CommonHelper.InheritPadding) &&
+		                                  DockInactiveHeaderPadding.Equals(CommonHelper.InheritPadding) &&
+		                                  DockActiveHeaderPadding.Equals(CommonHelper.InheritPadding) &&
+		                                  (OverlayHeaders == InheritBool.Inherit);
+
+        #endregion
 
         #region PopulateFromBase
         /// <summary>
@@ -104,7 +93,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [RefreshPropertiesAttribute(RefreshProperties.All)]
         public Padding PrimaryHeaderPadding
         {
-            get { return _primaryHeaderPadding; }
+            get => _primaryHeaderPadding;
 
             set
             {
@@ -136,7 +125,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [RefreshPropertiesAttribute(RefreshProperties.All)]
         public Padding SecondaryHeaderPadding
         {
-            get { return _secondaryHeaderPadding; }
+            get => _secondaryHeaderPadding;
 
             set
             {
@@ -168,7 +157,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [RefreshPropertiesAttribute(RefreshProperties.All)]
         public Padding DockInactiveHeaderPadding
         {
-            get { return _dockInactiveHeaderPadding; }
+            get => _dockInactiveHeaderPadding;
 
             set
             {
@@ -200,7 +189,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [RefreshPropertiesAttribute(RefreshProperties.All)]
         public Padding DockActiveHeaderPadding
         {
-            get { return _dockActiveHeaderPadding; }
+            get => _dockActiveHeaderPadding;
 
             set
             {
@@ -232,9 +221,9 @@ namespace ComponentFactory.Krypton.Toolkit
 		[RefreshPropertiesAttribute(RefreshProperties.All)]
 		public InheritBool OverlayHeaders
 		{
-			get { return _overlayHeaders; }
+			get => _overlayHeaders;
 
-			set
+            set
 			{
 				if (_overlayHeaders != value)
 				{
@@ -279,7 +268,9 @@ namespace ComponentFactory.Krypton.Toolkit
             {
                 // If the user has defined an actual value to use
                 if (OverlayHeaders != InheritBool.Inherit)
+                {
                     return OverlayHeaders;
+                }
             }
 
             // Pass onto the inheritance
@@ -298,19 +289,31 @@ namespace ComponentFactory.Krypton.Toolkit
             {
                 case PaletteMetricPadding.HeaderGroupPaddingPrimary:
                     if (!PrimaryHeaderPadding.Equals(CommonHelper.InheritPadding))
+                    {
                         return PrimaryHeaderPadding;
+                    }
+
                     break;
                 case PaletteMetricPadding.HeaderGroupPaddingSecondary:
                     if (!SecondaryHeaderPadding.Equals(CommonHelper.InheritPadding))
+                    {
                         return SecondaryHeaderPadding;
+                    }
+
                     break;
                 case PaletteMetricPadding.HeaderGroupPaddingDockInactive:
                     if (!DockInactiveHeaderPadding.Equals(CommonHelper.InheritPadding))
+                    {
                         return DockInactiveHeaderPadding;
+                    }
+
                     break;
                 case PaletteMetricPadding.HeaderGroupPaddingDockActive:
                     if (!DockActiveHeaderPadding.Equals(CommonHelper.InheritPadding))
+                    {
                         return DockActiveHeaderPadding;
+                    }
+
                     break;
             }
 

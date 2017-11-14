@@ -11,8 +11,6 @@
 using System;
 using System.Drawing;
 using System.ComponentModel;
-using System.Windows.Forms;
-using System.Collections.Generic;
 using System.Diagnostics;
 using ComponentFactory.Krypton.Toolkit;
 
@@ -24,8 +22,7 @@ namespace ComponentFactory.Krypton.Navigator
     internal class ViewletHeaderGroup
     {
         #region Instance Fields
-        private KryptonNavigator _navigator;
-        private PaletteRedirect _redirector;
+
         private ViewDrawDocker _viewGroup;
         private ViewDrawDocker _viewHeadingPrimary;
         private ViewDrawContent _viewContentPrimary;
@@ -51,8 +48,8 @@ namespace ComponentFactory.Krypton.Navigator
             Debug.Assert(needPaintDelegate != null);
 
             // Remember references
-            _navigator = navigator;
-            _redirector = redirector;
+            Navigator = navigator;
+            Redirector = redirector;
             _needPaintDelegate = needPaintDelegate;
         }
         #endregion
@@ -61,18 +58,12 @@ namespace ComponentFactory.Krypton.Navigator
         /// <summary>
         /// Gets access to the navigator reference.
         /// </summary>
-        public KryptonNavigator Navigator
-        {
-            get { return _navigator; }
-        }
+        public KryptonNavigator Navigator { get; }
 
         /// <summary>
         /// Gets access to the palette redirector reference.
         /// </summary>
-        public PaletteRedirect Redirector
-        {
-            get { return _redirector; }
-        }
+        public PaletteRedirect Redirector { get; }
 
         /// <summary>
 		/// Construct the view appropriate for this builder.
@@ -133,8 +124,7 @@ namespace ComponentFactory.Krypton.Navigator
         public void UpdateButtons()
         {
             // Ensure buttons are recreated to reflect different page
-            if (_buttonManager != null)
-                _buttonManager.RecreateButtons();
+            _buttonManager?.RecreateButtons();
         }
 
         /// <summary>
@@ -150,15 +140,21 @@ namespace ComponentFactory.Krypton.Navigator
             {
                 // Then use the states defined in the navigator itself
                 if (Navigator.Enabled)
+                {
                     SetPalettes(Navigator.StateNormal.HeaderGroup);
+                }
                 else
+                {
                     SetPalettes(Navigator.StateDisabled.HeaderGroup);
+                }
             }
             else
             {
                 // Use states defined in the selected page
                 if (Navigator.SelectedPage.Enabled)
+                {
                     SetPalettes(Navigator.SelectedPage.StateNormal.HeaderGroup);
+                }
                 else
                 {
                     SetPalettes(Navigator.SelectedPage.StateDisabled.HeaderGroup);
@@ -208,7 +204,9 @@ namespace ComponentFactory.Krypton.Navigator
         {
             // Our mode appropriate action is always to select a page
             if (action == DirectionButtonAction.ModeAppropriateAction)
+            {
                 action = DirectionButtonAction.SelectPage;
+            }
 
             return action;
         }
@@ -222,7 +220,9 @@ namespace ComponentFactory.Krypton.Navigator
         {
             // Our mode appropriate action is always to select a page
             if (action == DirectionButtonAction.ModeAppropriateAction)
+            {
                 action = DirectionButtonAction.SelectPage;
+            }
 
             return action;
         }
@@ -381,10 +381,12 @@ namespace ComponentFactory.Krypton.Navigator
                                                        new PaletteMetricInt[] { PaletteMetricInt.HeaderButtonEdgeInsetPrimary, PaletteMetricInt.HeaderButtonEdgeInsetSecondary },
                                                        new PaletteMetricPadding[] { PaletteMetricPadding.HeaderButtonPaddingPrimary, PaletteMetricPadding.HeaderButtonPaddingSecondary },
                                                        new GetToolStripRenderer(Navigator.CreateToolStripRenderer),
-                                                       _needPaintDelegate);
+                                                       _needPaintDelegate)
+            {
 
-            // Hook up the tooltip manager so that tooltips can be generated
-            _buttonManager.ToolTipManager = Navigator.ToolTipManager;
+                // Hook up the tooltip manager so that tooltips can be generated
+                ToolTipManager = Navigator.ToolTipManager
+            };
         }
 
         private void UpdateHeaders()
@@ -505,37 +507,37 @@ namespace ComponentFactory.Krypton.Navigator
 
         private void OnDragStart(object sender, DragStartEventCancelArgs e)
         {
-            _navigator.InternalDragStart(e, null);
+            Navigator.InternalDragStart(e, null);
         }
 
         private void OnDragMove(object sender, PointEventArgs e)
         {
-            _navigator.InternalDragMove(e);
+            Navigator.InternalDragMove(e);
         }
 
         private void OnDragEnd(object sender, PointEventArgs e)
         {
-            _navigator.InternalDragEnd(e);
+            Navigator.InternalDragEnd(e);
         }
 
         private void OnDragQuit(object sender, EventArgs e)
         {
-            _navigator.InternalDragQuit();
+            Navigator.InternalDragQuit();
         }
 
         private void OnLeftMouseDown(object sender, EventArgs e)
         {
-            _navigator.OnPrimaryHeaderLeftClicked(e);
+            Navigator.OnPrimaryHeaderLeftClicked(e);
         }
 
         private void OnRightMouseDown(object sender, EventArgs e)
         {
-            _navigator.OnPrimaryHeaderRightClicked(e);
+            Navigator.OnPrimaryHeaderRightClicked(e);
         }
 
         private void OnLeftDoubleClick(object sender, EventArgs e)
         {
-            _navigator.OnPrimaryHeaderDoubleClicked(e);
+            Navigator.OnPrimaryHeaderDoubleClicked(e);
         }
         #endregion
     }

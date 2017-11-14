@@ -9,14 +9,9 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
-using System.Data;
-using System.Drawing;
-using System.Drawing.Design;
 using System.Collections;
 using System.ComponentModel;
 using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Diagnostics;
 
 namespace ComponentFactory.Krypton.Toolkit
@@ -28,7 +23,7 @@ namespace ComponentFactory.Krypton.Toolkit
     public abstract class ButtonSpecCollectionBase : GlobalId
     {
         #region Instance Fields
-        private object _owner;
+
         #endregion
 
         #region Events
@@ -61,7 +56,7 @@ namespace ComponentFactory.Krypton.Toolkit
         public ButtonSpecCollectionBase(object owner)
         {
             Debug.Assert(owner != null);
-            _owner = owner;
+            Owner = owner;
         }
         #endregion
 
@@ -75,11 +70,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Gets and sets the owner of the collection.
         /// </summary>
-        public object Owner
-        {
-            get { return _owner; }
-            set { _owner = value; }
-        }
+        public object Owner { get; set; }
+
         #endregion
 
         #region Protected
@@ -89,9 +81,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <param name="e">A NavButtonSpecEventArgs instance containing event data.</param>
         protected void OnInserting(ButtonSpecEventArgs e)
         {
-            e.ButtonSpec.Owner = _owner;
-            if (Inserting != null)
-                Inserting(this, e);
+            e.ButtonSpec.Owner = Owner;
+            Inserting?.Invoke(this, e);
         }
 
         /// <summary>
@@ -100,8 +91,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <param name="e">A NavButtonSpecEventArgs instance containing event data.</param>
         protected void OnInserted(ButtonSpecEventArgs e)
         {
-            if (Inserted != null)
-                Inserted(this, e);
+            Inserted?.Invoke(this, e);
         }
 
         /// <summary>
@@ -111,8 +101,7 @@ namespace ComponentFactory.Krypton.Toolkit
         protected void OnRemoving(ButtonSpecEventArgs e)
         {
             e.ButtonSpec.Owner = null;
-            if (Removing != null)
-                Removing(this, e);
+            Removing?.Invoke(this, e);
         }
 
         /// <summary>
@@ -121,8 +110,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <param name="e">A NavButtonSpecEventArgs instance containing event data.</param>
         protected void OnRemoved(ButtonSpecEventArgs e)
         {
-            if (Removed != null)
-                Removed(this, e);
+            Removed?.Invoke(this, e);
         }
         #endregion
     }
@@ -186,7 +174,9 @@ namespace ComponentFactory.Krypton.Toolkit
         public void AddRange(T[] array)
         {
             foreach (T item in array)
+            {
                 Add(item);
+            }
         }
 
 		/// <summary>
@@ -225,12 +215,9 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// <summary>
 		/// Gets a value indicating whether the collection has a fixed size. 
 		/// </summary>
-		public bool IsFixedSize
-		{
-			get { return false; }
-		}
+		public bool IsFixedSize => false;
 
-		/// <summary>
+	    /// <summary>
 		/// Removes first occurance of specified object.
 		/// </summary>
 		/// <param name="value">Object reference.</param>
@@ -247,12 +234,9 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// <returns>Object at specified index.</returns>
 		object IList.this[int index]
 		{
-			get { return _specs[index]; }
-			
-			set
-			{
-				throw new NotImplementedException("Cannot set a collection index with a new value");
-			}
+			get => _specs[index];
+
+		    set => throw new NotImplementedException("Cannot set a collection index with a new value");
 		}
 		#endregion
 
@@ -279,13 +263,17 @@ namespace ComponentFactory.Krypton.Toolkit
 
             // We do not allow an empty button spec to be added
 			if (item == null)
-				throw new ArgumentNullException("item");
+			{
+			    throw new ArgumentNullException("item");
+			}
 
-            // Not allow to add the same button spec more than once
+		    // Not allow to add the same button spec more than once
 			if (_specs.Contains(item))
-                throw new ArgumentOutOfRangeException("item", "T already in collection");
+			{
+			    throw new ArgumentOutOfRangeException("item", "T already in collection");
+			}
 
-            // Generate before insert event
+		    // Generate before insert event
             OnInserting(new ButtonSpecEventArgs(item, index));
 
 			// Add into the internal collection
@@ -321,12 +309,9 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <returns>T at specified index.</returns>
         public T this[int index]
 		{
-			get { return _specs[index]; }
-			
-			set
-			{
-				throw new NotImplementedException("Cannot set a collection index with a new value");
-			}
+			get => _specs[index];
+
+		    set => throw new NotImplementedException("Cannot set a collection index with a new value");
 		}
 
         /// <summary>
@@ -340,13 +325,21 @@ namespace ComponentFactory.Krypton.Toolkit
             {
                 // First priority is the UniqueName
                 foreach (T bs in this)
+                {
                     if (bs.UniqueName == uniqueName)
+                    {
                         return bs;
+                    }
+                }
 
                 // Second priority is the Text
                 foreach (T bs in this)
+                {
                     if (bs.Text == uniqueName)
+                    {
                         return bs;
+                    }
+                }
 
                 // No match found
                 return null;
@@ -365,13 +358,17 @@ namespace ComponentFactory.Krypton.Toolkit
 
             // We do not allow an empty button spec to be added
 			if (item == null)
-				throw new ArgumentNullException("item");
+			{
+			    throw new ArgumentNullException("item");
+			}
 
-            // Not allow to add the same button spec more than once
+		    // Not allow to add the same button spec more than once
 			if (_specs.Contains(item))
-                throw new ArgumentOutOfRangeException("item", "T already in collection");
+			{
+			    throw new ArgumentOutOfRangeException("item", "T already in collection");
+			}
 
-            // Generate inserting event
+		    // Generate inserting event
             OnInserting(new ButtonSpecEventArgs(item, _specs.Count));
 
 			// Add to the internal collection
@@ -406,20 +403,14 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// <summary>
         /// Gets the number of button specs in collection.
 		/// </summary>
-		public int Count
-		{
-			get { return _specs.Count; }
-		}
+		public int Count => _specs.Count;
 
-		/// <summary>
+	    /// <summary>
 		/// Gets a value indicating whether the collection is read-only.
 		/// </summary>
-		public bool IsReadOnly
-		{
-			get { return false; }
-		}
+		public bool IsReadOnly => false;
 
-		/// <summary>
+	    /// <summary>
         /// Removes first occurance of specified spec.
 		/// </summary>
         /// <param name="item">T reference.</param>
@@ -456,11 +447,15 @@ namespace ComponentFactory.Krypton.Toolkit
 
 			// Cannot pass a null target array
 			if (array == null)
-				throw new ArgumentNullException("array");
+			{
+			    throw new ArgumentNullException("array");
+			}
 
-            // Try and copy each button spec to the destination array
+		    // Try and copy each button spec to the destination array
             foreach (T spec in this)
+            {
                 array.SetValue(spec, index++);
+            }
 		}
 
         /// <summary>
@@ -470,25 +465,22 @@ namespace ComponentFactory.Krypton.Toolkit
         {
             // Remove all the button specs that are allowed to be removed
             for (int i = Count - 1; i >= 0; i--)
+            {
                 RemoveAt(i);
+            }
         }
 
         /// <summary>
         /// Gets a value indicating whether access to the collection is synchronized (thread safe).
         /// </summary>
-        public bool IsSynchronized
-		{
-			get { return false; }
-		}
+        public bool IsSynchronized => false;
 
-		/// <summary>
+	    /// <summary>
         /// Gets an object that can be used to synchronize access to the collection. 
 		/// </summary>
-		public object SyncRoot
-		{
-			get { return this; }
-		}
-		#endregion
+		public object SyncRoot => this;
+
+	    #endregion
 
 		#region IEnumerable
         /// <summary>

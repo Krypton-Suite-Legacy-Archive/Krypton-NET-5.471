@@ -9,12 +9,8 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Text;
 using System.ComponentModel;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Diagnostics;
 using ComponentFactory.Krypton.Toolkit;
 
@@ -97,29 +93,24 @@ namespace ComponentFactory.Krypton.Navigator
         /// Gets a value indicating if all values are default.
         /// </summary>
         [Browsable(false)]
-        public override bool IsDefault
-        {
-            get
-            {
-                return ((CheckButtonStyle == ButtonStyle.Standalone) &&
-                        (TabStyle == TabStyle.HighProfile) &&
-                        (TabBorderStyle == TabBorderStyle.RoundedOutsizeMedium) &&
-                        (BarFirstItemInset == _defaultBarFirstItemInset) &&
-                        (BarLastItemInset == _defaultBarLastItemInset) &&
-                        (BarMapImage == MapKryptonPageImage.Small) &&
-                        (BarMapText == MapKryptonPageText.TextTitle) &&
-                        (BarMapExtraText == MapKryptonPageText.None) &&
-                        (BarOrientation == VisualOrientation.Top) &&
-                        (ItemSizing == BarItemSizing.SameHeight) &&
-                        (ItemMinimumSize == _defaultItemMinimumSize) &&
-                        (ItemMaximumSize == _defaultItemMaximumSize) &&
-                        (ItemOrientation == ButtonOrientation.Auto) &&
-                        (ItemAlignment == RelativePositionAlign.Near) &&
-                        (BarMinimumHeight == _defaultBarMinimumHeight) &&
-                        (BarAnimation == true) &&
-                        (BarMultiline == BarMultiline.Singleline));
-            }
-        }
+        public override bool IsDefault => ((CheckButtonStyle == ButtonStyle.Standalone) &&
+                                           (TabStyle == TabStyle.HighProfile) &&
+                                           (TabBorderStyle == TabBorderStyle.RoundedOutsizeMedium) &&
+                                           (BarFirstItemInset == _defaultBarFirstItemInset) &&
+                                           (BarLastItemInset == _defaultBarLastItemInset) &&
+                                           (BarMapImage == MapKryptonPageImage.Small) &&
+                                           (BarMapText == MapKryptonPageText.TextTitle) &&
+                                           (BarMapExtraText == MapKryptonPageText.None) &&
+                                           (BarOrientation == VisualOrientation.Top) &&
+                                           (ItemSizing == BarItemSizing.SameHeight) &&
+                                           (ItemMinimumSize == _defaultItemMinimumSize) &&
+                                           (ItemMaximumSize == _defaultItemMaximumSize) &&
+                                           (ItemOrientation == ButtonOrientation.Auto) &&
+                                           (ItemAlignment == RelativePositionAlign.Near) &&
+                                           (BarMinimumHeight == _defaultBarMinimumHeight) &&
+                                           BarAnimation &&
+                                           (BarMultiline == BarMultiline.Singleline));
+
         #endregion
 
         #region BarAnimation
@@ -132,7 +123,7 @@ namespace ComponentFactory.Krypton.Navigator
         [DefaultValue(true)]
         public bool BarAnimation
         {
-            get { return _barAnimation; }
+            get => _barAnimation;
 
             set
             {
@@ -163,7 +154,7 @@ namespace ComponentFactory.Krypton.Navigator
         [DefaultValue(typeof(VisualOrientation), "Top")]
         public VisualOrientation BarOrientation
         {
-            get { return _barOrientation; }
+            get => _barOrientation;
 
             set
             {
@@ -194,7 +185,7 @@ namespace ComponentFactory.Krypton.Navigator
         [DefaultValue(0)]
         public int BarFirstItemInset
         {
-            get { return _barFirstItemInset; }
+            get => _barFirstItemInset;
 
             set
             {
@@ -225,7 +216,7 @@ namespace ComponentFactory.Krypton.Navigator
         [DefaultValue(0)]
         public int BarLastItemInset
         {
-            get { return _barLastItemInset; }
+            get => _barLastItemInset;
 
             set
             {
@@ -256,7 +247,7 @@ namespace ComponentFactory.Krypton.Navigator
         [DefaultValue(21)]
         public int BarMinimumHeight
         {
-            get { return _barMinimumHeight; }
+            get => _barMinimumHeight;
 
             set
             {
@@ -287,7 +278,7 @@ namespace ComponentFactory.Krypton.Navigator
         [DefaultValue(typeof(BarMultiline), "Singleline")]
         public BarMultiline BarMultiline
         {
-            get { return _barMultiline; }
+            get => _barMultiline;
 
             set
             {
@@ -317,7 +308,7 @@ namespace ComponentFactory.Krypton.Navigator
         [DefaultValue(typeof(ButtonStyle), "Standalone")]
         public ButtonStyle CheckButtonStyle
         {
-            get { return _checkButtonStyle; }
+            get => _checkButtonStyle;
 
             set
             {
@@ -339,7 +330,7 @@ namespace ComponentFactory.Krypton.Navigator
         [DefaultValue(typeof(TabStyle), "HighProfile")]
         public TabStyle TabStyle
         {
-            get { return _tabStyle; }
+            get => _tabStyle;
 
             set
             {
@@ -361,7 +352,7 @@ namespace ComponentFactory.Krypton.Navigator
         [DefaultValue(typeof(TabBorderStyle), "RoundedOutsizeMedium")]
         public TabBorderStyle TabBorderStyle
         {
-            get { return _tabBorderStyle; }
+            get => _tabBorderStyle;
 
             set
             {
@@ -384,7 +375,7 @@ namespace ComponentFactory.Krypton.Navigator
         [DefaultValue(typeof(RelativePositionAlign), "Near")]
         public RelativePositionAlign ItemAlignment
         {
-            get { return _itemAlignment; }
+            get => _itemAlignment;
 
             set
             {
@@ -415,19 +406,31 @@ namespace ComponentFactory.Krypton.Navigator
         [DefaultValue(typeof(Size), "20,20")]
         public Size ItemMinimumSize
         {
-            get { return _itemMinimumSize; }
+            get => _itemMinimumSize;
 
             set
             {
                 if (_itemMinimumSize != value)
                 {
                     // None of the minimum values can be less than 1
-                    if (value.Width < 1) throw new ArgumentException("Width cannot be less than 1", "ItemMinimumSize");
-                    if (value.Height < 1) throw new ArgumentException("Height cannot be less than 1", "ItemMinimumSize");
+                    if (value.Width < 1)
+                    {
+                        throw new ArgumentException("Width cannot be less than 1", "ItemMinimumSize");
+                    }
+                    if (value.Height < 1)
+                    {
+                        throw new ArgumentException("Height cannot be less than 1", "ItemMinimumSize");
+                    }
 
                     // Minimum value must be less than or equal to the maximum
-                    if (value.Width > ItemMaximumSize.Width) throw new ArgumentException("Width cannot be greater than the ItemMaximumSize.Width", "ItemMinimumSize");
-                    if (value.Height > ItemMaximumSize.Height) throw new ArgumentException("Height cannot be greater than the ItemMaximumSize.Height", "ItemMinimumSize");
+                    if (value.Width > ItemMaximumSize.Width)
+                    {
+                        throw new ArgumentException("Width cannot be greater than the ItemMaximumSize.Width", "ItemMinimumSize");
+                    }
+                    if (value.Height > ItemMaximumSize.Height)
+                    {
+                        throw new ArgumentException("Height cannot be greater than the ItemMaximumSize.Height", "ItemMinimumSize");
+                    }
 
                     _itemMinimumSize = value;
                     _navigator.OnViewBuilderPropertyChanged("ItemMinimumSize");
@@ -454,19 +457,31 @@ namespace ComponentFactory.Krypton.Navigator
         [DefaultValue(typeof(Size), "200,200")]
         public Size ItemMaximumSize
         {
-            get { return _itemMaximumSize; }
+            get => _itemMaximumSize;
 
             set
             {
                 if (_itemMaximumSize != value)
                 {
                     // None of the maximum values can be less than 1
-                    if (value.Width < 1) throw new ArgumentException("Width cannot be less than 1", "ItemMaximumSize");
-                    if (value.Height < 1) throw new ArgumentException("Height cannot be less than 1", "ItemMaximumSize");
+                    if (value.Width < 1)
+                    {
+                        throw new ArgumentException("Width cannot be less than 1", "ItemMaximumSize");
+                    }
+                    if (value.Height < 1)
+                    {
+                        throw new ArgumentException("Height cannot be less than 1", "ItemMaximumSize");
+                    }
 
                     // Maximum value must be greater than or equal to the minimum
-                    if (value.Width < ItemMinimumSize.Width) throw new ArgumentException("Width cannot be less than the ItemMinimumSize.Width", "ItemMaximumSize");
-                    if (value.Height < ItemMinimumSize.Height) throw new ArgumentException("Height cannot be less than the ItemMinimumSize.Width", "ItemMaximumSize");
+                    if (value.Width < ItemMinimumSize.Width)
+                    {
+                        throw new ArgumentException("Width cannot be less than the ItemMinimumSize.Width", "ItemMaximumSize");
+                    }
+                    if (value.Height < ItemMinimumSize.Height)
+                    {
+                        throw new ArgumentException("Height cannot be less than the ItemMinimumSize.Width", "ItemMaximumSize");
+                    }
 
                     _itemMaximumSize = value;
                     _navigator.OnViewBuilderPropertyChanged("ItemMaximumSize");
@@ -493,7 +508,7 @@ namespace ComponentFactory.Krypton.Navigator
         [DefaultValue(typeof(ButtonOrientation), "Auto")]
         public ButtonOrientation ItemOrientation
         {
-            get { return _itemOrientation; }
+            get => _itemOrientation;
 
             set
             {
@@ -524,7 +539,7 @@ namespace ComponentFactory.Krypton.Navigator
         [DefaultValue(typeof(BarItemSizing), "All Same Height")]
         public BarItemSizing ItemSizing
         {
-            get { return _itemSizing; }
+            get => _itemSizing;
 
             set
             {
@@ -556,7 +571,7 @@ namespace ComponentFactory.Krypton.Navigator
         [DefaultValue(typeof(MapKryptonPageImage), "Small")]
         public virtual MapKryptonPageImage BarMapImage
         {
-            get { return _barMapImage; }
+            get => _barMapImage;
 
             set
             {
@@ -587,7 +602,7 @@ namespace ComponentFactory.Krypton.Navigator
         [DefaultValue(typeof(MapKryptonPageText), "Text - Title")]
         public MapKryptonPageText BarMapText
         {
-            get { return _barMapText; }
+            get => _barMapText;
 
             set
             {
@@ -618,7 +633,7 @@ namespace ComponentFactory.Krypton.Navigator
         [DefaultValue(typeof(MapKryptonPageText), "None (Empty string)")]
         public MapKryptonPageText BarMapExtraText
         {
-            get { return _barMapExtraText; }
+            get => _barMapExtraText;
 
             set
             {

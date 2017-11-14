@@ -8,12 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
 using System.Drawing;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using System.Diagnostics;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -26,7 +21,7 @@ namespace ComponentFactory.Krypton.Toolkit
         private int _showTotal;
         private BoolFlags31 _flags;
         private Rectangle[] _rects;
-        private Size _windowSize;
+
         #endregion
 
         #region Identity
@@ -52,10 +47,12 @@ namespace ComponentFactory.Krypton.Toolkit
             ShowMiddle = showMiddle;
 
             // Default valies
-            _windowSize = Size.Empty;
+            DockWindowSize = Size.Empty;
             _rects = new Rectangle[5];
             for (int i = 0; i < _rects.Length; i++)
+            {
                 _rects[i] = Rectangle.Empty;
+            }
         }
         #endregion
 
@@ -63,18 +60,15 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Gets the visible state of the background.
         /// </summary>
-        public bool ShowBack
-        {
-            get { return (_showTotal > 1); }
-        }
+        public bool ShowBack => (_showTotal > 1);
 
         /// <summary>
         /// Gets and sets the visible state of the left indicator.
         /// </summary>
         public bool ShowLeft
         {
-            get { return _flags.AreFlagsSet(0x0002); }
-            set { UpdateShowFlag(value, 0x0002); }
+            get => _flags.AreFlagsSet(0x0002);
+            set => UpdateShowFlag(value, 0x0002);
         }
 
         /// <summary>
@@ -82,8 +76,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public bool ShowRight
         {
-            get { return _flags.AreFlagsSet(0x0004); }
-            set { UpdateShowFlag(value, 0x0004); }
+            get => _flags.AreFlagsSet(0x0004);
+            set => UpdateShowFlag(value, 0x0004);
         }
 
         /// <summary>
@@ -91,8 +85,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public bool ShowTop
         {
-            get { return _flags.AreFlagsSet(0x0008); }
-            set { UpdateShowFlag(value, 0x0008); }
+            get => _flags.AreFlagsSet(0x0008);
+            set => UpdateShowFlag(value, 0x0008);
         }
 
         /// <summary>
@@ -100,8 +94,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public bool ShowBottom
         {
-            get { return _flags.AreFlagsSet(0x0010); }
-            set { UpdateShowFlag(value, 0x0010); }
+            get => _flags.AreFlagsSet(0x0010);
+            set => UpdateShowFlag(value, 0x0010);
         }
 
         /// <summary>
@@ -109,25 +103,22 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public bool ShowMiddle
         {
-            get { return _flags.AreFlagsSet(0x0020); }
-            set { UpdateShowFlag(value, 0x0020); }
+            get => _flags.AreFlagsSet(0x0020);
+            set => UpdateShowFlag(value, 0x0020);
         }
 
         /// <summary>
         /// Gets the set of flags associated with active
         /// </summary>
-        public int ActiveFlags
-        {
-            get { return _flags.Flags & 0x07C0; }
-        }
+        public int ActiveFlags => _flags.Flags & 0x07C0;
 
         /// <summary>
         /// Gets and sets the active state of left indicator.
         /// </summary>
         public bool ActiveLeft
         {
-            get { return _flags.AreFlagsSet(0x0040); }
-            set { UpdateFlag(value, 0x0040); }
+            get => _flags.AreFlagsSet(0x0040);
+            set => UpdateFlag(value, 0x0040);
         }
 
         /// <summary>
@@ -135,8 +126,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public bool ActiveRight
         {
-            get { return _flags.AreFlagsSet(0x0080); }
-            set { UpdateFlag(value, 0x0080); }
+            get => _flags.AreFlagsSet(0x0080);
+            set => UpdateFlag(value, 0x0080);
         }
 
         /// <summary>
@@ -144,8 +135,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public bool ActiveTop
         {
-            get { return _flags.AreFlagsSet(0x0100); }
-            set { UpdateFlag(value, 0x0100); }
+            get => _flags.AreFlagsSet(0x0100);
+            set => UpdateFlag(value, 0x0100);
         }
 
         /// <summary>
@@ -153,8 +144,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public bool ActiveBottom
         {
-            get { return _flags.AreFlagsSet(0x0200); }
-            set { UpdateFlag(value, 0x0200); }
+            get => _flags.AreFlagsSet(0x0200);
+            set => UpdateFlag(value, 0x0200);
         }
 
         /// <summary>
@@ -162,17 +153,14 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public bool ActiveMiddle
         {
-            get { return _flags.AreFlagsSet(0x0400); }
-            set { UpdateFlag(value, 0x0400); }
+            get => _flags.AreFlagsSet(0x0400);
+            set => UpdateFlag(value, 0x0400);
         }
 
         /// <summary>
         /// Gets if any of the docking indicators are active.
         /// </summary>
-        public bool AnyActive
-        {
-            get { return (ActiveFlags != 0); }
-        }
+        public bool AnyActive => (ActiveFlags != 0);
 
         /// <summary>
         /// Clear all the active flags.
@@ -187,8 +175,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public Rectangle RectLeft
         {
-            get { return _rects[0]; }
-            set { _rects[0] = value; }
+            get => _rects[0];
+            set => _rects[0] = value;
         }
 
         /// <summary>
@@ -196,8 +184,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public Rectangle RectRight
         {
-            get { return _rects[1]; }
-            set { _rects[1] = value; }
+            get => _rects[1];
+            set => _rects[1] = value;
         }
 
         /// <summary>
@@ -205,8 +193,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public Rectangle RectTop
         {
-            get { return _rects[2]; }
-            set { _rects[2] = value; }
+            get => _rects[2];
+            set => _rects[2] = value;
         }
 
         /// <summary>
@@ -214,8 +202,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public Rectangle RectBottom
         {
-            get { return _rects[3]; }
-            set { _rects[3] = value; }
+            get => _rects[3];
+            set => _rects[3] = value;
         }
 
         /// <summary>
@@ -223,27 +211,28 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public Rectangle RectMiddle
         {
-            get { return _rects[4]; }
-            set { _rects[4] = value; }
+            get => _rects[4];
+            set => _rects[4] = value;
         }
 
         /// <summary>
         /// Gets and sets size of the docking window required.
         /// </summary>
-        public Size DockWindowSize
-        {
-            get { return _windowSize; }
-            set { _windowSize = value; }
-        }
+        public Size DockWindowSize { get; set; }
+
         #endregion
 
         #region Implementation
         private void UpdateFlag(bool value, int flag)
         {
             if (value)
+            {
                 _flags.SetFlags(flag);
+            }
             else
+            {
                 _flags.ClearFlags(flag);
+            }
         }
 
         private void UpdateShowFlag(bool value, int flag)

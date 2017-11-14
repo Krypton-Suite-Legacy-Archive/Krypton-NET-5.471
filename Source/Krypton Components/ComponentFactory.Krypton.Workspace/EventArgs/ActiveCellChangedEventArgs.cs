@@ -9,8 +9,6 @@
 // *****************************************************************************
 
 using System;
-using System.Drawing;
-using System.Diagnostics;
 
 namespace ComponentFactory.Krypton.Workspace
 {
@@ -20,9 +18,8 @@ namespace ComponentFactory.Krypton.Workspace
 	public class ActiveCellChangedEventArgs : EventArgs
 	{
 		#region Instance Fields
-        private KryptonWorkspaceCell _oldCell;
-        private KryptonWorkspaceCell _newCell;
-		#endregion
+
+	    #endregion
 
 		#region Identity
 		/// <summary>
@@ -33,8 +30,8 @@ namespace ComponentFactory.Krypton.Workspace
         public ActiveCellChangedEventArgs(KryptonWorkspaceCell oldCell,
                                           KryptonWorkspaceCell newCell)
 		{
-            _oldCell = oldCell;
-            _newCell = newCell;
+            OldCell = oldCell;
+            NewCell = newCell;
         }
 		#endregion
 
@@ -42,18 +39,13 @@ namespace ComponentFactory.Krypton.Workspace
 		/// <summary>
         /// Gets the old cell reference.
 		/// </summary>
-        public KryptonWorkspaceCell OldCell
-		{
-            get { return _oldCell; }
-		}
+        public KryptonWorkspaceCell OldCell { get; }
 
-        /// <summary>
+	    /// <summary>
         /// Gets the new cell reference.
         /// </summary>
-        public KryptonWorkspaceCell NewCell
-        {
-            get { return _newCell; }
-        }
-        #endregion
+        public KryptonWorkspaceCell NewCell { get; }
+
+	    #endregion
 	}
 }

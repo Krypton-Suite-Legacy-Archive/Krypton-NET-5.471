@@ -9,12 +9,8 @@
 // *****************************************************************************
 
 using System;
-using System.IO;
 using System.Xml;
-using System.Text;
-using System.Drawing;
 using System.Windows.Forms;
-using System.Collections.Generic;
 using System.ComponentModel;
 using ComponentFactory.Krypton.Toolkit;
 using ComponentFactory.Krypton.Navigator;
@@ -30,7 +26,7 @@ namespace ComponentFactory.Krypton.Docking
     public class KryptonDockingFloating : DockingElementClosedCollection
     {
         #region Instance Fields
-        private Form _ownerForm;
+
         #endregion
 
         #region Identity
@@ -42,10 +38,7 @@ namespace ComponentFactory.Krypton.Docking
         public KryptonDockingFloating(string name, Form ownerForm)
             : base(name)
         {
-            if (ownerForm == null)
-                throw new ArgumentNullException("owner");
-
-            _ownerForm = ownerForm;
+            OwnerForm = ownerForm ?? throw new ArgumentNullException("owner");
         }
         #endregion
 
@@ -53,10 +46,7 @@ namespace ComponentFactory.Krypton.Docking
         /// <summary>
         /// Gets the form the floating windows have as the owner.
         /// </summary>
-        public Form OwnerForm
-        {
-            get { return _ownerForm; }
-        }
+        public Form OwnerForm { get; }
 
         /// <summary>
         /// Create and add a new floating window.
@@ -99,12 +89,13 @@ namespace ComponentFactory.Krypton.Docking
             foreach (IDockingElement child in this)
             {
                 // Only interested in floating window elements
-                KryptonDockingFloatingWindow floatingWindow = child as KryptonDockingFloatingWindow;
-                if (floatingWindow != null)
+                if (child is KryptonDockingFloatingWindow floatingWindow)
                 {
                     bool? ret = floatingWindow.PropogateBoolState(DockingPropogateBoolState.ContainsStorePage, uniqueName);
                     if (ret.HasValue && ret.Value)
+                    {
                         return floatingWindow;
+                    }
                 }
             }
 
@@ -116,10 +107,7 @@ namespace ComponentFactory.Krypton.Docking
         /// <summary>
         /// Gets the xml element name to use when saving.
         /// </summary>
-        protected override string XmlElementName
-        {
-            get { return "DF"; }
-        }
+        protected override string XmlElementName => "DF";
 
         /// <summary>
         /// Perform docking element specific actions for loading a child xml.
@@ -132,7 +120,9 @@ namespace ComponentFactory.Krypton.Docking
                                                         IDockingElement child)
         {
             if (child != null)
+            {
                 child.LoadElementFromXml(xmlReader, pages);
+            }
             else
             {
                 // Create a new floating window and then reload it

@@ -8,11 +8,8 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
 using System.Windows.Forms;
 using System.Drawing;
-using System.ComponentModel;
-using ComponentFactory.Krypton.Toolkit;
 using ComponentFactory.Krypton.Navigator;
 
 namespace ComponentFactory.Krypton.Workspace
@@ -23,8 +20,8 @@ namespace ComponentFactory.Krypton.Workspace
     public class CellDragCancelEventArgs : PageDragCancelEventArgs
 	{
 		#region Instance Fields
-        private KryptonWorkspaceCell _cell;
-        #endregion
+
+	    #endregion
 
 		#region Identity
 		/// <summary>
@@ -42,7 +39,7 @@ namespace ComponentFactory.Krypton.Workspace
                                        KryptonWorkspaceCell cell)
             : base(screenPoint, screenOffset, c, pages)
 		{
-            _cell = cell;
+            Cell = cell;
 		}
 
         /// <summary>
@@ -54,7 +51,7 @@ namespace ComponentFactory.Krypton.Workspace
                                        KryptonWorkspaceCell cell)
             : base(e.ScreenPoint, e.ElementOffset, e.Control, e.Pages)
         {
-            _cell = cell;
+            Cell = cell;
         }
         #endregion
 
@@ -62,10 +59,8 @@ namespace ComponentFactory.Krypton.Workspace
         /// <summary>
         /// Gets access to associated workspace cell.
         /// </summary>
-        public KryptonWorkspaceCell Cell
-        {
-            get { return _cell; }
-        }
-        #endregion
+        public KryptonWorkspaceCell Cell { get; }
+
+	    #endregion
     }
 }

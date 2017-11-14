@@ -9,10 +9,7 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
 using System.Diagnostics;
@@ -32,7 +29,6 @@ namespace ComponentFactory.Krypton.Ribbon
 
         #region Instance Fields
         private KryptonRibbon _ribbon;
-        private KryptonRibbonGroupClusterColorButton _ribbonColorButton;
         private NeedPaintHandler _needPaint;
         private PaletteBackInheritForced _backForced;
         private PaletteBorderInheritForced _borderForced;
@@ -63,12 +59,12 @@ namespace ComponentFactory.Krypton.Ribbon
 
             // Remember incoming references
             _ribbon = ribbon;
-            _ribbonColorButton = ribbonButton;
+            GroupClusterColorButton = ribbonButton;
             _needPaint = needPaint;
-            _currentSize = _ribbonColorButton.ItemSizeCurrent;
+            _currentSize = GroupClusterColorButton.ItemSizeCurrent;
 
             // Associate this view with the source component (required for design time selection)
-            Component = _ribbonColorButton;
+            Component = GroupClusterColorButton;
 
             // Create the small button view
             CreateView();
@@ -80,7 +76,7 @@ namespace ComponentFactory.Krypton.Ribbon
             UpdateItemSizeState();
 
             // Hook into changes in the ribbon button definition
-            _ribbonColorButton.PropertyChanged += new PropertyChangedEventHandler(OnButtonPropertyChanged);
+            GroupClusterColorButton.PropertyChanged += new PropertyChangedEventHandler(OnButtonPropertyChanged);
         }
 
 		/// <summary>
@@ -101,14 +97,14 @@ namespace ComponentFactory.Krypton.Ribbon
         {
             if (disposing)
             {
-                if (_ribbonColorButton != null)
+                if (GroupClusterColorButton != null)
                 {
                     // Must unhook to prevent memory leaks
-                    _ribbonColorButton.PropertyChanged -= new PropertyChangedEventHandler(OnButtonPropertyChanged);
+                    GroupClusterColorButton.PropertyChanged -= new PropertyChangedEventHandler(OnButtonPropertyChanged);
 
                     // Remove association with definition
-                    _ribbonColorButton.ClusterColorButtonView = null;
-                    _ribbonColorButton = null;
+                    GroupClusterColorButton.ClusterColorButtonView = null;
+                    GroupClusterColorButton = null;
                 }
             }
 
@@ -120,10 +116,8 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <summary>
         /// Gets access to the connected button definition.
         /// </summary>
-        public KryptonRibbonGroupClusterColorButton GroupClusterColorButton
-        {
-            get { return _ribbonColorButton; }
-        }
+        public KryptonRibbonGroupClusterColorButton GroupClusterColorButton { get; private set; }
+
         #endregion
 
         #region MaxBorderEdges
@@ -132,8 +126,8 @@ namespace ComponentFactory.Krypton.Ribbon
         /// </summary>
         public PaletteDrawBorders MaxBorderEdges
         {
-            get { return _borderForced.MaxBorderEdges; }
-            set { _borderForced.MaxBorderEdges = value; }
+            get => _borderForced.MaxBorderEdges;
+            set => _borderForced.MaxBorderEdges = value;
         }
         #endregion
 
@@ -143,8 +137,8 @@ namespace ComponentFactory.Krypton.Ribbon
         /// </summary>
         public bool BorderIgnoreNormal
         {
-            get { return _borderForced.BorderIgnoreNormal; }
-            
+            get => _borderForced.BorderIgnoreNormal;
+
             set 
             {
                 _backForced.BorderIgnoreNormal = value;
@@ -159,8 +153,8 @@ namespace ComponentFactory.Krypton.Ribbon
         /// </summary>
         public bool ConstantBorder
         {
-            get { return _viewMediumSmall.ConstantBorder; }
-            set { _viewMediumSmall.ConstantBorder = value; }
+            get => _viewMediumSmall.ConstantBorder;
+            set => _viewMediumSmall.ConstantBorder = value;
         }
         #endregion
 
@@ -170,8 +164,8 @@ namespace ComponentFactory.Krypton.Ribbon
         /// </summary>
         public bool DrawNonTrackingAreas
         {
-            get { return _viewMediumSmall.DrawNonTrackingAreas; }
-            set { _viewMediumSmall.DrawNonTrackingAreas = value; }
+            get => _viewMediumSmall.DrawNonTrackingAreas;
+            set => _viewMediumSmall.DrawNonTrackingAreas = value;
         }
         #endregion
 
@@ -183,10 +177,14 @@ namespace ComponentFactory.Krypton.Ribbon
         public ViewBase GetFirstFocusItem()
         {
             // Only take focus if we are visible and enabled
-            if (_ribbonColorButton.Visible && _ribbonColorButton.Enabled)
+            if (GroupClusterColorButton.Visible && GroupClusterColorButton.Enabled)
+            {
                 return _viewMediumSmall;
+            }
             else
+            {
                 return null;
+            }
         }
         #endregion
 
@@ -198,10 +196,14 @@ namespace ComponentFactory.Krypton.Ribbon
         public ViewBase GetLastFocusItem()
         {
             // Only take focus if we are visible and enabled
-            if (_ribbonColorButton.Visible && _ribbonColorButton.Enabled)
+            if (GroupClusterColorButton.Visible && GroupClusterColorButton.Enabled)
+            {
                 return _viewMediumSmall;
+            }
             else
+            {
                 return null;
+            }
         }
         #endregion
 
@@ -252,7 +254,7 @@ namespace ComponentFactory.Krypton.Ribbon
                 // Determine the screen position of the key tip dependant on item location
                 Point screenPt = _ribbon.CalculatedValues.KeyTipRectToPoint(viewRect, lineHint);
 
-                keyTipList.Add(new KeyTipInfo(_ribbonColorButton.Enabled, _ribbonColorButton.KeyTip, screenPt, 
+                keyTipList.Add(new KeyTipInfo(GroupClusterColorButton.Enabled, GroupClusterColorButton.KeyTip, screenPt, 
                                               this[0].ClientRectangle, _viewMediumSmall.Controller));
             }
         }
@@ -308,14 +310,16 @@ namespace ComponentFactory.Krypton.Ribbon
             base.Layout(context);
 
             // For split buttons we need to calculate the split button areas
-            if (_ribbonColorButton.ButtonType == GroupButtonType.Split)
+            if (GroupClusterColorButton.ButtonType == GroupButtonType.Split)
             {
                 // Find the position of the split area
                 int smallSplitRight = _viewMediumSmallText2Sep1.ClientLocation.X;
                 _viewMediumSmall.SplitRectangle = new Rectangle(smallSplitRight, ClientLocation.Y, ClientRectangle.Right - smallSplitRight, ClientHeight);
             }
             else
+            {
                 _viewMediumSmall.SplitRectangle = Rectangle.Empty;
+            }
         }
         #endregion
 
@@ -341,7 +345,9 @@ namespace ComponentFactory.Krypton.Ribbon
                 _needPaint(this, new NeedLayoutEventArgs(needLayout));
 
                 if (needLayout)
+                {
                     _ribbon.PerformLayout();
+                }
             }
         }
         #endregion
@@ -354,34 +360,44 @@ namespace ComponentFactory.Krypton.Ribbon
             _borderForced = new PaletteBorderInheritForced(_ribbon.StateCommon.RibbonGroupClusterButton.PaletteBorder);
 
             // Create the background and border view
-            _viewMediumSmall = new ViewDrawRibbonGroupButtonBackBorder(_ribbon, _ribbonColorButton, _backForced, _borderForced, true, _needPaint);
-            _viewMediumSmall.SplitVertical = false;
+            _viewMediumSmall = new ViewDrawRibbonGroupButtonBackBorder(_ribbon, GroupClusterColorButton, _backForced, _borderForced, true, _needPaint)
+            {
+                SplitVertical = false
+            };
             _viewMediumSmall.Click += new EventHandler(OnSmallButtonClick);
             _viewMediumSmall.DropDown += new EventHandler(OnSmallButtonDropDown);
 
             if (_ribbon.InDesignMode)
+            {
                 _viewMediumSmall.ContextClick += new MouseEventHandler(OnContextClick);
+            }
 
             // Create the layout docker for the contents of the button
             ViewLayoutDocker contentLayout = new ViewLayoutDocker();
 
             // Create the image and drop down content
-            _viewMediumSmallImage = new ViewDrawRibbonGroupClusterColorButtonImage(_ribbon, _ribbonColorButton);
-            _viewMediumSmallText1 = new ViewDrawRibbonGroupClusterColorButtonText(_ribbon, _ribbonColorButton);
-            _viewMediumSmallText1.Visible = (_currentSize != GroupItemSize.Small);
+            _viewMediumSmallImage = new ViewDrawRibbonGroupClusterColorButtonImage(_ribbon, GroupClusterColorButton);
+            _viewMediumSmallText1 = new ViewDrawRibbonGroupClusterColorButtonText(_ribbon, GroupClusterColorButton)
+            {
+                Visible = (_currentSize != GroupItemSize.Small)
+            };
             _viewMediumSmallDropArrow = new ViewDrawRibbonDropArrow(_ribbon);
             _viewMediumSmallText2Sep1 = new ViewLayoutRibbonSeparator(3, false);
             _viewMediumSmallText2Sep2 = new ViewLayoutRibbonSeparator(3, false);
-            ViewLayoutRibbonCenterPadding imagePadding = new ViewLayoutRibbonCenterPadding(_smallImagePadding);
-            imagePadding.Add(_viewMediumSmallImage);
+            ViewLayoutRibbonCenterPadding imagePadding = new ViewLayoutRibbonCenterPadding(_smallImagePadding)
+            {
+                _viewMediumSmallImage
+            };
 
             // Layout the content in the center of a row
-            _viewMediumSmallCenter = new ViewLayoutRibbonRowCenter();
-            _viewMediumSmallCenter.Add(imagePadding);
-            _viewMediumSmallCenter.Add(_viewMediumSmallText1);
-            _viewMediumSmallCenter.Add(_viewMediumSmallText2Sep1);
-            _viewMediumSmallCenter.Add(_viewMediumSmallDropArrow);
-            _viewMediumSmallCenter.Add(_viewMediumSmallText2Sep2);
+            _viewMediumSmallCenter = new ViewLayoutRibbonRowCenter
+            {
+                imagePadding,
+                _viewMediumSmallText1,
+                _viewMediumSmallText2Sep1,
+                _viewMediumSmallDropArrow,
+                _viewMediumSmallText2Sep2
+            };
 
             // Use content as only fill item
             contentLayout.Add(_viewMediumSmallCenter, ViewDockStyle.Fill);
@@ -394,7 +410,7 @@ namespace ComponentFactory.Krypton.Ribbon
                                                                      _viewMediumSmall, _viewMediumSmall.MouseController);
 
             // Provide back reference to the button definition
-            _ribbonColorButton.ClusterColorButtonView = _viewMediumSmall;
+            GroupClusterColorButton.ClusterColorButtonView = _viewMediumSmall;
 
             // Define the actual view
             Add(_viewMediumSmall);
@@ -402,7 +418,7 @@ namespace ComponentFactory.Krypton.Ribbon
 
         private void UpdateItemSizeState()
         {
-            UpdateItemSizeState(_ribbonColorButton.ItemSizeCurrent);
+            UpdateItemSizeState(GroupClusterColorButton.ItemSizeCurrent);
         }
 
         private void UpdateItemSizeState(GroupItemSize size)
@@ -415,9 +431,11 @@ namespace ComponentFactory.Krypton.Ribbon
         private void UpdateEnabledState()
         {
             // Get the correct enabled state from the button definition
-            bool buttonEnabled = _ribbonColorButton.Enabled;
-            if (_ribbonColorButton.KryptonCommand != null)
-                buttonEnabled = _ribbonColorButton.KryptonCommand.Enabled;
+            bool buttonEnabled = GroupClusterColorButton.Enabled;
+            if (GroupClusterColorButton.KryptonCommand != null)
+            {
+                buttonEnabled = GroupClusterColorButton.KryptonCommand.Enabled;
+            }
 
             bool enabled = _ribbon.InDesignHelperMode || (buttonEnabled && _ribbon.Enabled);
 
@@ -432,12 +450,16 @@ namespace ComponentFactory.Krypton.Ribbon
             bool checkedState = false;
 
             // Only show as checked if also a check type button
-            if (_ribbonColorButton.ButtonType == GroupButtonType.Check)
+            if (GroupClusterColorButton.ButtonType == GroupButtonType.Check)
             {
-                if (_ribbonColorButton.KryptonCommand != null)
-                    checkedState = _ribbonColorButton.KryptonCommand.Checked;
+                if (GroupClusterColorButton.KryptonCommand != null)
+                {
+                    checkedState = GroupClusterColorButton.KryptonCommand.Checked;
+                }
                 else
-                    checkedState = _ribbonColorButton.Checked;
+                {
+                    checkedState = GroupClusterColorButton.Checked;
+                }
             }
 
             _viewMediumSmall.Checked = checkedState;
@@ -446,14 +468,14 @@ namespace ComponentFactory.Krypton.Ribbon
         private void UpdateDropDownState()
         {
             // Only show the drop down if the button is the correct type
-            bool dropDown = ((_ribbonColorButton.ButtonType == GroupButtonType.DropDown) ||
-                             (_ribbonColorButton.ButtonType == GroupButtonType.Split));
+            bool dropDown = ((GroupClusterColorButton.ButtonType == GroupButtonType.DropDown) ||
+                             (GroupClusterColorButton.ButtonType == GroupButtonType.Split));
 
             _viewMediumSmallDropArrow.Visible = dropDown;
             _viewMediumSmallText2Sep2.Visible = dropDown;
 
             // Update the view with the type of button being used
-            _viewMediumSmall.ButtonType = _ribbonColorButton.ButtonType;
+            _viewMediumSmall.ButtonType = GroupClusterColorButton.ButtonType;
 
         }
 
@@ -526,8 +548,8 @@ namespace ComponentFactory.Krypton.Ribbon
             if (updateLayout)
             {
                 // If we are on the currently selected tab then...
-                if ((_ribbonColorButton.RibbonTab != null) &&
-                    (_ribbon.SelectedTab == _ribbonColorButton.RibbonTab))
+                if ((GroupClusterColorButton.RibbonTab != null) &&
+                    (_ribbon.SelectedTab == GroupClusterColorButton.RibbonTab))
                 {
                     // ...layout so the visible change is made
                     OnNeedPaint(true);
@@ -537,11 +559,11 @@ namespace ComponentFactory.Krypton.Ribbon
             if (updatePaint)
             {
                 // If this button is actually defined as visible...
-                if (_ribbonColorButton.Visible || _ribbon.InDesignMode)
+                if (GroupClusterColorButton.Visible || _ribbon.InDesignMode)
                 {
                     // ...and on the currently selected tab then...
-                    if ((_ribbonColorButton.RibbonTab != null) &&
-                        (_ribbon.SelectedTab == _ribbonColorButton.RibbonTab))
+                    if ((GroupClusterColorButton.RibbonTab != null) &&
+                        (_ribbon.SelectedTab == GroupClusterColorButton.RibbonTab))
                     {
                         // ...repaint it right now
                         OnNeedPaint(false, ClientRectangle);

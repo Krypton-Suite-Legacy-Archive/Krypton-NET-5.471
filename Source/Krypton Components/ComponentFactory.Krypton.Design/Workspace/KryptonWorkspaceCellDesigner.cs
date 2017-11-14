@@ -8,16 +8,8 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Collections;
-using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.ComponentModel;
 using System.ComponentModel.Design;
-using System.Windows.Forms;
 using System.Windows.Forms.Design;
-using System.Windows.Forms.Design.Behavior;
-using ComponentFactory.Krypton.Toolkit;
 using ComponentFactory.Krypton.Navigator;
 
 namespace ComponentFactory.Krypton.Workspace
@@ -28,10 +20,8 @@ namespace ComponentFactory.Krypton.Workspace
         /// <summary>
         /// Gets the selection rules that indicate the movement capabilities of a component.
         /// </summary>
-        public override SelectionRules SelectionRules
-        {
-            get { return SelectionRules.None; }
-        }
+        public override SelectionRules SelectionRules => SelectionRules.None;
+
         #endregion
         
         #region Implementation
@@ -47,16 +37,10 @@ namespace ComponentFactory.Krypton.Workspace
             {
                 // If this workspace cell is inside a parent
                 KryptonWorkspaceCell cell = (KryptonWorkspaceCell)Navigator;
-                if (cell.WorkspaceParent != null)
-                {
-                    // Cell an only be inside a workspace sequence
-                    KryptonWorkspaceSequence sequence = (KryptonWorkspaceSequence)cell.WorkspaceParent;
-                    if (sequence != null)
-                    {
-                        // Remove the cell from the parent
-                        sequence.Children.Remove(cell);
-                    }
-                }
+                // Cell an only be inside a workspace sequence
+                KryptonWorkspaceSequence sequence = (KryptonWorkspaceSequence) cell.WorkspaceParent;
+                // Remove the cell from the parent
+                sequence?.Children.Remove(cell);
             }
 
             base.OnComponentRemoving(sender, e);

@@ -8,11 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Text;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Diagnostics;
 
@@ -25,8 +21,8 @@ namespace ComponentFactory.Krypton.Toolkit
 	{
         #region Instance Fields
         private IPaletteContent _inherit;
-        private bool _forceShortTextHCenter;
-        #endregion
+
+	    #endregion
 
         #region Identity
         /// <summary>
@@ -39,7 +35,7 @@ namespace ComponentFactory.Krypton.Toolkit
             _inherit = inherit;
 
             // Default settings
-            _forceShortTextHCenter = false;
+            ForceShortTextHCenter = false;
         }
         #endregion
 
@@ -58,12 +54,9 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Gets and sets if the short text is centered horizontally.
         /// </summary>
-        public bool ForceShortTextHCenter
-        {
-            get { return _forceShortTextHCenter; }
-            set { _forceShortTextHCenter = value; }
-        }
-        #endregion
+        public bool ForceShortTextHCenter { get; set; }
+
+	    #endregion
 
         #region IPaletteContent
         /// <summary>
@@ -204,9 +197,13 @@ namespace ComponentFactory.Krypton.Toolkit
 		public override PaletteRelativeAlign GetContentShortTextH(PaletteState state)
         {
             if (ForceShortTextHCenter)
+            {
                 return PaletteRelativeAlign.Center;
+            }
             else
+            {
                 return _inherit.GetContentShortTextH(state);
+            }
         }
 
 		/// <summary>

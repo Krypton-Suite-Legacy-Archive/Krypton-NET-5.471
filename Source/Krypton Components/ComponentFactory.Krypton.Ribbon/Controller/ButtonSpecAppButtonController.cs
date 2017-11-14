@@ -9,7 +9,6 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Diagnostics;
@@ -57,8 +56,14 @@ namespace ComponentFactory.Krypton.Ribbon
             Debug.Assert(e != null);
 
             // Validate incoming references
-            if (c == null) throw new ArgumentNullException("c");
-            if (e == null) throw new ArgumentNullException("e");
+            if (c == null)
+            {
+                throw new ArgumentNullException("c");
+            }
+            if (e == null)
+            {
+                throw new ArgumentNullException("e");
+            }
 
             switch (e.KeyCode)
             {
@@ -100,8 +105,14 @@ namespace ComponentFactory.Krypton.Ribbon
             Debug.Assert(e != null);
 
             // Validate incoming references
-            if (c == null) throw new ArgumentNullException("c");
-            if (e == null) throw new ArgumentNullException("e");
+            if (c == null)
+            {
+                throw new ArgumentNullException("c");
+            }
+            if (e == null)
+            {
+                throw new ArgumentNullException("e");
+            }
 
             _viewManager.KeyMnemonic(e.KeyChar);
         }
@@ -111,10 +122,7 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <summary>
         /// Returns if the item shows a sub menu when selected.
         /// </summary>
-        public bool HasSubMenu
-        {
-            get { return false; }
-        }
+        public bool HasSubMenu => false;
 
         /// <summary>
         /// This target should display as the active target.
@@ -174,10 +182,7 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <summary>
         /// Get the client rectangle for the display of this target.
         /// </summary>
-        public Rectangle ClientRectangle
-        {
-            get { return _target.ClientRectangle; }
-        }
+        public Rectangle ClientRectangle => _target.ClientRectangle;
 
         /// <summary>
         /// Should a mouse down at the provided point cause the currently stacked context menu to become current.

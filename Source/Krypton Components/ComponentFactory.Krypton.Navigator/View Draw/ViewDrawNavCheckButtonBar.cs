@@ -9,13 +9,7 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using System.Diagnostics;
-using System.ComponentModel;
 using ComponentFactory.Krypton.Toolkit;
 
 namespace ComponentFactory.Krypton.Navigator
@@ -82,10 +76,8 @@ namespace ComponentFactory.Krypton.Navigator
         /// <summary>
         /// Gets the view associated with the check item.
         /// </summary>
-        public ViewBase View 
-        {
-            get { return this; }
-        }
+        public ViewBase View => this;
+
         #endregion
 
         #region IContentValues

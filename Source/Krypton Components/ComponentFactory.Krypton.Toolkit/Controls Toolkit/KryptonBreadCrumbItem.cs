@@ -9,15 +9,9 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
-using System.Data;
 using System.Drawing;
 using System.Drawing.Design;
 using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using System.Runtime.InteropServices;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -68,11 +62,15 @@ namespace ComponentFactory.Krypton.Toolkit
                         {
                             string text = item.ShortText;
                             if (!string.IsNullOrEmpty(text) && (text == name))
+                            {
                                 return item;
+                            }
 
                             text = item.LongText;
                             if (!string.IsNullOrEmpty(text) && (text == name))
+                            {
                                 return item;
+                            }
                         }
                     }
 
@@ -129,7 +127,9 @@ namespace ComponentFactory.Krypton.Toolkit
             {
                 // Clear down parent relationship
                 foreach (KryptonBreadCrumbItem child in this)
+                {
                     child.Parent = null;
+                }
 
                 base.OnClearing(e);
             }
@@ -150,8 +150,7 @@ namespace ComponentFactory.Krypton.Toolkit
         #endregion
 
         #region Instance Fields
-        private KryptonBreadCrumbItem _parent;
-        private BreadCrumbItems _items;
+
         #endregion
 
         #region Identity
@@ -209,7 +208,7 @@ namespace ComponentFactory.Krypton.Toolkit
             : base(shortText, longText, image, imageTransparentColor)
         {
             // Create child collection
-            _items = new BreadCrumbItems(this);
+            Items = new BreadCrumbItems(this);
         }
 
         /// <summary>
@@ -218,7 +217,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <returns></returns>
         public override string ToString()
         {
-            return "(" + _items.Count.ToString() + ") " + ShortText;
+            return "(" + Items.Count.ToString() + ") " + ShortText;
         }
         #endregion
 
@@ -232,10 +231,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         [RefreshProperties(RefreshProperties.All)]
         [Browsable(true)]
-        public BreadCrumbItems Items
-        {
-            get { return _items; }
-        }
+        public BreadCrumbItems Items { get; }
 
         /// <summary>
         /// Gets access to the Parent item in the hierarchy.
@@ -243,11 +239,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public KryptonBreadCrumbItem Parent
-        {
-            get { return _parent; }
-            internal set { _parent = value; }
-        }
+        public KryptonBreadCrumbItem Parent { get; internal set; }
+
         #endregion
 
         #region Protected
@@ -266,7 +259,9 @@ namespace ComponentFactory.Krypton.Toolkit
             {
                 // Find the root instance
                 while (parent.Parent != null)
+                {
                     parent = parent.Parent;
+                }
 
                 // Raise event in the root
                 parent.OnPropertyChanged(e);

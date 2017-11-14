@@ -9,14 +9,10 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
-using System.Data;
 using System.Drawing;
 using System.Drawing.Design;
 using System.ComponentModel;
-using System.ComponentModel.Design;
 using System.Windows.Forms;
-using System.Diagnostics;
 using ComponentFactory.Krypton.Toolkit;
 
 namespace ComponentFactory.Krypton.Ribbon
@@ -38,16 +34,9 @@ namespace ComponentFactory.Krypton.Ribbon
         private bool _visible;
         private bool _checked;
         private bool _autoCheck;
-        private Image _toolTipImage;
-        private Color _toolTipImageTransparentColor;
-        private LabelStyle _toolTipStyle;
         private string _textLine1;
         private string _textLine2;
         private string _keyTip;
-        private string _toolTipTitle;
-        private string _toolTipBody;
-        private Keys _shortcutKeys;
-        private ViewBase _radioButtonView;
         private GroupItemSize _itemSizeMax;
         private GroupItemSize _itemSizeMin;
         private GroupItemSize _itemSizeCurrent;
@@ -96,17 +85,17 @@ namespace ComponentFactory.Krypton.Ribbon
             _visible = true;
             _checked = false;
             _autoCheck = true;
-            _shortcutKeys = Keys.None;
+            ShortcutKeys = Keys.None;
             _textLine1 = "RadioButton";
             _textLine2 = string.Empty;
             _keyTip = "R";
             _itemSizeMax = GroupItemSize.Large;
             _itemSizeMin = GroupItemSize.Small;
             _itemSizeCurrent = GroupItemSize.Large;
-            _toolTipImageTransparentColor = Color.Empty;
-            _toolTipTitle = string.Empty;
-            _toolTipBody = string.Empty;
-            _toolTipStyle = LabelStyle.SuperTip;
+            ToolTipImageTransparentColor = Color.Empty;
+            ToolTipTitle = string.Empty;
+            ToolTipBody = string.Empty;
+            ToolTipStyle = LabelStyle.SuperTip;
         }
         #endregion
 
@@ -122,13 +111,15 @@ namespace ComponentFactory.Krypton.Ribbon
         [DefaultValue("RadioButton")]
         public string TextLine1
         {
-            get { return _textLine1; }
+            get => _textLine1;
 
             set
             {
                 // We never allow an empty text value
                 if (string.IsNullOrEmpty(value))
+                {
                     value = "RadioButton";
+                }
 
                 if (value != _textLine1)
                 {
@@ -149,7 +140,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [DefaultValue("")]
         public string TextLine2
         {
-            get { return _textLine2; }
+            get => _textLine2;
 
             set
             {
@@ -171,12 +162,14 @@ namespace ComponentFactory.Krypton.Ribbon
         [DefaultValue("R")]
         public string KeyTip
         {
-            get { return _keyTip; }
+            get => _keyTip;
 
             set
             {
                 if (string.IsNullOrEmpty(value))
+                {
                     value = "R";
+                }
 
                 _keyTip = value.ToUpper();
             }
@@ -194,7 +187,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public override bool Visible
         {
-            get { return _visible; }
+            get => _visible;
 
             set
             {
@@ -231,7 +224,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [DefaultValue(true)]
         public bool Enabled
         {
-            get { return _enabled; }
+            get => _enabled;
 
             set
             {
@@ -251,7 +244,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [DefaultValue(false)]
         public bool Checked
         {
-            get { return _checked; }
+            get => _checked;
 
             set
             {
@@ -262,7 +255,9 @@ namespace ComponentFactory.Krypton.Ribbon
                     OnPropertyChanged("Checked");
 
                     if (_checked)
+                    {
                         AutoUpdateOthers();
+                    }
 
                     // Generate events
                     OnCheckedChanged(EventArgs.Empty);
@@ -278,8 +273,8 @@ namespace ComponentFactory.Krypton.Ribbon
         [DefaultValue(true)]
         public bool AutoCheck
         {
-            get { return _autoCheck; }
-            
+            get => _autoCheck;
+
             set 
             {
                 if (_autoCheck != value)
@@ -287,7 +282,9 @@ namespace ComponentFactory.Krypton.Ribbon
                     _autoCheck = value;
 
                     if (_checked)
+                    {
                         AutoUpdateOthers();
+                    }
                 }
             }
         }
@@ -298,11 +295,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [Localizable(true)]
         [Category("Behavior")]
         [Description("Shortcut key combination to fire click event of the radio button.")]
-        public Keys ShortcutKeys
-        {
-            get { return _shortcutKeys; }
-            set { _shortcutKeys = value; }
-        }
+        public Keys ShortcutKeys { get; set; }
 
         private bool ShouldSerializeShortcutKeys()
         {
@@ -323,11 +316,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [Category("Appearance")]
         [Description("Tooltip style for the group radio button.")]
         [DefaultValue(typeof(LabelStyle), "SuperTip")]
-        public LabelStyle ToolTipStyle
-        {
-            get { return _toolTipStyle; }
-            set { _toolTipStyle = value; }
-        }
+        public LabelStyle ToolTipStyle { get; set; }
 
         /// <summary>
         /// Gets and sets the image for the item ToolTip.
@@ -337,11 +326,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [Description("Display image associated ToolTip.")]
         [DefaultValue(null)]
         [Localizable(true)]
-        public Image ToolTipImage
-        {
-            get { return _toolTipImage; }
-            set { _toolTipImage = value; }
-        }
+        public Image ToolTipImage { get; set; }
 
         /// <summary>
         /// Gets and sets the color to draw as transparent in the ToolTipImage.
@@ -351,11 +336,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [Description("Color to draw as transparent in the ToolTipImage.")]
         [KryptonDefaultColorAttribute()]
         [Localizable(true)]
-        public Color ToolTipImageTransparentColor
-        {
-            get { return _toolTipImageTransparentColor; }
-            set { _toolTipImageTransparentColor = value; }
-        }
+        public Color ToolTipImageTransparentColor { get; set; }
 
         /// <summary>
         /// Gets and sets the title text for the item ToolTip.
@@ -366,11 +347,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [Editor("System.ComponentModel.Design.MultilineStringEditor, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
         [DefaultValue("")]
         [Localizable(true)]
-        public string ToolTipTitle
-        {
-            get { return _toolTipTitle; }
-            set { _toolTipTitle = value; }
-        }
+        public string ToolTipTitle { get; set; }
 
         /// <summary>
         /// Gets and sets the body text for the item ToolTip.
@@ -381,11 +358,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [Editor("System.ComponentModel.Design.MultilineStringEditor, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
         [DefaultValue("")]
         [Localizable(true)]
-        public string ToolTipBody
-        {
-            get { return _toolTipBody; }
-            set { _toolTipBody = value; }
-        }
+        public string ToolTipBody { get; set; }
 
         /// <summary>
         /// Gets and sets the maximum allowed size of the item.
@@ -395,7 +368,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public override GroupItemSize ItemSizeMaximum
         {
-            get { return _itemSizeMax; }
+            get => _itemSizeMax;
 
             set
             {
@@ -415,7 +388,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public override GroupItemSize ItemSizeMinimum
         {
-            get { return _itemSizeMin; }
+            get => _itemSizeMin;
 
             set
             {
@@ -435,7 +408,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public override GroupItemSize ItemSizeCurrent
         {
-            get { return _itemSizeCurrent; }
+            get => _itemSizeCurrent;
 
             set
             {
@@ -483,11 +456,8 @@ namespace ComponentFactory.Krypton.Ribbon
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Browsable(false)]
-        public ViewBase RadioButtonView
-        {
-            get { return _radioButtonView; }
-            set { _radioButtonView = value; }
-        }
+        public ViewBase RadioButtonView { get; set; }
+
         #endregion
 
         #region Protected
@@ -505,7 +475,9 @@ namespace ComponentFactory.Krypton.Ribbon
                 {
                     // Make sure we become checked
                     if (!Checked)
+                    {
                         Checked = true;
+                    }
 
                     // In showing a popup we fire the delegate before the click so that the
                     // minimized popup is removed out of the way before the event is handled
@@ -513,21 +485,24 @@ namespace ComponentFactory.Krypton.Ribbon
                     if (VisualPopupManager.Singleton.CurrentPopup != null)
                     {
                         // Do we need to fire a delegate stating the click processing has finished?
-                        if (fireDelegate && (finishDelegate != null))
-                            finishDelegate(this, EventArgs.Empty);
+                        if (fireDelegate)
+                        {
+                            finishDelegate?.Invoke(this, EventArgs.Empty);
+                        }
 
                         fireDelegate = false;
                     }
 
                     // Generate actual click event
-                    if (Click != null)
-                        Click(this, EventArgs.Empty);
+                    Click?.Invoke(this, EventArgs.Empty);
                 }
             }
 
             // Do we need to fire a delegate stating the click processing has finished?
-            if (fireDelegate && (finishDelegate != null))
-                finishDelegate(this, EventArgs.Empty);
+            if (fireDelegate)
+            {
+                finishDelegate?.Invoke(this, EventArgs.Empty);
+            }
         }
 
         /// <summary>
@@ -536,8 +511,7 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <param name="e">An EventArgs containing the event data.</param>
         protected virtual void OnCheckedChanged(EventArgs e)
         {
-            if (CheckedChanged != null)
-                CheckedChanged(this, e);
+            CheckedChanged?.Invoke(this, e);
         }
 
         /// <summary>
@@ -546,16 +520,14 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <param name="propertyName">Name of property that has changed.</param>
         protected virtual void OnPropertyChanged(string propertyName)
         {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
 
         #region Internal
         internal void OnDesignTimeContextMenu(MouseEventArgs e)
         {
-            if (DesignTimeContextMenu != null)
-                DesignTimeContextMenu(this, e);
+            DesignTimeContextMenu?.Invoke(this, e);
         }
 
         internal override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -579,30 +551,16 @@ namespace ComponentFactory.Krypton.Ribbon
             return false;
         }
 
-        internal override LabelStyle InternalToolTipStyle
-        {
-            get { return ToolTipStyle; }
-        }
+        internal override LabelStyle InternalToolTipStyle => ToolTipStyle;
 
-        internal override Image InternalToolTipImage
-        {
-            get { return ToolTipImage; }
-        }
+        internal override Image InternalToolTipImage => ToolTipImage;
 
-        internal override Color InternalToolTipImageTransparentColor
-        {
-            get { return ToolTipImageTransparentColor; }
-        }
+        internal override Color InternalToolTipImageTransparentColor => ToolTipImageTransparentColor;
 
-        internal override string InternalToolTipTitle
-        {
-            get { return ToolTipTitle; }
-        }
+        internal override string InternalToolTipTitle => ToolTipTitle;
 
-        internal override string InternalToolTipBody
-        {
-            get { return ToolTipBody; }
-        }
+        internal override string InternalToolTipBody => ToolTipBody;
+
         #endregion
 
         #region Implementation
@@ -612,11 +570,13 @@ namespace ComponentFactory.Krypton.Ribbon
             if (AutoCheck && Checked)
             {
                 // If we are inside a ribbon container and a ribbon group
-                if ((RibbonContainer != null) && (RibbonContainer.RibbonGroup != null))
+                if (RibbonContainer?.RibbonGroup != null)
                 {
                     // Process each container inside the group
                     foreach (IRibbonGroupContainer container in RibbonContainer.RibbonGroup.Items)
+                    {
                         AutoUpdateContainer(container);
+                    }
                 }
             }
         }
@@ -627,21 +587,24 @@ namespace ComponentFactory.Krypton.Ribbon
             foreach (Component component in Container.GetChildComponents())
             {
                 // If the component is itself a container...
-                if (component is IRibbonGroupContainer)
-                    AutoUpdateContainer(component as IRibbonGroupContainer);
+                if (component is IRibbonGroupContainer container)
+                {
+                    AutoUpdateContainer(container);
+                }
                 else
                 {
                     // If this is another radio button...
-                    if (component is KryptonRibbonGroupRadioButton)
+                    if (component is KryptonRibbonGroupRadioButton radioButton)
                     {
-                        KryptonRibbonGroupRadioButton radioButton = (KryptonRibbonGroupRadioButton)component;
 
                         // Do not process ourself!
                         if (radioButton != this)
                         {
                             // If the target is checked and allowed to be auto unchecked
                             if (radioButton.AutoCheck && radioButton.Checked)
+                            {
                                 radioButton.Checked = false;
+                            }
                         }
                     }
                 }

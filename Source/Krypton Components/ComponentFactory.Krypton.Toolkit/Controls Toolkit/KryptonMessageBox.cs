@@ -9,24 +9,10 @@
 // *****************************************************************************
 
 using System;
-using System.IO;
-using System.Xml;
 using System.Text;
 using System.Drawing;
-using System.Drawing.Design;
-using System.Reflection;
 using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Collections.Generic;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Runtime.Serialization;
 using System.Windows.Forms;
-using System.Diagnostics;
-using System.Globalization;
-using System.Threading;
-using System.Runtime.InteropServices;
-using System.Media;
-using Microsoft.Win32;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -43,10 +29,7 @@ namespace ComponentFactory.Krypton.Toolkit
         internal class HelpInfo
         {
             #region Instance Fields
-            private string _helpFilePath;
-            private string _keyword;
-            private HelpNavigator _navigator;
-            private object _param;
+
             #endregion
 
             #region Identity
@@ -63,7 +46,7 @@ namespace ComponentFactory.Krypton.Toolkit
             /// <param name="helpFilePath">Value for HelpFilePath.</param>
             public HelpInfo(string helpFilePath)
             {
-                _helpFilePath = helpFilePath;
+                HelpFilePath = helpFilePath;
             }
 
             /// <summary>
@@ -73,8 +56,8 @@ namespace ComponentFactory.Krypton.Toolkit
             /// <param name="keyword">Value for Keyword</param>
             public HelpInfo(string helpFilePath, string keyword)
             {
-                _helpFilePath = helpFilePath;
-                _keyword = keyword;
+                HelpFilePath = helpFilePath;
+                Keyword = keyword;
             }
 
             /// <summary>
@@ -84,8 +67,8 @@ namespace ComponentFactory.Krypton.Toolkit
             /// <param name="navigator">Value for Navigator</param>
             public HelpInfo(string helpFilePath, HelpNavigator navigator)
             {
-                _helpFilePath = helpFilePath;
-                _navigator = navigator;
+                HelpFilePath = helpFilePath;
+                Navigator = navigator;
             }
 
             /// <summary>
@@ -96,9 +79,9 @@ namespace ComponentFactory.Krypton.Toolkit
             /// <param name="param">Value for Param</param>
             public HelpInfo(string helpFilePath, HelpNavigator navigator, object param)
             {
-                _helpFilePath = helpFilePath;
-                _navigator = navigator;
-                _param = param;
+                HelpFilePath = helpFilePath;
+                Navigator = navigator;
+                Param = param;
             }
             #endregion
 
@@ -106,34 +89,23 @@ namespace ComponentFactory.Krypton.Toolkit
             /// <summary>
             /// Gets the HelpFilePath property.
             /// </summary>
-            public string HelpFilePath 
-            { 
-                get { return _helpFilePath; } 
-            }
+            public string HelpFilePath { get; }
 
             /// <summary>
             /// Gets the Keyword property.
             /// </summary>
-            public string Keyword
-            {
-                get { return _keyword; } 
-            }
+            public string Keyword { get; }
 
             /// <summary>
             /// Gets the Navigator property.
             /// </summary>
-            public HelpNavigator Navigator
-            {
-                get { return _navigator; } 
-            }
+            public HelpNavigator Navigator { get; }
 
             /// <summary>
             /// Gets the Param property.
             /// </summary>
-            public object Param
-            {
-                get { return _param; }
-            }
+            public object Param { get; }
+
             #endregion
         }
 
@@ -141,18 +113,15 @@ namespace ComponentFactory.Krypton.Toolkit
         internal class MessageButton : KryptonButton
         {
             #region Instance Fields
-            private bool _ignoreAltF4;
+
             #endregion
 
             #region Identity
             /// <summary>
             /// Gets and sets the ignoring of Alt+F4
             /// </summary>
-            public bool IgnoreAltF4
-            {
-                get { return _ignoreAltF4; }
-                set { _ignoreAltF4 = value; }
-            }
+            public bool IgnoreAltF4 { get; set; }
+
             #endregion
 
             #region Protected
@@ -188,7 +157,8 @@ namespace ComponentFactory.Krypton.Toolkit
         #endregion
 
         #region Static Fields
-        private static readonly int GAP = 10;
+
+        private const int GAP = 10;
         private static int _osMajorVersion;
         #endregion
 
@@ -633,15 +603,21 @@ namespace ComponentFactory.Krypton.Toolkit
         {
             // Check if trying to show a message box from a non-interactive process, this is not possible
             if (!SystemInformation.UserInteractive && ((options & (MessageBoxOptions.ServiceNotification | MessageBoxOptions.DefaultDesktopOnly)) == 0))
+            {
                 throw new InvalidOperationException("Cannot show modal dialog when non-interactive");
+            }
 
             // Check if trying to show a message box from a service and the owner has been specified, this is not possible
             if ((owner != null) && ((options & (MessageBoxOptions.ServiceNotification | MessageBoxOptions.DefaultDesktopOnly)) != 0))
+            {
                 throw new ArgumentException("Cannot show message box from a service with an owner specified", "options");
+            }
 
             // Check if trying to show a message box from a service and help information is specified, this is not possible
             if ((helpInfo != null) && ((options & (MessageBoxOptions.ServiceNotification | MessageBoxOptions.DefaultDesktopOnly)) != 0))
+            {
                 throw new ArgumentException("Cannot show message box from a service with help specified", "options");
+            }
 
             // If help information provided or we are not a service/default desktop application then grab an owner for showing the message box
             IWin32Window showOwner = null;
@@ -649,18 +625,26 @@ namespace ComponentFactory.Krypton.Toolkit
             {
                 // If do not have an owner passed in then get the active window and use that instead
                 if (owner == null)
+                {
                     showOwner = Control.FromHandle(PI.GetActiveWindow());
+                }
                 else
+                {
                     showOwner = owner;
+                }
             }
 
             // Show message box window as a modal dialog and then dispose of it afterwards
             using (KryptonMessageBox kmb = new KryptonMessageBox(text, caption, buttons, icon, defaultButton, options, helpInfo))
             {
                 if (showOwner == null)
+                {
                     kmb.StartPosition = FormStartPosition.CenterScreen;
+                }
                 else
+                {
                     kmb.StartPosition = FormStartPosition.CenterParent;
+                }
 
                 return kmb.ShowDialog(showOwner);
             }
@@ -682,7 +666,10 @@ namespace ComponentFactory.Krypton.Toolkit
 
                     // Windows XP and before will Beep, Vista and above do not!
                     if (_osMajorVersion < 6)
+                    {
                         System.Media.SystemSounds.Beep.Play();
+                    }
+
                     break;
                 case MessageBoxIcon.Question:
                     _messageIcon.Image = Properties.Resources.help2;
@@ -799,8 +786,8 @@ namespace ComponentFactory.Krypton.Toolkit
                 Size messageSize = g.MeasureString(_text, _messageText.Font, 400).ToSize();
 
                 // Work out DPI adjustment factor
-                float factorX = g.DpiX > 96 ? (1.0f * g.DpiX / 96) : 1.0f;
-                float factorY = g.DpiY > 96 ? (1.0f * g.DpiY / 96) : 1.0f;
+                float factorX = g.DpiX > 96 ? ((1.0f * g.DpiX) / 96) : 1.0f;
+                float factorY = g.DpiY > 96 ? ((1.0f * g.DpiY) / 96) : 1.0f;
                 messageSize.Width = (int)((float)messageSize.Width * factorX);
                 messageSize.Height = (int)((float)messageSize.Height * factorY);
 
@@ -909,17 +896,19 @@ namespace ComponentFactory.Krypton.Toolkit
             _button1.Size = maxButtonSize;
 
             // Size the panel for the buttons
-            _panelButtons.Size = new Size((maxButtonSize.Width * numButtons) + GAP * (numButtons + 1), maxButtonSize.Height + GAP * 2);
+            _panelButtons.Size = new Size((maxButtonSize.Width * numButtons) + (GAP * (numButtons + 1)), maxButtonSize.Height + (GAP * 2));
 
             // Button area is the number of buttons with gaps between them and 10 pixels around all edges
-            return new Size((maxButtonSize.Width * numButtons) + GAP * (numButtons + 1), maxButtonSize.Height + GAP * 2);
+            return new Size((maxButtonSize.Width * numButtons) + (GAP * (numButtons + 1)), maxButtonSize.Height + (GAP * 2));
         }
 
         private void button_keyDown(object sender, KeyEventArgs e)
         {
             // Escape key kills the dialog if we allow it to be closed
             if ((e.KeyCode == Keys.Escape) && ControlBox)
+            {
                 Close();
+            }
             else
             {
                 // Pressing Ctrl+C should copy message text into the clipboard

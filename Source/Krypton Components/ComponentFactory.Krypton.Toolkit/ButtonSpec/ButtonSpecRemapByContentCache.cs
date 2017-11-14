@@ -8,15 +8,6 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
-using System.Drawing;
-using System.Drawing.Text;
-using System.Drawing.Drawing2D;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using System.Diagnostics;
-
 namespace ComponentFactory.Krypton.Toolkit
 {
     /// <summary>
@@ -68,20 +59,16 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Gets the palette content to use for remapping.
         /// </summary>
-        public override IPaletteContent PaletteContent
-        {
-            get { return _paletteContent; }
-        }
+        public override IPaletteContent PaletteContent => _paletteContent;
+
         #endregion
 
         #region PaletteState
         /// <summary>
         /// Gets the state of the remapping area
         /// </summary>
-        public override PaletteState PaletteState
-        {
-            get { return _paletteState; }
-        }
+        public override PaletteState PaletteState => _paletteState;
+
         #endregion
     }
 }

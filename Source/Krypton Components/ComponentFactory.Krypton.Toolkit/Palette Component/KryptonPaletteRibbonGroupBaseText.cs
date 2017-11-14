@@ -8,14 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
-using System.Drawing;
-using System.Drawing.Design;
-using System.Windows.Forms;
 using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Collections.Generic;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -26,9 +19,7 @@ namespace ComponentFactory.Krypton.Toolkit
     {
         #region Instance Fields
         private PaletteRibbonTextInheritRedirect _stateInherit;
-        private PaletteRibbonText _stateCommon;
-        private PaletteRibbonText _stateNormal;
-        private PaletteRibbonText _stateDisabled;
+
         #endregion
 
         #region Identity
@@ -44,9 +35,9 @@ namespace ComponentFactory.Krypton.Toolkit
 		{
             // Create the storage objects
             _stateInherit = new PaletteRibbonTextInheritRedirect(redirect, textStyle);
-            _stateCommon = new PaletteRibbonText(_stateInherit, needPaint);
-            _stateNormal = new PaletteRibbonText(_stateCommon, needPaint);
-            _stateDisabled = new PaletteRibbonText(_stateCommon, needPaint);
+            StateCommon = new PaletteRibbonText(_stateInherit, needPaint);
+            StateNormal = new PaletteRibbonText(StateCommon, needPaint);
+            StateDisabled = new PaletteRibbonText(StateCommon, needPaint);
         }
         #endregion
 
@@ -66,16 +57,11 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// Gets a value indicating if all values are default.
 		/// </summary>
 		[Browsable(false)]
-		public override bool IsDefault
-		{
-			get
-			{
-                return _stateCommon.IsDefault &&
-                       _stateNormal.IsDefault &&
-                       _stateDisabled.IsDefault;
-            }
-		}
-		#endregion
+		public override bool IsDefault => StateCommon.IsDefault &&
+		                                  StateNormal.IsDefault &&
+		                                  StateDisabled.IsDefault;
+
+        #endregion
 
         #region PopulateFromBase
         /// <summary>
@@ -84,8 +70,8 @@ namespace ComponentFactory.Krypton.Toolkit
         public void PopulateFromBase()
         {
             // Populate only the designated styles
-            _stateNormal.PopulateFromBase(PaletteState.Normal);
-            _stateDisabled.PopulateFromBase(PaletteState.Disabled);
+            StateNormal.PopulateFromBase(PaletteState.Normal);
+            StateDisabled.PopulateFromBase(PaletteState.Disabled);
         }
         #endregion
 
@@ -97,14 +83,11 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining common ribbon group text appearance that other states can override.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public PaletteRibbonText StateCommon
-        {
-            get { return _stateCommon; }
-        }
+        public PaletteRibbonText StateCommon { get; }
 
         private bool ShouldSerializeStateCommon()
         {
-            return !_stateCommon.IsDefault;
+            return !StateCommon.IsDefault;
         }
         #endregion
 
@@ -116,14 +99,11 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining normal ribbon group text appearance.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public PaletteRibbonText StateNormal
-        {
-            get { return _stateNormal; }
-        }
+        public PaletteRibbonText StateNormal { get; }
 
         private bool ShouldSerializeStateNormal()
         {
-            return !_stateNormal.IsDefault;
+            return !StateNormal.IsDefault;
         }
         #endregion
 
@@ -135,14 +115,11 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining tracking ribbon group text appearance.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public PaletteRibbonText StateDisabled
-        {
-            get { return _stateDisabled; }
-        }
+        public PaletteRibbonText StateDisabled { get; }
 
         private bool ShouldSerializeStateDisabled()
         {
-            return !_stateDisabled.IsDefault;
+            return !StateDisabled.IsDefault;
         }
         #endregion
     }

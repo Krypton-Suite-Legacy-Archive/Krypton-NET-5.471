@@ -8,11 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Drawing;
-using System.ComponentModel;
 using System.Windows.Forms;
-using System.Diagnostics;
 using ComponentFactory.Krypton.Toolkit;
 
 namespace ComponentFactory.Krypton.Ribbon
@@ -23,7 +19,7 @@ namespace ComponentFactory.Krypton.Ribbon
     public class ButtonSpecManagerLayoutAppButton : ButtonSpecManagerLayout
     {
         #region Instance Fields
-        private ViewContextMenuManager _viewManager;
+
         #endregion
 
         #region Identity
@@ -56,7 +52,7 @@ namespace ComponentFactory.Krypton.Ribbon
                    viewDockers, viewMetrics, viewMetricInt,
                    viewMetricPaddings, getRenderer, needPaint)
         {
-            _viewManager = viewManager;
+            ViewManager = viewManager;
         }
         #endregion
 
@@ -64,10 +60,8 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <summary>
         /// Gets access to the view manager associated with the button specs.
         /// </summary>
-        public ViewContextMenuManager ViewManager
-        {
-            get { return _viewManager; }
-        }
+        public ViewContextMenuManager ViewManager { get; }
+
         #endregion
 
         #region Protected

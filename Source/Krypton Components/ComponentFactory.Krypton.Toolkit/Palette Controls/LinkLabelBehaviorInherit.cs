@@ -8,12 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Text;
-using System.Drawing.Drawing2D;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Diagnostics;
 
@@ -23,7 +18,7 @@ namespace ComponentFactory.Krypton.Toolkit
     {
         #region Instance Fields
         private IPaletteContent _inherit;
-        private KryptonLinkBehavior _linkBehavior;
+
         #endregion
 
         #region Identity
@@ -37,7 +32,7 @@ namespace ComponentFactory.Krypton.Toolkit
         {
             Debug.Assert(inherit != null);
             _inherit = inherit;
-            _linkBehavior = linkBehavior;
+            LinkBehavior = linkBehavior;
         }
         #endregion
 
@@ -45,11 +40,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Gets and sets the link behavior.
         /// </summary>
-        public KryptonLinkBehavior LinkBehavior
-        {
-            get { return _linkBehavior; }
-            set { _linkBehavior = value; }
-        }
+        public KryptonLinkBehavior LinkBehavior { get; set; }
+
         #endregion
 
         #region IPaletteContent
@@ -135,7 +127,9 @@ namespace ComponentFactory.Krypton.Toolkit
 
             // We never try and modify an empty font
             if (ret != null)
+            {
                 ret = GetContentFont(state, ret);
+            }
 
             return ret;
         }
@@ -152,7 +146,9 @@ namespace ComponentFactory.Krypton.Toolkit
 
             // We never try and modify an empty font
             if (ret != null)
+            {
                 ret = GetContentFont(state, ret);
+            }
 
             return ret;
         }
@@ -517,7 +513,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 bool underline = false;
 
                 // Action to take depends on the link behavior setting
-                switch (_linkBehavior)
+                switch (LinkBehavior)
                 {
                     case KryptonLinkBehavior.AlwaysUnderline:
                         underline = true;
@@ -533,7 +529,9 @@ namespace ComponentFactory.Krypton.Toolkit
 
                 // Do we need to add an underline to the font?
                 if (underline)
+                {
                     font = new Font(font, FontStyle.Underline | font.Style);
+                }
             }
 
             return font;

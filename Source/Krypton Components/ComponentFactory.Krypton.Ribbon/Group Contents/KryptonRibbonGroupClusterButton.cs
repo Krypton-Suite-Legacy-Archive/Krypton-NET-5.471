@@ -9,12 +9,9 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
-using System.Data;
 using System.Drawing;
 using System.Drawing.Design;
 using System.ComponentModel;
-using System.ComponentModel.Design;
 using System.Windows.Forms;
 using System.Diagnostics;
 using ComponentFactory.Krypton.Toolkit;
@@ -43,13 +40,7 @@ namespace ComponentFactory.Krypton.Ribbon
         private bool _checked;
         private string _textLine;
         private string _keyTip;
-        private string _toolTipTitle;
-        private string _toolTipBody;
-        private Image _toolTipImage;
         private Image _imageSmall;
-        private Color _toolTipImageTransparentColor;
-        private LabelStyle _toolTipStyle;
-        private Keys _shortcutKeys;
         private GroupItemSize _itemSizeMax;
         private GroupItemSize _itemSizeMin;
         private GroupItemSize _itemSizeCurrent;
@@ -58,7 +49,7 @@ namespace ComponentFactory.Krypton.Ribbon
         private ContextMenuStrip _contextMenuStrip;
         private KryptonContextMenu _kryptonContextMenu;
         private EventHandler _kcmFinishDelegate;
-        private ViewBase _clusterButtonView;
+
         #endregion
 
         #region Events
@@ -103,7 +94,7 @@ namespace ComponentFactory.Krypton.Ribbon
             _checked = false;
             _textLine = string.Empty;
             _keyTip = "B";
-            _shortcutKeys = Keys.None;
+            ShortcutKeys = Keys.None;
             _itemSizeMax = GroupItemSize.Medium;
             _itemSizeMin = GroupItemSize.Small;
             _itemSizeCurrent = GroupItemSize.Medium;
@@ -111,10 +102,10 @@ namespace ComponentFactory.Krypton.Ribbon
             _buttonType = GroupButtonType.Push;
             _contextMenuStrip = null;
             _kryptonContextMenu = null;
-            _toolTipImageTransparentColor = Color.Empty;
-            _toolTipTitle = string.Empty;
-            _toolTipBody = string.Empty;
-            _toolTipStyle = LabelStyle.SuperTip;
+            ToolTipImageTransparentColor = Color.Empty;
+            ToolTipTitle = string.Empty;
+            ToolTipBody = string.Empty;
+            ToolTipStyle = LabelStyle.SuperTip;
         }
         #endregion
 
@@ -130,7 +121,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [DefaultValue("")]
         public string TextLine
         {
-            get { return _textLine; }
+            get => _textLine;
 
             set
             {
@@ -152,12 +143,14 @@ namespace ComponentFactory.Krypton.Ribbon
         [DefaultValue("B")]
         public string KeyTip
         {
-            get { return _keyTip; }
+            get => _keyTip;
 
             set
             {
                 if (string.IsNullOrEmpty(value))
+                {
                     value = "B";
+                }
 
                 _keyTip = value.ToUpper();
             }
@@ -173,7 +166,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [RefreshPropertiesAttribute(RefreshProperties.All)]
         public Image ImageSmall
         {
-            get { return _imageSmall; }
+            get => _imageSmall;
 
             set
             {
@@ -202,7 +195,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public override bool Visible
         {
-            get { return _visible; }
+            get => _visible;
 
             set
             {
@@ -239,7 +232,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [DefaultValue(true)]
         public bool Enabled
         {
-            get { return _enabled; }
+            get => _enabled;
 
             set
             {
@@ -260,7 +253,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [DefaultValue(false)]
         public bool Checked
         {
-            get { return _checked; }
+            get => _checked;
 
             set
             {
@@ -281,7 +274,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [DefaultValue(typeof(GroupButtonType), "Push")]
         public GroupButtonType ButtonType
         {
-            get { return _buttonType; }
+            get => _buttonType;
 
             set
             {
@@ -299,11 +292,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [Localizable(true)]
         [Category("Behavior")]
         [Description("Shortcut key combination to fire click event of the cluster button.")]
-        public Keys ShortcutKeys
-        {
-            get { return _shortcutKeys; }
-            set { _shortcutKeys = value; }
-        }
+        public Keys ShortcutKeys { get; set; }
 
         private bool ShouldSerializeShortcutKeys()
         {
@@ -324,11 +313,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [Category("Appearance")]
         [Description("Tooltip style for the group cluster button.")]
         [DefaultValue(typeof(LabelStyle), "SuperTip")]
-        public LabelStyle ToolTipStyle
-        {
-            get { return _toolTipStyle; }
-            set { _toolTipStyle = value; }
-        }
+        public LabelStyle ToolTipStyle { get; set; }
 
         /// <summary>
         /// Gets and sets the image for the item ToolTip.
@@ -338,11 +323,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [Description("Display image associated ToolTip.")]
         [DefaultValue(null)]
         [Localizable(true)]
-        public Image ToolTipImage
-        {
-            get { return _toolTipImage; }
-            set { _toolTipImage = value; }
-        }
+        public Image ToolTipImage { get; set; }
 
         /// <summary>
         /// Gets and sets the color to draw as transparent in the ToolTipImage.
@@ -352,11 +333,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [Description("Color to draw as transparent in the ToolTipImage.")]
         [KryptonDefaultColorAttribute()]
         [Localizable(true)]
-        public Color ToolTipImageTransparentColor
-        {
-            get { return _toolTipImageTransparentColor; }
-            set { _toolTipImageTransparentColor = value; }
-        }
+        public Color ToolTipImageTransparentColor { get; set; }
 
         /// <summary>
         /// Gets and sets the title text for the item ToolTip.
@@ -367,11 +344,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [Editor("System.ComponentModel.Design.MultilineStringEditor, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
         [DefaultValue("")]
         [Localizable(true)]
-        public string ToolTipTitle
-        {
-            get { return _toolTipTitle; }
-            set { _toolTipTitle = value; }
-        }
+        public string ToolTipTitle { get; set; }
 
         /// <summary>
         /// Gets and sets the body text for the item ToolTip.
@@ -382,11 +355,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [Editor("System.ComponentModel.Design.MultilineStringEditor, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
         [DefaultValue("")]
         [Localizable(true)]
-        public string ToolTipBody
-        {
-            get { return _toolTipBody; }
-            set { _toolTipBody = value; }
-        }
+        public string ToolTipBody { get; set; }
 
         /// <summary>
         /// Gets and sets the context strip for showing when the button is pressed.
@@ -396,8 +365,8 @@ namespace ComponentFactory.Krypton.Ribbon
         [DefaultValue(null)]
         public ContextMenuStrip ContextMenuStrip
         {
-            get { return _contextMenuStrip; }
-            
+            get => _contextMenuStrip;
+
             set 
             {
                 if (value != _contextMenuStrip)
@@ -416,7 +385,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [DefaultValue(null)]
         public KryptonContextMenu KryptonContextMenu
         {
-            get { return _kryptonContextMenu; }
+            get => _kryptonContextMenu;
 
             set
             {
@@ -436,7 +405,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [DefaultValue(null)]
         public KryptonCommand KryptonCommand
         {
-            get { return _command; }
+            get => _command;
 
             set
             {
@@ -445,13 +414,17 @@ namespace ComponentFactory.Krypton.Ribbon
                     if (_command != value)
                     {
                         if (_command != null)
+                        {
                             _command.PropertyChanged -= new PropertyChangedEventHandler(OnCommandPropertyChanged);
+                        }
 
                         _command = value;
                         OnPropertyChanged("KryptonCommand");
 
                         if (_command != null)
+                        {
                             _command.PropertyChanged += new PropertyChangedEventHandler(OnCommandPropertyChanged);
+                        }
                     }
 
                 }
@@ -466,20 +439,24 @@ namespace ComponentFactory.Krypton.Ribbon
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public override GroupItemSize ItemSizeMaximum
         {
-            get { return _itemSizeMax; }
+            get => _itemSizeMax;
 
             set
             {
                 // We can never be bigger than medium
                 if (value == GroupItemSize.Large)
+                {
                     value = GroupItemSize.Medium;
+                }
 
                 if (_itemSizeMax != value)
                 {
                     _itemSizeMax = value;
 
                     if (_itemSizeMax == GroupItemSize.Small)
+                    {
                         _itemSizeMin = GroupItemSize.Small;
+                    }
 
                     OnPropertyChanged("ItemSizeMaximum");
                 }
@@ -494,20 +471,24 @@ namespace ComponentFactory.Krypton.Ribbon
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public override GroupItemSize ItemSizeMinimum
         {
-            get { return _itemSizeMin; }
+            get => _itemSizeMin;
 
             set
             {
                 // We can never be bigger than medium
                 if (value == GroupItemSize.Large)
+                {
                     value = GroupItemSize.Medium;
+                }
 
                 if (_itemSizeMin != value)
                 {
                     _itemSizeMin = value;
 
                     if (_itemSizeMin == GroupItemSize.Medium)
+                    {
                         _itemSizeMax = GroupItemSize.Medium;
+                    }
 
                     OnPropertyChanged("ItemSizeMinimum");
                 }
@@ -522,8 +503,8 @@ namespace ComponentFactory.Krypton.Ribbon
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public override GroupItemSize ItemSizeCurrent
         {
-            get { return _itemSizeCurrent; }
-            
+            get => _itemSizeCurrent;
+
             set
             {
                 if (_itemSizeCurrent != value)
@@ -587,11 +568,8 @@ namespace ComponentFactory.Krypton.Ribbon
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Browsable(false)]
-        public ViewBase ClusterButtonView
-        {
-            get { return _clusterButtonView; }
-            set { _clusterButtonView = value; }
-        }
+        public ViewBase ClusterButtonView { get; set; }
+
         #endregion
 
         #region Protected
@@ -637,9 +615,13 @@ namespace ComponentFactory.Krypton.Ribbon
                     {
                         // Push back the change to the attached command
                         if (KryptonCommand != null)
+                        {
                             KryptonCommand.Checked = !KryptonCommand.Checked;
+                        }
                         else
+                        {
                             Checked = !Checked;
+                        }
                     }
 
                     // In showing a popup we fire the delegate before the click so that the
@@ -648,25 +630,27 @@ namespace ComponentFactory.Krypton.Ribbon
                     if (VisualPopupManager.Singleton.CurrentPopup != null)
                     {
                         // Do we need to fire a delegate stating the click processing has finished?
-                        if (fireDelegate && (finishDelegate != null))
-                            finishDelegate(this, EventArgs.Empty);
+                        if (fireDelegate)
+                        {
+                            finishDelegate?.Invoke(this, EventArgs.Empty);
+                        }
 
                         fireDelegate = false;
                     }
 
                     // Generate actual click event
-                    if (Click != null)
-                        Click(this, EventArgs.Empty);
+                    Click?.Invoke(this, EventArgs.Empty);
 
                     // Clicking the button should execute the associated command
-                    if (KryptonCommand != null)
-                        KryptonCommand.PerformExecute();
+                    KryptonCommand?.PerformExecute();
                 }
             }
 
             // Do we need to fire a delegate stating the click processing has finished?
-            if (fireDelegate && (finishDelegate != null))
-                finishDelegate(this, EventArgs.Empty);
+            if (fireDelegate)
+            {
+                finishDelegate?.Invoke(this, EventArgs.Empty);
+            }
         }
 
         /// <summary>
@@ -691,8 +675,7 @@ namespace ComponentFactory.Krypton.Ribbon
 
                             // Generate an event giving a chance for the krypton context menu strip to 
                             // be shown to be provided/modified or the action even to be cancelled
-                            if (DropDown != null)
-                                DropDown(this, contextArgs);
+                            DropDown?.Invoke(this, contextArgs);
 
                             // If user did not cancel and there is still a krypton context menu strip to show
                             if (!contextArgs.Cancel && (contextArgs.KryptonContextMenu != null))
@@ -701,7 +684,9 @@ namespace ComponentFactory.Krypton.Ribbon
 
                                 // Convert the view for the button into screen coordinates
                                 if ((Ribbon != null) && (ClusterButtonView != null))
+                                {
                                     screenRect = Ribbon.ViewRectangleToScreen(ClusterButtonView);
+                                }
 
                                 if (CommonHelper.ValidKryptonContextMenu(contextArgs.KryptonContextMenu))
                                 {
@@ -711,7 +696,9 @@ namespace ComponentFactory.Krypton.Ribbon
                                     // Show at location we were provided, but need to convert to screen coordinates
                                     contextArgs.KryptonContextMenu.Closed += new ToolStripDropDownClosedEventHandler(OnKryptonContextMenuClosed);
                                     if (contextArgs.KryptonContextMenu.Show(this, new Point(screenRect.X, screenRect.Bottom + 1)))
+                                    {
                                         fireDelegate = false;
+                                    }
                                 }
                             }
                         }
@@ -721,8 +708,7 @@ namespace ComponentFactory.Krypton.Ribbon
 
                             // Generate an event giving a chance for the context menu strip to be
                             // shown to be provided/modified or the action even to be cancelled
-                            if (DropDown != null)
-                                DropDown(this, contextArgs);
+                            DropDown?.Invoke(this, contextArgs);
 
                             // If user did not cancel and there is still a context menu strip to show
                             if (!contextArgs.Cancel && (contextArgs.ContextMenuStrip != null))
@@ -731,7 +717,9 @@ namespace ComponentFactory.Krypton.Ribbon
 
                                 // Convert the view for the button into screen coordinates
                                 if ((Ribbon != null) && (ClusterButtonView != null))
+                                {
                                     screenRect = Ribbon.ViewRectangleToScreen(ClusterButtonView);
+                                }
 
                                 if (CommonHelper.ValidContextMenuStrip(contextArgs.ContextMenuStrip))
                                 {
@@ -750,8 +738,10 @@ namespace ComponentFactory.Krypton.Ribbon
             }
 
             // Do we need to fire a delegate stating the click processing has finished?
-            if (fireDelegate && (finishDelegate != null))
-                finishDelegate(this, EventArgs.Empty);
+            if (fireDelegate)
+            {
+                finishDelegate?.Invoke(this, EventArgs.Empty);
+            }
         }
 
         /// <summary>
@@ -760,16 +750,14 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <param name="propertyName">Name of property that has changed.</param>
         protected virtual void OnPropertyChanged(string propertyName)
         {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
 
         #region Internal
         internal void OnDesignTimeContextMenu(MouseEventArgs e)
         {
-            if (DesignTimeContextMenu != null)
-                DesignTimeContextMenu(this, e);
+            DesignTimeContextMenu?.Invoke(this, e);
         }
 
         internal override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -810,42 +798,36 @@ namespace ComponentFactory.Krypton.Ribbon
                     (ButtonType == GroupButtonType.Split))
                 {
                     if (KryptonContextMenu != null)
+                    {
                         if (KryptonContextMenu.ProcessShortcut(keyData))
+                        {
                             return true;
+                        }
+                    }
 
                     if (ContextMenuStrip != null)
+                    {
                         if (CommonHelper.CheckContextMenuForShortcut(ContextMenuStrip, ref msg, keyData))
+                        {
                             return true;
+                        }
+                    }
                 }
             }
 
             return false;
         }
 
-        internal override LabelStyle InternalToolTipStyle
-        {
-            get { return ToolTipStyle; }
-        }
+        internal override LabelStyle InternalToolTipStyle => ToolTipStyle;
 
-        internal override Image InternalToolTipImage
-        {
-            get { return ToolTipImage; }
-        }
+        internal override Image InternalToolTipImage => ToolTipImage;
 
-        internal override Color InternalToolTipImageTransparentColor
-        {
-            get { return ToolTipImageTransparentColor; }
-        }
+        internal override Color InternalToolTipImageTransparentColor => ToolTipImageTransparentColor;
 
-        internal override string InternalToolTipTitle
-        {
-            get { return ToolTipTitle; }
-        }
+        internal override string InternalToolTipTitle => ToolTipTitle;
 
-        internal override string InternalToolTipBody
-        {
-            get { return ToolTipBody; }
-        }
+        internal override string InternalToolTipBody => ToolTipBody;
+
         #endregion
 
         #region Implementation

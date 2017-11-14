@@ -13,7 +13,6 @@ using System.Drawing;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows.Forms;
-using System.Reflection;
 using System.Collections.Generic;
 using ComponentFactory.Krypton.Toolkit;
 
@@ -31,10 +30,7 @@ namespace ComponentFactory.Krypton.Navigator
 
         #region Instance Fields
         private bool _constructed;
-		private ViewManager _manager;
-		private KryptonNavigator _navigator;
-		private PaletteRedirect _redirector;
-        private NeedPaintHandler _needPaintDelegate;
+	    private NeedPaintHandler _needPaintDelegate;
         #endregion
 
 		#region Identity
@@ -53,29 +49,32 @@ namespace ComponentFactory.Krypton.Navigator
 		/// </summary>
 		public KryptonNavigator Navigator
 		{
-            [System.Diagnostics.DebuggerStepThrough]
-            get { return _navigator; }
-		}
+		    [System.Diagnostics.DebuggerStepThrough]
+		    get;
+		    private set;
+	    }
 
-		/// <summary>
+	    /// <summary>
 		/// Gets access to the view manager instance.
 		/// </summary>
 		public ViewManager ViewManager
-		{
-            [System.Diagnostics.DebuggerStepThrough]
-            get { return _manager; }
-		}
+	    {
+	        [System.Diagnostics.DebuggerStepThrough]
+	        get;
+	        private set;
+	    }
 
-		/// <summary>
+	    /// <summary>
 		/// Gets the palette redirector.
 		/// </summary>
 		public PaletteRedirect Redirector
-		{
-            [System.Diagnostics.DebuggerStepThrough]
-            get { return _redirector; }
-		}
+	    {
+	        [System.Diagnostics.DebuggerStepThrough]
+	        get;
+	        private set;
+	    }
 
-        /// <summary>
+	    /// <summary>
         /// Gets a value indicating if the mode is a tab strip style mode.
         /// </summary>
         public abstract bool IsTabStripMode { get; }
@@ -98,13 +97,13 @@ namespace ComponentFactory.Krypton.Navigator
 			Debug.Assert(_constructed == false);
 
             // Save provided references
-			_navigator = navigator;
-			_manager = manager;
-			_redirector = redirector;
+			Navigator = navigator;
+			ViewManager = manager;
+			Redirector = redirector;
 			_constructed = true;
 
             // Hook into the navigator events
-            _navigator.ViewBuilderPropertyChanged += new PropertyChangedEventHandler(OnViewBuilderPropertyChanged);
+            Navigator.ViewBuilderPropertyChanged += new PropertyChangedEventHandler(OnViewBuilderPropertyChanged);
 		}
 
         /// <summary>
@@ -113,16 +112,16 @@ namespace ComponentFactory.Krypton.Navigator
         public virtual void Destruct()
         {
             Debug.Assert(_constructed);
-            Debug.Assert(_navigator != null);
+            Debug.Assert(Navigator != null);
 
             // Unhook from the navigator events
-            _navigator.ViewBuilderPropertyChanged -= new PropertyChangedEventHandler(OnViewBuilderPropertyChanged);
+            Navigator.ViewBuilderPropertyChanged -= new PropertyChangedEventHandler(OnViewBuilderPropertyChanged);
 
             // No longer constructed
             _constructed = false;
 
             // Change of mode means we get rid of any showing popup page
-            _navigator.DismissPopups();
+            Navigator.DismissPopups();
         }
 
         /// <summary>
@@ -320,12 +319,9 @@ namespace ComponentFactory.Krypton.Navigator
         /// <summary>
         /// Gets a value indicating if the view can accept the focus.
         /// </summary>
-        public virtual bool CanFocus
-        {
-            get { return false; }
-        }
+        public virtual bool CanFocus => false;
 
-        /// <summary>
+	    /// <summary>
         /// Occurs when the navigator takes the focus.
         /// </summary>
         public virtual void GotFocus() { }
@@ -445,10 +441,14 @@ namespace ComponentFactory.Krypton.Navigator
 
                     // If at end of collection then get the first page
                     if (first == null)
+                    {
                         first = Navigator.FirstActionPage();
+                    }
                 }
                 else
+                {
                     first = Navigator.FirstActionPage();
+                }
 
                 // Next page to test is the first one 
                 KryptonPage next = first;
@@ -488,7 +488,9 @@ namespace ComponentFactory.Krypton.Navigator
                     // If we are back at the first page we examined then we must have
                     // wrapped around collection and still found nothing, time to exit
                     if (next == first)
+                    {
                         break;
+                    }
                 }
             }
 
@@ -504,9 +506,13 @@ namespace ComponentFactory.Krypton.Navigator
         {
             // A page must be selected in order to find the previous one
             if (Navigator.SelectedPage != null)
+            {
                 return SelectNextPage(Navigator.SelectedPage, wrap, false);
+            }
             else
+            {
                 return false;
+            }
         }
 
         /// <summary>
@@ -539,13 +545,17 @@ namespace ComponentFactory.Krypton.Navigator
                         Navigator.OnCtrlTabWrap(ce);
 
                         if (ce.Cancel)
+                        {
                             return false;
+                        }
 
                         first = Navigator.FirstActionPage();
                     }
                 }
                 else
+                {
                     first = Navigator.FirstActionPage();
+                }
 
                 // Next page to test is the first one 
                 KryptonPage next = first;
@@ -558,7 +568,9 @@ namespace ComponentFactory.Krypton.Navigator
 
                     // If next page was selected, then all finished
                     if (Navigator.SelectedPage == next)
+                    {
                         return true;
+                    }
                     else
                     {
                         // Otherwise keep looking for another visible next page
@@ -572,7 +584,9 @@ namespace ComponentFactory.Krypton.Navigator
                             Navigator.OnCtrlTabWrap(ce);
 
                             if (ce.Cancel)
+                            {
                                 return false;
+                            }
 
                             // Wrap around to the first page
                             next = Navigator.FirstActionPage();
@@ -581,7 +595,9 @@ namespace ComponentFactory.Krypton.Navigator
                         // If we are back at the first page we examined then we must have
                         // wrapped around collection and still found nothing, time to exit
                         if (next == first)
+                        {
                             return false;
+                        }
                     }
                 }
             }
@@ -598,9 +614,13 @@ namespace ComponentFactory.Krypton.Navigator
         {
             // A page must be selected in order to find the previous one
             if (Navigator.SelectedPage != null)
+            {
                 return SelectPreviousPage(Navigator.SelectedPage, wrap, false);
+            }
             else
+            {
                 return false;
+            }
         }
 
         /// <summary>
@@ -633,13 +653,17 @@ namespace ComponentFactory.Krypton.Navigator
                         Navigator.OnCtrlTabWrap(ce);
 
                         if (ce.Cancel)
+                        {
                             return false;
+                        }
 
                         first = Navigator.LastActionPage();
                     }
                 }
                 else
+                {
                     first = Navigator.LastActionPage();
+                }
 
                 // Page to test is the first one 
                 KryptonPage previous = first;
@@ -652,7 +676,9 @@ namespace ComponentFactory.Krypton.Navigator
 
                     // If previous page was selected, then all finished
                     if (Navigator.SelectedPage == previous)
+                    {
                         return true;
+                    }
                     else
                     {
                         // Otherwise keep looking for another visible previous page
@@ -666,7 +692,9 @@ namespace ComponentFactory.Krypton.Navigator
                             Navigator.OnCtrlTabWrap(ce);
 
                             if (ce.Cancel)
+                            {
                                 return false;
+                            }
 
                             // Wrap around to the last page
                             previous = Navigator.Pages[Navigator.Pages.Count - 1];
@@ -675,7 +703,9 @@ namespace ComponentFactory.Krypton.Navigator
                         // If we are back at the first page we examined then we must have
                         // wrapped around collection and still found nothing, time to exit
                         if (previous == first)
+                        {
                             return false;
+                        }
                     }
                 }
             }
@@ -695,7 +725,9 @@ namespace ComponentFactory.Krypton.Navigator
             {
                 // Only create the delegate when it is first needed
                 if (_needPaintDelegate == null)
+                {
                     _needPaintDelegate = new NeedPaintHandler(OnNeedPaint);
+                }
 
                 return _needPaintDelegate;
             }

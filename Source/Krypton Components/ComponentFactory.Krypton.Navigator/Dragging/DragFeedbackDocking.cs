@@ -9,9 +9,7 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
 using System.Drawing;
-using System.Diagnostics;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using ComponentFactory.Krypton.Toolkit;
@@ -33,9 +31,6 @@ namespace ComponentFactory.Krypton.Navigator
             #region Instance Fields
             private IPaletteDragDrop _paletteDragDrop;
             private IRenderer _renderer;
-            private bool _excludeCluster;
-            private Rectangle _screenRect;
-            private Rectangle _drawRect;
             private HintToTarget _hintToTarget;
             private IDropDockingIndicator _indicators;
             #endregion
@@ -53,11 +48,13 @@ namespace ComponentFactory.Krypton.Navigator
             {
                 _paletteDragDrop = paletteDragDrop;
                 _renderer = renderer;
-                _screenRect = target.ScreenRect;
-                _drawRect = target.DrawRect;
-                _hintToTarget = new HintToTarget();
-                _hintToTarget.Add(target.Hint & DragTargetHint.ExcludeFlags, target);
-                _excludeCluster = (target.Hint & DragTargetHint.ExcludeCluster) == DragTargetHint.ExcludeCluster;
+                ScreenRect = target.ScreenRect;
+                DrawRect = target.DrawRect;
+                _hintToTarget = new HintToTarget
+                {
+                    { target.Hint & DragTargetHint.ExcludeFlags, target }
+                };
+                ExcludeCluster = (target.Hint & DragTargetHint.ExcludeCluster) == DragTargetHint.ExcludeCluster;
             }
 
             /// <summary>
@@ -81,26 +78,17 @@ namespace ComponentFactory.Krypton.Navigator
             /// <summary>
             /// Gets the screen rectangle this cluster works for.
             /// </summary>
-            public Rectangle ScreenRect
-            {
-                get { return _screenRect; }
-            }
+            public Rectangle ScreenRect { get; }
 
             /// <summary>
             /// Gets the drawing rectangle this cluster works for.
             /// </summary>
-            public Rectangle DrawRect
-            {
-                get { return _drawRect; }
-            }
+            public Rectangle DrawRect { get; private set; }
 
             /// <summary>
             /// Gets a value indicating if the cluster is exlusive to the current contents.
             /// </summary>
-            public bool ExcludeCluster
-            {
-                get { return _excludeCluster; }
-            }
+            public bool ExcludeCluster { get; }
 
             /// <summary>
             /// Add the new target to the cluster.
@@ -117,7 +105,7 @@ namespace ComponentFactory.Krypton.Navigator
                     _hintToTarget.Add(hint, target);
 
                     // Make sure the drawing rectangle encloses all targets
-                    _drawRect = Rectangle.Union(_drawRect, target.DrawRect);
+                    DrawRect = Rectangle.Union(DrawRect, target.DrawRect);
                 }
             }
 
@@ -271,9 +259,13 @@ namespace ComponentFactory.Krypton.Navigator
 
                     // Is the target allowed to be added to the found cluster (if there is one found)
                     if ((cluster == null) || cluster.ExcludeCluster || ((target.Hint & DragTargetHint.ExcludeCluster) == DragTargetHint.ExcludeCluster))
+                    {
                         _clusters.Add(new DockCluster(PaletteDragDrop, Renderer, target));
+                    }
                     else
+                    {
                         cluster.Add(target);
+                    }
                 }
             }
         }
@@ -295,12 +287,16 @@ namespace ComponentFactory.Krypton.Navigator
 
                 // We use the first matching target found in a cluster
                 if ((clusterTarget != null) && (matchTarget == null))
+                {
                     matchTarget = clusterTarget;
+                }
             }
 
             // Update the solid feedback rectangle with area of the specific target
             if (_solid != null)
+            {
                 _solid.SolidRect = (matchTarget != null) ? matchTarget.DrawRect : Rectangle.Empty;
+            }
 
             return matchTarget;
         }
@@ -327,7 +323,9 @@ namespace ComponentFactory.Krypton.Navigator
         {
             // Must dispose each cluster as they contain unmanaged resources
             foreach (DockCluster cluster in _clusters)
+            {
                 cluster.Dispose();
+            }
 
             _clusters.Clear();
         }
@@ -335,8 +333,12 @@ namespace ComponentFactory.Krypton.Navigator
         private DockCluster FindTargetCluster(DragTarget target)
         {
             foreach (DockCluster cluster in _clusters)
+            {
                 if (!cluster.ExcludeCluster && cluster.ScreenRect.Equals(target.ScreenRect))
+                {
                     return cluster;
+                }
+            }
 
             return null;
         }

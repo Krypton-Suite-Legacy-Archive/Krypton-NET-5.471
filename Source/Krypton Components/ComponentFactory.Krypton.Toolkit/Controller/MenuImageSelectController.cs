@@ -9,7 +9,6 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Diagnostics;
@@ -31,9 +30,7 @@ namespace ComponentFactory.Krypton.Toolkit
         private ViewLayoutMenuItemSelect _layout;
         private ViewContextMenuManager _viewManager;
         private NeedPaintHandler _needPaint;
-        private Point _mousePoint;
-        private bool _captured;
-        private bool _mouseOver;
+	    private bool _mouseOver;
         #endregion
 
 		#region Events
@@ -61,7 +58,7 @@ namespace ComponentFactory.Krypton.Toolkit
             Debug.Assert(layout != null);
             Debug.Assert(needPaint != null);
 
-            _mousePoint = CommonHelper.NullPoint;
+            MousePoint = CommonHelper.NullPoint;
             _viewManager = viewManager;
 			_target = target;
             _layout = layout;
@@ -73,22 +70,17 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Gets the current tracking mouse point.
         /// </summary>
-        public Point MousePoint
-        {
-            get { return _mousePoint; }
-        }
-        #endregion
+        public Point MousePoint { get; private set; }
+
+	    #endregion
 
         #region ContextMenuTarget Notifications
         /// <summary>
         /// Returns if the item shows a sub menu when selected.
         /// </summary>
-        public virtual bool HasSubMenu
-        {
-            get { return false; }
-        }
+        public virtual bool HasSubMenu => false;
 
-        /// <summary>
+	    /// <summary>
         /// This target should display as the active target.
         /// </summary>
         public virtual void ShowTarget()
@@ -149,12 +141,9 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Get the client rectangle for the display of this target.
         /// </summary>
-        public Rectangle ClientRectangle
-        {
-            get { return _target.ClientRectangle; }
-        }
+        public Rectangle ClientRectangle => _target.ClientRectangle;
 
-        /// <summary>
+	    /// <summary>
         /// Should a mouse down at the provided point cause the currently stacked context menu to become current.
         /// </summary>
         /// <param name="pt">Client coordinates point.</param>
@@ -192,7 +181,7 @@ namespace ComponentFactory.Krypton.Toolkit
             if (_layout.ItemEnabled)
             {
                 // Track the mouse point
-                _mousePoint = pt;
+                MousePoint = pt;
 
                 // Update the visual state
                 UpdateTargetState(pt);
@@ -212,13 +201,13 @@ namespace ComponentFactory.Krypton.Toolkit
             if (_layout.ItemEnabled && (button == MouseButtons.Left))
             {
                 // Capturing mouse input
-                _captured = true;
+                Captured = true;
 
                 // Update the visual state
                 UpdateTargetState(pt);
             }
 
-			return _captured;
+			return Captured;
 		}
 
 		/// <summary>
@@ -230,10 +219,10 @@ namespace ComponentFactory.Krypton.Toolkit
         public virtual void MouseUp(Control c, Point pt, MouseButtons button)
 		{
             // If the mouse is currently captured
-            if (_layout.ItemEnabled && _captured)
+            if (_layout.ItemEnabled && Captured)
             {
                 // Not capturing mouse input anymore
-                _captured = false;
+                Captured = false;
 
                 // Only interested in left mouse being released
                 if (button == MouseButtons.Left)
@@ -281,10 +270,10 @@ namespace ComponentFactory.Krypton.Toolkit
                 _mouseOver = false;
 
                 // Not tracking the mouse means a null value
-                _mousePoint = CommonHelper.NullPoint; 
+                MousePoint = CommonHelper.NullPoint; 
 
                 // If leaving the view then cannot be capturing mouse input anymore
-                _captured = false;
+                Captured = false;
 
                 // Update the visual state
                 UpdateTargetState(c);
@@ -303,11 +292,9 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Should the left mouse down be ignored when present on a visual form border area.
         /// </summary>
-        public virtual bool IgnoreVisualFormLeftButtonDown
-        {
-            get { return false; }
-        }
-        #endregion
+        public virtual bool IgnoreVisualFormLeftButtonDown => false;
+
+	    #endregion
 
         #region Focus Notifications
         /// <summary>
@@ -339,8 +326,15 @@ namespace ComponentFactory.Krypton.Toolkit
             Debug.Assert(e != null);
 
             // Validate incoming references
-            if (c == null) throw new ArgumentNullException("c");
-            if (e == null) throw new ArgumentNullException("e");
+            if (c == null)
+            {
+                throw new ArgumentNullException("c");
+            }
+
+            if (e == null)
+            {
+                throw new ArgumentNullException("e");
+            }
 
             switch (e.KeyCode)
             {
@@ -388,8 +382,15 @@ namespace ComponentFactory.Krypton.Toolkit
             Debug.Assert(e != null);
 
             // Validate incoming references
-            if (c == null) throw new ArgumentNullException("c");
-            if (e == null) throw new ArgumentNullException("e");
+            if (c == null)
+            {
+                throw new ArgumentNullException("c");
+            }
+
+            if (e == null)
+            {
+                throw new ArgumentNullException("e");
+            }
 
             _viewManager.KeyMnemonic(e.KeyChar);
         }
@@ -406,8 +407,15 @@ namespace ComponentFactory.Krypton.Toolkit
             Debug.Assert(e != null);
 
             // Validate incoming references
-            if (c == null) throw new ArgumentNullException("c");
-            if (e == null) throw new ArgumentNullException("e");
+            if (c == null)
+            {
+                throw new ArgumentNullException("c");
+            }
+
+            if (e == null)
+            {
+                throw new ArgumentNullException("e");
+            }
 
             return false;
         }
@@ -419,7 +427,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public NeedPaintHandler NeedPaint
         {
-            get { return _needPaint; }
+            get => _needPaint;
 
             set
             {
@@ -434,12 +442,9 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Gets access to the associated target of the controller.
         /// </summary>
-        public ViewBase Target
-        {
-            get { return _target; }
-        }
+        public ViewBase Target => _target;
 
-		/// <summary>
+	    /// <summary>
 		/// Fires the NeedPaint event.
 		/// </summary>
 		public void PerformNeedPaint()
@@ -461,13 +466,9 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Gets a value indicating if mouse input is being captured.
         /// </summary>
-        protected bool Captured
-        {
-            get { return _captured; }
-            set { _captured = value; }
-        }
+        protected bool Captured { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// Set the correct visual state of the target.
         /// </summary>
         /// <param name="c">Owning control.</param>
@@ -499,26 +500,36 @@ namespace ComponentFactory.Krypton.Toolkit
 
             // If the button is disabled then show as disabled
             if (!_target.Enabled)
+            {
                 newState = PaletteState.Disabled;
+            }
             else
             {
                 newState = PaletteState.Normal;
 
                 // If capturing input....
-                if (_captured)
+                if (Captured)
                 {
                     if (_target.ClientRectangle.Contains(pt))
+                    {
                         newState = PaletteState.Pressed;
+                    }
                     else
+                    {
                         newState = PaletteState.Tracking;
+                    }
                 }
                 else
                 {
                     // Only hot tracking, so show tracking only if mouse over the target 
                     if (_mouseOver)
+                    {
                         newState = PaletteState.Tracking;
+                    }
                     else
+                    {
                         newState = PaletteState.Normal;
+                    }
                 }
             }
 
@@ -526,9 +537,13 @@ namespace ComponentFactory.Krypton.Toolkit
             if (_target.ElementState != newState)
             {
                 if (newState == PaletteState.Tracking)
+                {
                     _target.Track();
+                }
                 else
+                {
                     _target.Untrack();
+                }
 
                 // Update target to reflect new state
                 _target.ElementState = newState;
@@ -544,9 +559,8 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// <param name="e">A MouseEventArgs containing the event data.</param>
 		protected virtual void OnClick(MouseEventArgs e)
 		{
-			if (Click != null)
-				Click(_target, e);
-		}
+            Click?.Invoke(_target, e);
+        }
 
 		/// <summary>
 		/// Raises the NeedPaint event.
@@ -554,9 +568,8 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// <param name="needLayout">Does the palette change require a layout.</param>
 		protected virtual void OnNeedPaint(bool needLayout)
 		{
-            if (_needPaint != null)
-                _needPaint(this, new NeedLayoutEventArgs(needLayout, _target.ClientRectangle));
-		}
+            _needPaint?.Invoke(this, new NeedLayoutEventArgs(needLayout, _target.ClientRectangle));
+        }
 		#endregion
     }
 }

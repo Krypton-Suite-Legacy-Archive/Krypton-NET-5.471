@@ -9,18 +9,10 @@
 // *****************************************************************************
 
 using System;
-using System.Data;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Text;
-using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using Microsoft.Win32;
 using ComponentFactory.Krypton.Toolkit;
 
 namespace ComponentFactory.Krypton.Ribbon
@@ -39,7 +31,6 @@ namespace ComponentFactory.Krypton.Ribbon
         private ViewDrawRibbonAppButton _appButtonBottom;
         private ViewLayoutStack _viewColumns;
         private ViewLayoutDocker _viewButtonSpecDocker;
-        private PaletteRedirect _redirector;
         private ButtonSpecManagerLayout _buttonManager;
         private Rectangle _rectAppButtonBottomHalf;
         private Rectangle _rectAppButtonTopHalf;
@@ -68,7 +59,7 @@ namespace ComponentFactory.Krypton.Ribbon
             : base(true)
         {
             // Remember incoming state
-            _redirector = redirector;
+            Redirector = redirector;
             _ribbon = ribbon;
             _rectAppButtonTopHalf = rectAppButtonTopHalf;
             _rectAppButtonBottomHalf = rectAppButtonBottomHalf;
@@ -78,9 +69,13 @@ namespace ComponentFactory.Krypton.Ribbon
 
             // Set the initial resolved palette to the appropriate setting
             if (palette != null)
+            {
                 SetPalette(palette);
+            }
             else
+            {
                 SetPalette(KryptonManager.GetPaletteForMode(paletteMode));
+            }
 
             // Set of context menu columns
             _viewColumns = new ViewLayoutStack(true);
@@ -108,7 +103,9 @@ namespace ComponentFactory.Krypton.Ribbon
 
             // With keyboard activate we select the first valid item
             if (keyboardActivated)
+            {
                 ((ViewContextMenuManager)ViewManager).KeyDown();
+            }
         }
 
         private void CreateButtonSpecView()
@@ -121,11 +118,15 @@ namespace ComponentFactory.Krypton.Ribbon
         {
             // Ask the top level collection to generate the child view elements
             KryptonContextMenuCollection topCollection = new KryptonContextMenuCollection();
-            KryptonContextMenuItems topItems = new KryptonContextMenuItems();
-            topItems.ImageColumn = false;
+            KryptonContextMenuItems topItems = new KryptonContextMenuItems
+            {
+                ImageColumn = false
+            };
             topCollection.Add(topItems);
             foreach (KryptonContextMenuItemBase item in appButton.AppButtonMenuItems)
+            {
                 topItems.Items.Add(item);
+            }
             topCollection.GenerateView(_provider, this, _viewColumns, true, true);
         }
 
@@ -135,8 +136,10 @@ namespace ComponentFactory.Krypton.Ribbon
             if (_ribbon.RibbonAppButton.AppButtonShowRecentDocs)
             {
                 // Create a dummy vertical menu separator for separating recent documents from menu items
-                KryptonContextMenuSeparator dummySep1 = new KryptonContextMenuSeparator();
-                dummySep1.Horizontal = false;
+                KryptonContextMenuSeparator dummySep1 = new KryptonContextMenuSeparator
+                {
+                    Horizontal = false
+                };
                 _viewColumns.Add(new ViewDrawMenuSeparator(dummySep1, _provider.ProviderStateCommon.Separator));
                 _viewColumns.Add(new ViewLayoutSeparator(0, _ribbon.RibbonAppButton.AppButtonMinRecentSize.Height));
 
@@ -162,7 +165,9 @@ namespace ComponentFactory.Krypton.Ribbon
                 // Then generate an item per recent document entry
                 int index = 1;
                 foreach (KryptonRibbonRecentDoc recentDoc in _ribbon.RibbonAppButton.AppButtonRecentDocs)
+                {
                     documentStack.Add(new ViewDrawRibbonAppMenuRecentDec(_ribbon, _provider, recentDoc, _ribbon.RibbonAppButton.AppButtonMaxRecentSize.Width, NeedPaintDelegate, index++));
+                }
 
                 // Add separator entry which is then used to fill remained space
                 documentStack.Add(new ViewLayoutSeparator(1));
@@ -174,56 +179,68 @@ namespace ComponentFactory.Krypton.Ribbon
 
         private ViewDrawCanvas CreateInsideCanvas()
         {
-            ViewDrawCanvas mainBackground = new ViewDrawCanvas(_provider.ProviderStateCommon.ControlInner.Back, _provider.ProviderStateCommon.ControlInner.Border, VisualOrientation.Top);
-            mainBackground.Add(_viewColumns);
+            ViewDrawCanvas mainBackground = new ViewDrawCanvas(_provider.ProviderStateCommon.ControlInner.Back, _provider.ProviderStateCommon.ControlInner.Border, VisualOrientation.Top)
+            {
+                _viewColumns
+            };
             mainBackground.KeyController = new ContextMenuController((ViewContextMenuManager)ViewManager);
             return mainBackground;
         }
 
         private void CreateInnerBacking(ViewBase fillElement)
         {
-            _drawInnerBacking = new ViewDrawRibbonAppMenuInner(_ribbon);
-            _drawInnerBacking.Add(new ViewLayoutSeparator(2), ViewDockStyle.Top);
-            _drawInnerBacking.Add(new ViewLayoutSeparator(2), ViewDockStyle.Bottom);
-            _drawInnerBacking.Add(new ViewLayoutSeparator(2), ViewDockStyle.Left);
-            _drawInnerBacking.Add(new ViewLayoutSeparator(2), ViewDockStyle.Right);
-            _drawInnerBacking.Add(fillElement, ViewDockStyle.Fill);
+            _drawInnerBacking = new ViewDrawRibbonAppMenuInner(_ribbon)
+            {
+                { new ViewLayoutSeparator(2), ViewDockStyle.Top },
+                { new ViewLayoutSeparator(2), ViewDockStyle.Bottom },
+                { new ViewLayoutSeparator(2), ViewDockStyle.Left },
+                { new ViewLayoutSeparator(2), ViewDockStyle.Right },
+                { fillElement, ViewDockStyle.Fill }
+            };
         }
 
         private void CreateOuterBacking()
         {
-            _drawOutsideBacking = new ViewDrawRibbonAppMenuOuter(_ribbon);
-            _drawOutsideBacking.Add(_drawInnerBacking, ViewDockStyle.Fill);
-            _drawOutsideBacking.Add(new ViewLayoutSeparator(14), ViewDockStyle.Top);
-            _drawOutsideBacking.Add(new ViewLayoutSeparator(2), ViewDockStyle.Left);
-            _drawOutsideBacking.Add(new ViewLayoutSeparator(2), ViewDockStyle.Right);
-            _drawOutsideBacking.Add(new ViewLayoutSeparator(2), ViewDockStyle.Bottom);
-            _drawOutsideBacking.Add(_viewButtonSpecDocker, ViewDockStyle.Bottom);
-            _drawOutsideBacking.Add(new ViewLayoutSeparator(2), ViewDockStyle.Bottom);
+            _drawOutsideBacking = new ViewDrawRibbonAppMenuOuter(_ribbon)
+            {
+                { _drawInnerBacking, ViewDockStyle.Fill },
+                { new ViewLayoutSeparator(14), ViewDockStyle.Top },
+                { new ViewLayoutSeparator(2), ViewDockStyle.Left },
+                { new ViewLayoutSeparator(2), ViewDockStyle.Right },
+                { new ViewLayoutSeparator(2), ViewDockStyle.Bottom },
+                { _viewButtonSpecDocker, ViewDockStyle.Bottom },
+                { new ViewLayoutSeparator(2), ViewDockStyle.Bottom }
+            };
         }
 
         private void CreateAppButtonBottom()
         {
-            _appButtonBottom = new ViewDrawRibbonAppButton(_ribbon, true);
-            _appButtonBottom.ElementState = PaletteState.Pressed;
+            _appButtonBottom = new ViewDrawRibbonAppButton(_ribbon, true)
+            {
+                ElementState = PaletteState.Pressed
+            };
 
             if (_ribbon.RibbonShape == PaletteRibbonShape.Office2010)
+            {
                 _appButtonBottom.Visible = false;
+            }
         }
 
         private void CreateOutsideDocker()
         {
-            _drawOutsideBack = new PaletteBackToPalette(_redirector, PaletteBackStyle.ControlRibbonAppMenu);
-            _drawOutsideBorder = new PaletteBorderToPalette(_redirector, PaletteBorderStyle.ControlRibbonAppMenu);
-            _drawOutsideDocker = new ViewDrawRibbonAppMenu(_drawOutsideBack, _drawOutsideBorder, _appButtonBottom, _rectAppButtonBottomHalf);
-            _drawOutsideDocker.KeyController = new ContextMenuController((ViewContextMenuManager)ViewManager);
+            _drawOutsideBack = new PaletteBackToPalette(Redirector, PaletteBackStyle.ControlRibbonAppMenu);
+            _drawOutsideBorder = new PaletteBorderToPalette(Redirector, PaletteBorderStyle.ControlRibbonAppMenu);
+            _drawOutsideDocker = new ViewDrawRibbonAppMenu(_drawOutsideBack, _drawOutsideBorder, _appButtonBottom, _rectAppButtonBottomHalf)
+            {
+                KeyController = new ContextMenuController((ViewContextMenuManager)ViewManager)
+            };
             _drawOutsideDocker.Add(_drawOutsideBacking, ViewDockStyle.Fill);
         }
 
         private void CreateButtonManager(RibbonAppButton appButton)
         {
             _buttonManager = new ButtonSpecManagerLayoutAppButton((ViewContextMenuManager)ViewManager,
-                                                                  this, _redirector, appButton.AppButtonSpecs, null,
+                                                                  this, Redirector, appButton.AppButtonSpecs, null,
                                                                   new ViewLayoutDocker[] { _viewButtonSpecDocker },
                                                                   new IPaletteMetric[] { _ribbon.StateCommon },
                                                                   new PaletteMetricInt[] { PaletteMetricInt.None },
@@ -265,10 +282,7 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <summary>
         /// Sets the reason for the context menu being closed.
         /// </summary>
-        public Nullable<ToolStripDropDownCloseReason> CloseReason 
-        {
-            get { return _provider.ProviderCloseReason; }
-        }
+        public Nullable<ToolStripDropDownCloseReason> CloseReason => _provider.ProviderCloseReason;
 
         /// <summary>
         /// Show the context menu relative to the provided screen rectangle.
@@ -298,10 +312,14 @@ namespace ComponentFactory.Krypton.Ribbon
             screenPt.Y = Math.Max(screenPt.Y, workingArea.Y);
 
             if ((screenPt.X + preferredSize.Width) > workingArea.Right)
+            {
                 screenPt.X = workingArea.Right - preferredSize.Width;
+            }
 
             if ((screenPt.Y + preferredSize.Height) > workingArea.Bottom)
+            {
                 screenPt.Y = workingArea.Bottom - preferredSize.Height;
+            }
 
             // Call base class method that performs actual sizing and display of control
             base.Show(new Rectangle(screenPt, preferredSize));
@@ -312,8 +330,8 @@ namespace ComponentFactory.Krypton.Ribbon
         /// </summary>
         public KryptonContextMenuPositionH ShowHorz
         {
-            get { return _provider.ProviderShowHorz; }
-            set { _provider.ProviderShowHorz = value; }
+            get => _provider.ProviderShowHorz;
+            set => _provider.ProviderShowHorz = value;
         }
 
         /// <summary>
@@ -321,17 +339,14 @@ namespace ComponentFactory.Krypton.Ribbon
         /// </summary>
         public KryptonContextMenuPositionV ShowVert
         {
-            get { return _provider.ProviderShowVert; }
-            set { _provider.ProviderShowVert = value; }
+            get => _provider.ProviderShowVert;
+            set => _provider.ProviderShowVert = value;
         }
 
         /// <summary>
         /// Gets access to the view manager for the context menu.
         /// </summary>
-        public ViewContextMenuManager ViewContextMenuManager
-        {
-            get { return (ViewContextMenuManager)ViewManager; }
-        }
+        public ViewContextMenuManager ViewContextMenuManager => (ViewContextMenuManager)ViewManager;
 
         /// <summary>
         /// Should a mouse down at the provided point cause an end to popup tracking.
@@ -347,9 +362,13 @@ namespace ComponentFactory.Krypton.Ribbon
                 // the owner ribbon) then we do not want to end all tracking from this method. Otherwise
                 // if the mouse is inside the bottom half of the button then we do end tracking!
                 if (RectangleToClient(_rectAppButtonTopHalf).Contains(pt))
+                {
                     return false;
+                }
                 else if (ClientRectangle.Contains(pt) && _appButtonBottom.ClientRectangle.Contains(pt))
+                {
                     return true;
+                }
             }
 
             return base.DoesCurrentMouseDownEndAllTracking(m, pt);
@@ -365,9 +384,13 @@ namespace ComponentFactory.Krypton.Ribbon
         {
             // Is this mouse over the application button area?
             if (ClientRectangle.Contains(pt) && _appButtonBottom.Visible && _appButtonBottom.ClientRectangle.Contains(pt))
+            {
                 return false;
+            }
             else
+            {
                 return ViewContextMenuManager.DoesStackedClientMouseDownBecomeCurrent(m, pt);
+            }
         }
 
         /// <summary>
@@ -385,7 +408,9 @@ namespace ComponentFactory.Krypton.Ribbon
                 return true;
             }
             else
+            {
                 return base.DoesMouseDownGetEaten(m, pt);
+            }
         }
 
         /// <summary>
@@ -406,7 +431,7 @@ namespace ComponentFactory.Krypton.Ribbon
         protected PaletteRedirect Redirector
         {
             [System.Diagnostics.DebuggerStepThrough]
-            get { return _redirector; }
+            get;
         }
 
         /// <summary>
@@ -481,7 +506,9 @@ namespace ComponentFactory.Krypton.Ribbon
             {
                 // Find the preferred size which fits exactly the calculated contents size
                 using (ViewLayoutContext context = new ViewLayoutContext(this, Renderer))
+                {
                     return ViewManager.Root.GetPreferredSize(context);
+                }
             }
             finally
             {
@@ -506,7 +533,7 @@ namespace ComponentFactory.Krypton.Ribbon
                 _palette = palette;
 
                 // Update redirector to use palette as source for obtaining values
-                _redirector.Target = _palette;
+                Redirector.Target = _palette;
 
                 // Get the renderer associated with the palette
                 Renderer = _palette.GetRenderer();
@@ -534,8 +561,7 @@ namespace ComponentFactory.Krypton.Ribbon
 
         private void OnProviderClosing(object sender, CancelEventArgs e)
         {
-            if (_ribbon != null)
-                _ribbon.OnAppButtonMenuClosing(e);
+            _ribbon?.OnAppButtonMenuClosing(e);
         }
 
         private void OnProviderClose(object sender, CloseReasonEventArgs e)

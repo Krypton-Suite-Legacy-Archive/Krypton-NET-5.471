@@ -8,15 +8,9 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Text;
 using System.Drawing.Design;
 using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Diagnostics;
 using ComponentFactory.Krypton.Toolkit;
 
@@ -29,7 +23,7 @@ namespace ComponentFactory.Krypton.Ribbon
     {
         #region Static Fields
         private static readonly Image _defaultAppImage = Properties.Resources.AppButtonDefault;
-        private static readonly string _defaultAppText = "File";
+        private const string DEFAULT_APP_TEXT = "File";
         private static readonly Color _defaultAppBaseColorDark = Color.FromArgb(31, 72, 161);
         private static readonly Color _defaultAppBaseColorLight = Color.FromArgb(84, 158, 243);
         #endregion
@@ -56,17 +50,7 @@ namespace ComponentFactory.Krypton.Ribbon
         #region Instance Fields
         private KryptonRibbon _ribbon;
         private Image _appButtonImage;
-        private Image _appButtonToolTipImage;
-        private string _appButtonToolTipTitle;
-        private string _appButtonToolTipBody;
-        private Color _appButtonToolTipImageTransparentColor;
         private KryptonContextMenuItems _appButtonMenuItems;
-        private KryptonRibbonRecentDocCollection _appButtonRecentDocs;
-        private LabelStyle _appButtonToolTipStyle;
-        private AppMenuButtonSpecCollection _appButtonSpecs;
-        private Size _appButtonMinRecentSize;
-        private Size _appButtonMaxRecentSize;
-        private bool _appButtonShowRecentDocs;
         private bool _appButtonVisible;
         private Color _appButtonBaseColorDark;
         private Color _appButtonBaseColorLight;
@@ -85,23 +69,25 @@ namespace ComponentFactory.Krypton.Ribbon
             _ribbon = ribbon;
 
             // Default values
-            _appButtonMenuItems = new KryptonContextMenuItems();
-            _appButtonMenuItems.ImageColumn = false;
+            _appButtonMenuItems = new KryptonContextMenuItems
+            {
+                ImageColumn = false
+            };
             _appButtonImage = _defaultAppImage;
-            _appButtonSpecs = new AppMenuButtonSpecCollection(ribbon);
-            _appButtonRecentDocs = new KryptonRibbonRecentDocCollection();
-            _appButtonToolTipTitle = string.Empty;
-            _appButtonToolTipBody = string.Empty;
-            _appButtonToolTipImageTransparentColor = Color.Empty;
-            _appButtonToolTipStyle = LabelStyle.SuperTip;
-            _appButtonMinRecentSize = new Size(250, 250);
-            _appButtonMaxRecentSize = new Size(350, 350);
-            _appButtonShowRecentDocs = true;
+            AppButtonSpecs = new AppMenuButtonSpecCollection(ribbon);
+            AppButtonRecentDocs = new KryptonRibbonRecentDocCollection();
+            AppButtonToolTipTitle = string.Empty;
+            AppButtonToolTipBody = string.Empty;
+            AppButtonToolTipImageTransparentColor = Color.Empty;
+            AppButtonToolTipStyle = LabelStyle.SuperTip;
+            AppButtonMinRecentSize = new Size(250, 250);
+            AppButtonMaxRecentSize = new Size(350, 350);
+            AppButtonShowRecentDocs = true;
             _appButtonVisible = true;
             _appButtonBaseColorDark = _defaultAppBaseColorDark;
             _appButtonBaseColorLight = _defaultAppBaseColorLight;
             _appButtonTextColor = Color.White;
-            _appButtonText = _defaultAppText;
+            _appButtonText = DEFAULT_APP_TEXT;
         }
 		#endregion
 
@@ -110,30 +96,24 @@ namespace ComponentFactory.Krypton.Ribbon
         /// Gets a value indicating if all values are default.
         /// </summary>
         [Browsable(false)]
-        public override bool IsDefault
-        {
-            get
-            {
-                return ((AppButtonImage == _defaultAppImage) &&
-                        (AppButtonText == _defaultAppText) &&
-                        (AppButtonBaseColorDark == _defaultAppBaseColorDark) &&
-                        (AppButtonBaseColorLight == _defaultAppBaseColorLight) &&
-                        (AppButtonTextColor == Color.White) &&
-                        (AppButtonMenuItems.Count == 0) &&
-                        (AppButtonRecentDocs.Count == 0) &&
-                        AppButtonMinRecentSize.Equals(new Size(250, 250)) &&
-                        AppButtonMaxRecentSize.Equals(new Size(350, 350)) &&
-                        AppButtonShowRecentDocs &&
-                        (AppButtonSpecs.Count == 0) &&
-                        string.IsNullOrEmpty(AppButtonToolTipBody) &&
-                        string.IsNullOrEmpty(AppButtonToolTipBody) &&
-                        (AppButtonToolTipImage == null) &&
-                        (AppButtonToolTipImageTransparentColor == Color.Empty) &&
-                        (AppButtonToolTipStyle == LabelStyle.SuperTip) &&
-                        AppButtonVisible);
+        public override bool IsDefault => ((AppButtonImage == _defaultAppImage) &&
+                                           (AppButtonText == DEFAULT_APP_TEXT) &&
+                                           (AppButtonBaseColorDark == _defaultAppBaseColorDark) &&
+                                           (AppButtonBaseColorLight == _defaultAppBaseColorLight) &&
+                                           (AppButtonTextColor == Color.White) &&
+                                           (AppButtonMenuItems.Count == 0) &&
+                                           (AppButtonRecentDocs.Count == 0) &&
+                                           AppButtonMinRecentSize.Equals(new Size(250, 250)) &&
+                                           AppButtonMaxRecentSize.Equals(new Size(350, 350)) &&
+                                           AppButtonShowRecentDocs &&
+                                           (AppButtonSpecs.Count == 0) &&
+                                           string.IsNullOrEmpty(AppButtonToolTipBody) &&
+                                           string.IsNullOrEmpty(AppButtonToolTipBody) &&
+                                           (AppButtonToolTipImage == null) &&
+                                           (AppButtonToolTipImageTransparentColor == Color.Empty) &&
+                                           (AppButtonToolTipStyle == LabelStyle.SuperTip) &&
+                                           AppButtonVisible);
 
-            }
-        }
         #endregion
 
         #region AppButtonImage
@@ -146,7 +126,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [RefreshPropertiesAttribute(RefreshProperties.All)]
         public Image AppButtonImage
         {
-            get { return _appButtonImage; }
+            get => _appButtonImage;
 
             set
             {
@@ -155,8 +135,7 @@ namespace ComponentFactory.Krypton.Ribbon
                     _appButtonImage = value;
 
                     // Captin area is not created when property first set to default value
-                    if (_ribbon.CaptionArea != null)
-                        _ribbon.CaptionArea.AppButtonChanged();
+                    _ribbon.CaptionArea?.AppButtonChanged();
                 }
             }
         }
@@ -178,8 +157,8 @@ namespace ComponentFactory.Krypton.Ribbon
         [DefaultValue(typeof(Color), "31, 72, 161")]
         public Color AppButtonBaseColorDark
         {
-            get { return _appButtonBaseColorDark; }
-            
+            get => _appButtonBaseColorDark;
+
             set 
             {
                 if (_appButtonBaseColorDark != null)
@@ -202,8 +181,8 @@ namespace ComponentFactory.Krypton.Ribbon
         [DefaultValue(typeof(Color), "84, 158, 243")]
         public Color AppButtonBaseColorLight
         {
-            get { return _appButtonBaseColorLight; }
-            
+            get => _appButtonBaseColorLight;
+
             set 
             {
                 if (_appButtonBaseColorLight != null)
@@ -226,8 +205,8 @@ namespace ComponentFactory.Krypton.Ribbon
         [DefaultValue(typeof(Color), "White")]
         public Color AppButtonTextColor
         {
-            get { return _appButtonTextColor; }
-            
+            get => _appButtonTextColor;
+
             set 
             {
                 if (_appButtonTextColor != null)
@@ -251,8 +230,8 @@ namespace ComponentFactory.Krypton.Ribbon
         [Localizable(true)]
         public string AppButtonText
         {
-            get { return _appButtonText; }
-            
+            get => _appButtonText;
+
             set 
             {
                 if (_appButtonText != null)
@@ -272,10 +251,8 @@ namespace ComponentFactory.Krypton.Ribbon
         [Description("Context menu items for the application button.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         [Editor("ComponentFactory.Krypton.Toolkit.KryptonContextMenuItemCollectionEditor, ComponentFactory.Krypton.Design, Version=4.7.1.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e", typeof(UITypeEditor))]
-        public virtual KryptonContextMenuItemCollection AppButtonMenuItems
-        {
-            get { return _appButtonMenuItems.Items; }
-        }
+        public virtual KryptonContextMenuItemCollection AppButtonMenuItems => _appButtonMenuItems.Items;
+
         #endregion
 
         #region AppButtonRecentDocs
@@ -286,10 +263,8 @@ namespace ComponentFactory.Krypton.Ribbon
         [Description("Recent document entries for the application buttton.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         [Editor("ComponentFactory.Krypton.Ribbon.KryptonRibbonRecentDocCollectionEditor, ComponentFactory.Krypton.Design, Version=4.7.1.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e", typeof(UITypeEditor))]
-        public virtual KryptonRibbonRecentDocCollection AppButtonRecentDocs
-        {
-            get { return _appButtonRecentDocs; }
-        }
+        public virtual KryptonRibbonRecentDocCollection AppButtonRecentDocs { get; }
+
         #endregion
 
         #region AppButtonMinRecentSize
@@ -299,11 +274,8 @@ namespace ComponentFactory.Krypton.Ribbon
         [Category("Values")]
         [Description("Minimum size of the recent documents area of the application button.")]
         [DefaultValue(typeof(Size), "250,250")]
-        public Size AppButtonMinRecentSize
-        {
-            get { return _appButtonMinRecentSize; }
-            set { _appButtonMinRecentSize = value; }
-        }
+        public Size AppButtonMinRecentSize { get; set; }
+
         #endregion
 
         #region AppButtonMaxRecentSize
@@ -313,11 +285,8 @@ namespace ComponentFactory.Krypton.Ribbon
         [Category("Values")]
         [Description("Maximum size of the recent documents area of the application button.")]
         [DefaultValue(typeof(Size), "350,350")]
-        public Size AppButtonMaxRecentSize
-        {
-            get { return _appButtonMaxRecentSize; }
-            set { _appButtonMaxRecentSize = value; }
-        }
+        public Size AppButtonMaxRecentSize { get; set; }
+
         #endregion
 
         #region AppButtonSpecs
@@ -327,10 +296,8 @@ namespace ComponentFactory.Krypton.Ribbon
         [Category("Visuals")]
         [Description("Collection of button specifications for the app button context menu.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public AppMenuButtonSpecCollection AppButtonSpecs
-        {
-            get { return _appButtonSpecs; }
-        }
+        public AppMenuButtonSpecCollection AppButtonSpecs { get; }
+
         #endregion
 
         #region AppButtonShowRecentDocs
@@ -340,11 +307,8 @@ namespace ComponentFactory.Krypton.Ribbon
         [Category("Visuals")]
         [Description("Determine if the recent documents area should be shown in the application button.")]
         [DefaultValue(true)]
-        public bool AppButtonShowRecentDocs
-        {
-            get { return _appButtonShowRecentDocs; }
-            set { _appButtonShowRecentDocs = value; }
-        }
+        public bool AppButtonShowRecentDocs { get; set; }
+
         #endregion
 
         #region AppButtonToolTipStyle
@@ -355,11 +319,8 @@ namespace ComponentFactory.Krypton.Ribbon
         [Description("Tooltip style for the application button.")]
         [DefaultValue(typeof(LabelStyle), "SuperTip")]
         [Localizable(true)]
-        public LabelStyle AppButtonToolTipStyle
-        {
-            get { return _appButtonToolTipStyle; }
-            set { _appButtonToolTipStyle = value; }
-        }
+        public LabelStyle AppButtonToolTipStyle { get; set; }
+
         #endregion
 
         #region AppButtonToolTipImage
@@ -371,11 +332,8 @@ namespace ComponentFactory.Krypton.Ribbon
         [Description("Display image associated ToolTip.")]
         [DefaultValue(null)]
         [Localizable(true)]
-        public Image AppButtonToolTipImage
-        {
-            get { return _appButtonToolTipImage; }
-            set { _appButtonToolTipImage = value; }
-        }
+        public Image AppButtonToolTipImage { get; set; }
+
         #endregion
 
         #region AppButtonToolTipImageTransparentColor
@@ -387,11 +345,8 @@ namespace ComponentFactory.Krypton.Ribbon
         [Description("Color to draw as transparent in the ToolTipImage.")]
         [KryptonDefaultColorAttribute()]
         [Localizable(true)]
-        public Color AppButtonToolTipImageTransparentColor
-        {
-            get { return _appButtonToolTipImageTransparentColor; }
-            set { _appButtonToolTipImageTransparentColor = value; }
-        }
+        public Color AppButtonToolTipImageTransparentColor { get; set; }
+
         #endregion
 
         #region AppButtonToolTipTitle
@@ -404,11 +359,8 @@ namespace ComponentFactory.Krypton.Ribbon
         [Editor("System.ComponentModel.Design.MultilineStringEditor, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
         [DefaultValue("")]
         [Localizable(true)]
-        public string AppButtonToolTipTitle
-        {
-            get { return _appButtonToolTipTitle; }
-            set { _appButtonToolTipTitle = value; }
-        }
+        public string AppButtonToolTipTitle { get; set; }
+
         #endregion
 
         #region AppButtonToolTipBody
@@ -421,11 +373,8 @@ namespace ComponentFactory.Krypton.Ribbon
         [Editor("System.ComponentModel.Design.MultilineStringEditor, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
         [DefaultValue("")]
         [Localizable(true)]
-        public string AppButtonToolTipBody
-        {
-            get { return _appButtonToolTipBody; }
-            set { _appButtonToolTipBody = value; }
-        }
+        public string AppButtonToolTipBody { get; set; }
+
         #endregion
 
         #region AppButtonVisible
@@ -437,8 +386,8 @@ namespace ComponentFactory.Krypton.Ribbon
         [DefaultValue(true)]
         public bool AppButtonVisible
         {
-            get { return _appButtonVisible; }
-         
+            get => _appButtonVisible;
+
             set
             {
                 if (_appButtonVisible != value)

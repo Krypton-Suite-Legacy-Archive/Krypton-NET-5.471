@@ -9,10 +9,7 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
 using System.Diagnostics;
@@ -27,12 +24,13 @@ namespace ComponentFactory.Krypton.Ribbon
                                                       IRibbonViewGroupItemView
     {
         #region Static Fields
-        private static readonly int NULL_CONTROL_WIDTH = 50;
+
+        private const int NULL_CONTROL_WIDTH = 50;
+
         #endregion
 
         #region Instance Fields
         private KryptonRibbon _ribbon;
-        private KryptonRibbonGroupMaskedTextBox _ribbonMaskedTextBox;
         private ViewDrawRibbonGroup _activeGroup;
         private MaskedTextBoxController _controller;
         private NeedPaintHandler _needPaint;
@@ -56,16 +54,16 @@ namespace ComponentFactory.Krypton.Ribbon
 
             // Remember incoming references
             _ribbon = ribbon;
-            _ribbonMaskedTextBox = ribbonMaskedTextBox;
+            GroupMaskedTextBox = ribbonMaskedTextBox;
             _needPaint = needPaint;
-            _currentSize = _ribbonMaskedTextBox.ItemSizeCurrent;
+            _currentSize = GroupMaskedTextBox.ItemSizeCurrent;
 
             // Hook into the masked textbox events
-            _ribbonMaskedTextBox.MouseEnterControl += new EventHandler(OnMouseEnterControl);
-            _ribbonMaskedTextBox.MouseLeaveControl += new EventHandler(OnMouseLeaveControl);
+            GroupMaskedTextBox.MouseEnterControl += new EventHandler(OnMouseEnterControl);
+            GroupMaskedTextBox.MouseLeaveControl += new EventHandler(OnMouseLeaveControl);
 
             // Associate this view with the source component (required for design time selection)
-            Component = _ribbonMaskedTextBox;
+            Component = GroupMaskedTextBox;
 
             if (_ribbon.InDesignMode)
             {
@@ -76,7 +74,7 @@ namespace ComponentFactory.Krypton.Ribbon
             }
 
             // Create controller needed for handling focus and key tip actions
-            _controller = new MaskedTextBoxController(_ribbon, _ribbonMaskedTextBox, this);
+            _controller = new MaskedTextBoxController(_ribbon, GroupMaskedTextBox, this);
             SourceController = _controller;
             KeyController = _controller;
 
@@ -85,13 +83,13 @@ namespace ComponentFactory.Krypton.Ribbon
             _ribbon.ViewRibbonManager.LayoutAfter += new EventHandler(OnLayoutAction);
 
             // Define back reference to view for the masked text box definition
-            _ribbonMaskedTextBox.MaskedTextBoxView = this;
+            GroupMaskedTextBox.MaskedTextBoxView = this;
 
             // Give paint delegate to masked textbox so its palette changes are redrawn
-            _ribbonMaskedTextBox.ViewPaintDelegate = needPaint;
+            GroupMaskedTextBox.ViewPaintDelegate = needPaint;
 
             // Hook into changes in the ribbon custom definition
-            _ribbonMaskedTextBox.PropertyChanged += new PropertyChangedEventHandler(OnMaskedTextBoxPropertyChanged);
+            GroupMaskedTextBox.PropertyChanged += new PropertyChangedEventHandler(OnMaskedTextBoxPropertyChanged);
         }
 
 		/// <summary>
@@ -112,19 +110,19 @@ namespace ComponentFactory.Krypton.Ribbon
         {
             if (disposing)
             {
-                if (_ribbonMaskedTextBox != null)
+                if (GroupMaskedTextBox != null)
                 {
                     // Must unhook to prevent memory leaks
-                    _ribbonMaskedTextBox.MouseEnterControl -= new EventHandler(OnMouseEnterControl);
-                    _ribbonMaskedTextBox.MouseLeaveControl -= new EventHandler(OnMouseLeaveControl);
-                    _ribbonMaskedTextBox.ViewPaintDelegate = null;
-                    _ribbonMaskedTextBox.PropertyChanged -= new PropertyChangedEventHandler(OnMaskedTextBoxPropertyChanged);
+                    GroupMaskedTextBox.MouseEnterControl -= new EventHandler(OnMouseEnterControl);
+                    GroupMaskedTextBox.MouseLeaveControl -= new EventHandler(OnMouseLeaveControl);
+                    GroupMaskedTextBox.ViewPaintDelegate = null;
+                    GroupMaskedTextBox.PropertyChanged -= new PropertyChangedEventHandler(OnMaskedTextBoxPropertyChanged);
                     _ribbon.ViewRibbonManager.LayoutAfter -= new EventHandler(OnLayoutAction);
                     _ribbon.ViewRibbonManager.LayoutBefore -= new EventHandler(OnLayoutAction);
 
                     // Remove association with definition
-                    _ribbonMaskedTextBox.MaskedTextBoxView = null; 
-                    _ribbonMaskedTextBox = null;
+                    GroupMaskedTextBox.MaskedTextBoxView = null; 
+                    GroupMaskedTextBox = null;
                 }
             }
 
@@ -136,10 +134,8 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <summary>
         /// Gets access to the owning group masked textbox instance.
         /// </summary>
-        public KryptonRibbonGroupMaskedTextBox GroupMaskedTextBox
-        {
-            get { return _ribbonMaskedTextBox; }
-        }
+        public KryptonRibbonGroupMaskedTextBox GroupMaskedTextBox { get; private set; }
+
         #endregion
 
         #region LostFocus
@@ -150,7 +146,7 @@ namespace ComponentFactory.Krypton.Ribbon
         public override void LostFocus(Control c)
         {
             // Ask ribbon to shift focus to the hidden control
-            _ribbon.HideFocus(_ribbonMaskedTextBox.MaskedTextBox);
+            _ribbon.HideFocus(GroupMaskedTextBox.MaskedTextBox);
             base.LostFocus(c);
         }
         #endregion
@@ -162,13 +158,14 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <returns>ViewBase of item; otherwise false.</returns>
         public ViewBase GetFirstFocusItem()
         {
-            if ((_ribbonMaskedTextBox.Visible) &&
-                (_ribbonMaskedTextBox.LastMaskedTextBox != null) &&
-                (_ribbonMaskedTextBox.LastMaskedTextBox.MaskedTextBox != null) &&
-                (_ribbonMaskedTextBox.LastMaskedTextBox.MaskedTextBox.CanSelect))
+            if ((GroupMaskedTextBox.Visible) && (GroupMaskedTextBox.LastMaskedTextBox?.MaskedTextBox != null) && (GroupMaskedTextBox.LastMaskedTextBox.MaskedTextBox.CanSelect))
+            {
                 return this;
+            }
             else
+            {
                 return null;
+            }
         }
         #endregion
 
@@ -179,13 +176,14 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <returns>ViewBase of item; otherwise false.</returns>
         public ViewBase GetLastFocusItem()
         {
-            if ((_ribbonMaskedTextBox.Visible) &&
-                (_ribbonMaskedTextBox.LastMaskedTextBox != null) &&
-                (_ribbonMaskedTextBox.LastMaskedTextBox.MaskedTextBox != null) &&
-                (_ribbonMaskedTextBox.LastMaskedTextBox.MaskedTextBox.CanSelect))
+            if ((GroupMaskedTextBox.Visible) && (GroupMaskedTextBox.LastMaskedTextBox?.MaskedTextBox != null) && (GroupMaskedTextBox.LastMaskedTextBox.MaskedTextBox.CanSelect))
+            {
                 return this;
+            }
             else
+            {
                 return null;
+            }
         }
         #endregion
 
@@ -248,8 +246,8 @@ namespace ComponentFactory.Krypton.Ribbon
                         break;
                 }
 
-                keyTipList.Add(new KeyTipInfo(_ribbonMaskedTextBox.Enabled, 
-                                              _ribbonMaskedTextBox.KeyTip,
+                keyTipList.Add(new KeyTipInfo(GroupMaskedTextBox.Enabled, 
+                                              GroupMaskedTextBox.KeyTip,
                                               screenPt, 
                                               ClientRectangle,
                                               _controller));
@@ -272,7 +270,7 @@ namespace ComponentFactory.Krypton.Ribbon
         /// </summary>
         public void ResetGroupItemSize()
         {
-            _currentSize = _ribbonMaskedTextBox.ItemSizeCurrent;
+            _currentSize = GroupMaskedTextBox.ItemSizeCurrent;
         }
 
         /// <summary>
@@ -298,12 +296,18 @@ namespace ComponentFactory.Krypton.Ribbon
                 }
             }
             else
+            {
                 preferredSize.Width = NULL_CONTROL_WIDTH;
+            }
 
             if (_currentSize == GroupItemSize.Large)
+            {
                 preferredSize.Height = _ribbon.CalculatedValues.GroupTripleHeight;
+            }
             else
+            {
                 preferredSize.Height = _ribbon.CalculatedValues.GroupLineHeight;
+            }
 
             return preferredSize;
         }
@@ -323,13 +327,10 @@ namespace ComponentFactory.Krypton.Ribbon
             if (!context.ViewManager.DoNotLayoutControls)
             {
                 // If we have an actual control, position it with a pixel padding all around
-                if (LastMaskedTextBox != null)
-                {
-                    LastMaskedTextBox.SetBounds(ClientLocation.X + 1,
-                                                ClientLocation.Y + 1,
-                                                ClientWidth - 2,
-                                                ClientHeight - 2);
-                }
+                LastMaskedTextBox?.SetBounds(ClientLocation.X + 1,
+                    ClientLocation.Y + 1,
+                    ClientWidth - 2,
+                    ClientHeight - 2);
             }
 
             // Let child elements layout in given space
@@ -347,7 +348,7 @@ namespace ComponentFactory.Krypton.Ribbon
             Debug.Assert(context != null);
 
             // If we do not have a masked textbox
-            if (_ribbonMaskedTextBox.MaskedTextBox == null)
+            if (GroupMaskedTextBox.MaskedTextBox == null)
             {
                 // And we are in design time
                 if (_ribbon.InDesignMode)
@@ -387,7 +388,9 @@ namespace ComponentFactory.Krypton.Ribbon
                 _needPaint(this, new NeedLayoutEventArgs(needLayout));
 
                 if (needLayout)
+                {
                     _ribbon.PerformLayout();
+                }
             }
         }
         #endregion
@@ -395,13 +398,13 @@ namespace ComponentFactory.Krypton.Ribbon
         #region Implementation
         private void OnContextClick(object sender, MouseEventArgs e)
         {
-            _ribbonMaskedTextBox.OnDesignTimeContextMenu(e);
+            GroupMaskedTextBox.OnDesignTimeContextMenu(e);
         }
 
         private void OnMaskedTextBoxPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             bool updateLayout = false;
-            bool updatePaint = false;
+            const bool UPDATE_PAINT = false;
 
             switch (e.PropertyName)
             {
@@ -420,40 +423,42 @@ namespace ComponentFactory.Krypton.Ribbon
             if (updateLayout)
             {
                 // If we are on the currently selected tab then...
-                if ((_ribbonMaskedTextBox.RibbonTab != null) &&
-                    (_ribbon.SelectedTab == _ribbonMaskedTextBox.RibbonTab))
+                if ((GroupMaskedTextBox.RibbonTab != null) &&
+                    (_ribbon.SelectedTab == GroupMaskedTextBox.RibbonTab))
                 {
                     // ...layout so the visible change is made
                     OnNeedPaint(true);
                 }
             }
 
-            if (updatePaint)
+            if (UPDATE_PAINT)
+#pragma warning disable 162
             {
                 // If this button is actually defined as visible...
-                if (_ribbonMaskedTextBox.Visible || _ribbon.InDesignMode)
+                if (GroupMaskedTextBox.Visible || _ribbon.InDesignMode)
                 {
                     // ...and on the currently selected tab then...
-                    if ((_ribbonMaskedTextBox.RibbonTab != null) &&
-                        (_ribbon.SelectedTab == _ribbonMaskedTextBox.RibbonTab))
+                    if ((GroupMaskedTextBox.RibbonTab != null) &&
+                        (_ribbon.SelectedTab == GroupMaskedTextBox.RibbonTab))
                     {
                         // ...repaint it right now
                         OnNeedPaint(false, ClientRectangle);
                     }
                 }
             }
+#pragma warning restore 162
         }
 
         private Control LastParentControl
         {
-            get { return _ribbonMaskedTextBox.LastParentControl; }
-            set { _ribbonMaskedTextBox.LastParentControl = value; }
+            get => GroupMaskedTextBox.LastParentControl;
+            set => GroupMaskedTextBox.LastParentControl = value;
         }
 
         private KryptonMaskedTextBox LastMaskedTextBox
         {
-            get { return _ribbonMaskedTextBox.LastMaskedTextBox; }
-            set { _ribbonMaskedTextBox.LastMaskedTextBox = value; }
+            get => GroupMaskedTextBox.LastMaskedTextBox;
+            set => GroupMaskedTextBox.LastMaskedTextBox = value;
         }
 
         private void UpdateParent(Control parentControl)
@@ -461,11 +466,11 @@ namespace ComponentFactory.Krypton.Ribbon
             // Is there a change in the masked textbox or a change in 
             // the parent control that is hosting the control...
             if ((parentControl != LastParentControl) ||
-                (LastMaskedTextBox != _ribbonMaskedTextBox.MaskedTextBox))
+                (LastMaskedTextBox != GroupMaskedTextBox.MaskedTextBox))
             {
                 // We only modify the parent and visible state if processing for correct container
-                if ((_ribbonMaskedTextBox.RibbonContainer.RibbonGroup.ShowingAsPopup && (parentControl is VisualPopupGroup)) ||
-                    (!_ribbonMaskedTextBox.RibbonContainer.RibbonGroup.ShowingAsPopup && !(parentControl is VisualPopupGroup)))
+                if ((GroupMaskedTextBox.RibbonContainer.RibbonGroup.ShowingAsPopup && (parentControl is VisualPopupGroup)) ||
+                    (!GroupMaskedTextBox.RibbonContainer.RibbonGroup.ShowingAsPopup && !(parentControl is VisualPopupGroup)))
                 {
                     // If we have added the custrom control to a parent before
                     if ((LastMaskedTextBox != null) && (LastParentControl != null))
@@ -479,7 +484,7 @@ namespace ComponentFactory.Krypton.Ribbon
                     }
 
                     // Remember the current control and new parent
-                    LastMaskedTextBox = _ribbonMaskedTextBox.MaskedTextBox;
+                    LastMaskedTextBox = GroupMaskedTextBox.MaskedTextBox;
                     LastParentControl = parentControl;
 
                     // If we have a new masked textbox and parent
@@ -504,13 +509,13 @@ namespace ComponentFactory.Krypton.Ribbon
             if (c != null)
             {
                 // Start with the enabled state of the group element
-                bool enabled = _ribbonMaskedTextBox.Enabled;
+                bool enabled = GroupMaskedTextBox.Enabled;
 
                 // If we have an associated designer setup...
-                if (!_ribbon.InDesignHelperMode && (_ribbonMaskedTextBox.MaskedTextBoxDesigner != null))
+                if (!_ribbon.InDesignHelperMode && (GroupMaskedTextBox.MaskedTextBoxDesigner != null))
                 {
                     // And we are not using the design helpers, then use the design specified value
-                    enabled = _ribbonMaskedTextBox.MaskedTextBoxDesigner.DesignEnabled;
+                    enabled = GroupMaskedTextBox.MaskedTextBoxDesigner.DesignEnabled;
                 }
 
                 c.Enabled = enabled;
@@ -522,13 +527,13 @@ namespace ComponentFactory.Krypton.Ribbon
             if (c != null)
             {
                 // Start with the visible state of the group element
-                bool visible = _ribbonMaskedTextBox.Visible;
+                bool visible = GroupMaskedTextBox.Visible;
 
                 // If we have an associated designer setup...
-                if (!_ribbon.InDesignHelperMode && (_ribbonMaskedTextBox.MaskedTextBoxDesigner != null))
+                if (!_ribbon.InDesignHelperMode && (GroupMaskedTextBox.MaskedTextBoxDesigner != null))
                 {
                     // And we are not using the design helpers, then use the design specified value
-                    visible = _ribbonMaskedTextBox.MaskedTextBoxDesigner.DesignVisible;
+                    visible = GroupMaskedTextBox.MaskedTextBoxDesigner.DesignVisible;
                 }
 
                 return visible;
@@ -542,40 +547,43 @@ namespace ComponentFactory.Krypton.Ribbon
             if (c != null)
             {
                 // Start with the visible state of the group element
-                bool visible = _ribbonMaskedTextBox.Visible;
+                bool visible = GroupMaskedTextBox.Visible;
 
                 // If we have an associated designer setup...
-                if (!_ribbon.InDesignHelperMode && (_ribbonMaskedTextBox.MaskedTextBoxDesigner != null))
+                if (!_ribbon.InDesignHelperMode && (GroupMaskedTextBox.MaskedTextBoxDesigner != null))
                 {
                     // And we are not using the design helpers, then use the design specified value
-                    visible = _ribbonMaskedTextBox.MaskedTextBoxDesigner.DesignVisible;
+                    visible = GroupMaskedTextBox.MaskedTextBoxDesigner.DesignVisible;
                 }
 
                 if (visible)
                 {
                     // Only visible if on the currently selected page
-                    if ((_ribbonMaskedTextBox.RibbonTab == null) ||
-                        (_ribbon.SelectedTab != _ribbonMaskedTextBox.RibbonTab))
+                    if ((GroupMaskedTextBox.RibbonTab == null) ||
+                        (_ribbon.SelectedTab != GroupMaskedTextBox.RibbonTab))
+                    {
                         visible = false;
+                    }
                     else
                     {
                         // Check the owning group is visible
-                        if ((_ribbonMaskedTextBox.RibbonContainer != null) &&
-                            (_ribbonMaskedTextBox.RibbonContainer.RibbonGroup != null) &&
-                            !_ribbonMaskedTextBox.RibbonContainer.RibbonGroup.Visible &&
-                            !_ribbon.InDesignMode)
+                        if ((GroupMaskedTextBox.RibbonContainer?.RibbonGroup != null) && !GroupMaskedTextBox.RibbonContainer.RibbonGroup.Visible && !_ribbon.InDesignMode)
+                        {
                             visible = false;
+                        }
                         else
                         {
                             // Check that the group is not collapsed
-                            if ((_ribbonMaskedTextBox.RibbonContainer.RibbonGroup.IsCollapsed) &&
-                                ((_ribbon.GetControllerControl(_ribbonMaskedTextBox.MaskedTextBox) is KryptonRibbon) ||
-                                 (_ribbon.GetControllerControl(_ribbonMaskedTextBox.MaskedTextBox) is VisualPopupMinimized)))
+                            if ((GroupMaskedTextBox.RibbonContainer.RibbonGroup.IsCollapsed) &&
+                                ((_ribbon.GetControllerControl(GroupMaskedTextBox.MaskedTextBox) is KryptonRibbon) ||
+                                 (_ribbon.GetControllerControl(GroupMaskedTextBox.MaskedTextBox) is VisualPopupMinimized)))
+                            {
                                 visible = false;
+                            }
                             else
                             {
                                 // Check that the hierarchy of containers are all visible
-                                KryptonRibbonGroupContainer container = _ribbonMaskedTextBox.RibbonContainer;
+                                KryptonRibbonGroupContainer container = GroupMaskedTextBox.RibbonContainer;
 
                                 // Keep going until we have searched the entire parent chain of containers
                                 while (container != null)
@@ -602,7 +610,7 @@ namespace ComponentFactory.Krypton.Ribbon
         private void OnLayoutAction(object sender, EventArgs e)
         {
             // If not disposed then we still have a element reference
-            if (_ribbonMaskedTextBox != null)
+            if (GroupMaskedTextBox != null)
             {
                 // Change in selected tab requires a retest of the control visibility
                 UpdateVisible(LastMaskedTextBox);
@@ -620,9 +628,9 @@ namespace ComponentFactory.Krypton.Ribbon
             // Keep going till we get to the top or find a group
             while (parent != null)
             {
-                if (parent is ViewDrawRibbonGroup)
+                if (parent is ViewDrawRibbonGroup ribGroup)
                 {
-                    _activeGroup = (ViewDrawRibbonGroup)parent;
+                    _activeGroup = ribGroup;
                     break;
                 }
 

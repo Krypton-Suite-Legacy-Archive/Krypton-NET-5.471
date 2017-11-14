@@ -9,11 +9,8 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
-using System.Data;
 using System.Drawing;
 using System.ComponentModel;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
@@ -34,9 +31,8 @@ namespace ComponentFactory.Krypton.Toolkit
     public sealed class KryptonSplitterPanel : KryptonPanel
 	{
 		#region Instance Fields
-		private bool _collapsed;
-		private KryptonSplitContainer _container;
-		#endregion
+
+	    #endregion
 
 		#region Events
 		/// <summary>
@@ -97,7 +93,7 @@ namespace ComponentFactory.Krypton.Toolkit
 		{
 			Debug.Assert(container != null);
 
-			_container = container;
+			Owner = container;
 		}
 		#endregion
 
@@ -171,12 +167,9 @@ namespace ComponentFactory.Krypton.Toolkit
 		[Bindable(false)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-		public new DockPaddingEdges DockPadding
-		{
-			get { return base.DockPadding; }
-		}
+		public new DockPaddingEdges DockPadding => base.DockPadding;
 
-		/// <summary>
+	    /// <summary>
 		/// Gets or sets the height of the KryptonSplitterPanel. 
 		/// </summary>
         [Browsable(false)]
@@ -187,16 +180,17 @@ namespace ComponentFactory.Krypton.Toolkit
 			get
 			{
 				if (Collapsed)
-					return 0;
-				else
-					return base.Height;
-			}
+                {
+                    return 0;
+                }
+                else
+                {
+                    return base.Height;
+                }
+            }
 
-			set
-			{
-				throw new NotSupportedException("Cannot set the Height of a KryptonSplitterPanel");
-			}
-		}
+			set => throw new NotSupportedException("Cannot set the Height of a KryptonSplitterPanel");
+	    }
 
 		/// <summary>
 		/// Gets or sets the coordinates of the upper-left corner of the KryptonSplitterPanel relative to the upper-left corner of its KryptonSplitContainer. 
@@ -207,8 +201,8 @@ namespace ComponentFactory.Krypton.Toolkit
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public new Point Location
 		{
-			get { return base.Location; }
-			set { base.Location = value; }
+			get => base.Location;
+		    set => base.Location = value;
 		}
 
 		/// <summary>
@@ -219,8 +213,8 @@ namespace ComponentFactory.Krypton.Toolkit
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public override Size MaximumSize
 		{
-			get { return base.MaximumSize; }
-			set { base.MaximumSize = value; }
+			get => base.MaximumSize;
+		    set => base.MaximumSize = value;
 		}
 
 		/// <summary>
@@ -231,8 +225,8 @@ namespace ComponentFactory.Krypton.Toolkit
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public override Size MinimumSize
 		{
-			get { return base.MinimumSize; }
-			set { base.MinimumSize = value; }
+			get => base.MinimumSize;
+		    set => base.MinimumSize = value;
 		}
 
 		/// <summary>
@@ -243,8 +237,8 @@ namespace ComponentFactory.Krypton.Toolkit
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public new string Name
 		{
-			get { return base.Name; }
-			set { base.Name = value; }
+			get => base.Name;
+		    set => base.Name = value;
 		}
 
 		/// <summary>
@@ -255,8 +249,8 @@ namespace ComponentFactory.Krypton.Toolkit
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public new Control Parent
 		{
-			get { return base.Parent; }
-			set { base.Parent = value; }
+			get => base.Parent;
+		    set => base.Parent = value;
 		}
 
 		/// <summary>
@@ -271,12 +265,16 @@ namespace ComponentFactory.Krypton.Toolkit
 			get 
 			{
 				if (Collapsed)
-					return Size.Empty;
-				else
-					return base.Size;
-			}
+                {
+                    return Size.Empty;
+                }
+                else
+                {
+                    return base.Size;
+                }
+            }
 
-			set { base.Size = value; }
+			set => base.Size = value;
 		}
 
 		/// <summary>
@@ -287,8 +285,8 @@ namespace ComponentFactory.Krypton.Toolkit
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public new int TabIndex
 		{
-			get { return base.TabIndex; }
-			set { base.TabIndex = value; }
+			get => base.TabIndex;
+		    set => base.TabIndex = value;
 		}
 
 		/// <summary>
@@ -299,8 +297,8 @@ namespace ComponentFactory.Krypton.Toolkit
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public new bool TabStop
 		{
-			get { return base.TabStop; }
-			set { base.TabStop = value; }
+			get => base.TabStop;
+		    set => base.TabStop = value;
 		}
 
 		/// <summary>
@@ -311,8 +309,8 @@ namespace ComponentFactory.Krypton.Toolkit
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public new bool Visible
 		{
-			get { return base.Visible; }
-			set { base.Visible = value; }
+			get => base.Visible;
+		    set => base.Visible = value;
 		}
 
 		/// <summary>
@@ -326,15 +324,16 @@ namespace ComponentFactory.Krypton.Toolkit
 			get
 			{
 				if (Collapsed)
-					return 0;
-				else
-					return base.Width;
-			}
+                {
+                    return 0;
+                }
+                else
+                {
+                    return base.Width;
+                }
+            }
 
-			set
-			{
-				throw new NotSupportedException("Cannot set the Width of a KryptonSplitterPanel");
-			}
+			set => throw new NotSupportedException("Cannot set the Width of a KryptonSplitterPanel");
 		}
 
 		#endregion
@@ -343,19 +342,15 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// <summary>
 		/// Gets the space, in pixels, that is specified by default between controls.
 		/// </summary>
-		protected override Padding DefaultMargin
-		{
-			get { return new Padding(0, 0, 0, 0); }
-		}
+		protected override Padding DefaultMargin => new Padding(0, 0, 0, 0);
 
-		/// <summary>
+	    /// <summary>
 		/// Raises the AutoSizeChanged event.
 		/// </summary>
 		/// <param name="e">An EventArgs containing the event data.</param>
 		protected override void OnAutoSizeChanged(EventArgs e)
 		{
-			if (AutoSizeChanged != null)
-				AutoSizeChanged(this, e);
+            AutoSizeChanged?.Invoke(this, e);
 
             base.OnAutoSizeChanged(e);
         }
@@ -366,8 +361,7 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// <param name="e">An EventArgs containing the event data.</param>
 		protected override void OnDockChanged(EventArgs e)
 		{
-			if (DockChanged != null)
-				DockChanged(this, e);
+            DockChanged?.Invoke(this, e);
 
             base.OnDockChanged(e);
         }
@@ -378,8 +372,7 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// <param name="e">An EventArgs containing the event data.</param>
 		protected override void OnLocationChanged(EventArgs e)
 		{
-			if (LocationChanged != null)
-				LocationChanged(this, e);
+            LocationChanged?.Invoke(this, e);
 
             base.OnLocationChanged(e);
         }
@@ -390,8 +383,7 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// <param name="e">An EventArgs containing the event data.</param>
 		protected override void OnTabIndexChanged(EventArgs e)
 		{
-			if (TabIndexChanged != null)
-				TabIndexChanged(this, e);
+            TabIndexChanged?.Invoke(this, e);
 
             base.OnTabIndexChanged(e);
         }
@@ -402,8 +394,7 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// <param name="e">An EventArgs containing the event data.</param>
 		protected override void OnTabStopChanged(EventArgs e)
 		{
-			if (TabStopChanged != null)
-				TabStopChanged(this, e);
+            TabStopChanged?.Invoke(this, e);
 
             base.OnTabStopChanged(e);
         }
@@ -414,24 +405,17 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// <param name="e">An EventArgs containing the event data.</param>
 		protected override void OnVisibleChanged(EventArgs e)
 		{
-			if (VisibleChanged != null)
-				VisibleChanged(this, e);
+            VisibleChanged?.Invoke(this, e);
 
             base.OnVisibleChanged(e);
 		}
         #endregion
 
 		#region Internal
-		internal KryptonSplitContainer Owner
-		{
-			get { return _container; }
-		}
+		internal KryptonSplitContainer Owner { get; }
 
-		internal bool Collapsed
-		{
-			get { return _collapsed; }
-			set { _collapsed = value; }
-		}
-		#endregion
+	    internal bool Collapsed { get; set; }
+
+	    #endregion
 	}
 }

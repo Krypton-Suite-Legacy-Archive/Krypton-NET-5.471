@@ -9,10 +9,7 @@
 // *****************************************************************************
 
 using System;
-using System.ComponentModel;
 using System.ComponentModel.Design;
-using System.Windows.Forms;
-using System.Windows.Forms.Design;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -49,8 +46,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public PaletteBackStyle GroupBackStyle
         {
-            get { return _headerGroup.GroupBackStyle; }
-            
+            get => _headerGroup.GroupBackStyle;
+
             set 
             {
                 if (_headerGroup.GroupBackStyle != value)
@@ -66,8 +63,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public PaletteBorderStyle GroupBorderStyle
         {
-            get { return _headerGroup.GroupBorderStyle; }
-            
+            get => _headerGroup.GroupBorderStyle;
+
             set 
             {
                 if (_headerGroup.GroupBorderStyle != value)
@@ -83,8 +80,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public HeaderStyle HeaderStylePrimary
         {
-            get { return _headerGroup.HeaderStylePrimary; }
-            
+            get => _headerGroup.HeaderStylePrimary;
+
             set 
             { 
                 if (_headerGroup.HeaderStylePrimary != value)
@@ -100,8 +97,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public HeaderStyle HeaderStyleSecondary
         {
-            get { return _headerGroup.HeaderStyleSecondary; }
-            
+            get => _headerGroup.HeaderStyleSecondary;
+
             set 
             {
                 if (_headerGroup.HeaderStyleSecondary != value)
@@ -117,8 +114,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public VisualOrientation HeaderPositionPrimary
         {
-            get { return _headerGroup.HeaderPositionPrimary; }
-            
+            get => _headerGroup.HeaderPositionPrimary;
+
             set 
             {
                 if (_headerGroup.HeaderPositionPrimary != value)
@@ -134,8 +131,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public VisualOrientation HeaderPositionSecondary
         {
-            get { return _headerGroup.HeaderPositionSecondary; }
-            
+            get => _headerGroup.HeaderPositionSecondary;
+
             set 
             {
                 if (_headerGroup.HeaderPositionSecondary != value)
@@ -151,8 +148,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public PaletteMode PaletteMode
         {
-            get { return _headerGroup.PaletteMode; }
-            
+            get => _headerGroup.PaletteMode;
+
             set 
             {
                 if (_headerGroup.PaletteMode != value)
@@ -223,21 +220,30 @@ namespace ComponentFactory.Krypton.Toolkit
 
             // Assign the new text to the correct header text
             if (header1)
+            {
                 _text1 = (newVisible ? "Hide primary header" : "Show primary header");
+            }
             else
+            {
                 _text2 = (newVisible ? "Hide secondary header" : "Show secondary header");
+            }
 
             if (header1)
+            {
                 _headerGroup.HeaderVisiblePrimary = newVisible;
+            }
             else
+            {
                 _headerGroup.HeaderVisibleSecondary = newVisible;
+            }
 
             // Get the user interface service associated with actions
-            DesignerActionUIService service = GetService(typeof(DesignerActionUIService)) as DesignerActionUIService;
 
             // If we managed to get it then request it update to reflect new action setting
-            if (service != null)
+            if (GetService(typeof(DesignerActionUIService)) is DesignerActionUIService service)
+            {
                 service.Refresh(_headerGroup);
+            }
         }
         #endregion
     }

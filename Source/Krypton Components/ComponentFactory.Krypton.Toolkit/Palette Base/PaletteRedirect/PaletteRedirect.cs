@@ -9,13 +9,8 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Text;
-using System.Drawing.Drawing2D;
-using System.Collections.Generic;
 using System.Windows.Forms;
-using System.Diagnostics;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -82,8 +77,8 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// </summary>
 		public virtual IPalette Target
 		{
-			get { return _target; }
-            set { _target = value; }
+			get => _target;
+		    set => _target = value;
 		}
 		#endregion
 
@@ -1492,10 +1487,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Gets access to the color table instance.
         /// </summary>
-        public virtual KryptonColorTable ColorTable
-        {
-            get { return _target.ColorTable; }
-        }
+        public virtual KryptonColorTable ColorTable => _target.ColorTable;
+
         #endregion
 
         #region OnPalettePaint
@@ -1506,8 +1499,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <param name="e">An PaletteLayoutEventArgs containing event data.</param>
         protected virtual void OnPalettePaint(object sender, PaletteLayoutEventArgs e)
         {
-            if (PalettePaint != null)
-                PalettePaint(this, e);
+            PalettePaint?.Invoke(this, e);
         }
         #endregion
 
@@ -1519,8 +1511,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <param name="e">An EventArgs containing event data.</param>
         protected virtual void OnAllowFormChromeChanged(object sender, EventArgs e)
         {
-            if (AllowFormChromeChanged != null)
-                AllowFormChromeChanged(this, e);
+            AllowFormChromeChanged?.Invoke(this, e);
         }
         #endregion
 
@@ -1532,8 +1523,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <param name="e">An EventArgs containing event data.</param>
         protected virtual void OnBasePaletteChanged(object sender, EventArgs e)
         {
-            if (BasePaletteChanged != null)
-                BasePaletteChanged(this, e);
+            BasePaletteChanged?.Invoke(this, e);
         }
         #endregion
 
@@ -1545,8 +1535,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <param name="e">An EventArgs containing event data.</param>
         protected virtual void OnBaseRendererChanged(object sender, EventArgs e)
         {
-            if (BaseRendererChanged != null)
-                BaseRendererChanged(this, e);
+            BaseRendererChanged?.Invoke(this, e);
         }
         #endregion
 
@@ -1558,8 +1547,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <param name="e">An EventArgs containing event data.</param>
         protected virtual void OnButtonSpecChanged(object sender, EventArgs e)
         {
-            if (ButtonSpecChanged != null)
-                ButtonSpecChanged(this, e);
+            ButtonSpecChanged?.Invoke(this, e);
         }
         #endregion
     }

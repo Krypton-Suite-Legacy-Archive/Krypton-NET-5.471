@@ -8,15 +8,8 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Imaging;
-using System.Drawing.Drawing2D;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Diagnostics;
-using ComponentFactory.Krypton.Toolkit;
 
 namespace ComponentFactory.Krypton.Ribbon
 {
@@ -63,10 +56,7 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <summary>
         /// Gets the size to draw the image.
         /// </summary>
-        protected override Size DrawSize 
-        {
-            get { return _smallSize; }
-        }
+        protected override Size DrawSize => _smallSize;
 
         /// <summary>
         /// Gets the image to be drawn.
@@ -76,9 +66,13 @@ namespace ComponentFactory.Krypton.Ribbon
             get 
             {
                 if (_ribbonButton.KryptonCommand != null)
+                {
                     return _ribbonButton.KryptonCommand.ImageSmall;
+                }
                 else
-                    return _ribbonButton.ImageSmall; 
+                {
+                    return _ribbonButton.ImageSmall;
+                }
             }
         }
         #endregion

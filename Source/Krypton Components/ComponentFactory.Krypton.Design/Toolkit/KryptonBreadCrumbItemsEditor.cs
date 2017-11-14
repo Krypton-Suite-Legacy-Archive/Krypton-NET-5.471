@@ -9,14 +9,10 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Design;
 using System.Windows.Forms;
-using System.Windows.Forms.Design;
 using System.ComponentModel;
 using System.ComponentModel.Design;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace ComponentFactory.Krypton.Toolkit
@@ -62,8 +58,8 @@ namespace ComponentFactory.Krypton.Toolkit
                 [Category("Appearance")]
                 public string ShortText
                 {
-                    get { return _item.ShortText; }
-                    set { _item.ShortText = value; }
+                    get => _item.ShortText;
+                    set => _item.ShortText = value;
                 }
                 #endregion
 
@@ -74,8 +70,8 @@ namespace ComponentFactory.Krypton.Toolkit
                 [Category("Appearance")]
                 public string LongText
                 {
-                    get { return _item.LongText; }
-                    set { _item.LongText = value; }
+                    get => _item.LongText;
+                    set => _item.LongText = value;
                 }
                 #endregion
 
@@ -87,8 +83,8 @@ namespace ComponentFactory.Krypton.Toolkit
                 [DefaultValue(null)]
                 public Image Image
                 {
-                    get { return _item.Image; }
-                    set { _item.Image = value; }
+                    get => _item.Image;
+                    set => _item.Image = value;
                 }
                 #endregion
 
@@ -100,8 +96,8 @@ namespace ComponentFactory.Krypton.Toolkit
                 [DefaultValue(typeof(Color), "")]
                 public Color ImageTransparentColor
                 {
-                    get { return _item.ImageTransparentColor; }
-                    set { _item.ImageTransparentColor = value; }
+                    get => _item.ImageTransparentColor;
+                    set => _item.ImageTransparentColor = value;
                 }
                 #endregion
 
@@ -114,8 +110,8 @@ namespace ComponentFactory.Krypton.Toolkit
                 [DefaultValue(null)]
                 public object Tag
                 {
-                    get { return _item.Tag; }
-                    set { _item.Tag = value; }
+                    get => _item.Tag;
+                    set => _item.Tag = value;
                 }
                 #endregion
             }
@@ -126,8 +122,7 @@ namespace ComponentFactory.Krypton.Toolkit
             protected class MenuTreeNode : TreeNode
             {
                 #region Instance Fields
-                private KryptonBreadCrumbItem _item;
-                private object _propertyObject;
+
                 #endregion
 
                 #region Identity
@@ -137,13 +132,13 @@ namespace ComponentFactory.Krypton.Toolkit
                 /// <param name="item">Menu item to represent.</param>
                 public MenuTreeNode(KryptonBreadCrumbItem item)
                 {
-                    _item = item;
-                    _propertyObject = item;
+                    Item = item;
+                    PropertyObject = item;
 
-                    Text = _item.ToString();
+                    Text = Item.ToString();
 
                     // Hook into property changes
-                    _item.PropertyChanged += new PropertyChangedEventHandler(OnPropertyChanged);
+                    Item.PropertyChanged += new PropertyChangedEventHandler(OnPropertyChanged);
                 }
                 #endregion
 
@@ -151,25 +146,20 @@ namespace ComponentFactory.Krypton.Toolkit
                 /// <summary>
                 /// Gets access to the associated item.
                 /// </summary>
-                public KryptonBreadCrumbItem Item
-                {
-                    get { return _item; }
-                }
+                public KryptonBreadCrumbItem Item { get; }
 
                 /// <summary>
                 /// Gets access to object wrapper for use in the property grid.
                 /// </summary>
-                public object PropertyObject
-                {
-                    get { return _propertyObject; }
-                }
+                public object PropertyObject { get; }
+
                 #endregion
 
                 #region Implementation
                 private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
                 {
                     // Update with correct string for new state
-                    Text = _item.ToString();
+                    Text = Item.ToString();
                 }
                 #endregion
             }
@@ -180,7 +170,7 @@ namespace ComponentFactory.Krypton.Toolkit
             protected class PropertyGridSite : ISite, IServiceProvider
             {
                 #region Instance Fields
-                private IComponent _component;
+
                 private IServiceProvider _serviceProvider;
                 private bool _inGetService;
                 #endregion
@@ -195,7 +185,7 @@ namespace ComponentFactory.Krypton.Toolkit
                                         IComponent component)
                 {
                     _serviceProvider = servicePovider;
-                    _component = component;
+                    Component = component;
                 }
                 #endregion
 
@@ -226,26 +216,17 @@ namespace ComponentFactory.Krypton.Toolkit
                 /// <summary>
                 /// Gets the component associated with the ISite when implemented by a class.
                 /// </summary>
-                public IComponent Component
-                {
-                    get { return _component; }
-                }
+                public IComponent Component { get; }
 
                 /// <summary>
                 /// Gets the IContainer associated with the ISite when implemented by a class.
                 /// </summary>
-                public IContainer Container
-                {
-                    get { return null; }
-                }
+                public IContainer Container => null;
 
                 /// <summary>
                 /// Determines whether the component is in design mode when implemented by a class.
                 /// </summary>
-                public bool DesignMode
-                {
-                    get { return false; }
-                }
+                public bool DesignMode => false;
 
                 /// <summary>
                 /// Gets or sets the name of the component associated with the ISite when implemented by a class.
@@ -469,14 +450,18 @@ namespace ComponentFactory.Krypton.Toolkit
                     // Add all the top level clones
                     treeView1.Nodes.Clear();
                     foreach (KryptonBreadCrumbItem item in Items)
+                    {
                         AddMenuTreeNode(item, null);
+                    }
 
                     // Expand to show all entries
                     treeView1.ExpandAll();
 
                     // Select the first node
                     if (treeView1.Nodes.Count > 0)
+                    {
                         treeView1.SelectedNode = treeView1.Nodes[0];
+                    }
 
                     UpdateButtons();
                     UpdatePropertyGrid();
@@ -490,7 +475,9 @@ namespace ComponentFactory.Krypton.Toolkit
                 // Create an array with all the root items
                 object[] rootItems = new object[treeView1.Nodes.Count];
                 for (int i = 0; i < rootItems.Length; i++)
+                {
                     rootItems[i] = ((MenuTreeNode)treeView1.Nodes[i]).Item;
+                }
 
                 // Cache a lookup of all items after changes are made
                 DictItemBase afterItems = CreateItemsDictionary(rootItems);
@@ -511,12 +498,18 @@ namespace ComponentFactory.Krypton.Toolkit
             private bool ContainsNode(TreeNode node, TreeNode find)
             {
                 if (node.Nodes.Contains(find))
+                {
                     return true;
+                }
                 else
                 {
                     foreach (TreeNode child in node.Nodes)
+                    {
                         if (ContainsNode(child, find))
+                        {
                             return true;
+                        }
+                    }
                 }
 
                 return false;
@@ -525,7 +518,9 @@ namespace ComponentFactory.Krypton.Toolkit
             private TreeNode NextNode(TreeNode currentNode)
             {
                 if (currentNode == null)
+                {
                     return null;
+                }
 
                 bool found = false;
                 return RecursiveFind(treeView1.Nodes, currentNode, ref found, true);
@@ -534,7 +529,9 @@ namespace ComponentFactory.Krypton.Toolkit
             private TreeNode PreviousNode(TreeNode currentNode)
             {
                 if (currentNode == null)
+                {
                     return null;
+                }
 
                 bool found = false;
                 return RecursiveFind(treeView1.Nodes, currentNode, ref found, false);
@@ -553,9 +550,13 @@ namespace ComponentFactory.Krypton.Toolkit
                     if (forward)
                     {
                         if (!found)
+                        {
                             found |= (node == target);
-                        else 
+                        }
+                        else
+                        {
                             return node;
+                        }
                     }
 
                     // Do not recurse into the children if looking forwards and at the target
@@ -566,17 +567,25 @@ namespace ComponentFactory.Krypton.Toolkit
                         
                         // If we found a node to return then return it now
                         if (findNode != null)
+                        {
                             return findNode;
+                        }
                         else if (found && (target != node))
+                        {
                             return node;
+                        }
 
                         // Searching backwards we check the child collection after checking the node
                         if (!forward)
                         {
                             if (!found)
+                            {
                                 found |= (node == target);
-                            else 
+                            }
+                            else
+                            {
                                 return node;
+                            }
                         }
                     }
                 }
@@ -600,8 +609,7 @@ namespace ComponentFactory.Krypton.Toolkit
                         // Remove cell from parent collection
                         MenuTreeNode parentNode = (MenuTreeNode)node.Parent;
                         TreeNodeCollection parentCollection = (node.Parent == null ? treeView1.Nodes : node.Parent.Nodes);
-                        if (parentNode != null)
-                            parentNode.Item.Items.Remove(node.Item);
+                        parentNode?.Item.Items.Remove(node.Item);
                         parentCollection.Remove(node);
 
                         if (contained)
@@ -616,11 +624,12 @@ namespace ComponentFactory.Krypton.Toolkit
                             {
                                 // If the page is the last one in the collection then we need to insert afterwards
                                 if (pageIndex == (previousParent.Nodes.Count - 1))
+                                {
                                     pageIndex++;
+                                }
                             }
 
-                            if (previousParent != null)
-                                previousParent.Item.Items.Insert(pageIndex, node.Item);
+                            previousParent?.Item.Items.Insert(pageIndex, node.Item);
                             parentCollection.Insert(pageIndex, node);
                         }
                         else
@@ -655,8 +664,7 @@ namespace ComponentFactory.Krypton.Toolkit
                         // Remove cell from parent collection
                         MenuTreeNode parentNode = (MenuTreeNode)node.Parent;
                         TreeNodeCollection parentCollection = (node.Parent == null ? treeView1.Nodes : node.Parent.Nodes);
-                        if (parentNode != null)
-                            parentNode.Item.Items.Remove(node.Item);
+                        parentNode?.Item.Items.Remove(node.Item);
                         parentCollection.Remove(node);
 
                         if (contained)
@@ -665,8 +673,7 @@ namespace ComponentFactory.Krypton.Toolkit
                             MenuTreeNode previousParent = (MenuTreeNode)nextNode.Parent;
                             parentCollection = (nextNode.Parent == null ? treeView1.Nodes : nextNode.Parent.Nodes);
                             int pageIndex = parentCollection.IndexOf(nextNode);
-                            if (previousParent != null)
-                                previousParent.Item.Items.Insert(pageIndex + 1, node.Item);
+                            previousParent?.Item.Items.Insert(pageIndex + 1, node.Item);
                             parentCollection.Insert(pageIndex + 1, node);
                         }
                         else
@@ -693,13 +700,17 @@ namespace ComponentFactory.Krypton.Toolkit
 
                 // If there is no selection then append to root
                 if (selectedNode == null)
+                {
                     treeView1.Nodes.Add(newNode);
+                }
                 else
                 {
                     // If current selection is at the root
                     TreeNode parentNode = selectedNode.Parent;
                     if (parentNode == null)
+                    {
                         treeView1.Nodes.Insert(treeView1.Nodes.IndexOf(selectedNode) + 1, newNode);
+                    }
                     else
                     {
                         MenuTreeNode parentMenu = (MenuTreeNode)parentNode;
@@ -727,7 +738,9 @@ namespace ComponentFactory.Krypton.Toolkit
 
                 // If there is no selection then append to root
                 if (selectedNode == null)
+                {
                     treeView1.Nodes.Add(newNode);
+                }
                 else
                 {
                     MenuTreeNode selectedMenu = (MenuTreeNode)selectedNode;
@@ -757,7 +770,9 @@ namespace ComponentFactory.Krypton.Toolkit
 
                     // If at root level then remove from root, otherwise from the parent collection
                     if (node.Parent == null)
+                    {
                         treeView1.Nodes.Remove(node);
+                    }
                     else
                     {
                         TreeNode parentNode = node.Parent;
@@ -791,9 +806,13 @@ namespace ComponentFactory.Krypton.Toolkit
             {
                 TreeNode node = treeView1.SelectedNode;
                 if (node == null)
+                {
                     propertyGrid1.SelectedObject = null;
+                }
                 else
+                {
                     propertyGrid1.SelectedObject = new CrumbProxy((KryptonBreadCrumbItem)((MenuTreeNode)node).PropertyObject);
+                }
             }
 
             private DictItemBase CreateItemsDictionary(object[] items)
@@ -801,7 +820,9 @@ namespace ComponentFactory.Krypton.Toolkit
                 DictItemBase dictItems = new DictItemBase();
 
                 foreach (KryptonBreadCrumbItem item in items)
+                {
                     AddItemsToDictionary(dictItems, item);
+                }
 
                 return dictItems;
             }
@@ -813,7 +834,9 @@ namespace ComponentFactory.Krypton.Toolkit
 
                 // Add children of an items collection
                 foreach (KryptonBreadCrumbItem item in baseItem.Items)
+                {
                     AddItemsToDictionary(dictItems, item);
+                }
             }
 
             private void AddMenuTreeNode(KryptonBreadCrumbItem item, MenuTreeNode parent)
@@ -823,13 +846,19 @@ namespace ComponentFactory.Krypton.Toolkit
 
                 // Add to either root or parent node
                 if (parent != null)
+                {
                     parent.Nodes.Add(node);
+                }
                 else
+                {
                     treeView1.Nodes.Add(node);
+                }
 
                 // Add children of an items collection
                 foreach (KryptonBreadCrumbItem child in item.Items)
+                {
                     AddMenuTreeNode(child, node);
+                }
             }
 
             private void SynchronizeCollections(DictItemBase before,
@@ -838,32 +867,36 @@ namespace ComponentFactory.Krypton.Toolkit
             {
                 // Add all new components (in the 'after' but not the 'before'
                 foreach (KryptonBreadCrumbItem item in after.Values)
+                {
                     if (!before.ContainsKey(item))
                     {
-                        if (context.Container != null)
-                            context.Container.Add(item as IComponent);
+                        context.Container?.Add(item as IComponent);
                     }
+                }
 
                 // Delete all old components (in the 'before' but not the 'after'
                 foreach (KryptonBreadCrumbItem item in before.Values)
+                {
                     if (!after.ContainsKey(item))
                     {
                         DestroyInstance(item);
 
-                        if (context.Container != null)
-                            context.Container.Remove(item as IComponent);
+                        context.Container?.Remove(item as IComponent);
                     }
+                }
 
                 IComponentChangeService changeService = (IComponentChangeService)GetService(typeof(IComponentChangeService));
                 if (changeService != null)
                 {
                     // Mark components as changed when not added or removed
                     foreach (KryptonBreadCrumbItem item in after.Values)
+                    {
                         if (before.ContainsKey(item))
                         {
                             changeService.OnComponentChanging(item, null);
                             changeService.OnComponentChanged(item, null, null, null);
                         }
+                    }
                 }
             }
             #endregion

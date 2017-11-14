@@ -8,12 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Diagnostics;
 
 namespace ComponentFactory.Krypton.Toolkit
@@ -22,8 +17,7 @@ namespace ComponentFactory.Krypton.Toolkit
                                              IContextMenuItemColumn
     {
         #region Instance Field
-        private int _columnIndex;
-        private Size _lastPreferredSize;
+
         private int _overridePreferredWidth;
         #endregion
 
@@ -39,7 +33,7 @@ namespace ComponentFactory.Krypton.Toolkit
                                        int columnIndex)
             : base(palette, values, VisualOrientation.Top)
         {
-            _columnIndex = columnIndex;
+            ColumnIndex = columnIndex;
             _overridePreferredWidth = 0;
         }
 
@@ -68,9 +62,13 @@ namespace ComponentFactory.Krypton.Toolkit
             Size preferredSize = base.GetPreferredSize(context);
 
             if (_overridePreferredWidth != 0)
+            {
                 preferredSize.Width = _overridePreferredWidth;
+            }
             else
-                _lastPreferredSize = base.GetPreferredSize(context);
+            {
+                LastPreferredSize = base.GetPreferredSize(context);
+            }
 
             return preferredSize;
         }
@@ -80,25 +78,19 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Gets the index of the column within the menu item.
         /// </summary>
-        public int ColumnIndex 
-        {
-            get { return _columnIndex; }
-        }
+        public int ColumnIndex { get; }
 
         /// <summary>
         /// Gets the last calculated preferred size value.
         /// </summary>
-        public Size LastPreferredSize 
-        {
-            get { return _lastPreferredSize; }
-        }
+        public Size LastPreferredSize { get; private set; }
 
         /// <summary>
         /// Sets the preferred width value to use until further notice.
         /// </summary>
         public int OverridePreferredWidth
         {
-            set { _overridePreferredWidth = value; }
+            set => _overridePreferredWidth = value;
         }
         #endregion
     }

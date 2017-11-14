@@ -8,11 +8,8 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace ComponentFactory.Krypton.Toolkit
@@ -24,8 +21,8 @@ namespace ComponentFactory.Krypton.Toolkit
 	{
         #region Instance Fields
         private IPaletteBack _inherit;
-        private TreeNode _node;
-        #endregion
+
+	    #endregion
 
         #region Identity
         /// <summary>
@@ -45,12 +42,9 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Set the tree node to use for sourcing values.
         /// </summary>
-        public TreeNode TreeNode
-        {
-            get { return _node; }
-            set { _node = value; }
-        }
-        #endregion
+        public TreeNode TreeNode { get; set; }
+
+	    #endregion
 
         #region IPaletteBack
 		/// <summary>
@@ -61,9 +55,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public override InheritBool GetBackDraw(PaletteState state)
         {
             if ((TreeNode != null) && (TreeNode.BackColor != Color.Empty))
+            {
                 return InheritBool.True;
+            }
             else
+            {
                 return _inherit.GetBackDraw(state);
+            }
         }
 
 		/// <summary>
@@ -84,9 +82,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public override Color GetBackColor1(PaletteState state)
         {
             if ((TreeNode != null) && (TreeNode.BackColor != Color.Empty))
+            {
                 return TreeNode.BackColor;
+            }
             else
+            {
                 return _inherit.GetBackColor1(state);
+            }
         }
 
 		/// <summary>
@@ -97,9 +99,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public override Color GetBackColor2(PaletteState state)
         {
             if ((TreeNode != null) && (TreeNode.BackColor != Color.Empty))
+            {
                 return TreeNode.BackColor;
+            }
             else
+            {
                 return _inherit.GetBackColor2(state);
+            }
         }
 
 		/// <summary>

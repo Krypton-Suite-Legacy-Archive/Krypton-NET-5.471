@@ -8,11 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.ComponentModel;
 using System.ComponentModel.Design;
-using System.Windows.Forms;
-using System.Windows.Forms.Design;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -67,7 +63,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public PaletteMode PaletteMode
         {
-            get { return _contextMenu.PaletteMode; }
+            get => _contextMenu.PaletteMode;
 
             set
             {

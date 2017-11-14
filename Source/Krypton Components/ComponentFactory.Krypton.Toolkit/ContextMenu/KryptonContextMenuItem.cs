@@ -9,20 +9,10 @@
 // *****************************************************************************
 
 using System;
-using System.Data;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Text;
-using System.Drawing.Imaging;
-using System.Drawing.Drawing2D;
 using System.Drawing.Design;
 using System.Windows.Forms;
 using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Diagnostics;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using Microsoft.Win32;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -52,12 +42,7 @@ namespace ComponentFactory.Krypton.Toolkit
         private Color _imageTransparentColor;
         private CheckState _checkState;
         private Keys _shortcutKeys;
-        private KryptonContextMenuCollection _items;
         private PaletteContextMenuItemStateRedirect _stateRedirect;
-        private PaletteContextMenuItemState _stateNormal;
-        private PaletteContextMenuItemState _stateDisabled;
-        private PaletteContextMenuItemStateHighlight _stateHighlight;
-        private PaletteContextMenuItemStateChecked _stateChecked;
         private KryptonCommand _command;
         #endregion
 
@@ -157,7 +142,9 @@ namespace ComponentFactory.Krypton.Toolkit
 
             // Initial click handler
             if (clickHandler != null)
+            {
                 Click += clickHandler;
+            }
 
             // Default fields
             _enabled = true;
@@ -171,14 +158,14 @@ namespace ComponentFactory.Krypton.Toolkit
             _shortcutKeys = shortcut;
             _shortcutKeyDisplayString = string.Empty;
             _checkState = CheckState.Unchecked;
-            _items = new KryptonContextMenuCollection();
+            Items = new KryptonContextMenuCollection();
 
             // Create the common storage for palette override values
             _stateRedirect = new PaletteContextMenuItemStateRedirect();
-            _stateNormal = new PaletteContextMenuItemState(_stateRedirect);
-            _stateDisabled = new PaletteContextMenuItemState(_stateRedirect);
-            _stateHighlight = new PaletteContextMenuItemStateHighlight(_stateRedirect);
-            _stateChecked = new PaletteContextMenuItemStateChecked(_stateRedirect);
+            StateNormal = new PaletteContextMenuItemState(_stateRedirect);
+            StateDisabled = new PaletteContextMenuItemState(_stateRedirect);
+            StateHighlight = new PaletteContextMenuItemStateHighlight(_stateRedirect);
+            StateChecked = new PaletteContextMenuItemStateChecked(_stateRedirect);
         }
 
         /// <summary>
@@ -197,20 +184,14 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int ItemChildCount
-        {
-            get { return 0; }
-        }
+        public override int ItemChildCount => 0;
 
         /// <summary>
         /// Returns the indexed child menu item.
         /// </summary>
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override KryptonContextMenuItemBase this[int index]
-        {
-            get { return null; }
-        }
+        public override KryptonContextMenuItemBase this[int index] => null;
 
         /// <summary>
         /// Test for the provided shortcut and perform relevant action if a match is found.
@@ -225,7 +206,9 @@ namespace ComponentFactory.Krypton.Toolkit
                 return true;
             }
             else
+            {
                 return false;
+            }
         }
 
         /// <summary>
@@ -258,8 +241,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [Bindable(true)]
         public string Text
         {
-            get { return _text; }
-            
+            get => _text;
+
             set 
             {
                 if (_text != value)
@@ -282,8 +265,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [Bindable(true)]
         public string ExtraText
         {
-            get { return _extraText; }
-            
+            get => _extraText;
+
             set 
             {
                 if (_extraText != value)
@@ -305,8 +288,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [Bindable(true)]
         public Image Image
         {
-            get { return _image; }
-            
+            get => _image;
+
             set 
             {
                 if (_image != value)
@@ -327,8 +310,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [Bindable(true)]
         public Color ImageTransparentColor
         {
-            get { return _imageTransparentColor; }
-            
+            get => _imageTransparentColor;
+
             set 
             {
                 if (_imageTransparentColor != value)
@@ -354,8 +337,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [Localizable(true)]
         public Keys ShortcutKeys
         {
-            get { return _shortcutKeys; }
-            
+            get => _shortcutKeys;
+
             set 
             {
                 if (_shortcutKeys != value)
@@ -375,8 +358,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue(true)]
         public bool AutoClose
         {
-            get { return _autoClose; }
-            
+            get => _autoClose;
+
             set 
             {
                 if (_autoClose != value)
@@ -396,8 +379,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue(false)]
         public bool SplitSubMenu
         {
-            get { return _splitSubMenu; }
-            
+            get => _splitSubMenu;
+
             set 
             {
                 if (_splitSubMenu != value)
@@ -417,8 +400,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue(false)]
         public bool CheckOnClick
         {
-            get { return _checkOnClick; }
-            
+            get => _checkOnClick;
+
             set 
             {
                 if (_checkOnClick != value)
@@ -439,8 +422,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [Localizable(true)]
         public bool ShowShortcutKeys
         {
-            get { return _showShortcutKeys; }
-            
+            get => _showShortcutKeys;
+
             set 
             {
                 if (_showShortcutKeys != value)
@@ -460,8 +443,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue(false)]
         public bool LargeKryptonCommandImage
         {
-            get { return _largeKryptonCommandImage; }
-            
+            get => _largeKryptonCommandImage;
+
             set 
             {
                 if (_largeKryptonCommandImage != value)
@@ -482,8 +465,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [Localizable(true)]
         public string ShortcutKeyDisplayString
         {
-            get { return _shortcutKeyDisplayString; }
-            
+            get => _shortcutKeyDisplayString;
+
             set 
             {
                 if (_shortcutKeyDisplayString != value)
@@ -505,8 +488,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [Bindable(true)]
         public bool Checked
         {
-            get { return (CheckState != CheckState.Unchecked); }
-            
+            get => (CheckState != CheckState.Unchecked);
+
             set 
             {
                 // Are we currently checked?
@@ -525,7 +508,9 @@ namespace ComponentFactory.Krypton.Toolkit
 
                     // CheckState might have changed
                     if (checkStateChanged)
+                    {
                         OnCheckStateChanged(EventArgs.Empty);
+                    }
 
                     OnPropertyChanged(new PropertyChangedEventArgs("Checked"));
                 }
@@ -543,8 +528,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [Bindable(true)]
         public CheckState CheckState
         {
-            get { return _checkState; }
-            
+            get => _checkState;
+
             set 
             {
                 if (_checkState != value)
@@ -554,7 +539,9 @@ namespace ComponentFactory.Krypton.Toolkit
 
                     // Checked might have changed
                     if (Checked != oldChecked)
+                    {
                         OnCheckedChanged(EventArgs.Empty);
+                    }
 
                     // CheckState value has always changed
                     OnCheckStateChanged(EventArgs.Empty);
@@ -570,10 +557,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [Description("Collection of sub-menu items.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         [Editor("ComponentFactory.Krypton.Toolkit.KryptonContextMenuCollectionEditor, ComponentFactory.Krypton.Design, Version=4.7.1.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e", typeof(UITypeEditor))]
-        public KryptonContextMenuCollection Items
-        {
-            get { return _items; }
-        }
+        public KryptonContextMenuCollection Items { get; }
 
         /// <summary>
         /// Gets and sets if the menu item is enabled.
@@ -585,8 +569,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [Bindable(true)]
         public bool Enabled
         {
-            get { return _enabled; }
-            
+            get => _enabled;
+
             set 
             {
                 if (_enabled != value)
@@ -604,14 +588,11 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining menu item disabled appearance values.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public PaletteContextMenuItemState StateDisabled
-        {
-            get { return _stateDisabled; }
-        }
+        public PaletteContextMenuItemState StateDisabled { get; }
 
         private bool ShouldSerializeStateDisabled()
         {
-            return !_stateDisabled.IsDefault;
+            return !StateDisabled.IsDefault;
         }
 
         /// <summary>
@@ -621,14 +602,11 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining menu item normal appearance values.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public PaletteContextMenuItemState StateNormal
-        {
-            get { return _stateNormal; }
-        }
+        public PaletteContextMenuItemState StateNormal { get; }
 
         private bool ShouldSerializeStateNormal()
         {
-            return !_stateNormal.IsDefault;
+            return !StateNormal.IsDefault;
         }
 
         /// <summary>
@@ -638,14 +616,11 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining menu item checked appearance values.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public PaletteContextMenuItemStateChecked StateChecked
-        {
-            get { return _stateChecked; }
-        }
+        public PaletteContextMenuItemStateChecked StateChecked { get; }
 
         private bool ShouldSerializeStateChecked()
         {
-            return !_stateChecked.IsDefault;
+            return !StateChecked.IsDefault;
         }
 
         /// <summary>
@@ -655,14 +630,11 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining menu item highlight appearance values.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public PaletteContextMenuItemStateHighlight StateHighlight
-        {
-            get { return _stateHighlight; }
-        }
+        public PaletteContextMenuItemStateHighlight StateHighlight { get; }
 
         private bool ShouldSerializeStateHighlight()
         {
-            return !_stateHighlight.IsDefault;
+            return !StateHighlight.IsDefault;
         }
 
         /// <summary>
@@ -674,7 +646,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue(null)]
         public virtual KryptonCommand KryptonCommand
         {
-            get { return _command; }
+            get => _command;
 
             set
             {
@@ -711,16 +683,19 @@ namespace ComponentFactory.Krypton.Toolkit
 
                 // Update correct property
                 if (KryptonCommand != null)
+                {
                     KryptonCommand.CheckState = state;
+                }
                 else
+                {
                     CheckState = state;
+                }
             }
 
             OnClick(EventArgs.Empty);
 
             // If we have an attached command then execute it
-            if (KryptonCommand != null)
-                KryptonCommand.PerformExecute();
+            KryptonCommand?.PerformExecute();
         }
         #endregion
 
@@ -731,8 +706,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <param name="e">An EventArgs that contains the event data.</param>
         protected virtual void OnClick(EventArgs e)
         {
-            if (Click != null)
-                Click(this, e);
+            Click?.Invoke(this, e);
         }
 
         /// <summary>
@@ -741,8 +715,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <param name="e">An EventArgs that contains the event data.</param>
         protected virtual void OnCheckedChanged(EventArgs e)
         {
-            if (CheckedChanged != null)
-                CheckedChanged(this, e);
+            CheckedChanged?.Invoke(this, e);
         }
 
         /// <summary>
@@ -751,8 +724,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <param name="e">An EventArgs that contains the event data.</param>
         protected virtual void OnCheckStateChanged(EventArgs e)
         {
-            if (CheckStateChanged != null)
-                CheckStateChanged(this, e);
+            CheckStateChanged?.Invoke(this, e);
         }
         #endregion
 

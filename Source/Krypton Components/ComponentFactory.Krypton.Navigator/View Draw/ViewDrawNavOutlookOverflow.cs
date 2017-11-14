@@ -8,14 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using System.Diagnostics;
-using System.ComponentModel;
 using ComponentFactory.Krypton.Toolkit;
 
 namespace ComponentFactory.Krypton.Navigator
@@ -54,11 +47,9 @@ namespace ComponentFactory.Krypton.Navigator
         /// <summary>
         /// Gets a value indicating if button specs are allowed on the button.
         /// </summary>
-        public override bool AllowButtonSpecs
-        {
-            get { return false; }
-        }
-        #endregion
+        public override bool AllowButtonSpecs => false;
+
+	    #endregion
 
         #region IContentValues
         /// <summary>

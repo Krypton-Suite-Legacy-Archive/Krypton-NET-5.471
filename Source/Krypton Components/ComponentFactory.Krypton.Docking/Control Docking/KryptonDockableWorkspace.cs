@@ -9,16 +9,7 @@
 // *****************************************************************************
 
 using System;
-using System.IO;
-using System.Xml;
-using System.Text;
-using System.Data;
 using System.Drawing;
-using System.Drawing.Design;
-using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Windows.Forms;
-using System.Diagnostics;
 using ComponentFactory.Krypton.Toolkit;
 using ComponentFactory.Krypton.Navigator;
 using ComponentFactory.Krypton.Workspace;
@@ -56,34 +47,22 @@ namespace ComponentFactory.Krypton.Docking
         /// <summary>
         /// Gets a value indicating if docking specific appearance should be applied.
         /// </summary>
-        protected override bool ApplyDockingAppearance
-        {
-            get { return false; }
-        }
+        protected override bool ApplyDockingAppearance => false;
 
         /// <summary>
         /// Gets a value indicating if docking specific close action should be applied.
         /// </summary>
-        protected override bool ApplyDockingCloseAction
-        {
-            get { return false; }
-        }
+        protected override bool ApplyDockingCloseAction => false;
 
         /// <summary>
         /// Gets a value indicating if docking specific pin actions should be applied.
         /// </summary>
-        protected override bool ApplyDockingPinAction
-        {
-            get { return false; }
-        }
+        protected override bool ApplyDockingPinAction => false;
 
         /// <summary>
         /// Gets a value indicating if docking specific drop down actions should be applied.
         /// </summary>
-        protected override bool ApplyDockingDropDownAction
-        {
-            get { return false; }
-        }
+        protected override bool ApplyDockingDropDownAction => false;
 
         /// <summary>
         /// Initialize a new cell.
@@ -110,13 +89,18 @@ namespace ComponentFactory.Krypton.Docking
             while (cell != null)
             {
                 if (e.NewCell != cell)
+                {
                     cell.Bar.TabStyle = TabStyle.StandardProfile;
+                }
+
                 cell = NextCell(cell);
             }
 
             // Ensure the newly selected cell has a higher profile appearance
             if (e.NewCell != null)
+            {
                 e.NewCell.Bar.TabStyle = TabStyle.HighProfile;
+            }
 
             base.OnActiveCellChanged(e);
         }

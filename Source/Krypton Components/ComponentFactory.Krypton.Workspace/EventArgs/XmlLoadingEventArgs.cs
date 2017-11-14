@@ -9,10 +9,7 @@
 // *****************************************************************************
 
 using System;
-using System.IO;
 using System.Xml;
-using System.Drawing;
-using System.Diagnostics;
 
 namespace ComponentFactory.Krypton.Workspace
 {
@@ -22,9 +19,8 @@ namespace ComponentFactory.Krypton.Workspace
 	public class XmlLoadingEventArgs : EventArgs
 	{
 		#region Instance Fields
-        private KryptonWorkspace _workspace;
-        private XmlReader _xmlReader;
-		#endregion
+
+	    #endregion
 
 		#region Identity
 		/// <summary>
@@ -35,8 +31,8 @@ namespace ComponentFactory.Krypton.Workspace
         public XmlLoadingEventArgs(KryptonWorkspace workspace,
                                    XmlReader xmlReading)
 		{
-            _workspace = workspace;
-            _xmlReader = xmlReading;
+            Workspace = workspace;
+            XmlReader = xmlReading;
 		}
 		#endregion
 
@@ -44,18 +40,13 @@ namespace ComponentFactory.Krypton.Workspace
 		/// <summary>
         /// Gets the workspace reference.
 		/// </summary>
-        public KryptonWorkspace Workspace
-		{
-            get { return _workspace; }
-		}
+        public KryptonWorkspace Workspace { get; }
 
-        /// <summary>
+	    /// <summary>
         /// Gets the xml reader.
         /// </summary>
-        public XmlReader XmlReader
-        {
-            get { return _xmlReader; }
-        }
-        #endregion
+        public XmlReader XmlReader { get; }
+
+	    #endregion
 	}
 }

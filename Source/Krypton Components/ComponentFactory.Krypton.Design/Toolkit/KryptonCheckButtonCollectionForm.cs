@@ -9,9 +9,6 @@
 // *****************************************************************************
 
 using System;
-using System.Data;
-using System.Text;
-using System.Drawing;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
@@ -25,7 +22,7 @@ namespace ComponentFactory.Krypton.Toolkit
         private class ListEntry
         {
             #region Instance Fields
-            private KryptonCheckButton _checkButton;
+
             #endregion
 
             #region Identity
@@ -36,7 +33,7 @@ namespace ComponentFactory.Krypton.Toolkit
             public ListEntry(KryptonCheckButton checkButton)
             {
                 Debug.Assert(checkButton != null);
-                _checkButton = checkButton;
+                CheckButton = checkButton;
             }
 
             /// <summary>
@@ -45,7 +42,7 @@ namespace ComponentFactory.Krypton.Toolkit
             /// <returns>String instance.</returns>
             public override string ToString()
             {
-                return _checkButton.Site.Name + "  (Text: " + _checkButton.Text + ")";
+                return CheckButton.Site.Name + "  (Text: " + CheckButton.Text + ")";
             }
             #endregion
 
@@ -53,10 +50,8 @@ namespace ComponentFactory.Krypton.Toolkit
             /// <summary>
             /// Gets access to the encapsulated check button instance.
             /// </summary>
-            public KryptonCheckButton CheckButton
-            {
-                get { return _checkButton; }
-            }
+            public KryptonCheckButton CheckButton { get; }
+
             #endregion
         }
         #endregion
@@ -98,15 +93,14 @@ namespace ComponentFactory.Krypton.Toolkit
                 // Find all the check buttons inside the container
                 foreach (object obj in container.Components)
                 {
+                    // Cast to the correct type
                     // We are only interested in check buttons
-                    if (obj is KryptonCheckButton)
+                    if (obj is KryptonCheckButton checkButton)
                     {
-                        // Cast to the correct type
-                        KryptonCheckButton checkButton = (KryptonCheckButton)obj;
 
                         // Add a new entry to the list box but only check it if 
                         // it is already present in the check buttons collection
-                        checkedListBox.Items.Add(new ListEntry(checkButton), 
+                        checkedListBox.Items.Add(new ListEntry(checkButton),
                                                  _checkSet.CheckButtons.Contains(checkButton));
                     }
                 }
@@ -118,7 +112,9 @@ namespace ComponentFactory.Krypton.Toolkit
             // Create a copy of the current check set buttons
             List<KryptonCheckButton> copy = new List<KryptonCheckButton>();
             foreach (KryptonCheckButton checkButton in _checkSet.CheckButtons)
+            {
                 copy.Add(checkButton);
+            }
 
             // Process each of the list entries in turn
             for(int i=0; i<checkedListBox.Items.Count; i++)
@@ -131,9 +127,13 @@ namespace ComponentFactory.Krypton.Toolkit
                 {
                     // Make sure the check button is in the check set
                     if (!_checkSet.CheckButtons.Contains(entry.CheckButton))
+                    {
                         _checkSet.CheckButtons.Add(entry.CheckButton);
+                    }
                     else
+                    {
                         copy.Remove(entry.CheckButton);
+                    }
                 }
                 else
                 {
@@ -149,7 +149,9 @@ namespace ComponentFactory.Krypton.Toolkit
             // If there are any dangling references in the checkset that are
             // not in the component list from the list box then remove them
             foreach(KryptonCheckButton checkButton in copy)
+            {
                 _checkSet.CheckButtons.Remove(checkButton);
+            }
         }
         #endregion
     }

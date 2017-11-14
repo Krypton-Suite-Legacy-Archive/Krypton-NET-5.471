@@ -9,10 +9,7 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Diagnostics;
 using ComponentFactory.Krypton.Toolkit;
@@ -31,8 +28,7 @@ namespace ComponentFactory.Krypton.Ribbon
         #endregion
 
         #region Instance Fields
-        private KryptonRibbon _ribbon;
-        private NeedPaintHandler _needPaintDelegate;
+
         private IPaletteRibbonBack _inherit;
         private IDisposable _memento;
         private bool _borderOutside;
@@ -53,8 +49,8 @@ namespace ComponentFactory.Krypton.Ribbon
             Debug.Assert(needPaintDelegate != null);
 
             // Remember incoming references
-            _ribbon = ribbon;
-            _needPaintDelegate = needPaintDelegate;
+            Ribbon = ribbon;
+            NeedPaintDelegate = needPaintDelegate;
             _borderOutside = borderOutside;
         }
 
@@ -96,10 +92,12 @@ namespace ComponentFactory.Krypton.Ribbon
         {
             get
             {
-                if (_ribbon == null)
+                if (Ribbon == null)
+                {
                     return Padding.Empty;
+                }
 
-                switch (_ribbon.RibbonShape)
+                switch (Ribbon.RibbonShape)
                 {
                     default:
                     case PaletteRibbonShape.Office2007:
@@ -169,15 +167,14 @@ namespace ComponentFactory.Krypton.Ribbon
         public override void RenderBefore(RenderContext context)
         {
             // If there is a selected tab and it is a context tab use the context specific palette
-            if ((Ribbon.SelectedTab != null) &&
-                (!string.IsNullOrEmpty(Ribbon.SelectedTab.ContextName)))
+            if (!string.IsNullOrEmpty(Ribbon.SelectedTab?.ContextName))
             {
-                _inherit = _ribbon.StateContextCheckedNormal.RibbonGroupArea;
+                _inherit = Ribbon.StateContextCheckedNormal.RibbonGroupArea;
                 ElementState = PaletteState.ContextCheckedNormal;
             }
             else
             {
-                _inherit = _ribbon.StateCheckedNormal.RibbonGroupArea;
+                _inherit = Ribbon.StateCheckedNormal.RibbonGroupArea;
                 ElementState = PaletteState.CheckedNormal;
             }
 
@@ -192,8 +189,8 @@ namespace ComponentFactory.Krypton.Ribbon
                 drawRect.Width += borderPadding.Horizontal;
                 drawRect.Height += borderPadding.Vertical;
             }
-            else if ((_ribbon.CaptionArea.DrawCaptionOnComposition) && 
-                     (_ribbon.RibbonShape == PaletteRibbonShape.Office2010))
+            else if ((Ribbon.CaptionArea.DrawCaptionOnComposition) && 
+                     (Ribbon.RibbonShape == PaletteRibbonShape.Office2010))
             {
                 // Prevent the left and right edges from being drawn
                 drawRect.X -= 1;
@@ -201,7 +198,7 @@ namespace ComponentFactory.Krypton.Ribbon
             }
 
             // Use renderer to draw the tab background
-            _memento = context.Renderer.RenderRibbon.DrawRibbonBack(_ribbon.RibbonShape, context, drawRect, State, this, VisualOrientation.Top, false, _memento);
+            _memento = context.Renderer.RenderRibbon.DrawRibbonBack(Ribbon.RibbonShape, context, drawRect, State, this, VisualOrientation.Top, false, _memento);
         }
         #endregion
 
@@ -227,7 +224,9 @@ namespace ComponentFactory.Krypton.Ribbon
 
             // If empty then try and recover the context specific color
             if (retColor == Color.Empty)
+            {
                 retColor = CheckForContextColor(state);
+            }
 
             return retColor;
         }
@@ -243,7 +242,9 @@ namespace ComponentFactory.Krypton.Ribbon
 
             // If empty then try and recover the context specific color
             if (retColor == Color.Empty)
+            {
                 retColor = CheckForContextColor(state);
+            }
 
             return retColor;
         }
@@ -259,7 +260,9 @@ namespace ComponentFactory.Krypton.Ribbon
 
             // If empty then try and recover the context specific color
             if (retColor == Color.Empty)
+            {
                 retColor = CheckForContextColor(state);
+            }
 
             return retColor;
         }
@@ -275,7 +278,9 @@ namespace ComponentFactory.Krypton.Ribbon
 
             // If empty then try and recover the context specific color
             if (retColor == Color.Empty)
+            {
                 retColor = CheckForContextColor(state);
+            }
 
             return retColor;
         }
@@ -291,7 +296,9 @@ namespace ComponentFactory.Krypton.Ribbon
 
             // If empty then try and recover the context specific color
             if (retColor == Color.Empty)
+            {
                 retColor = CheckForContextColor(state);
+            }
 
             return retColor;
         }
@@ -301,38 +308,30 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <summary>
         /// Gets access the source ribbon control.
         /// </summary>
-        protected KryptonRibbon Ribbon
-        {
-            get { return _ribbon; }
-        }
+        protected KryptonRibbon Ribbon { get; }
 
         /// <summary>
         /// Gets access the paint delegate.
         /// </summary>
-        protected NeedPaintHandler NeedPaintDelegate
-        {
-            get { return _needPaintDelegate; }
-        }
+        protected NeedPaintHandler NeedPaintDelegate { get; }
+
         #endregion
 
         #region Implementation
         private Color CheckForContextColor(PaletteState state)
         {
             // We need an associated ribbon tab
-            if (Ribbon.SelectedTab != null)
+            // Does the ribbon tab have a context setting?
+            if (!string.IsNullOrEmpty(Ribbon.SelectedTab?.ContextName))
             {
-                // Does the ribbon tab have a context setting?
-                if (!string.IsNullOrEmpty(Ribbon.SelectedTab.ContextName))
-                {
-                    // Find the context definition for this context
-                    KryptonRibbonContext ribbonContext = Ribbon.RibbonContexts[Ribbon.SelectedTab.ContextName];
+                // Find the context definition for this context
+                KryptonRibbonContext ribbonContext = Ribbon.RibbonContexts[Ribbon.SelectedTab.ContextName];
 
-                    // Should always work, but you never know!
-                    if (ribbonContext != null)
-                    {
-                        // Return the context specific color
-                        return ribbonContext.ContextColor;
-                    }
+                // Should always work, but you never know!
+                if (ribbonContext != null)
+                {
+                    // Return the context specific color
+                    return ribbonContext.ContextColor;
                 }
             }
 

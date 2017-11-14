@@ -9,10 +9,6 @@
 // *****************************************************************************
 
 using System;
-using System.Drawing;
-using System.Diagnostics;
-using ComponentFactory.Krypton.Toolkit;
-using ComponentFactory.Krypton.Workspace;
 
 namespace ComponentFactory.Krypton.Docking
 {
@@ -22,9 +18,8 @@ namespace ComponentFactory.Krypton.Docking
 	public class FloatingWindowEventArgs : EventArgs
 	{
 		#region Instance Fields
-        private KryptonFloatingWindow _floatingWindow;
-        private KryptonDockingFloatingWindow _element;
-		#endregion
+
+	    #endregion
 
 		#region Identity
 		/// <summary>
@@ -35,8 +30,8 @@ namespace ComponentFactory.Krypton.Docking
         public FloatingWindowEventArgs(KryptonFloatingWindow floatingWindow,
                                        KryptonDockingFloatingWindow element)
 		{
-            _floatingWindow = floatingWindow;
-            _element = element;
+            FloatingWindow = floatingWindow;
+            FloatingWindowElement = element;
 		}
 		#endregion
 
@@ -44,18 +39,13 @@ namespace ComponentFactory.Krypton.Docking
         /// <summary>
         /// Gets a reference to the KryptonFloatingWindow control.
         /// </summary>
-        public KryptonFloatingWindow FloatingWindow
-        {
-            get { return _floatingWindow; }
-        }
+        public KryptonFloatingWindow FloatingWindow { get; }
 
-        /// <summary>
+	    /// <summary>
         /// Gets a reference to the KryptonDockingFloatingWindow that is managing the dockspace.
         /// </summary>
-        public KryptonDockingFloatingWindow FloatingWindowElement
-        {
-            get { return _element; }
-        }
-        #endregion
+        public KryptonDockingFloatingWindow FloatingWindowElement { get; }
+
+	    #endregion
 	}
 }

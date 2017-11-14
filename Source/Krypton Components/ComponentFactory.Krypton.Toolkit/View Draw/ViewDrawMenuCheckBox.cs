@@ -9,10 +9,7 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.ComponentModel;
@@ -23,15 +20,12 @@ namespace ComponentFactory.Krypton.Toolkit
     {
         #region Instance Fields
         private IContextMenuProvider _provider;
-        private KryptonContextMenuCheckBox _checkBox;
         private FixedContentValue _contentValues;
-        private ViewDrawContent _drawContent;
-        private ViewDrawCheckBox _drawCheckBox;
         private ViewLayoutCenter _layoutCenter;
         private ViewLayoutDocker _outerDocker;
         private ViewLayoutDocker _innerDocker;
         private KryptonCommand _cachedCommand;
-        private bool _itemEnabled;
+
         #endregion
 
         #region Identity
@@ -44,7 +38,7 @@ namespace ComponentFactory.Krypton.Toolkit
                                     KryptonContextMenuCheckBox checkBox)
 		{
             _provider = provider;
-            _checkBox = checkBox;
+            KryptonContextMenuCheckBox = checkBox;
 
             // Create fixed storage of the content values
             _contentValues = new FixedContentValue(ResolveText,
@@ -53,37 +47,47 @@ namespace ComponentFactory.Krypton.Toolkit
                                                    ResolveImageTransparentColor);
 
             // Decide on the enabled state of the display
-            _itemEnabled = provider.ProviderEnabled && ResolveEnabled;
+            ItemEnabled = provider.ProviderEnabled && ResolveEnabled;
 
             // Give the heading object the redirector to use when inheriting values
-            _checkBox.SetPaletteRedirect(provider.ProviderRedirector);
+            KryptonContextMenuCheckBox.SetPaletteRedirect(provider.ProviderRedirector);
 
             // Create the content for the actual heading text/image
-            _drawContent = new ViewDrawContent((_itemEnabled ? (IPaletteContent)_checkBox.OverrideNormal : (IPaletteContent)_checkBox.OverrideDisabled), 
-                                               _contentValues, VisualOrientation.Top);
-            _drawContent.UseMnemonic = true;
-            _drawContent.Enabled = _itemEnabled;
+            ViewDrawContent = new ViewDrawContent((ItemEnabled ? (IPaletteContent)KryptonContextMenuCheckBox.OverrideNormal : (IPaletteContent)KryptonContextMenuCheckBox.OverrideDisabled),
+                                               _contentValues, VisualOrientation.Top)
+            {
+                UseMnemonic = true,
+                Enabled = ItemEnabled
+            };
 
             // Create the check box image drawer and place inside element so it is always centered
-            _drawCheckBox = new ViewDrawCheckBox(_checkBox.StateCheckBoxImages);
-            _drawCheckBox.CheckState = ResolveCheckState;
-            _drawCheckBox.Enabled = _itemEnabled;
-            _layoutCenter = new ViewLayoutCenter();
-            _layoutCenter.Add(_drawCheckBox);
+            ViewDrawCheckBox = new ViewDrawCheckBox(KryptonContextMenuCheckBox.StateCheckBoxImages)
+            {
+                CheckState = ResolveCheckState,
+                Enabled = ItemEnabled
+            };
+            _layoutCenter = new ViewLayoutCenter
+            {
+                ViewDrawCheckBox
+            };
 
             // Place the check box on the left of the available space but inside separators
-            _innerDocker = new ViewLayoutDocker();
-            _innerDocker.Add(_drawContent, ViewDockStyle.Fill);
-            _innerDocker.Add(_layoutCenter, ViewDockStyle.Left);
-            _innerDocker.Add(new ViewLayoutSeparator(1), ViewDockStyle.Right);
-            _innerDocker.Add(new ViewLayoutSeparator(3), ViewDockStyle.Left);
-            _innerDocker.Add(new ViewLayoutSeparator(1), ViewDockStyle.Top);
-            _innerDocker.Add(new ViewLayoutSeparator(1), ViewDockStyle.Bottom);
+            _innerDocker = new ViewLayoutDocker
+            {
+                { ViewDrawContent, ViewDockStyle.Fill },
+                { _layoutCenter, ViewDockStyle.Left },
+                { new ViewLayoutSeparator(1), ViewDockStyle.Right },
+                { new ViewLayoutSeparator(3), ViewDockStyle.Left },
+                { new ViewLayoutSeparator(1), ViewDockStyle.Top },
+                { new ViewLayoutSeparator(1), ViewDockStyle.Bottom }
+            };
 
             // Use outer docker so that any extra space not needed is used by the null
-            _outerDocker = new ViewLayoutDocker();
-            _outerDocker.Add(_innerDocker, ViewDockStyle.Top);
-            _outerDocker.Add(new ViewLayoutNull(), ViewDockStyle.Fill);
+            _outerDocker = new ViewLayoutDocker
+            {
+                { _innerDocker, ViewDockStyle.Top },
+                { new ViewLayoutNull(), ViewDockStyle.Fill }
+            };
 
             // Use context menu specific version of the check box controller
             MenuCheckBoxController mcbc = new MenuCheckBoxController(provider.ProviderViewManager, _innerDocker, this, provider.ProviderNeedPaintDelegate);
@@ -95,13 +99,13 @@ namespace ComponentFactory.Krypton.Toolkit
             Add(_outerDocker);
 
             // Want to know when a property changes whilst displayed
-            _checkBox.PropertyChanged += new PropertyChangedEventHandler(OnPropertyChanged);
+            KryptonContextMenuCheckBox.PropertyChanged += new PropertyChangedEventHandler(OnPropertyChanged);
 
             // We need to know if a property of the command changes
-            if (_checkBox.KryptonCommand != null)
+            if (KryptonContextMenuCheckBox.KryptonCommand != null)
             {
-                _cachedCommand = _checkBox.KryptonCommand;
-                _checkBox.KryptonCommand.PropertyChanged += new PropertyChangedEventHandler(OnCommandPropertyChanged);
+                _cachedCommand = KryptonContextMenuCheckBox.KryptonCommand;
+                KryptonContextMenuCheckBox.KryptonCommand.PropertyChanged += new PropertyChangedEventHandler(OnCommandPropertyChanged);
             }
         }
 
@@ -124,7 +128,7 @@ namespace ComponentFactory.Krypton.Toolkit
             if (disposing)
             {
                 // Unhook from events
-                _checkBox.PropertyChanged -= new PropertyChangedEventHandler(OnPropertyChanged);
+                KryptonContextMenuCheckBox.PropertyChanged -= new PropertyChangedEventHandler(OnPropertyChanged);
 
                 if (_cachedCommand != null)
                 {
@@ -141,40 +145,32 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Gets access to the check box image drawing element.
         /// </summary>
-        public ViewDrawCheckBox ViewDrawCheckBox
-        {
-            get { return _drawCheckBox; }
-        }
+        public ViewDrawCheckBox ViewDrawCheckBox { get; }
+
         #endregion
 
         #region ViewDrawContent
         /// <summary>
         /// Gets access to the content drawing element.
         /// </summary>
-        public ViewDrawContent ViewDrawContent
-        {
-            get { return _drawContent; }
-        }
+        public ViewDrawContent ViewDrawContent { get; }
+
         #endregion
 
         #region ItemEnabled
         /// <summary>
         /// Gets the enabled state of the item.
         /// </summary>
-        public bool ItemEnabled
-        {
-            get { return _itemEnabled; }
-        }
+        public bool ItemEnabled { get; private set; }
+
         #endregion
 
         #region ItemText
         /// <summary>
         /// Gets the short text value of the check box item.
         /// </summary>
-        public string ItemText
-        {
-            get { return _contentValues.GetShortText(); }
-        }
+        public string ItemText => _contentValues.GetShortText();
+
         #endregion
 
         #region ResolveEnabled
@@ -186,9 +182,13 @@ namespace ComponentFactory.Krypton.Toolkit
             get
             {
                 if (_cachedCommand != null)
+                {
                     return _cachedCommand.Enabled;
+                }
                 else
-                    return _checkBox.Enabled;
+                {
+                    return KryptonContextMenuCheckBox.Enabled;
+                }
             }
         }
         #endregion
@@ -202,9 +202,13 @@ namespace ComponentFactory.Krypton.Toolkit
             get
             {
                 if (_cachedCommand != null)
+                {
                     return _cachedCommand.ImageSmall;
+                }
                 else
-                    return _checkBox.Image;
+                {
+                    return KryptonContextMenuCheckBox.Image;
+                }
             }
         }
         #endregion
@@ -218,9 +222,13 @@ namespace ComponentFactory.Krypton.Toolkit
             get
             {
                 if (_cachedCommand != null)
+                {
                     return _cachedCommand.ImageTransparentColor;
+                }
                 else
-                    return _checkBox.ImageTransparentColor;
+                {
+                    return KryptonContextMenuCheckBox.ImageTransparentColor;
+                }
             }
         }
         #endregion
@@ -234,9 +242,13 @@ namespace ComponentFactory.Krypton.Toolkit
             get
             {
                 if (_cachedCommand != null)
+                {
                     return _cachedCommand.Text;
+                }
                 else
-                    return _checkBox.Text;
+                {
+                    return KryptonContextMenuCheckBox.Text;
+                }
             }
         }
         #endregion
@@ -250,9 +262,13 @@ namespace ComponentFactory.Krypton.Toolkit
             get
             {
                 if (_cachedCommand != null)
+                {
                     return _cachedCommand.ExtraText;
+                }
                 else
-                    return _checkBox.ExtraText;
+                {
+                    return KryptonContextMenuCheckBox.ExtraText;
+                }
             }
         }
         #endregion
@@ -266,9 +282,13 @@ namespace ComponentFactory.Krypton.Toolkit
             get
             {
                 if (_cachedCommand != null)
+                {
                     return _cachedCommand.CheckState;
+                }
                 else
-                    return _checkBox.CheckState;
+                {
+                    return KryptonContextMenuCheckBox.CheckState;
+                }
             }
         }
         #endregion
@@ -277,20 +297,16 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Gets access to the actual check box definiton.
         /// </summary>
-        public KryptonContextMenuCheckBox KryptonContextMenuCheckBox
-        {
-            get { return _checkBox; }
-        }
+        public KryptonContextMenuCheckBox KryptonContextMenuCheckBox { get; }
+
         #endregion
 
         #region CanCloseMenu
         /// <summary>
         /// Gets a value indicating if the menu is capable of being closed.
         /// </summary>
-        public bool CanCloseMenu
-        {
-            get { return _provider.ProviderCanCloseMenu; }
-        }
+        public bool CanCloseMenu => _provider.ProviderCanCloseMenu;
+
         #endregion
 
         #region Closing
@@ -331,15 +347,15 @@ namespace ComponentFactory.Krypton.Toolkit
             _contentValues.ImageTransparentColor = ResolveImageTransparentColor;
 
             // Find new enabled state
-            _itemEnabled = _provider.ProviderEnabled && ResolveEnabled;
+            ItemEnabled = _provider.ProviderEnabled && ResolveEnabled;
 
             // Update with enabled state
-            _drawContent.SetPalette(_itemEnabled ? (IPaletteContent)_checkBox.OverrideNormal : (IPaletteContent)_checkBox.OverrideDisabled);
-            _drawContent.Enabled = _itemEnabled;
-            _drawCheckBox.Enabled = _itemEnabled;
+            ViewDrawContent.SetPalette(ItemEnabled ? (IPaletteContent)KryptonContextMenuCheckBox.OverrideNormal : (IPaletteContent)KryptonContextMenuCheckBox.OverrideDisabled);
+            ViewDrawContent.Enabled = ItemEnabled;
+            ViewDrawCheckBox.Enabled = ItemEnabled;
 
             // Update the checked state
-            _drawCheckBox.CheckState = ResolveCheckState;
+            ViewDrawCheckBox.CheckState = ResolveCheckState;
 
             return base.GetPreferredSize(context);
         }
@@ -353,7 +369,10 @@ namespace ComponentFactory.Krypton.Toolkit
             Debug.Assert(context != null);
 
             // Validate incoming reference
-            if (context == null) throw new ArgumentNullException("context");
+            if (context == null)
+            {
+                throw new ArgumentNullException("context");
+            }
 
             // We take on all the available display area
             ClientRectangle = context.DisplayRectangle;
@@ -381,12 +400,16 @@ namespace ComponentFactory.Krypton.Toolkit
                 case "KryptonCommand":
                     // Unhook from any existing command
                     if (_cachedCommand != null)
+                    {
                         _cachedCommand.PropertyChanged -= new PropertyChangedEventHandler(OnCommandPropertyChanged);
+                    }
 
                     // Hook into the new command
-                    _cachedCommand = _checkBox.KryptonCommand;
+                    _cachedCommand = KryptonContextMenuCheckBox.KryptonCommand;
                     if (_cachedCommand != null)
+                    {
                         _cachedCommand.PropertyChanged += new PropertyChangedEventHandler(OnCommandPropertyChanged);
+                    }
 
                     // Update to show new state
                     _provider.ProviderNeedPaintDelegate(this, new NeedLayoutEventArgs(true));
@@ -413,7 +436,7 @@ namespace ComponentFactory.Krypton.Toolkit
 
         private void OnClick(object sender, EventArgs e)
         {
-            _checkBox.PerformClick();
+            KryptonContextMenuCheckBox.PerformClick();
         }
         #endregion
     }

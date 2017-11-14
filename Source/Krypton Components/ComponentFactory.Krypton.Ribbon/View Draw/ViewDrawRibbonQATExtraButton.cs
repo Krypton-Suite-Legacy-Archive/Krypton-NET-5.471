@@ -9,10 +9,8 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Diagnostics;
 using ComponentFactory.Krypton.Toolkit;
@@ -33,7 +31,7 @@ namespace ComponentFactory.Krypton.Ribbon
         private KryptonRibbon _ribbon;
         private IDisposable _mementoBack;
         private EventHandler _finishDelegate;
-        private bool _overflow;
+
         #endregion
 
         #region Events
@@ -101,21 +99,16 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <summary>
         /// Gets the key tip target for this view.
         /// </summary>
-        public IRibbonKeyTipTarget KeyTipTarget
-        {
-            get { return SourceController as IRibbonKeyTipTarget; }
-        }
+        public IRibbonKeyTipTarget KeyTipTarget => SourceController as IRibbonKeyTipTarget;
+
         #endregion
 
         #region Overflow
         /// <summary>
         /// Gets and sets a value indicating if the button should be drawn as an overflow or context arrow.
         /// </summary>
-        public bool Overflow
-        {
-            get { return _overflow; }
-            set { _overflow = value; }
-        }
+        public bool Overflow { get; set; }
+
         #endregion
 
         #region Visible
@@ -124,8 +117,8 @@ namespace ComponentFactory.Krypton.Ribbon
         /// </summary>
         public override bool Visible
         {
-            get { return (_ribbon.Visible && base.Visible); }
-            set { base.Visible = value; }
+            get => (_ribbon.Visible && base.Visible);
+            set => base.Visible = value;
         }
         #endregion
 
@@ -186,8 +179,10 @@ namespace ComponentFactory.Krypton.Ribbon
 
             // Do we need to draw the border?
             if (paletteBorder.GetBorderDraw(State) == InheritBool.True)
+            {
                 context.Renderer.RenderStandardBorder.DrawBorder(context, ClientRectangle, paletteBorder, 
-                                                                 VisualOrientation.Top, State);
+                    VisualOrientation.Top, State);
+            }
 
             // Find the content area inside the button rectangle
             Rectangle contentRect = ClientRectangle;
@@ -195,9 +190,13 @@ namespace ComponentFactory.Krypton.Ribbon
 
             // Decide if we are drawing an overflow or context arrow image
             if (Overflow)
+            {
                 context.Renderer.RenderGlyph.DrawRibbonOverflow(_ribbon.RibbonShape, context, contentRect, paletteGeneral, State);
+            }
             else
+            {
                 context.Renderer.RenderGlyph.DrawRibbonContextArrow(_ribbon.RibbonShape, context, contentRect, paletteGeneral, State);
+            }
         }
         #endregion
 
@@ -216,13 +215,16 @@ namespace ComponentFactory.Krypton.Ribbon
             Form ownerForm = _ribbon.FindForm();
 
             // Ensure the form we are inside is active
-            if (ownerForm != null)
-                ownerForm.Activate();
+            ownerForm?.Activate();
 
             if ((ClickAndFinish != null) && !_ribbon.InDesignMode)
+            {
                 ClickAndFinish(this, _finishDelegate);
+            }
             else
+            {
                 ClickFinished(this, EventArgs.Empty);
+            }
         }
         #endregion
     }

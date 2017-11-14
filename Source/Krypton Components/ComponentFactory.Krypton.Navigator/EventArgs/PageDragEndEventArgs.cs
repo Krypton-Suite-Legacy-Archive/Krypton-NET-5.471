@@ -9,7 +9,6 @@
 // *****************************************************************************
 
 using System;
-using System.Drawing;
 
 namespace ComponentFactory.Krypton.Navigator
 {
@@ -19,9 +18,8 @@ namespace ComponentFactory.Krypton.Navigator
 	public class PageDragEndEventArgs : EventArgs
 	{
 		#region Instance Fields
-        private bool _dropped;
-        private KryptonPageCollection _pages;
-		#endregion
+
+	    #endregion
 
 		#region Identity
 		/// <summary>
@@ -32,11 +30,13 @@ namespace ComponentFactory.Krypton.Navigator
         public PageDragEndEventArgs(bool dropped,
                                     KryptonPage[] pages)
 		{
-            _dropped = dropped;
-            _pages = new KryptonPageCollection();
+            Dropped = dropped;
+            Pages = new KryptonPageCollection();
 
             if (pages != null)
-                _pages.AddRange(pages);
+            {
+                Pages.AddRange(pages);
+            }
 		}
         #endregion
 
@@ -44,20 +44,16 @@ namespace ComponentFactory.Krypton.Navigator
         /// <summary>
         /// Gets a value indicating if the drop was performed.
         /// </summary>
-        public bool Dropped
-        {
-            get { return _dropped; }
-        }
-        #endregion
+        public bool Dropped { get; }
+
+	    #endregion
 
         #region Pages
         /// <summary>
         /// Gets access to the collection of pages.
         /// </summary>
-        public KryptonPageCollection Pages
-        {
-            get { return _pages; }
-        }
-        #endregion
+        public KryptonPageCollection Pages { get; }
+
+	    #endregion
     }
 }

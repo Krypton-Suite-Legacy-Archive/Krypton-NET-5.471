@@ -8,11 +8,8 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
 using System.Drawing;
-using System.Diagnostics;
 using ComponentFactory.Krypton.Toolkit;
-using ComponentFactory.Krypton.Workspace;
 
 namespace ComponentFactory.Krypton.Docking
 {
@@ -22,8 +19,8 @@ namespace ComponentFactory.Krypton.Docking
     public class DockspaceSeparatorResizeEventArgs : DockspaceSeparatorEventArgs
 	{
 		#region Instance Fields
-        private Rectangle _resizeRect;
-		#endregion
+
+	    #endregion
 
 		#region Identity
 		/// <summary>
@@ -37,7 +34,7 @@ namespace ComponentFactory.Krypton.Docking
                                                  Rectangle resizeRect)
             : base(separator, element)
 		{
-            _resizeRect = resizeRect;
+            ResizeRect = resizeRect;
 		}
 		#endregion
 
@@ -45,11 +42,8 @@ namespace ComponentFactory.Krypton.Docking
         /// <summary>
         /// Gets and sets the rectangle that limits resizing of the dockspace using the separator.
         /// </summary>
-        public Rectangle ResizeRect
-        {
-            get { return _resizeRect; }
-            set { _resizeRect = value; }
-        }
-        #endregion
+        public Rectangle ResizeRect { get; set; }
+
+	    #endregion
 	}
 }

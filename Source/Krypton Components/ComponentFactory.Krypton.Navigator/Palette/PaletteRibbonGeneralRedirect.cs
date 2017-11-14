@@ -8,14 +8,8 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Design;
-using System.Windows.Forms;
 using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Collections.Generic;
 using System.Diagnostics;
 using ComponentFactory.Krypton.Toolkit;
 
@@ -72,13 +66,8 @@ namespace ComponentFactory.Krypton.Navigator
         /// Gets a value indicating if all values are default.
         /// </summary>
         [Browsable(false)]
-        public override bool IsDefault
-        {
-            get
-            {
-                return (TextFont == null) && (TextHint == PaletteTextHint.Inherit);
-            }                        
-        }
+        public override bool IsDefault => (TextFont == null) && (TextHint == PaletteTextHint.Inherit);
+
         #endregion
 
         #region ContextTextAlign
@@ -282,7 +271,7 @@ namespace ComponentFactory.Krypton.Navigator
         [RefreshPropertiesAttribute(RefreshProperties.All)]
         public Font TextFont
         {
-            get { return _textFont; }
+            get => _textFont;
 
             set
             {
@@ -310,9 +299,13 @@ namespace ComponentFactory.Krypton.Navigator
         public Font GetRibbonTextFont(PaletteState state)
         {
             if (TextFont != null)
+            {
                 return TextFont;
+            }
             else
+            {
                 return _inherit.GetRibbonTextFont(state);
+            }
         }
         #endregion
 
@@ -326,7 +319,7 @@ namespace ComponentFactory.Krypton.Navigator
         [RefreshPropertiesAttribute(RefreshProperties.All)]
         public PaletteTextHint TextHint
         {
-            get { return _textHint; }
+            get => _textHint;
 
             set
             {
@@ -354,9 +347,13 @@ namespace ComponentFactory.Krypton.Navigator
         public PaletteTextHint GetRibbonTextHint(PaletteState state)
         {
             if (TextHint != PaletteTextHint.Inherit)
+            {
                 return TextHint;
+            }
             else
+            {
                 return _inherit.GetRibbonTextHint(state);
+            }
         }
         #endregion
 

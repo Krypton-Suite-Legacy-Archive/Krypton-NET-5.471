@@ -8,12 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
-using System.Drawing;
-using System.Drawing.Text;
 using System.ComponentModel;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Diagnostics;
 using ComponentFactory.Krypton.Toolkit;
@@ -26,9 +21,11 @@ namespace ComponentFactory.Krypton.Navigator
     public class NavigatorOutlook : Storage
     {
         #region Static Fields
-        private static readonly string _defaultMoreButtons = "Show &More Buttons";
-        private static readonly string _defaultFewerButtons = "Show Fe&wer Buttons";
-        private static readonly string _defaultAddRemoveButtons = "&Add or Remove Buttons";
+
+        private const string DEFAULT_MORE_BUTTONS = "Show &More Buttons";
+        private const string DEFAULT_FEWER_BUTTONS = "Show Fe&wer Buttons";
+        private const string DEFAULT_ADD_REMOVE_BUTTONS = "&Add or Remove Buttons";
+
         #endregion
 
         #region Instance Fields
@@ -38,12 +35,7 @@ namespace ComponentFactory.Krypton.Navigator
         private PaletteBorderStyle _borderEdgeStyle;
         private ButtonOrientation _itemOrientation;
         private Orientation _orientation;
-        private NavigatorOutlookFull _full;
-        private NavigatorOutlookMini _mini;
         private InheritBool _headerSecondaryVisible;
-        private string _textMoreButtons;
-        private string _textFewerButtons;
-        private string _textAddRemoveButtons;
         private bool _showDropDownButton;
         #endregion
 
@@ -65,8 +57,8 @@ namespace ComponentFactory.Krypton.Navigator
             NeedPaint = needPaint;
 
             // Create compound objects
-            _full = new NavigatorOutlookFull(navigator, needPaint);
-            _mini = new NavigatorOutlookMini(navigator, needPaint);
+            Full = new NavigatorOutlookFull(navigator, needPaint);
+            Mini = new NavigatorOutlookMini(navigator, needPaint);
 
             // Default values
             _checkButtonStyle = ButtonStyle.NavigatorStack;
@@ -75,9 +67,9 @@ namespace ComponentFactory.Krypton.Navigator
             _orientation = Orientation.Vertical;
             _itemOrientation = ButtonOrientation.Auto;
             _headerSecondaryVisible = InheritBool.False;
-            _textMoreButtons = _defaultMoreButtons;
-            _textFewerButtons = _defaultFewerButtons;
-            _textAddRemoveButtons = _defaultAddRemoveButtons;
+            TextMoreButtons = DEFAULT_MORE_BUTTONS;
+            TextFewerButtons = DEFAULT_FEWER_BUTTONS;
+            TextAddRemoveButtons = DEFAULT_ADD_REMOVE_BUTTONS;
             _showDropDownButton = true;
         }
 		#endregion
@@ -87,24 +79,19 @@ namespace ComponentFactory.Krypton.Navigator
         /// Gets a value indicating if all values are default.
         /// </summary>
         [Browsable(false)]
-        public override bool IsDefault
-        {
-            get
-            {
-                return (Full.IsDefault &&
-                        Mini.IsDefault &&
-                        (CheckButtonStyle == ButtonStyle.NavigatorStack) &&
-                        (OverflowButtonStyle == ButtonStyle.NavigatorOverflow) &&
-                        (BorderEdgeStyle == PaletteBorderStyle.ControlClient) &&
-                        (Orientation == Orientation.Vertical) &&
-                        (ItemOrientation == ButtonOrientation.Auto) &&
-                        (HeaderSecondaryVisible == InheritBool.False) &&
-                        (TextMoreButtons.Equals(_defaultMoreButtons)) &&
-                        (TextFewerButtons.Equals(_defaultFewerButtons)) &&
-                        (TextAddRemoveButtons.Equals(_defaultAddRemoveButtons)) &&
-                        (ShowDropDownButton == true));
-            }
-        }
+        public override bool IsDefault => (Full.IsDefault &&
+                                           Mini.IsDefault &&
+                                           (CheckButtonStyle == ButtonStyle.NavigatorStack) &&
+                                           (OverflowButtonStyle == ButtonStyle.NavigatorOverflow) &&
+                                           (BorderEdgeStyle == PaletteBorderStyle.ControlClient) &&
+                                           (Orientation == Orientation.Vertical) &&
+                                           (ItemOrientation == ButtonOrientation.Auto) &&
+                                           (HeaderSecondaryVisible == InheritBool.False) &&
+                                           (TextMoreButtons.Equals(DEFAULT_MORE_BUTTONS)) &&
+                                           (TextFewerButtons.Equals(DEFAULT_FEWER_BUTTONS)) &&
+                                           (TextAddRemoveButtons.Equals(DEFAULT_ADD_REMOVE_BUTTONS)) &&
+                                           ShowDropDownButton);
+
         #endregion
 
         #region Full
@@ -114,14 +101,11 @@ namespace ComponentFactory.Krypton.Navigator
         [Category("Visuals")]
         [Description("Settings for the Outlook - Full mode.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public NavigatorOutlookFull Full
-        {
-            get { return _full; }
-        }
+        public NavigatorOutlookFull Full { get; }
 
         private bool ShouldSerializeFull()
         {
-            return !_full.IsDefault;
+            return !Full.IsDefault;
         }
         #endregion
 
@@ -132,14 +116,11 @@ namespace ComponentFactory.Krypton.Navigator
         [Category("Visuals")]
         [Description("Settings for the Outlook - Mini mode.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public NavigatorOutlookMini Mini
-        {
-            get { return _mini; }
-        }
+        public NavigatorOutlookMini Mini { get; }
 
         private bool ShouldSerializeMini()
         {
-            return !_mini.IsDefault;
+            return !Mini.IsDefault;
         }
         #endregion
 
@@ -152,7 +133,7 @@ namespace ComponentFactory.Krypton.Navigator
         [DefaultValue(typeof(ButtonStyle), "NavigatorStack")]
         public ButtonStyle CheckButtonStyle
         {
-            get { return _checkButtonStyle; }
+            get => _checkButtonStyle;
 
             set
             {
@@ -174,7 +155,7 @@ namespace ComponentFactory.Krypton.Navigator
         [DefaultValue(typeof(ButtonStyle), "NavigatorOverflow")]
         public ButtonStyle OverflowButtonStyle
         {
-            get { return _overflowButtonStyle; }
+            get => _overflowButtonStyle;
 
             set
             {
@@ -196,7 +177,7 @@ namespace ComponentFactory.Krypton.Navigator
         [DefaultValue(typeof(PaletteBorderStyle), "ControlClient")]
         public PaletteBorderStyle BorderEdgeStyle
         {
-            get { return _borderEdgeStyle; }
+            get => _borderEdgeStyle;
 
             set
             {
@@ -219,7 +200,7 @@ namespace ComponentFactory.Krypton.Navigator
         [DefaultValue(typeof(Orientation), "Vertical")]
         public Orientation Orientation
         {
-            get { return _orientation; }
+            get => _orientation;
 
             set
             {
@@ -250,7 +231,7 @@ namespace ComponentFactory.Krypton.Navigator
         [DefaultValue(typeof(ButtonOrientation), "Auto")]
         public ButtonOrientation ItemOrientation
         {
-            get { return _itemOrientation; }
+            get => _itemOrientation;
 
             set
             {
@@ -281,7 +262,7 @@ namespace ComponentFactory.Krypton.Navigator
         [DefaultValue(typeof(InheritBool), "False")]
         public InheritBool HeaderSecondaryVisible
         {
-            get { return _headerSecondaryVisible; }
+            get => _headerSecondaryVisible;
 
             set
             {
@@ -311,18 +292,14 @@ namespace ComponentFactory.Krypton.Navigator
         [RefreshPropertiesAttribute(RefreshProperties.All)]
         [DefaultValue("Show &More Buttons")]
         [Localizable(true)]
-        public string TextMoreButtons
-        {
-            get { return _textMoreButtons; }
-            set { _textMoreButtons = value; }
-        }
+        public string TextMoreButtons { get; set; }
 
         /// <summary>
         /// Resets the TextMoreButtons property to its default value.
         /// </summary>
         public void ResetTextMoreButtons()
         {
-            TextMoreButtons = _defaultMoreButtons;
+            TextMoreButtons = DEFAULT_MORE_BUTTONS;
         }
         #endregion
 
@@ -335,18 +312,14 @@ namespace ComponentFactory.Krypton.Navigator
         [RefreshPropertiesAttribute(RefreshProperties.All)]
         [DefaultValue("Show Fe&wer Buttons")]
         [Localizable(true)]
-        public string TextFewerButtons
-        {
-            get { return _textFewerButtons; }
-            set { _textFewerButtons = value; }
-        }
+        public string TextFewerButtons { get; set; }
 
         /// <summary>
         /// Resets the TextFewerButtons property to its default value.
         /// </summary>
         public void ResetTextFewerButtons()
         {
-            TextFewerButtons = _defaultFewerButtons;
+            TextFewerButtons = DEFAULT_FEWER_BUTTONS;
         }
         #endregion
 
@@ -359,18 +332,14 @@ namespace ComponentFactory.Krypton.Navigator
         [RefreshPropertiesAttribute(RefreshProperties.All)]
         [DefaultValue("&Add or Remove Buttons")]
         [Localizable(true)]
-        public string TextAddRemoveButtons
-        {
-            get { return _textAddRemoveButtons; }
-            set { _textAddRemoveButtons = value; }
-        }
+        public string TextAddRemoveButtons { get; set; }
 
         /// <summary>
         /// Resets the TextAddRemoveButtons property to its default value.
         /// </summary>
         public void ResetTextAddRemoveButtons()
         {
-            TextAddRemoveButtons = _defaultAddRemoveButtons;
+            TextAddRemoveButtons = DEFAULT_ADD_REMOVE_BUTTONS;
         }
         #endregion
 
@@ -384,7 +353,7 @@ namespace ComponentFactory.Krypton.Navigator
         [DefaultValue(true)]
         public bool ShowDropDownButton
         {
-            get { return _showDropDownButton; }
+            get => _showDropDownButton;
 
             set
             {

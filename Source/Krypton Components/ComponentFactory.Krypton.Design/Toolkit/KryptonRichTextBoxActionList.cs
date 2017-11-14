@@ -8,12 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Drawing;
-using System.ComponentModel;
 using System.ComponentModel.Design;
-using System.Windows.Forms;
-using System.Windows.Forms.Design;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -46,8 +41,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public PaletteMode PaletteMode
         {
-            get { return _richTextBox.PaletteMode; }
-            
+            get => _richTextBox.PaletteMode;
+
             set 
             {
                 if (_richTextBox.PaletteMode != value)
@@ -63,7 +58,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public InputControlStyle InputControlStyle
         {
-            get { return _richTextBox.InputControlStyle; }
+            get => _richTextBox.InputControlStyle;
 
             set
             {
@@ -80,7 +75,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public bool Multiline
         {
-            get { return _richTextBox.Multiline; }
+            get => _richTextBox.Multiline;
 
             set
             {
@@ -97,7 +92,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public bool WordWrap
         {
-            get { return _richTextBox.WordWrap; }
+            get => _richTextBox.WordWrap;
 
             set
             {

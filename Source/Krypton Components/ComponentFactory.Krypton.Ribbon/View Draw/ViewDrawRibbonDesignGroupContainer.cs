@@ -9,13 +9,9 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Diagnostics;
-using System.ComponentModel;
 using ComponentFactory.Krypton.Toolkit;
 
 namespace ComponentFactory.Krypton.Ribbon
@@ -39,8 +35,10 @@ namespace ComponentFactory.Krypton.Ribbon
         static ViewDrawRibbonDesignGroupContainer()
         {
             // Use image list to convert background Magenta to transparent
-            _imageList = new ImageList();
-            _imageList.TransparentColor = Color.Magenta;
+            _imageList = new ImageList
+            {
+                TransparentColor = Color.Magenta
+            };
             _imageList.Images.AddRange(new Image[]{Properties.Resources.KryptonRibbonGroupTriple,
                                                    Properties.Resources.KryptonRibbonGroupLines,
                                                    Properties.Resources.KryptonRibbonGroupSeparator,
@@ -86,26 +84,17 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <summary>
         /// Gets the padding to use when calculating the preferred size.
         /// </summary>
-        protected override Padding PreferredPadding
-        {
-            get { return _padding; }
-        }
+        protected override Padding PreferredPadding => _padding;
 
         /// <summary>
         /// Gets the padding to use when laying out the view.
         /// </summary>
-        protected override Padding LayoutPadding
-        {
-            get { return Padding.Empty; }
-        }
+        protected override Padding LayoutPadding => Padding.Empty;
 
         /// <summary>
         /// Gets the padding to shrink the client area by when laying out.
         /// </summary>
-        protected override Padding OuterPadding
-        {
-            get { return _padding; }
-        }
+        protected override Padding OuterPadding => _padding;
 
         /// <summary>
         /// Raises the Click event.
@@ -117,8 +106,10 @@ namespace ComponentFactory.Krypton.Ribbon
             // Create the context strip the first time around
             if (_cms == null)
             {
-                _cms = new ContextMenuStrip();
-                _cms.ImageList = _imageList;
+                _cms = new ContextMenuStrip
+                {
+                    ImageList = _imageList
+                };
 
                 // Create child items
                 ToolStripMenuItem menuTriple = new ToolStripMenuItem("Add Triple", null, new EventHandler(OnAddTriple));

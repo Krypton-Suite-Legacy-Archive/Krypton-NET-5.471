@@ -8,15 +8,9 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
-using System.Data;
 using System.Drawing;
-using System.Drawing.Design;
 using System.ComponentModel;
 using System.Windows.Forms;
-using System.Diagnostics;
-using System.Collections;
 using ComponentFactory.Krypton.Toolkit;
 
 namespace ComponentFactory.Krypton.Ribbon
@@ -34,7 +28,7 @@ namespace ComponentFactory.Krypton.Ribbon
     {
         #region Instance Fields
         private bool _visible;
-        private ViewBase _separatorView;
+
         #endregion
 
         #region Events
@@ -79,7 +73,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public override bool Visible
         {
-            get { return _visible; }
+            get => _visible;
 
             set
             {
@@ -162,18 +156,14 @@ namespace ComponentFactory.Krypton.Ribbon
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Browsable(false)]
-        public ViewBase SeparatorView
-        {
-            get { return _separatorView; }
-            set { _separatorView = value; }
-        }
+        public ViewBase SeparatorView { get; set; }
+
         #endregion
 
         #region Internal
         internal void OnDesignTimeContextMenu(MouseEventArgs e)
         {
-            if (DesignTimeContextMenu != null)
-                DesignTimeContextMenu(this, e);
+            DesignTimeContextMenu?.Invoke(this, e);
         }
 
         internal override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -189,8 +179,7 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <param name="propertyName">Name of property that has changed.</param>
         protected virtual void OnPropertyChanged(string propertyName)
         {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
     }

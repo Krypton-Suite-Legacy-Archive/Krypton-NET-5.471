@@ -9,10 +9,8 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Diagnostics;
 using ComponentFactory.Krypton.Toolkit;
@@ -31,7 +29,6 @@ namespace ComponentFactory.Krypton.Ribbon
 
         #region Instance Fields
         private KryptonRibbon _ribbon;
-        private IQuickAccessToolbarButton _qatButton;
         private QATButtonToContent _contentProvider;
         private ViewDrawContent _drawContent;
         private IDisposable _mementoBack;
@@ -53,7 +50,7 @@ namespace ComponentFactory.Krypton.Ribbon
 
             // Remember incoming references
             _ribbon = ribbon;
-            _qatButton = qatButton;
+            QATButton = qatButton;
 
             // If the source interface comes from a component then allow it to 
             // be selected at design time by clicking on the view instance
@@ -117,20 +114,16 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <summary>
         /// Gets the key tip target for this view.
         /// </summary>
-        public IRibbonKeyTipTarget KeyTipTarget
-        {
-            get { return SourceController as IRibbonKeyTipTarget; }
-        }
+        public IRibbonKeyTipTarget KeyTipTarget => SourceController as IRibbonKeyTipTarget;
+
         #endregion
 
         #region QATButton
         /// <summary>
         /// Gets access to the source button this view represents.
         /// </summary>
-        public IQuickAccessToolbarButton QATButton
-        {
-            get { return _qatButton; }
-        }
+        public IQuickAccessToolbarButton QATButton { get; }
+
         #endregion
 
         #region Enabled
@@ -139,7 +132,7 @@ namespace ComponentFactory.Krypton.Ribbon
         /// </summary>
         public override bool Enabled
         {
-            get { return (base.Enabled && _ribbon.Enabled); }
+            get => (base.Enabled && _ribbon.Enabled);
 
             set
             {
@@ -184,7 +177,9 @@ namespace ComponentFactory.Krypton.Ribbon
         {
             // Make sure we reflect the current enabled state
             if (!Enabled && _ribbon.InDesignHelperMode)
+            {
                 ElementState = PaletteState.Disabled;
+            }
 
             IPaletteBack paletteBack = _ribbon.StateCommon.RibbonQATButton.PaletteBack;
             IPaletteBorder paletteBorder = _ribbon.StateCommon.RibbonQATButton.PaletteBorder;
@@ -210,8 +205,10 @@ namespace ComponentFactory.Krypton.Ribbon
 
             // Do we need to draw the border?
             if (paletteBorder.GetBorderDraw(State) == InheritBool.True)
+            {
                 context.Renderer.RenderStandardBorder.DrawBorder(context, ClientRectangle, paletteBorder, 
-                                                                 VisualOrientation.Top, State);
+                    VisualOrientation.Top, State);
+            }
 
             base.RenderBefore(context);
         }
@@ -238,11 +235,10 @@ namespace ComponentFactory.Krypton.Ribbon
                 Form ownerForm = _ribbon.FindForm();
 
                 // Ensure the form we are inside is active
-                if (ownerForm != null)
-                    ownerForm.Activate();
+                ownerForm?.Activate();
 
                 // Inform quick access toolbar button it has been clicked
-                _qatButton.PerformClick();
+                QATButton.PerformClick();
             }
         }
         #endregion
@@ -255,7 +251,7 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <returns>Image.</returns>
         public Image GetImage(PaletteState state)
         {
-            return _qatButton.GetImage();
+            return QATButton.GetImage();
         }
 
         /// <summary>

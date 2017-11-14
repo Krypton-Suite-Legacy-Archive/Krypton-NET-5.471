@@ -8,8 +8,6 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Windows.Forms;
 using ComponentFactory.Krypton.Toolkit;
 
 namespace ComponentFactory.Krypton.Navigator
@@ -20,8 +18,8 @@ namespace ComponentFactory.Krypton.Navigator
     public class KryptonContextMenuEventArgs : KryptonPageEventArgs
 	{
 		#region Instance Fields
-        private KryptonContextMenu _contextMenu;
-		#endregion
+
+	    #endregion
 
 		#region Identity
 		/// <summary>
@@ -35,7 +33,7 @@ namespace ComponentFactory.Krypton.Navigator
                                            KryptonContextMenu contextMenu)
 			: base(page, index)
 		{
-            _contextMenu = contextMenu;
+            KryptonContextMenu = contextMenu;
 		}
 		#endregion
 
@@ -43,10 +41,8 @@ namespace ComponentFactory.Krypton.Navigator
         /// <summary>
         /// Gets access to the KryptonContextMenu that is to be shown.
         /// </summary>
-        public KryptonContextMenu KryptonContextMenu
-        {
-            get { return _contextMenu; }
-        }
-        #endregion
+        public KryptonContextMenu KryptonContextMenu { get; }
+
+	    #endregion
     }
 }

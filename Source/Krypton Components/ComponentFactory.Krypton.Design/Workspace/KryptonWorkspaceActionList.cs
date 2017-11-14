@@ -8,12 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Drawing;
-using System.ComponentModel;
 using System.ComponentModel.Design;
-using System.Windows.Forms;
-using System.Windows.Forms.Design;
 using ComponentFactory.Krypton.Toolkit;
 
 namespace ComponentFactory.Krypton.Workspace
@@ -47,7 +42,7 @@ namespace ComponentFactory.Krypton.Workspace
         /// </summary>
         public PaletteBackStyle ContainerBackStyle
         {
-            get { return _workspace.ContainerBackStyle; }
+            get => _workspace.ContainerBackStyle;
 
             set
             {
@@ -64,7 +59,7 @@ namespace ComponentFactory.Krypton.Workspace
         /// </summary>
         public SeparatorStyle SeparatorStyle
         {
-            get { return _workspace.SeparatorStyle; }
+            get => _workspace.SeparatorStyle;
 
             set
             {
@@ -81,7 +76,7 @@ namespace ComponentFactory.Krypton.Workspace
         /// </summary>
         public bool AllowResizing
         {
-            get { return _workspace.AllowResizing; }
+            get => _workspace.AllowResizing;
 
             set
             {
@@ -98,7 +93,7 @@ namespace ComponentFactory.Krypton.Workspace
         /// </summary>
         public CompactFlags CompactFlags
         {
-            get { return _workspace.CompactFlags; }
+            get => _workspace.CompactFlags;
 
             set
             {
@@ -115,8 +110,8 @@ namespace ComponentFactory.Krypton.Workspace
         /// </summary>
         public PaletteMode PaletteMode
         {
-            get { return _workspace.PaletteMode; }
-            
+            get => _workspace.PaletteMode;
+
             set 
             {
                 if (_workspace.PaletteMode != value)

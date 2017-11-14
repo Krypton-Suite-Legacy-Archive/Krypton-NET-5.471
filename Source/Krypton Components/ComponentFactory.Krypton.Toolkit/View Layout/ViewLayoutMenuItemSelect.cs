@@ -9,10 +9,7 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -38,7 +35,7 @@ namespace ComponentFactory.Krypton.Toolkit
         private int _imageCount;
         private int _lineItems;
         private Padding _padding;
-        private bool _enabled;
+
         #endregion
 
         #region Identity
@@ -58,7 +55,7 @@ namespace ComponentFactory.Krypton.Toolkit
             _provider = provider;
 
             _itemSelect.TrackingIndex = -1;
-            _enabled = provider.ProviderEnabled;
+            ItemEnabled = provider.ProviderEnabled;
             _viewManager = provider.ProviderViewManager;
 
             // Cache the values to use when running
@@ -77,7 +74,9 @@ namespace ComponentFactory.Krypton.Toolkit
 
             IPalette palette = provider.ProviderPalette;
             if (palette == null)
+            {
                 palette = KryptonManager.GetPaletteForMode(provider.ProviderPaletteMode);
+            }
 
             // Create triple that can be used by the draw button
             _triple = new PaletteTripleToPalette(palette,
@@ -104,20 +103,16 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Gets the enabled state of the item.
         /// </summary>
-        public bool ItemEnabled
-        {
-            get { return _enabled; }
-        }
+        public bool ItemEnabled { get; }
+
         #endregion
 
         #region CanCloseMenu
         /// <summary>
         /// Gets a value indicating if the menu is capable of being closed.
         /// </summary>
-        public bool CanCloseMenu
-        {
-            get { return _provider.ProviderCanCloseMenu; }
-        }
+        public bool CanCloseMenu => _provider.ProviderCanCloseMenu;
+
         #endregion
 
         #region Closing
@@ -184,10 +179,13 @@ namespace ComponentFactory.Krypton.Toolkit
 			Debug.Assert(context != null);
 
             // Validate incoming reference
-            if (context == null) throw new ArgumentNullException("context");
-            
+            if (context == null)
+            {
+                throw new ArgumentNullException("context");
+            }
+
             // We take on all the available display area
-			ClientRectangle = context.DisplayRectangle;
+            ClientRectangle = context.DisplayRectangle;
 
             // Ensure that the correct number of children are created
             SyncChildren();
@@ -239,14 +237,18 @@ namespace ComponentFactory.Krypton.Toolkit
                 // Create and add the number extra needed
                 int create = _imageIndexCount - Count;
                 for (int i = 0; i < create; i++)
+                {
                     Add(new ViewDrawMenuImageSelectItem(_viewManager, _itemSelect, _triple, this, _needPaint));
+                }
             }
             else if (Count > _imageIndexCount)
             {
                 // Destroy the extra ones no longer needed
                 int remove = Count - _imageIndexCount;
                 for (int i = 0; i < remove; i++)
+                {
                     RemoveAt(0);
+                }
             }
 
             // Tell each item the image it should be displaying
@@ -257,7 +259,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 item.ImageList = _imageList;
                 item.ImageIndex = imageIndex;
                 item.Checked = (_selectedIndex == imageIndex);
-                item.Enabled = _enabled;
+                item.Enabled = ItemEnabled;
             }
         }
         #endregion

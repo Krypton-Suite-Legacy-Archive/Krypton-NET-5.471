@@ -8,13 +8,8 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
 using System.Drawing;
-using System.ComponentModel;
 using System.ComponentModel.Design;
-using System.Windows.Forms;
-using System.Windows.Forms.Design;
-using ComponentFactory.Krypton.Toolkit;
 
 namespace ComponentFactory.Krypton.Navigator
 {
@@ -48,7 +43,7 @@ namespace ComponentFactory.Krypton.Navigator
         /// </summary>
         public string TextShort
         {
-            get { return _page.Text; }
+            get => _page.Text;
 
             set
             {
@@ -65,7 +60,7 @@ namespace ComponentFactory.Krypton.Navigator
         /// </summary>
         public string TextTitle
         {
-            get { return _page.TextTitle; }
+            get => _page.TextTitle;
 
             set
             {
@@ -82,7 +77,7 @@ namespace ComponentFactory.Krypton.Navigator
         /// </summary>
         public string TextDescription
         {
-            get { return _page.TextDescription; }
+            get => _page.TextDescription;
 
             set
             {
@@ -99,7 +94,7 @@ namespace ComponentFactory.Krypton.Navigator
         /// </summary>
         public string ToolTipTitle
         {
-            get { return _page.ToolTipTitle; }
+            get => _page.ToolTipTitle;
 
             set
             {
@@ -116,7 +111,7 @@ namespace ComponentFactory.Krypton.Navigator
         /// </summary>
         public string ToolTipBody
         {
-            get { return _page.ToolTipBody; }
+            get => _page.ToolTipBody;
 
             set
             {
@@ -133,7 +128,7 @@ namespace ComponentFactory.Krypton.Navigator
         /// </summary>
         public Image ToolTipImage
         {
-            get { return _page.ToolTipImage; }
+            get => _page.ToolTipImage;
 
             set
             {
@@ -150,7 +145,7 @@ namespace ComponentFactory.Krypton.Navigator
         /// </summary>
         public Image ImageSmall
         {
-            get { return _page.ImageSmall; }
+            get => _page.ImageSmall;
 
             set
             {
@@ -167,7 +162,7 @@ namespace ComponentFactory.Krypton.Navigator
         /// </summary>
         public Image ImageMedium
         {
-            get { return _page.ImageMedium; }
+            get => _page.ImageMedium;
 
             set
             {
@@ -184,7 +179,7 @@ namespace ComponentFactory.Krypton.Navigator
         /// </summary>
         public Image ImageLarge
         {
-            get { return _page.ImageLarge; }
+            get => _page.ImageLarge;
 
             set
             {
@@ -201,16 +196,20 @@ namespace ComponentFactory.Krypton.Navigator
         /// </summary>
         public bool PageInOverflowBarForOutlookMode
         {
-            get { return _page.AreFlagsSet(KryptonPageFlags.PageInOverflowBarForOutlookMode); }
+            get => _page.AreFlagsSet(KryptonPageFlags.PageInOverflowBarForOutlookMode);
 
             set
             {
                 _serviceComponentChange.OnComponentChanged(_page, null, _page.AreFlagsSet(KryptonPageFlags.PageInOverflowBarForOutlookMode), value);
 
                 if (value)
+                {
                     _page.SetFlags(KryptonPageFlags.PageInOverflowBarForOutlookMode);
+                }
                 else
+                {
                     _page.ClearFlags(KryptonPageFlags.PageInOverflowBarForOutlookMode);
+                }
             }
         }
         #endregion
@@ -225,19 +224,21 @@ namespace ComponentFactory.Krypton.Navigator
             // Only create the list of items once
             if (_actions == null)
             {
-                _actions = new DesignerActionItemCollection();
-                _actions.Add(new DesignerActionHeaderItem("Appearance"));
-                _actions.Add(new DesignerActionPropertyItem("TextShort", "Text", "Appearance", "The page text."));
-                _actions.Add(new DesignerActionPropertyItem("TextTitle", "Text Title", "Appearance", "The title text for the page."));
-                _actions.Add(new DesignerActionPropertyItem("TextDescription", "Text Description", "Appearance", "The description text for the page."));
-                _actions.Add(new DesignerActionPropertyItem("ImageSmall", "Image Small", "Appearance", "The small image that represents the page."));
-                _actions.Add(new DesignerActionPropertyItem("ImageMedium", "Image Medium", "Appearance", "The medium image that represents the page."));
-                _actions.Add(new DesignerActionPropertyItem("ImageLarge", "Image Large", "Appearance", "The large image that represents the page."));
-                _actions.Add(new DesignerActionPropertyItem("ToolTipTitle", "Tooltip Title", "Appearance", "The tooltip title text for the page."));
-                _actions.Add(new DesignerActionPropertyItem("ToolTipBody", "Tooltip Body", "Appearance", "The tooltip body text for the page."));
-                _actions.Add(new DesignerActionPropertyItem("ToolTipImage", "Tooltip Image", "Appearance", "The tooltip image that represents the page."));
-                _actions.Add(new DesignerActionHeaderItem("Flags"));
-                _actions.Add(new DesignerActionPropertyItem("PageInOverflowBarForOutlookMode", "Page in Overflow Bar for Outlook mode", "Flags", "Should the page be shown on the overflow bar for the Outlook mode."));
+                _actions = new DesignerActionItemCollection
+                {
+                    new DesignerActionHeaderItem("Appearance"),
+                    new DesignerActionPropertyItem("TextShort", "Text", "Appearance", "The page text."),
+                    new DesignerActionPropertyItem("TextTitle", "Text Title", "Appearance", "The title text for the page."),
+                    new DesignerActionPropertyItem("TextDescription", "Text Description", "Appearance", "The description text for the page."),
+                    new DesignerActionPropertyItem("ImageSmall", "Image Small", "Appearance", "The small image that represents the page."),
+                    new DesignerActionPropertyItem("ImageMedium", "Image Medium", "Appearance", "The medium image that represents the page."),
+                    new DesignerActionPropertyItem("ImageLarge", "Image Large", "Appearance", "The large image that represents the page."),
+                    new DesignerActionPropertyItem("ToolTipTitle", "Tooltip Title", "Appearance", "The tooltip title text for the page."),
+                    new DesignerActionPropertyItem("ToolTipBody", "Tooltip Body", "Appearance", "The tooltip body text for the page."),
+                    new DesignerActionPropertyItem("ToolTipImage", "Tooltip Image", "Appearance", "The tooltip image that represents the page."),
+                    new DesignerActionHeaderItem("Flags"),
+                    new DesignerActionPropertyItem("PageInOverflowBarForOutlookMode", "Page in Overflow Bar for Outlook mode", "Flags", "Should the page be shown on the overflow bar for the Outlook mode.")
+                };
             }
 
             return _actions;

@@ -9,14 +9,9 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
 using System.Drawing;
 using System.Drawing.Design;
-using System.Windows.Forms;
 using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -35,7 +30,7 @@ namespace ComponentFactory.Krypton.Toolkit
         private bool _allowInheritText;
         private bool _allowInheritExtraText;
         private bool _allowInheritToolTipTitle;
-        private CheckButtonImageStates _imageStates;
+
         #endregion
 
         #region Identity
@@ -55,8 +50,10 @@ namespace ComponentFactory.Krypton.Toolkit
             _allowInheritText = true;
             _allowInheritExtraText = true;
             _allowInheritToolTipTitle = true;
-            _imageStates = new CheckButtonImageStates();
-            _imageStates.NeedPaint = new NeedPaintHandler(OnImageStateChanged);
+            ImageStates = new CheckButtonImageStates
+            {
+                NeedPaint = new NeedPaintHandler(OnImageStateChanged)
+            };
         }
 		#endregion
 
@@ -65,23 +62,18 @@ namespace ComponentFactory.Krypton.Toolkit
         /// Gets a value indicating if all values are default.
         /// </summary>
         [Browsable(false)]
-        public override bool IsDefault
-        {
-            get
-            {
-                return (base.IsDefault &&
-                        _imageStates.IsDefault&&
-                        (Image == null) &&
-                        (Text == string.Empty) &&
-                        (ExtraText == string.Empty) &&
-                        (ToolTipTitle == string.Empty) &&
-                        (ColorMap == Color.Empty) &&
-                        (AllowInheritImage == true) &&
-                        (AllowInheritText == true) &&
-                        (AllowInheritExtraText == true) &&
-                        (AllowInheritToolTipTitle == true));
-            }
-        }
+        public override bool IsDefault => (base.IsDefault &&
+                                           ImageStates.IsDefault&&
+                                           (Image == null) &&
+                                           (Text == string.Empty) &&
+                                           (ExtraText == string.Empty) &&
+                                           (ToolTipTitle == string.Empty) &&
+                                           (ColorMap == Color.Empty) &&
+                                           AllowInheritImage &&
+                                           AllowInheritText &&
+                                           AllowInheritExtraText &&
+                                           AllowInheritToolTipTitle);
+
         #endregion
 
         #region PopulateFromBase
@@ -117,7 +109,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue(null)]
         public Image Image
         {
-            get { return _image; }
+            get => _image;
 
             set
             {
@@ -151,14 +143,11 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("State specific images for the button.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public CheckButtonImageStates ImageStates
-        {
-            get { return _imageStates; }
-        }
+        public CheckButtonImageStates ImageStates { get; }
 
         private bool ShouldSerializeImageStates()
         {
-            return !_imageStates.IsDefault;
+            return !ImageStates.IsDefault;
         }
         #endregion
 
@@ -174,7 +163,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue("")]
         public string Text
         {
-            get { return _text; }
+            get => _text;
 
             set
             {
@@ -212,7 +201,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue("")]
         public string ExtraText
         {
-            get { return _extraText; }
+            get => _extraText;
 
             set
             {
@@ -250,7 +239,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue("")]
         public string ToolTipTitle
         {
-            get { return _toolTipTitle; }
+            get => _toolTipTitle;
 
             set
             {
@@ -287,7 +276,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [KryptonDefaultColorAttribute()]
         public Color ColorMap
         {
-            get { return _colorMap; }
+            get => _colorMap;
 
             set
             {
@@ -324,7 +313,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue(true)]
         public bool AllowInheritImage
         {
-            get { return _allowInheritImage; }
+            get => _allowInheritImage;
 
             set
             {
@@ -356,7 +345,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue(true)]
         public bool AllowInheritText
         {
-            get { return _allowInheritText; }
+            get => _allowInheritText;
 
             set
             {
@@ -388,7 +377,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue(true)]
         public bool AllowInheritExtraText
         {
-            get { return _allowInheritExtraText; }
+            get => _allowInheritExtraText;
 
             set
             {
@@ -420,7 +409,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue(true)]
         public bool AllowInheritToolTipTitle
         {
-            get { return _allowInheritToolTipTitle; }
+            get => _allowInheritToolTipTitle;
 
             set
             {
@@ -481,10 +470,14 @@ namespace ComponentFactory.Krypton.Toolkit
 
             // Default to the image if no state specific image is found
             if (image == null)
+            {
                 image = Image;
+            }
 
             if ((image != null) || !AllowInheritImage)
+            {
                 return image;
+            }
 
             return base.GetButtonSpecImage(style, state);
         }
@@ -497,9 +490,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public override string GetButtonSpecShortText(PaletteButtonSpecStyle style)
         {
             if ((Text.Length > 0) || !AllowInheritText)
+            {
                 return Text;
+            }
             else
+            {
                 return base.GetButtonSpecShortText(style);
+            }
         }
 
         /// <summary>
@@ -510,9 +507,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public override string GetButtonSpecLongText(PaletteButtonSpecStyle style)
         {
             if ((ExtraText.Length > 0) || !AllowInheritExtraText)
+            {
                 return ExtraText;
+            }
             else
+            {
                 return base.GetButtonSpecLongText(style);
+            }
         }
 
         /// <summary>
@@ -523,9 +524,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public override string GetButtonSpecToolTipTitle(PaletteButtonSpecStyle style)
         {
             if ((ToolTipTitle.Length > 0) || !AllowInheritToolTipTitle)
+            {
                 return ToolTipTitle;
+            }
             else
+            {
                 return base.GetButtonSpecToolTipTitle(style);
+            }
         }
 
         /// <summary>
@@ -536,9 +541,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public override Color GetButtonSpecColorMap(PaletteButtonSpecStyle style)
         {
             if (ColorMap != Color.Empty)
+            {
                 return ColorMap;
+            }
             else
+            {
                 return base.GetButtonSpecColorMap(style);
+            }
         }
         #endregion
 

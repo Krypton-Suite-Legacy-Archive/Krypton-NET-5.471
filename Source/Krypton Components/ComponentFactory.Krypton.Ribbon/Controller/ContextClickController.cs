@@ -8,11 +8,8 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Diagnostics;
 using ComponentFactory.Krypton.Toolkit;
 
 namespace ComponentFactory.Krypton.Ribbon
@@ -121,11 +118,9 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <summary>
         /// Should the left mouse down be ignored when present on a visual form border area.
         /// </summary>
-        public virtual bool IgnoreVisualFormLeftButtonDown
-        {
-            get { return false; }
-        }
-        #endregion
+        public virtual bool IgnoreVisualFormLeftButtonDown => false;
+
+	    #endregion
 
 		#region Protected
         /// <summary>
@@ -134,8 +129,7 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <param name="e">A MouseEventArgs containing the event data.</param>
         protected virtual void OnContextClick(MouseEventArgs e)
         {
-            if (ContextClick != null)
-                ContextClick(this, e);
+            ContextClick?.Invoke(this, e);
         }
 		#endregion
     }

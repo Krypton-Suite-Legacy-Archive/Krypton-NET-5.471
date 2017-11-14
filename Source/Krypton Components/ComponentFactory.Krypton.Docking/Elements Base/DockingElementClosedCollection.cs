@@ -8,15 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Drawing;
-using System.Collections;
 using System.Collections.Generic;
-using System.Windows.Forms;
-using System.Text;
-using System.Diagnostics;
-using System.ComponentModel;
-using ComponentFactory.Krypton.Toolkit;
 
 namespace ComponentFactory.Krypton.Docking
 {
@@ -45,20 +37,14 @@ namespace ComponentFactory.Krypton.Docking
         /// <summary>
         /// Gets the number of child docking elements.
         /// </summary>
-        public override int Count 
-        {
-            get { return _elements.Count; }
-        }
+        public override int Count => _elements.Count;
 
         /// <summary>
         /// Gets the docking element at the specified index.
         /// </summary>
         /// <param name="index">Index.</param>
         /// <returns>Docking element at specified index.</returns>
-        public override IDockingElement this[int index] 
-        {
-            get { return _elements[index]; }
-        }
+        public override IDockingElement this[int index] => _elements[index];
 
         /// <summary>
         /// Gets the docking element with the specified name.
@@ -73,8 +59,12 @@ namespace ComponentFactory.Krypton.Docking
                 if (name != null)
                 {
                     foreach (IDockingElement element in this)
+                    {
                         if (element.Name.Equals(name))
+                        {
                             return element;
+                        }
+                    }
                 }
 
                 return null; 
@@ -144,7 +134,9 @@ namespace ComponentFactory.Krypton.Docking
                 return true;
             }
             else
+            {
                 return false;
+            }
         }
 
         /// <summary>
@@ -154,7 +146,9 @@ namespace ComponentFactory.Krypton.Docking
         {
             // Remove the parent relationships
             foreach (IDockingElement element in this)
+            {
                 element.Parent = null;
+            }
 
             _elements.Clear();
         }

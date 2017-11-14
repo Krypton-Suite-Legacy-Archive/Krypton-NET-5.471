@@ -9,13 +9,9 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
 using System.Drawing;
 using System.Drawing.Design;
-using System.Windows.Forms;
 using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Collections.Generic;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -67,17 +63,12 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// Gets a value indicating if all values are default.
 		/// </summary>
 		[Browsable(false)]
-		public override bool IsDefault
-		{
-			get
-			{
-                return ((Image == null) &&
-                        (ImageTransparentColor == Color.Empty) &&
-						(Text == _defaultText) &&
-						(ExtraText == _defaultExtraText));
-			}
-		}
-		#endregion
+		public override bool IsDefault => ((Image == null) &&
+		                                   (ImageTransparentColor == Color.Empty) &&
+		                                   (Text == _defaultText) &&
+		                                   (ExtraText == _defaultExtraText));
+
+	    #endregion
 
 		#region Image
 		/// <summary>
@@ -89,9 +80,9 @@ namespace ComponentFactory.Krypton.Toolkit
 		[RefreshPropertiesAttribute(RefreshProperties.All)]
 		public Image Image
 		{
-			get { return _image; }
+			get => _image;
 
-			set
+		    set
 			{
 				if (_image != value)
 				{
@@ -136,7 +127,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [KryptonDefaultColorAttribute()]
         public Color ImageTransparentColor
         {
-            get { return _transparent; }
+            get => _transparent;
 
             set
             {
@@ -183,17 +174,16 @@ namespace ComponentFactory.Krypton.Toolkit
 		[Editor("System.ComponentModel.Design.MultilineStringEditor, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
 		public string Text
 		{
-			get { return _text; }
+			get => _text;
 
-			set
+		    set
 			{
 				if (_text != value)
 				{
 					_text = value;
 					PerformNeedPaint(true);
-                    if (TextChanged != null)
-                        TextChanged(this, EventArgs.Empty);
-				}
+                    TextChanged?.Invoke(this, EventArgs.Empty);
+                }
 			}
 		}
 
@@ -231,9 +221,9 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue("")]
         public string ExtraText
 		{
-			get { return _extraText; }
+			get => _extraText;
 
-			set
+		    set
 			{
 				if (_extraText != value)
 				{

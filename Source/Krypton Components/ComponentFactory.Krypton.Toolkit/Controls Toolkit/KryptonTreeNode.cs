@@ -8,16 +8,9 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
-using System.Data;
 using System.Drawing;
-using System.Drawing.Design;
 using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Collections.Generic;
 using System.Windows.Forms;
-using System.Runtime.InteropServices;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -114,7 +107,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [Localizable(true)]
         public string LongText
         {
-            get { return _longText; }
+            get => _longText;
 
             set 
             {
@@ -140,7 +133,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [Description("Foreground color of the long text")]
         public Color LongForeColor
         {
-            get { return _longForeColor; }
+            get => _longForeColor;
 
             set
             {
@@ -166,7 +159,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [Description("Font of the long text")]
         public Font LongNodeFont
         {
-            get { return _longNodeFont; }
+            get => _longNodeFont;
 
             set
             {
@@ -191,8 +184,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <param name="e">A PropertyChangedEventArgs containing the event data.</param>
         protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
         {
-            if (PropertyChanged != null)
-                PropertyChanged(this, e);
+            PropertyChanged?.Invoke(this, e);
         }
         #endregion 
     }

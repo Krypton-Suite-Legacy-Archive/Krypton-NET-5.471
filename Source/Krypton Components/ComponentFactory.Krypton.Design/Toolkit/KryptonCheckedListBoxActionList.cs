@@ -8,12 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Drawing;
-using System.ComponentModel;
 using System.ComponentModel.Design;
-using System.Windows.Forms;
-using System.Windows.Forms.Design;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -46,7 +41,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public ButtonStyle ItemStyle
         {
-            get { return _checkedListBox.ItemStyle; }
+            get => _checkedListBox.ItemStyle;
 
             set
             {
@@ -63,7 +58,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public PaletteBackStyle BackStyle
         {
-            get { return _checkedListBox.BackStyle; }
+            get => _checkedListBox.BackStyle;
 
             set
             {
@@ -80,7 +75,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public PaletteBorderStyle BorderStyle
         {
-            get { return _checkedListBox.BorderStyle; }
+            get => _checkedListBox.BorderStyle;
 
             set
             {
@@ -97,7 +92,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public CheckedSelectionMode SelectionMode
         {
-            get { return _checkedListBox.SelectionMode; }
+            get => _checkedListBox.SelectionMode;
 
             set
             {
@@ -114,7 +109,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public bool Sorted
         {
-            get { return _checkedListBox.Sorted; }
+            get => _checkedListBox.Sorted;
 
             set
             {
@@ -131,7 +126,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public bool CheckOnClick
         {
-            get { return _checkedListBox.CheckOnClick; }
+            get => _checkedListBox.CheckOnClick;
 
             set
             {
@@ -148,8 +143,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public PaletteMode PaletteMode
         {
-            get { return _checkedListBox.PaletteMode; }
-            
+            get => _checkedListBox.PaletteMode;
+
             set 
             {
                 if (_checkedListBox.PaletteMode != value)

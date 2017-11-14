@@ -9,10 +9,8 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Diagnostics;
 using ComponentFactory.Krypton.Toolkit;
@@ -96,10 +94,8 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <summary>
         /// Gets access to the controller used for the button.
         /// </summary>
-        public DialogLauncherButtonController DialogButtonController
-        {
-            get { return SourceController as DialogLauncherButtonController; }
-        }
+        public DialogLauncherButtonController DialogButtonController => SourceController as DialogLauncherButtonController;
+
         #endregion
 
         #region Layout
@@ -156,8 +152,10 @@ namespace ComponentFactory.Krypton.Ribbon
 
             // Do we need to draw the border?
             if (paletteBorder.GetBorderDraw(State) == InheritBool.True)
+            {
                 context.Renderer.RenderStandardBorder.DrawBorder(context, ClientRectangle, paletteBorder, 
-                                                                 VisualOrientation.Top, State);
+                    VisualOrientation.Top, State);
+            }
 
             // Find the content area inside the button rectangle
             Rectangle contentRect = ClientRectangle;

@@ -9,7 +9,6 @@
 // *****************************************************************************
 
 using System;
-using System.Diagnostics;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -25,9 +24,8 @@ namespace ComponentFactory.Krypton.Toolkit
 	public class TypedCollectionEventArgs<T> : EventArgs where T : class
 	{
 		#region Instance Fields
-		private T _item;
-		private int _index;
-		#endregion
+
+	    #endregion
 
 		#region Identity
 		/// <summary>
@@ -38,8 +36,8 @@ namespace ComponentFactory.Krypton.Toolkit
         public TypedCollectionEventArgs(T item, int index)
 		{
 			// Remember parameter details
-            _item = item;
-			_index = index;
+            Item = item;
+			Index = index;
 		}
 		#endregion
 
@@ -47,18 +45,13 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// <summary>
 		/// Gets the item associated with the event.
 		/// </summary>
-        public T Item
-		{
-            get { return _item; }
-		}
+        public T Item { get; }
 
-		/// <summary>
+	    /// <summary>
 		/// Gets the index of the item associated with the event.
 		/// </summary>
-		public int Index
-		{
-			get { return _index; }
-		}
-		#endregion
+		public int Index { get; }
+
+	    #endregion
 	}
 }

@@ -8,9 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
 using System.Drawing;
-using System.Windows.Forms;
 using System.Diagnostics;
 using ComponentFactory.Krypton.Toolkit;
 
@@ -41,15 +39,10 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <summary>
         /// Gets a value indicating if the mapping produces any content.
         /// </summary>
-        public bool HasContent
-        {
-            get
-            {
-                return (GetImage(PaletteState.Normal) != null) ||
-                        !string.IsNullOrEmpty(GetShortText()) ||
-                        !string.IsNullOrEmpty(GetLongText());
-            }
-        }
+        public bool HasContent => (GetImage(PaletteState.Normal) != null) ||
+                                  !string.IsNullOrEmpty(GetShortText()) ||
+                                  !string.IsNullOrEmpty(GetLongText());
+
         #endregion
 
         #region IContentValues

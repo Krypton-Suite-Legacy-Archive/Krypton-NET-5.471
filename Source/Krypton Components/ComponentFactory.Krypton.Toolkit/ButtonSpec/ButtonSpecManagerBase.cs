@@ -9,13 +9,9 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Design;
 using System.Windows.Forms;
 using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 
@@ -32,7 +28,7 @@ namespace ComponentFactory.Krypton.Toolkit
         #endregion
 
         #region Instance Fields
-        private ToolTipManager _toolTipManager;
+
         private PaletteRedirect _redirector;
         private ButtonSpecCollectionBase _variableSpecs;
         private ButtonSpecCollectionBase _fixedSpecs;
@@ -43,9 +39,7 @@ namespace ComponentFactory.Krypton.Toolkit
         private ListSpacers[] _viewSpacers;
         private ButtonSpecLookup _specLookup;
         private GetToolStripRenderer _getRenderer;
-        private bool _useMnemonic;
-        private Control _control;
-        private NeedPaintHandler _needPaint;
+
         #endregion
 
         #region Identity
@@ -81,7 +75,7 @@ namespace ComponentFactory.Krypton.Toolkit
             NeedPaint = needPaint;
 
             // Remember references
-            _control = control;
+            Control = control;
             _redirector = redirector;
             _variableSpecs = variableSpecs;
             _fixedSpecs = fixedSpecs;
@@ -92,10 +86,12 @@ namespace ComponentFactory.Krypton.Toolkit
             _getRenderer = getRenderer;
 
             if (_viewMetrics != null)
+            {
                 _viewSpacers = new ListSpacers[_viewMetrics.Length];
+            }
 
             // Default state
-            _useMnemonic = true;
+            UseMnemonic = true;
 
             // Create the lookup instance
             _specLookup = new ButtonSpecLookup();
@@ -114,28 +110,17 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Gets the owning control.
         /// </summary>
-        public Control Control
-        {
-            get { return _control; }
-        }
+        public Control Control { get; }
 
         /// <summary>
         /// Gets and sets the associated tooltip manager.
         /// </summary>
-        public ToolTipManager ToolTipManager
-        {
-            get { return _toolTipManager; }
-            set { _toolTipManager = value; }
-        }
+        public ToolTipManager ToolTipManager { get; set; }
 
         /// <summary>
         /// Gets and sets the need paint delegate for notifying paint requests.
         /// </summary>
-        public NeedPaintHandler NeedPaint
-        {
-            get { return _needPaint; }
-            set { _needPaint = value; }
-        }
+        public NeedPaintHandler NeedPaint { get; set; }
 
         /// <summary>
         /// Gets an array containing references of all the current views.
@@ -149,7 +134,9 @@ namespace ComponentFactory.Krypton.Toolkit
 
                 int i=0;
                 foreach (ButtonSpecView view in _specLookup.Values)
+                {
                     array[i++] = view;
+                }
 
                 return array;
             }
@@ -223,11 +210,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Gets and sets the use of mnemonics.
         /// </summary>
-        public bool UseMnemonic
-        {
-            get { return _useMnemonic; }
-            set { _useMnemonic = value; }
-        }
+        public bool UseMnemonic { get; set; }
 
         /// <summary>
         /// Requests that all the buttons be recreated.
@@ -321,7 +304,9 @@ namespace ComponentFactory.Krypton.Toolkit
 
                     // Update the the metric for all the spacers associated with this docker
                     foreach (ViewLayoutMetricSpacer spacer in _viewSpacers[i])
+                    {
                         spacer.SetMetrics(viewMetric);
+                    }
 
                     // Need a repaint and layout to show change
                     PerformNeedPaint(true);
@@ -356,7 +341,9 @@ namespace ComponentFactory.Krypton.Toolkit
 
                     // Update the the metric for all the spacers associated with this docker
                     foreach (ViewLayoutMetricSpacer spacer in _viewSpacers[i])
+                    {
                         spacer.SetMetrics(viewMetric, viewMetricInt);
+                    }
 
                     // Need a repaint and layout to show change
                     PerformNeedPaint(true);
@@ -384,8 +371,12 @@ namespace ComponentFactory.Krypton.Toolkit
         {
             // Find all the buttons on this view docker
             foreach (ButtonSpecView buttonView in _specLookup.Values)
+            {
                 if (buttonView.ButtonSpec == buttonSpec)
+                {
                     return buttonView.ViewButton.ClientRectangle;
+                }
+            }
 
             return Rectangle.Empty;
         }
@@ -399,8 +390,12 @@ namespace ComponentFactory.Krypton.Toolkit
         {
             // Search for a button spec that contains this element
             foreach (ButtonSpecView buttonView in _specLookup.Values)
+            {
                 if (buttonView.ViewCenter.ContainsRecurse(element))
+                {
                     return buttonView.ButtonSpec;
+                }
+            }
 
             // No match
             return null;
@@ -415,10 +410,14 @@ namespace ComponentFactory.Krypton.Toolkit
         {
             // Search all buttons for any that contain the provided point
             foreach (ButtonSpecView buttonView in _specLookup.Values)
+            {
                 if (buttonView.ViewButton.Visible &&
                     buttonView.ViewButton.Enabled &&
                     buttonView.ViewButton.ClientRectangle.Contains(pt))
+                {
                     return true;
+                }
+            }
 
             return false;
         }
@@ -460,8 +459,12 @@ namespace ComponentFactory.Krypton.Toolkit
         public virtual ButtonSpec GetButtonSpecFromView(ViewDrawButton viewButton)
         {
             foreach (ButtonSpecView specView in _specLookup.Values)
+            {
                 if (specView.ViewButton == viewButton)
+                {
                     return specView.ButtonSpec;
+                }
+            }
 
             return null;
         }
@@ -480,7 +483,9 @@ namespace ComponentFactory.Krypton.Toolkit
                     specView.ViewButton.Enabled)
                 {
                     if (specView.ButtonSpec.Edge == align)
+                    {
                         return specView.ViewButton;
+                    }
                 }
             }
 
@@ -500,7 +505,9 @@ namespace ComponentFactory.Krypton.Toolkit
             foreach (ButtonSpecView specView in _specLookup.Values)
             {
                 if (!found)
+                {
                     found = (specView.ViewButton == current);
+                }
                 else
                 {
                     // Is the button actually visible/enabled
@@ -508,7 +515,9 @@ namespace ComponentFactory.Krypton.Toolkit
                         specView.ViewButton.Enabled)
                     {
                         if (specView.ButtonSpec.Edge == align)
+                        {
                             return specView.ViewButton;
+                        }
                     }
                 }
             }
@@ -534,7 +543,9 @@ namespace ComponentFactory.Krypton.Toolkit
                 ButtonSpecView specView = (ButtonSpecView)specLookups[i];
 
                 if (!found)
+                {
                     found = (specView.ViewButton == current);
+                }
                 else
                 {
                     // Is the button actually visible/enabled
@@ -542,7 +553,9 @@ namespace ComponentFactory.Krypton.Toolkit
                         specView.ViewButton.Enabled)
                     {
                         if (specView.ButtonSpec.Edge == align)
+                        {
                             return specView.ViewButton;
+                        }
                     }
                 }
             }
@@ -569,7 +582,9 @@ namespace ComponentFactory.Krypton.Toolkit
                     specView.ViewButton.Enabled)
                 {
                     if (specView.ButtonSpec.Edge == align)
+                    {
                         return specView.ViewButton;
+                    }
                 }
             }
 
@@ -593,10 +608,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Gets a value indicating if inside edge spacers are required.
         /// </summary>
-        protected virtual bool UseInsideSpacers
-        {
-            get { return false; }
-        }
+        protected virtual bool UseInsideSpacers => false;
 
         /// <summary>
         /// Gets the number of dockers.
@@ -693,8 +705,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <param name="needLayout">Does the palette change require a layout.</param>
         protected virtual void OnNeedPaint(object sender, bool needLayout)
         {
-            if (_needPaint != null)
-                _needPaint(sender, new NeedLayoutEventArgs(needLayout));
+            NeedPaint?.Invoke(sender, new NeedLayoutEventArgs(needLayout));
         }
         #endregion
 
@@ -709,7 +720,9 @@ namespace ComponentFactory.Krypton.Toolkit
         {
             // Destruct all the current views
             foreach (ButtonSpecView buttonView in _specLookup.Values)
+            {
                 RemoveButtonSpec(buttonView.ButtonSpec);
+            }
 
             // All views are destroyed so clear down lookup
             _specLookup.Clear();
@@ -773,9 +786,13 @@ namespace ComponentFactory.Krypton.Toolkit
 
                             // The edge determines which count to use
                             if (buttonSpec.GetEdge(_redirector) == RelativeEdgeAlign.Far)
+                            {
                                 farCounts[dockerIndex]++;
+                            }
                             else
+                            {
                                 nearCounts[dockerIndex]++;
+                            }
                         }
                     }
                 }

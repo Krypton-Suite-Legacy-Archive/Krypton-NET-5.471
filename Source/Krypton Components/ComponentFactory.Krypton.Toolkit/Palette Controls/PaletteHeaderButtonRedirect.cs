@@ -8,12 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
-using System.Drawing;
-using System.Drawing.Text;
 using System.ComponentModel;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Diagnostics;
 
@@ -62,16 +57,11 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// Gets a value indicating if all values are default.
 		/// </summary>
 		[Browsable(false)]
-		public override bool IsDefault
-		{
-			get
-			{
-				return (base.IsDefault &&
-                        ButtonPadding.Equals(CommonHelper.InheritPadding) &&
-                        (ButtonEdgeInset == -1));
-			}
-		}
-		#endregion
+		public override bool IsDefault => (base.IsDefault &&
+		                                   ButtonPadding.Equals(CommonHelper.InheritPadding) &&
+		                                   (ButtonEdgeInset == -1));
+
+	    #endregion
 
         #region ButtonEdgeInset
         /// <summary>
@@ -83,7 +73,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [RefreshPropertiesAttribute(RefreshProperties.All)]
         public int ButtonEdgeInset
         {
-            get { return _buttonEdgeInset; }
+            get => _buttonEdgeInset;
 
             set
             {
@@ -114,7 +104,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [RefreshPropertiesAttribute(RefreshProperties.All)]
         public Padding ButtonPadding
         {
-            get { return _buttonPadding; }
+            get => _buttonPadding;
 
             set
             {
@@ -156,7 +146,9 @@ namespace ComponentFactory.Krypton.Toolkit
             {
                 // If the user has defined an actual value to use
                 if (ButtonEdgeInset != -1)
+                {
                     return ButtonEdgeInset;
+                }
             }
 
             // Pass onto the inheritance
@@ -195,7 +187,9 @@ namespace ComponentFactory.Krypton.Toolkit
             {
                 // If the user has defined an actual value to use
                 if (!ButtonPadding.Equals(CommonHelper.InheritPadding))
+                {
                     return ButtonPadding;
+                }
             }
 
             // Pass onto the inheritance

@@ -9,12 +9,8 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Drawing.Drawing2D;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Diagnostics;
 using ComponentFactory.Krypton.Toolkit;
 
@@ -77,8 +73,9 @@ namespace ComponentFactory.Krypton.Ribbon
                 if (_mementos != null)
                 {
                     foreach (IDisposable memento in _mementos)
-                        if (memento != null)
-                            memento.Dispose();
+                    {
+                        memento?.Dispose();
+                    }
 
                     _mementos = null;
                 }
@@ -94,8 +91,8 @@ namespace ComponentFactory.Krypton.Ribbon
         /// </summary>
         public override bool Visible
         {
-            get { return (base.Visible && ((Parent == null) ? true : Parent.Visible)); }
-            set { base.Visible = value; }
+            get => (base.Visible && ((Parent == null) ? true : Parent.Visible));
+            set => base.Visible = value;
         }
         #endregion
 
@@ -183,7 +180,9 @@ namespace ComponentFactory.Krypton.Ribbon
                     Rectangle imageRect = new Rectangle(ClientLocation.X + 7, ClientLocation.Y + 6, 24, 24);
 
                     if (_ribbon.Enabled)
+                    {
                         context.Graphics.DrawImage(_ribbon.RibbonAppButton.AppButtonImage, imageRect);
+                    }
                     else
                     {
                         // Use a color matrix to convert to black and white

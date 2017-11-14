@@ -8,15 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
-using System.Drawing;
-using System.Drawing.Design;
-using System.Windows.Forms;
 using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -26,9 +18,7 @@ namespace ComponentFactory.Krypton.Toolkit
     public class PaletteMonthCalendarDoubleState : PaletteDouble
     {
         #region Instance Fields
-        private PaletteTriple _paletteHeader;
-        private PaletteTriple _paletteDay;
-        private PaletteTriple _paletteDayOfWeek;
+
         #endregion
 
         #region Identity
@@ -50,9 +40,9 @@ namespace ComponentFactory.Krypton.Toolkit
                                                NeedPaintHandler needPaint) 
             : base(redirect, needPaint)
 		{
-            _paletteHeader = new PaletteTriple(redirect.Header, needPaint);
-            _paletteDay = new PaletteTriple(redirect.Day, needPaint);
-            _paletteDayOfWeek = new PaletteTriple(redirect.DayOfWeek, needPaint);
+            Header = new PaletteTriple(redirect.Header, needPaint);
+            Day = new PaletteTriple(redirect.Day, needPaint);
+            DayOfWeek = new PaletteTriple(redirect.DayOfWeek, needPaint);
         }
         #endregion
 
@@ -61,17 +51,12 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// Gets a value indicating if all values are default.
 		/// </summary>
 		[Browsable(false)]
-		public override bool IsDefault
-		{
-            get
-            {
-                return (base.IsDefault && 
-                        _paletteHeader.IsDefault &&
-                        _paletteDay.IsDefault &&
-                        _paletteDayOfWeek.IsDefault);
-            }
-		}
-		#endregion
+		public override bool IsDefault => (base.IsDefault && 
+		                                   Header.IsDefault &&
+		                                   Day.IsDefault &&
+		                                   DayOfWeek.IsDefault);
+
+        #endregion
 
         #region Header
         /// <summary>
@@ -80,14 +65,11 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining month/year header appearance entries.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public PaletteTriple Header
-        {
-            get { return _paletteHeader; }
-        }
+        public PaletteTriple Header { get; }
 
         private bool ShouldSerializeHeader()
         {
-            return !_paletteHeader.IsDefault;
+            return !Header.IsDefault;
         }
         #endregion
 
@@ -98,14 +80,11 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining day appearance entries.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public PaletteTriple Day
-        {
-            get { return _paletteDay; }
-        }
+        public PaletteTriple Day { get; }
 
         private bool ShouldSerializeDay()
         {
-            return !_paletteDay.IsDefault;
+            return !Day.IsDefault;
         }
         #endregion
 
@@ -116,14 +95,11 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining day of week appearance entries.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public PaletteTriple DayOfWeek
-        {
-            get { return _paletteDayOfWeek; }
-        }
+        public PaletteTriple DayOfWeek { get; }
 
         private bool ShouldSerializeDayOfWeek()
         {
-            return !_paletteDayOfWeek.IsDefault;
+            return !DayOfWeek.IsDefault;
         }
         #endregion
     }

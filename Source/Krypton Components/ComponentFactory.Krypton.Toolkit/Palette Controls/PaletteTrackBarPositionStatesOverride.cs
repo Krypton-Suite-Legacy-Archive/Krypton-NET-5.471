@@ -9,12 +9,7 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
-using System.Drawing;
-using System.Drawing.Text;
 using System.ComponentModel;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Diagnostics;
 
 namespace ComponentFactory.Krypton.Toolkit
@@ -25,8 +20,8 @@ namespace ComponentFactory.Krypton.Toolkit
     public class PaletteTrackBarPositionStatesOverride : GlobalId
 	{
 		#region Instance Fields
-        private PaletteElementColorInheritOverride _overridePositionState;
-        #endregion
+
+	    #endregion
 
 		#region Identity
 		/// <summary>
@@ -43,11 +38,18 @@ namespace ComponentFactory.Krypton.Toolkit
             Debug.Assert(overrideStates != null);
 
             // Validate incoming references
-            if (normalStates == null) throw new ArgumentNullException("normalStates");
-            if (overrideStates == null) throw new ArgumentNullException("overrideStates");
+            if (normalStates == null)
+            {
+                throw new ArgumentNullException("normalStates");
+            }
+
+            if (overrideStates == null)
+            {
+                throw new ArgumentNullException("overrideStates");
+            }
 
             // Create the override instance
-            _overridePositionState = new PaletteElementColorInheritOverride(normalStates.Position, overrideStates.Position);
+            Position = new PaletteElementColorInheritOverride(normalStates.Position, overrideStates.Position);
 
             // Do not apply an override by default
             Apply = false;
@@ -67,7 +69,7 @@ namespace ComponentFactory.Krypton.Toolkit
         public void SetPalettes(PaletteTrackBarRedirect normalStates,
                                 PaletteTrackBarPositionStates overrideStates)
         {
-            _overridePositionState.SetPalettes(normalStates.Position, overrideStates.Position);
+            Position.SetPalettes(normalStates.Position, overrideStates.Position);
         }
         #endregion
 
@@ -77,9 +79,9 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// </summary>
 		public bool Apply
 		{
-            get { return _overridePositionState.Apply; }
-			set { _overridePositionState.Apply = value; }
-		}
+            get => Position.Apply;
+            set => Position.Apply = value;
+        }
 		#endregion
 
         #region Override
@@ -88,8 +90,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public bool Override
         {
-            get { return _overridePositionState.Override; }
-            set { _overridePositionState.Override = value; }
+            get => Position.Override;
+            set => Position.Override = value;
         }
         #endregion
 
@@ -99,8 +101,8 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// </summary>
 		public PaletteState OverrideState
 		{
-            get { return _overridePositionState.OverrideState; }
-            set { _overridePositionState.OverrideState = value; }
+            get => Position.OverrideState;
+		    set => Position.OverrideState = value;
 		}
 		#endregion
 
@@ -112,10 +114,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining position appearance.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public PaletteElementColorInheritOverride Position
-        {
-            get { return _overridePositionState; }
-        }
-        #endregion
+        public PaletteElementColorInheritOverride Position { get; }
+
+	    #endregion
 	}
 }

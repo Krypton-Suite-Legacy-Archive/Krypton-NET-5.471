@@ -9,18 +9,9 @@
 // *****************************************************************************
 
 using System;
-using System.Data;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Text;
-using System.Drawing.Imaging;
-using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using Microsoft.Win32;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -83,8 +74,10 @@ namespace ComponentFactory.Krypton.Toolkit
             _style = ButtonStyle.LowProfile;
 
             // Timer used to generate tracking change event
-            _trackingEventTimer = new Timer();
-            _trackingEventTimer.Interval = 120;
+            _trackingEventTimer = new Timer
+            {
+                Interval = 120
+            };
             _trackingEventTimer.Tick += new EventHandler(OnTrackingTick);
         }
 
@@ -104,20 +97,14 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int ItemChildCount 
-        {
-            get { return 0; }
-        }
+        public override int ItemChildCount => 0;
 
         /// <summary>
         /// Returns the indexed child menu item.
         /// </summary>
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override KryptonContextMenuItemBase this[int index]
-        {
-            get { return null; }
-        }
+        public override KryptonContextMenuItemBase this[int index] => null;
 
         /// <summary>
         /// Test for the provided shortcut and perform relevant action if a match is found.
@@ -156,8 +143,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue(typeof(Padding), "2,2,2,2")]
         public Padding Padding
         {
-            get { return _padding; }
-            
+            get => _padding;
+
             set 
             {
                 if (_padding != value)
@@ -177,7 +164,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue(true)]
         public bool AutoClose
         {
-            get { return _autoClose; }
+            get => _autoClose;
 
             set
             {
@@ -198,7 +185,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue(-1)]
         public int SelectedIndex
         {
-            get { return _selectedIndex; }
+            get => _selectedIndex;
 
             set
             {
@@ -219,8 +206,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue(typeof(ButtonStyle), "LowProfile")]
         public ButtonStyle ButtonStyle
         {
-            get { return _style; }
-            
+            get => _style;
+
             set
             {
                 if (_style != value)
@@ -240,7 +227,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue(null)]
         public ImageList ImageList
         {
-            get { return _imageList; }
+            get => _imageList;
 
             set
             {
@@ -261,7 +248,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue(-1)]
         public int ImageIndexStart
         {
-            get { return _imageIndexStart; }
+            get => _imageIndexStart;
 
             set
             {
@@ -282,7 +269,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue(-1)]
         public int ImageIndexEnd
         {
-            get { return _imageIndexEnd; }
+            get => _imageIndexEnd;
 
             set
             {
@@ -303,7 +290,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue(5)]
         public int LineItems
         {
-            get { return _lineItems; }
+            get => _lineItems;
 
             set
             {
@@ -326,8 +313,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <param name="e">An EventArgs containing the event data.</param>
         protected virtual void OnSelectedIndexChanged(EventArgs e)
         {
-            if (SelectedIndexChanged != null)
-                SelectedIndexChanged(this, e);
+            SelectedIndexChanged?.Invoke(this, e);
         }
 
         /// <summary>
@@ -337,16 +323,15 @@ namespace ComponentFactory.Krypton.Toolkit
         protected virtual void OnTrackingImage(ImageSelectEventArgs e)
         {
             _eventTrackingIndex = e.ImageIndex;
-            if (TrackingImage != null)
-                TrackingImage(this, e);
+            TrackingImage?.Invoke(this, e);
         }
         #endregion
 
         #region Internal
         internal int TrackingIndex
         {
-            get { return _trackingIndex; }
-            
+            get => _trackingIndex;
+
             set 
             { 
                 if (_trackingIndex != value)
@@ -373,7 +358,9 @@ namespace ComponentFactory.Krypton.Toolkit
 
                 // But only generate if actual event would yield a different value
                 if (_eventTrackingIndex != _trackingIndex)
+                {
                     OnTrackingImage(new ImageSelectEventArgs(_imageList, _trackingIndex));
+                }
             }
             else
             {

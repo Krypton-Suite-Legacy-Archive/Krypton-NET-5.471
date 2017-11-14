@@ -9,18 +9,9 @@
 // *****************************************************************************
 
 using System;
-using System.Data;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Text;
-using System.Drawing.Imaging;
-using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using Microsoft.Win32;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -36,12 +27,12 @@ namespace ComponentFactory.Krypton.Toolkit
     public class KryptonContextMenuColorColumns : KryptonContextMenuItemBase
     {
         #region Static Fields
-        private static readonly Color[][] _noneScheme = new Color[][] { };
+        private static readonly Color[][] _noneScheme = { };
 
-        private static readonly Color[][] _mono2Scheme = new Color[][] { new Color[] { Color.White }, 
+        private static readonly Color[][] _mono2Scheme = { new Color[] { Color.White }, 
                                                                          new Color[] { Color.Black } };
 
-        private static readonly Color[][] _mono8Scheme = new Color[][] { new Color[] { Color.White                   }, 
+        private static readonly Color[][] _mono8Scheme = { new Color[] { Color.White                   }, 
                                                                          new Color[] { Color.Silver                  },
                                                                          new Color[] { Color.FromArgb(160, 160, 160) },
                                                                          new Color[] { Color.Gray                    },
@@ -50,7 +41,7 @@ namespace ComponentFactory.Krypton.Toolkit
                                                                          new Color[] { Color.FromArgb( 32,  32,  32) },
                                                                          new Color[] { Color.Black }};
 
-        private static readonly Color[][] _basic16Scheme = new Color[][] { new Color[] { Color.White,   Color.Black  }, 
+        private static readonly Color[][] _basic16Scheme = { new Color[] { Color.White,   Color.Black  }, 
                                                                            new Color[] { Color.Silver,  Color.Gray   }, 
                                                                            new Color[] { Color.Red,     Color.Maroon }, 
                                                                            new Color[] { Color.Yellow,  Color.Olive  }, 
@@ -59,7 +50,7 @@ namespace ComponentFactory.Krypton.Toolkit
                                                                            new Color[] { Color.Blue,    Color.Navy   }, 
                                                                            new Color[] { Color.Fuchsia, Color.Purple } }; 
 
-        private static readonly Color[][] _officeStandardScheme = new Color[][] { new Color[] { Color.FromArgb(192,   0,   0) }, 
+        private static readonly Color[][] _officeStandardScheme = { new Color[] { Color.FromArgb(192,   0,   0) }, 
                                                                                   new Color[] { Color.Red                     }, 
                                                                                   new Color[] { Color.FromArgb(255, 192,   0) }, 
                                                                                   new Color[] { Color.Yellow                  }, 
@@ -70,7 +61,7 @@ namespace ComponentFactory.Krypton.Toolkit
                                                                                   new Color[] { Color.FromArgb(  0,  32,  96) }, 
                                                                                   new Color[] { Color.FromArgb(112,  48, 160) } };
     
-        private static readonly Color[][] _officeThemeScheme = new Color[][] { new Color[] { Color.White,                   Color.FromArgb(242, 242, 242), Color.FromArgb(216, 216, 216), Color.FromArgb(191, 191, 191), Color.FromArgb(165, 165, 165), Color.Gray                    }, 
+        private static readonly Color[][] _officeThemeScheme = { new Color[] { Color.White,                   Color.FromArgb(242, 242, 242), Color.FromArgb(216, 216, 216), Color.FromArgb(191, 191, 191), Color.FromArgb(165, 165, 165), Color.Gray                    }, 
                                                                                new Color[] { Color.Black,                   Color.FromArgb(127, 127, 127), Color.FromArgb( 89,  89,  89), Color.FromArgb( 63,  63,  63), Color.FromArgb( 38,  38,  38), Color.FromArgb( 12,  12,  12) }, 
                                                                                new Color[] { Color.FromArgb(238, 236, 225), Color.FromArgb(221, 217, 195), Color.FromArgb(196, 189, 151), Color.FromArgb(147, 137,  83), Color.FromArgb( 73,  68,  41), Color.FromArgb( 29,  27,  16) }, 
                                                                                new Color[] { Color.FromArgb( 31,  73, 125), Color.FromArgb(198, 217, 240), Color.FromArgb(141, 179, 226), Color.FromArgb( 84, 141, 212), Color.FromArgb( 23,  54,  93), Color.FromArgb( 15,  36,  62) }, 
@@ -84,7 +75,6 @@ namespace ComponentFactory.Krypton.Toolkit
 
         #region Instance Fields
         private ColorScheme _colorScheme;
-        private Color[][] _colors;
         private Color _selectedColor;
         private Size _blockSize;
         private bool _autoClose;
@@ -146,20 +136,14 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int ItemChildCount 
-        {
-            get { return 0; }
-        }
+        public override int ItemChildCount => 0;
 
         /// <summary>
         /// Returns the indexed child menu item.
         /// </summary>
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override KryptonContextMenuItemBase this[int index]
-        {
-            get { return null; }
-        }
+        public override KryptonContextMenuItemBase this[int index] => null;
 
         /// <summary>
         /// Test for the provided shortcut and perform relevant action if a match is found.
@@ -198,8 +182,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue(true)]
         public bool AutoClose
         {
-            get { return _autoClose; }
-            
+            get => _autoClose;
+
             set 
             {
                 if (_autoClose != value)
@@ -219,7 +203,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue(typeof(ColorScheme), "OfficeThemes")]
         public ColorScheme ColorScheme
         {
-            get { return _colorScheme; }
+            get => _colorScheme;
 
             set
             {
@@ -240,7 +224,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue(typeof(Color), "")]
         public Color SelectedColor
         {
-            get { return _selectedColor; }
+            get => _selectedColor;
 
             set
             {
@@ -262,8 +246,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue(typeof(Size), "13,13")]
         public Size BlockSize
         {
-            get { return _blockSize; }
-            
+            get => _blockSize;
+
             set 
             {
                 if (_blockSize != value)
@@ -283,8 +267,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue(true)]
         public bool GroupNonFirstRows
         {
-            get { return _groupNonFirstRows; }
-            
+            get => _groupNonFirstRows;
+
             set 
             {
                 if (_groupNonFirstRows != value)
@@ -303,29 +287,37 @@ namespace ComponentFactory.Krypton.Toolkit
         {
             // Cannot accept an empty argument
             if ((colors == null) || (colors.Length == 0))
+            {
                 colors = _noneScheme;
+            }
 
             int rows = -1;
             for (int i = 0; i < colors.Length; i++)
             {
                 // Each element must contain a valid reference
                 if (colors[i] == null)
+                {
                     throw new ArgumentOutOfRangeException("Child array cannot be null.");
+                }
                 else
                 {
                     // Cache length of first child array
                     if (i == 0)
+                    {
                         rows = colors[i].Length;
+                    }
                     else
                     {
                         // All other child arrays must be the same length
                         if (colors[i].Length != rows)
+                        {
                             throw new ArgumentOutOfRangeException("Each child color array must be the same length.");
+                        }
                     }
                 }
             }
 
-            _colors = colors;
+            Colors = colors;
         }
 
         /// <summary>
@@ -335,12 +327,18 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <returns>True if found; otherwise false.</returns>
         public bool ContainsColor(Color color)
         {
-            if ((_colors != null) && (color != null))
+            if ((Colors != null) && (color != null))
             {
-                foreach (Color[] column in _colors)
+                foreach (Color[] column in Colors)
+                {
                     foreach (Color row in column)
+                    {
                         if (color.Equals(row))
+                        {
                             return true;
+                        }
+                    }
+                }
             }
 
             return false;
@@ -354,8 +352,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <param name="e">An ColorEventArgs that contains the event data.</param>
         protected virtual void OnSelectedColorChanged(ColorEventArgs e)
         {
-            if (SelectedColorChanged != null)
-                SelectedColorChanged(this, e);
+            SelectedColorChanged?.Invoke(this, e);
         }
 
         /// <summary>
@@ -364,16 +361,13 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <param name="e">An ColorEventArgs that contains the event data.</param>
         protected internal virtual void OnTrackingColor(ColorEventArgs e)
         {
-            if (TrackingColor != null)
-                TrackingColor(this, e);
+            TrackingColor?.Invoke(this, e);
         }
         #endregion
 
         #region Internal
-        internal Color[][] Colors
-        {
-            get { return _colors; }
-        }
+        internal Color[][] Colors { get; private set; }
+
         #endregion
 
         #region Implementation
@@ -384,22 +378,22 @@ namespace ComponentFactory.Krypton.Toolkit
             switch (scheme)
             {
                 case ColorScheme.None:
-                    _colors = _noneScheme;
+                    Colors = _noneScheme;
                     break;
                 case ColorScheme.Mono2:
-                    _colors = _mono2Scheme;
+                    Colors = _mono2Scheme;
                     break;
                 case ColorScheme.Mono8:
-                    _colors = _mono8Scheme;
+                    Colors = _mono8Scheme;
                     break;
                 case ColorScheme.Basic16:
-                    _colors = _basic16Scheme;
+                    Colors = _basic16Scheme;
                     break;
                 case ColorScheme.OfficeStandard:
-                    _colors = _officeStandardScheme;
+                    Colors = _officeStandardScheme;
                     break;
                 case ColorScheme.OfficeThemes:
-                    _colors = _officeThemeScheme;
+                    Colors = _officeThemeScheme;
                     break;
             }
         }

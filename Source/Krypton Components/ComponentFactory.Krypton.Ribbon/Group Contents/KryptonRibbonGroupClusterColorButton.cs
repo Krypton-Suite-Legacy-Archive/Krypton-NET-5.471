@@ -9,14 +9,10 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
-using System.Data;
 using System.Drawing;
 using System.Drawing.Design;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.Design;
 using System.Windows.Forms;
 using System.Diagnostics;
 using ComponentFactory.Krypton.Toolkit;
@@ -51,23 +47,16 @@ namespace ComponentFactory.Krypton.Ribbon
         private bool _visibleMoreColors;
         private string _textLine;
         private string _keyTip;
-        private string _toolTipTitle;
-        private string _toolTipBody;
         private Rectangle _selectedRect;
         private Color _selectedColor;
         private Color _emptyBorderColor;
-        private Image _toolTipImage;
         private Image _imageSmall;
-        private Color _toolTipImageTransparentColor;
-        private LabelStyle _toolTipStyle;
-        private Keys _shortcutKeys;
         private KryptonCommand _command;
         private GroupItemSize _itemSizeMax;
         private GroupItemSize _itemSizeMin;
         private GroupItemSize _itemSizeCurrent;
         private GroupButtonType _buttonType;
         private EventHandler _kcmFinishDelegate;
-        private ViewBase _clusterColorButtonView;
         private ColorScheme _schemeThemes;
         private ColorScheme _schemeStandard;
         private int _maxRecentColors;
@@ -150,7 +139,7 @@ namespace ComponentFactory.Krypton.Ribbon
             _autoRecentColors = true;
             _keyTip = "B";
             _textLine = string.Empty;
-            _shortcutKeys = Keys.None;
+            ShortcutKeys = Keys.None;
             _selectedColor = Color.Red;
             _emptyBorderColor = Color.DarkGray;
             _selectedRect = new Rectangle(0, 12, 16, 4);
@@ -166,10 +155,10 @@ namespace ComponentFactory.Krypton.Ribbon
             _itemSizeCurrent = GroupItemSize.Medium;
             _imageSmall = _defaultButtonImageSmall;
             _buttonType = GroupButtonType.Split;
-            _toolTipImageTransparentColor = Color.Empty;
-            _toolTipTitle = string.Empty;
-            _toolTipBody = string.Empty;
-            _toolTipStyle = LabelStyle.SuperTip;
+            ToolTipImageTransparentColor = Color.Empty;
+            ToolTipTitle = string.Empty;
+            ToolTipBody = string.Empty;
+            ToolTipStyle = LabelStyle.SuperTip;
             _maxRecentColors = 10;
             _recentColors = new List<Color>();
 
@@ -210,7 +199,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [DefaultValue(typeof(Color), "Red")]
         public Color SelectedColor
         {
-            get { return _selectedColor; }
+            get => _selectedColor;
 
             set
             {
@@ -233,7 +222,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [DefaultValue(typeof(Color), "DarkGray")]
         public Color EmptyBorderColor
         {
-            get { return _emptyBorderColor; }
+            get => _emptyBorderColor;
 
             set
             {
@@ -254,7 +243,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [DefaultValue(typeof(Rectangle), "0,12,16,4")]
         public Rectangle SelectedRect
         {
-            get { return _selectedRect; }
+            get => _selectedRect;
 
             set
             {
@@ -274,7 +263,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [DefaultValue("")]
         public string TextLine
         {
-            get { return _textLine; }
+            get => _textLine;
 
             set
             {
@@ -296,12 +285,14 @@ namespace ComponentFactory.Krypton.Ribbon
         [DefaultValue("B")]
         public string KeyTip
         {
-            get { return _keyTip; }
+            get => _keyTip;
 
             set
             {
                 if (string.IsNullOrEmpty(value))
+                {
                     value = "B";
+                }
 
                 _keyTip = value.ToUpper();
             }
@@ -317,7 +308,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [RefreshPropertiesAttribute(RefreshProperties.All)]
         public Image ImageSmall
         {
-            get { return _imageSmall; }
+            get => _imageSmall;
 
             set
             {
@@ -342,7 +333,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [DefaultValue(10)]
         public int MaxRecentColors
         {
-            get { return _maxRecentColors; }
+            get => _maxRecentColors;
 
             set
             {
@@ -362,7 +353,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [DefaultValue(true)]
         public bool VisibleThemes
         {
-            get { return _visibleThemes; }
+            get => _visibleThemes;
 
             set
             {
@@ -382,7 +373,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [DefaultValue(true)]
         public bool VisibleStandard
         {
-            get { return _visibleStandard; }
+            get => _visibleStandard;
 
             set
             {
@@ -402,7 +393,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [DefaultValue(true)]
         public bool VisibleRecent
         {
-            get { return _visibleRecent; }
+            get => _visibleRecent;
 
             set
             {
@@ -422,7 +413,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [DefaultValue(true)]
         public bool VisibleNoColor
         {
-            get { return _visibleNoColor; }
+            get => _visibleNoColor;
 
             set
             {
@@ -442,7 +433,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [DefaultValue(true)]
         public bool VisibleMoreColors
         {
-            get { return _visibleMoreColors; }
+            get => _visibleMoreColors;
 
             set
             {
@@ -462,7 +453,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [DefaultValue(true)]
         public bool AutoRecentColors
         {
-            get { return _autoRecentColors; }
+            get => _autoRecentColors;
 
             set
             {
@@ -482,7 +473,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [DefaultValue(typeof(ColorScheme), "OfficeThemes")]
         public ColorScheme SchemeThemes
         {
-            get { return _schemeThemes; }
+            get => _schemeThemes;
 
             set
             {
@@ -502,7 +493,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [DefaultValue(typeof(ColorScheme), "OfficeStandard")]
         public ColorScheme SchemeStandard
         {
-            get { return _schemeStandard; }
+            get => _schemeStandard;
 
             set
             {
@@ -526,7 +517,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public override bool Visible
         {
-            get { return _visible; }
+            get => _visible;
 
             set
             {
@@ -563,7 +554,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [DefaultValue(true)]
         public bool Enabled
         {
-            get { return _enabled; }
+            get => _enabled;
 
             set
             {
@@ -584,7 +575,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [DefaultValue(false)]
         public bool Checked
         {
-            get { return _checked; }
+            get => _checked;
 
             set
             {
@@ -605,7 +596,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [DefaultValue(typeof(GroupButtonType), "Split")]
         public GroupButtonType ButtonType
         {
-            get { return _buttonType; }
+            get => _buttonType;
 
             set
             {
@@ -623,11 +614,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [Localizable(true)]
         [Category("Behavior")]
         [Description("Shortcut key combination to fire click event of the cluster color button.")]
-        public Keys ShortcutKeys
-        {
-            get { return _shortcutKeys; }
-            set { _shortcutKeys = value; }
-        }
+        public Keys ShortcutKeys { get; set; }
 
         private bool ShouldSerializeShortcutKeys()
         {
@@ -648,11 +635,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [Category("Appearance")]
         [Description("Tooltip style for the group color cluster button.")]
         [DefaultValue(typeof(LabelStyle), "SuperTip")]
-        public LabelStyle ToolTipStyle
-        {
-            get { return _toolTipStyle; }
-            set { _toolTipStyle = value; }
-        }
+        public LabelStyle ToolTipStyle { get; set; }
 
         /// <summary>
         /// Gets and sets the image for the item ToolTip.
@@ -662,11 +645,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [Description("Display image associated ToolTip.")]
         [DefaultValue(null)]
         [Localizable(true)]
-        public Image ToolTipImage
-        {
-            get { return _toolTipImage; }
-            set { _toolTipImage = value; }
-        }
+        public Image ToolTipImage { get; set; }
 
         /// <summary>
         /// Gets and sets the color to draw as transparent in the ToolTipImage.
@@ -676,11 +655,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [Description("Color to draw as transparent in the ToolTipImage.")]
         [KryptonDefaultColorAttribute()]
         [Localizable(true)]
-        public Color ToolTipImageTransparentColor
-        {
-            get { return _toolTipImageTransparentColor; }
-            set { _toolTipImageTransparentColor = value; }
-        }
+        public Color ToolTipImageTransparentColor { get; set; }
 
         /// <summary>
         /// Gets and sets the title text for the item ToolTip.
@@ -691,11 +666,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [Editor("System.ComponentModel.Design.MultilineStringEditor, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
         [DefaultValue("")]
         [Localizable(true)]
-        public string ToolTipTitle
-        {
-            get { return _toolTipTitle; }
-            set { _toolTipTitle = value; }
-        }
+        public string ToolTipTitle { get; set; }
 
         /// <summary>
         /// Gets and sets the body text for the item ToolTip.
@@ -706,11 +677,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [Editor("System.ComponentModel.Design.MultilineStringEditor, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
         [DefaultValue("")]
         [Localizable(true)]
-        public string ToolTipBody
-        {
-            get { return _toolTipBody; }
-            set { _toolTipBody = value; }
-        }
+        public string ToolTipBody { get; set; }
 
         /// <summary>
         /// Gets and sets the set of recent colors.
@@ -719,7 +686,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [Description("Collection of recent colors.")]
         public Color[] RecentColors
         {
-            get { return _recentColors.ToArray(); }
+            get => _recentColors.ToArray();
 
             set
             {
@@ -727,7 +694,9 @@ namespace ComponentFactory.Krypton.Ribbon
 
                 // You cannot add an empty collection
                 if (value != null)
+                {
                     _recentColors.AddRange(value);
+                }
             }
         }
 
@@ -747,20 +716,24 @@ namespace ComponentFactory.Krypton.Ribbon
         [DefaultValue(null)]
         public KryptonCommand KryptonCommand
         {
-            get { return _command; }
+            get => _command;
 
             set
             {
                 if (_command != value)
                 {
                     if (_command != null)
+                    {
                         _command.PropertyChanged -= new PropertyChangedEventHandler(OnCommandPropertyChanged);
+                    }
 
                     _command = value;
                     OnPropertyChanged("KryptonCommand");
 
                     if (_command != null)
+                    {
                         _command.PropertyChanged += new PropertyChangedEventHandler(OnCommandPropertyChanged);
+                    }
                 }
             }
         }
@@ -773,20 +746,24 @@ namespace ComponentFactory.Krypton.Ribbon
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public override GroupItemSize ItemSizeMaximum
         {
-            get { return _itemSizeMax; }
+            get => _itemSizeMax;
 
             set
             {
                 // We can never be bigger than medium
                 if (value == GroupItemSize.Large)
+                {
                     value = GroupItemSize.Medium;
+                }
 
                 if (_itemSizeMax != value)
                 {
                     _itemSizeMax = value;
 
                     if (_itemSizeMax == GroupItemSize.Small)
+                    {
                         _itemSizeMin = GroupItemSize.Small;
+                    }
 
                     OnPropertyChanged("ItemSizeMaximum");
                 }
@@ -801,20 +778,24 @@ namespace ComponentFactory.Krypton.Ribbon
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public override GroupItemSize ItemSizeMinimum
         {
-            get { return _itemSizeMin; }
+            get => _itemSizeMin;
 
             set
             {
                 // We can never be bigger than medium
                 if (value == GroupItemSize.Large)
+                {
                     value = GroupItemSize.Medium;
+                }
 
                 if (_itemSizeMin != value)
                 {
                     _itemSizeMin = value;
 
                     if (_itemSizeMin == GroupItemSize.Medium)
+                    {
                         _itemSizeMax = GroupItemSize.Medium;
+                    }
 
                     OnPropertyChanged("ItemSizeMinimum");
                 }
@@ -829,8 +810,8 @@ namespace ComponentFactory.Krypton.Ribbon
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public override GroupItemSize ItemSizeCurrent
         {
-            get { return _itemSizeCurrent; }
-            
+            get => _itemSizeCurrent;
+
             set
             {
                 if (_itemSizeCurrent != value)
@@ -894,11 +875,8 @@ namespace ComponentFactory.Krypton.Ribbon
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Browsable(false)]
-        public ViewBase ClusterColorButtonView
-        {
-            get { return _clusterColorButtonView; }
-            set { _clusterColorButtonView = value; }
-        }
+        public ViewBase ClusterColorButtonView { get; set; }
+
         #endregion
 
         #region Protected
@@ -944,9 +922,13 @@ namespace ComponentFactory.Krypton.Ribbon
                     {
                         // Push back the change to the attached command
                         if (KryptonCommand != null)
+                        {
                             KryptonCommand.Checked = !KryptonCommand.Checked;
+                        }
                         else
+                        {
                             Checked = !Checked;
+                        }
                     }
 
                     // In showing a popup we fire the delegate before the click so that the
@@ -955,25 +937,27 @@ namespace ComponentFactory.Krypton.Ribbon
                     if (VisualPopupManager.Singleton.CurrentPopup != null)
                     {
                         // Do we need to fire a delegate stating the click processing has finished?
-                        if (fireDelegate && (finishDelegate != null))
-                            finishDelegate(this, EventArgs.Empty);
+                        if (fireDelegate)
+                        {
+                            finishDelegate?.Invoke(this, EventArgs.Empty);
+                        }
 
                         fireDelegate = false;
                     }
 
                     // Generate actual click event
-                    if (Click != null)
-                        Click(this, EventArgs.Empty);
+                    Click?.Invoke(this, EventArgs.Empty);
 
                     // Clicking the button should execute the associated command
-                    if (KryptonCommand != null)
-                        KryptonCommand.PerformExecute();
+                    KryptonCommand?.PerformExecute();
                 }
             }
 
             // Do we need to fire a delegate stating the click processing has finished?
-            if (fireDelegate && (finishDelegate != null))
-                finishDelegate(this, EventArgs.Empty);
+            if (fireDelegate)
+            {
+                finishDelegate?.Invoke(this, EventArgs.Empty);
+            }
         }
 
         /// <summary>
@@ -1000,8 +984,7 @@ namespace ComponentFactory.Krypton.Ribbon
 
                             // Generate an event giving a chance for the krypton context menu strip to 
                             // be shown to be provided/modified or the action even to be cancelled
-                            if (DropDown != null)
-                                DropDown(this, contextArgs);
+                            DropDown?.Invoke(this, contextArgs);
 
                             // If user did not cancel and there is still a krypton context menu strip to show
                             if (!contextArgs.Cancel && (contextArgs.KryptonContextMenu != null))
@@ -1010,7 +993,9 @@ namespace ComponentFactory.Krypton.Ribbon
 
                                 // Convert the view for the button into screen coordinates
                                 if ((Ribbon != null) && (ClusterColorButtonView != null))
+                                {
                                     screenRect = Ribbon.ViewRectangleToScreen(ClusterColorButtonView);
+                                }
 
                                 if (CommonHelper.ValidKryptonContextMenu(contextArgs.KryptonContextMenu))
                                 {
@@ -1030,7 +1015,9 @@ namespace ComponentFactory.Krypton.Ribbon
                                     // Show at location we were provided, but need to convert to screen coordinates
                                     contextArgs.KryptonContextMenu.Closed += new ToolStripDropDownClosedEventHandler(OnKryptonContextMenuClosed);
                                     if (contextArgs.KryptonContextMenu.Show(this, new Point(screenRect.X, screenRect.Bottom + 1)))
+                                    {
                                         fireDelegate = false;
+                                    }
                                 }
                             }
                         }
@@ -1039,8 +1026,10 @@ namespace ComponentFactory.Krypton.Ribbon
             }
 
             // Do we need to fire a delegate stating the click processing has finished?
-            if (fireDelegate && (finishDelegate != null))
-                finishDelegate(this, EventArgs.Empty);
+            if (fireDelegate)
+            {
+                finishDelegate?.Invoke(this, EventArgs.Empty);
+            }
         }
 
         /// <summary>
@@ -1049,8 +1038,7 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <param name="selectedColor">New selected color.</param>
         protected virtual void OnSelectedColorChanged(Color selectedColor)
         {
-            if (SelectedColorChanged != null)
-                SelectedColorChanged(this, new ColorEventArgs(selectedColor));
+            SelectedColorChanged?.Invoke(this, new ColorEventArgs(selectedColor));
         }
 
         /// <summary>
@@ -1059,8 +1047,7 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <param name="e">An ColorEventArgs that contains the event data.</param>
         protected virtual void OnTrackingColor(ColorEventArgs e)
         {
-            if (TrackingColor != null)
-                TrackingColor(this, e);
+            TrackingColor?.Invoke(this, e);
         }
 
         /// <summary>
@@ -1069,8 +1056,7 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <param name="e">An CancelEventArgs that contains the event data.</param>
         protected virtual void OnMoreColors(CancelEventArgs e)
         {
-            if (MoreColors != null)
-                MoreColors(this, e);
+            MoreColors?.Invoke(this, e);
         }
 
         /// <summary>
@@ -1079,16 +1065,14 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <param name="propertyName">Name of property that has changed.</param>
         protected virtual void OnPropertyChanged(string propertyName)
         {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
 
         #region Internal
         internal void OnDesignTimeContextMenu(MouseEventArgs e)
         {
-            if (DesignTimeContextMenu != null)
-                DesignTimeContextMenu(this, e);
+            DesignTimeContextMenu?.Invoke(this, e);
         }
 
         internal override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -1129,38 +1113,28 @@ namespace ComponentFactory.Krypton.Ribbon
                     (ButtonType == GroupButtonType.Split))
                 {
                     if (_kryptonContextMenu != null)
+                    {
                         if (_kryptonContextMenu.ProcessShortcut(keyData))
+                        {
                             return true;
+                        }
+                    }
                 }
             }
 
             return false;
         }
 
-        internal override LabelStyle InternalToolTipStyle
-        {
-            get { return ToolTipStyle; }
-        }
+        internal override LabelStyle InternalToolTipStyle => ToolTipStyle;
 
-        internal override Image InternalToolTipImage
-        {
-            get { return ToolTipImage; }
-        }
+        internal override Image InternalToolTipImage => ToolTipImage;
 
-        internal override Color InternalToolTipImageTransparentColor
-        {
-            get { return ToolTipImageTransparentColor; }
-        }
+        internal override Color InternalToolTipImageTransparentColor => ToolTipImageTransparentColor;
 
-        internal override string InternalToolTipTitle
-        {
-            get { return ToolTipTitle; }
-        }
+        internal override string InternalToolTipTitle => ToolTipTitle;
 
-        internal override string InternalToolTipBody
-        {
-            get { return ToolTipBody; }
-        }
+        internal override string InternalToolTipBody => ToolTipBody;
+
         #endregion
 
         #region Implementation
@@ -1170,9 +1144,8 @@ namespace ComponentFactory.Krypton.Ribbon
             foreach (KryptonContextMenuItemBase item in collection)
             {
                 // Hook into color events
-                if (item is KryptonContextMenuColorColumns)
+                if (item is KryptonContextMenuColorColumns columns)
                 {
-                    KryptonContextMenuColorColumns columns = (KryptonContextMenuColorColumns)item;
                     columns.SelectedColor = _selectedColor;
 
                     if (hook)
@@ -1198,19 +1171,22 @@ namespace ComponentFactory.Krypton.Ribbon
                 foreach (KryptonContextMenuItemBase item in _kryptonContextMenu.Items)
                 {
                     // Only interested in the non-recent colors color columns
-                    if ((item is KryptonContextMenuColorColumns) && (item != _colorsRecent))
+                    if ((item != _colorsRecent) && (item is KryptonContextMenuColorColumns colors))
                     {
                         // Cast to correct type
-                        KryptonContextMenuColorColumns colors = (KryptonContextMenuColorColumns)item;
 
                         // We do not change the theme or standard entries if they are not to be used
                         if (((item == _colorsTheme) && !VisibleThemes) ||
                             ((item == _colorsStandard) && !VisibleStandard))
+                        {
                             continue;
+                        }
 
                         // If matching color found, do not add to recent colors
                         if (colors.ContainsColor(color))
+                        {
                             return;
+                        }
                     }
                 }
 
@@ -1219,11 +1195,13 @@ namespace ComponentFactory.Krypton.Ribbon
                 {
                     bool found = false;
                     foreach (Color recentColor in _recentColors)
+                    {
                         if (recentColor.Equals(color))
                         {
                             found = true;
                             break;
                         }
+                    }
 
                     // If the color is not already part of the recent colors
                     if (!found)
@@ -1233,7 +1211,9 @@ namespace ComponentFactory.Krypton.Ribbon
 
                         // Enforce the maximum number of recent colors
                         if (_recentColors.Count > MaxRecentColors)
+                        {
                             _recentColors.RemoveRange(MaxRecentColors, _recentColors.Count - MaxRecentColors);
+                        }
                     }
                 }
             }
@@ -1261,7 +1241,9 @@ namespace ComponentFactory.Krypton.Ribbon
 
             // Define the recent colors
             if (_recentColors.Count == 0)
+            {
                 _colorsRecent.SetCustomColors(null);
+            }
             else
             {
                 // Create an array of color arrays
@@ -1269,7 +1251,9 @@ namespace ComponentFactory.Krypton.Ribbon
 
                 // Each column is just a single color
                 for (int i = 0; i < _recentColors.Count; i++)
+                {
                     colors[i] = new Color[] { _recentColors[i] };
+                }
 
                 _colorsRecent.SetCustomColors(colors);
             }
@@ -1290,7 +1274,9 @@ namespace ComponentFactory.Krypton.Ribbon
                 {
                     // Finish when we reach the target
                     if (item == target)
+                    {
                         break;
+                    }
 
                     // We do not consider existing separators
                     if (!((item is KryptonContextMenuSeparator) ||
@@ -1334,13 +1320,17 @@ namespace ComponentFactory.Krypton.Ribbon
             if (!cea.Cancel)
             {
                 // Use a standard color dialog for the selection of custom colors
-                ColorDialog cd = new ColorDialog();
-                cd.Color = SelectedColor;
-                cd.FullOpen = true;
+                ColorDialog cd = new ColorDialog
+                {
+                    Color = SelectedColor,
+                    FullOpen = true
+                };
 
                 // Only if user selected a value do we want to use it
                 if (cd.ShowDialog() == DialogResult.OK)
+                {
                     SelectedColor = cd.Color;
+                }
             }
         }
 

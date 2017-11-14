@@ -8,11 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Diagnostics;
 using ComponentFactory.Krypton.Toolkit;
@@ -23,7 +19,6 @@ namespace ComponentFactory.Krypton.Ribbon
     {
         #region Instance Fields
         private KryptonRibbon _ribbon;
-        private ViewLayoutRibbonQATContents _qatContents;
         private ViewBase _focusView;
         private bool _layingOut;
         #endregion
@@ -46,7 +41,7 @@ namespace ComponentFactory.Krypton.Ribbon
             Debug.Assert(qatContents != null);
             
             _ribbon = ribbon;
-            _qatContents = qatContents;
+            QATContents = qatContents;
 		}
 
         /// <summary>
@@ -65,10 +60,8 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <summary>
         /// Gets a the view that handles the overflow items.
         /// </summary>
-        public ViewLayoutRibbonQATContents QATContents
-        {
-            get { return _qatContents; }
-        }
+        public ViewLayoutRibbonQATContents QATContents { get; }
+
         #endregion
 
         #region GetPreferredSize
@@ -119,8 +112,7 @@ namespace ComponentFactory.Krypton.Ribbon
         public override void KeyDown(KeyEventArgs e)
         {
             // Tell current view of key event
-            if (FocusView != null)
-                FocusView.KeyDown(e);
+            FocusView?.KeyDown(e);
         }
 
         /// <summary>
@@ -130,8 +122,7 @@ namespace ComponentFactory.Krypton.Ribbon
         public override void KeyPress(KeyPressEventArgs e)
         {
             // Tell current view of key event
-            if (FocusView != null)
-                FocusView.KeyPress(e);
+            FocusView?.KeyPress(e);
         }
 
         /// <summary>
@@ -142,7 +133,9 @@ namespace ComponentFactory.Krypton.Ribbon
         {
             // Tell current view of key event
             if (FocusView != null)
+            {
                 MouseCaptured = FocusView.KeyUp(e);
+            }
         }
         #endregion
 
@@ -152,7 +145,7 @@ namespace ComponentFactory.Krypton.Ribbon
         /// </summary>
         public ViewBase FocusView
         {
-            get { return _focusView; }
+            get => _focusView;
 
             set
             {
@@ -160,14 +153,12 @@ namespace ComponentFactory.Krypton.Ribbon
                 if (_focusView != value)
                 {
                     // Remove focus from existing view
-                    if (_focusView != null)
-                        _focusView.LostFocus(Root.OwningControl);
+                    _focusView?.LostFocus(Root.OwningControl);
 
                     _focusView = value;
 
                     // Add focus to the new view
-                    if (_focusView != null)
-                        _focusView.GotFocus(Root.OwningControl);
+                    _focusView?.GotFocus(Root.OwningControl);
                 }
             }
         }

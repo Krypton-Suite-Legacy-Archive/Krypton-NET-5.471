@@ -9,19 +9,11 @@
 // *****************************************************************************
 
 using System;
-using System.Data;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Text;
-using System.Drawing.Imaging;
-using System.Drawing.Drawing2D;
-using System.Drawing.Design;
 using System.Windows.Forms;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using Microsoft.Win32;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -40,23 +32,11 @@ namespace ComponentFactory.Krypton.Toolkit
     public class KryptonContextMenu : Component
     {
         #region Instance Fields
-        private IPalette _localPalette;
-        private PaletteMode _paletteMode;
-        private VisualContextMenu _contextMenu;
-        private PaletteContextMenuRedirect _stateCommon;
-        private PaletteContextMenuItemState _stateNormal;
-        private PaletteContextMenuItemState _stateDisabled;
-        private PaletteContextMenuItemStateHighlight _stateHighlight;
-        private PaletteContextMenuItemStateChecked _stateChecked;
+
         private PaletteRedirectContextMenu _redirectorImages;
         private PaletteRedirect _redirector;
         private NeedPaintHandler _needPaintDelegate;
-        private KryptonContextMenuCollection _items;
-        private ToolStripDropDownCloseReason _closeReason;
-        private ContextMenuImages _images;
-        private bool _enabled;
-        private object _caller;
-        private object _tag;
+
         #endregion
 
         #region Events
@@ -99,22 +79,22 @@ namespace ComponentFactory.Krypton.Toolkit
             _needPaintDelegate = new NeedPaintHandler(OnNeedPaint);
 
             // Set default settings
-            _localPalette = null;
-            _paletteMode = PaletteMode.Global;
-            _images = new ContextMenuImages(_needPaintDelegate);
+            Palette = null;
+            PaletteMode = PaletteMode.Global;
+            Images = new ContextMenuImages(_needPaintDelegate);
             _redirector = new PaletteRedirect(null);
-            _redirectorImages = new PaletteRedirectContextMenu(_redirector, _images);
-            _enabled = true;
+            _redirectorImages = new PaletteRedirectContextMenu(_redirector, Images);
+            Enabled = true;
 
             // Create the palette storage
-            _stateCommon = new PaletteContextMenuRedirect(_redirector, _needPaintDelegate);
-            _stateNormal = new PaletteContextMenuItemState(_stateCommon);
-            _stateDisabled = new PaletteContextMenuItemState(_stateCommon);
-            _stateHighlight = new PaletteContextMenuItemStateHighlight(_stateCommon);
-            _stateChecked = new PaletteContextMenuItemStateChecked(_stateCommon);
+            StateCommon = new PaletteContextMenuRedirect(_redirector, _needPaintDelegate);
+            StateNormal = new PaletteContextMenuItemState(StateCommon);
+            StateDisabled = new PaletteContextMenuItemState(StateCommon);
+            StateHighlight = new PaletteContextMenuItemStateHighlight(StateCommon);
+            StateChecked = new PaletteContextMenuItemStateChecked(StateCommon);
 
             // Create the top level collection for menu items
-            _items = new KryptonContextMenuCollection();
+            Items = new KryptonContextMenuCollection();
         }
 
         /// <summary> 
@@ -124,7 +104,9 @@ namespace ComponentFactory.Krypton.Toolkit
         protected override void Dispose(bool disposing)
         {
             if (disposing)
+            {
                 Close();
+            }
 
             base.Dispose(disposing);
         }        
@@ -137,14 +119,11 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Image value overrides.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public ContextMenuImages Images
-        {
-            get { return _images; }
-        }
+        public ContextMenuImages Images { get; }
 
         private bool ShouldSerializeImages()
         {
-            return !_images.IsDefault;
+            return !Images.IsDefault;
         }
         
         /// <summary>
@@ -153,14 +132,11 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining common context menu appearance that other states can override.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public PaletteContextMenuRedirect StateCommon
-        {
-            get { return _stateCommon; }
-        }
+        public PaletteContextMenuRedirect StateCommon { get; }
 
         private bool ShouldSerializeStateCommon()
         {
-            return !_stateCommon.IsDefault;
+            return !StateCommon.IsDefault;
         }
 
         /// <summary>
@@ -169,14 +145,11 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining context menu disabled appearance values.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public PaletteContextMenuItemState StateDisabled
-        {
-            get { return _stateDisabled; }
-        }
+        public PaletteContextMenuItemState StateDisabled { get; }
 
         private bool ShouldSerializeStateDisabled()
         {
-            return !_stateDisabled.IsDefault;
+            return !StateDisabled.IsDefault;
         }
 
         /// <summary>
@@ -185,14 +158,11 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for context menu item normal appearance values.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public PaletteContextMenuItemState StateNormal
-        {
-            get { return _stateNormal; }
-        }
+        public PaletteContextMenuItemState StateNormal { get; }
 
         private bool ShouldSerializeStateNormal()
         {
-            return !_stateNormal.IsDefault;
+            return !StateNormal.IsDefault;
         }
 
         /// <summary>
@@ -201,14 +171,11 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining context menu checked appearance values.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public PaletteContextMenuItemStateChecked StateChecked
-        {
-            get { return _stateChecked; }
-        }
+        public PaletteContextMenuItemStateChecked StateChecked { get; }
 
         private bool ShouldSerializeStateChecked()
         {
-            return !_stateChecked.IsDefault;
+            return !StateChecked.IsDefault;
         }
 
         /// <summary>
@@ -217,14 +184,11 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining context menu highlight appearance values.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public PaletteContextMenuItemStateHighlight StateHighlight
-        {
-            get { return _stateHighlight; }
-        }
+        public PaletteContextMenuItemStateHighlight StateHighlight { get; }
 
         private bool ShouldSerializeStateHighlight()
         {
-            return !_stateHighlight.IsDefault;
+            return !StateHighlight.IsDefault;
         }
 
         /// <summary>
@@ -233,10 +197,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Data")]
         [Description("Collection of menu items.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public KryptonContextMenuCollection Items
-        {
-            get { return _items; }
-        }
+        public KryptonContextMenuCollection Items { get; }
 
         /// <summary>
         /// Gets and sets user-defined data associated with the object.
@@ -245,11 +206,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [Description("User-defined data associated with the object.")]
         [TypeConverter(typeof(StringConverter))]
         [Bindable(true)]
-        public object Tag
-        {
-            get { return _tag; }
-            set { _tag = value; }
-        }
+        public object Tag { get; set; }
 
         private void ResetTag()
         {
@@ -268,11 +225,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [Description("Indicates whether the context menu is enabled.")]
         [DefaultValue(true)]
         [Bindable(true)]
-        public bool Enabled
-        {
-            get { return _enabled; }
-            set { _enabled = value; }
-        }
+        public bool Enabled { get; set; }
 
         /// <summary>
         /// Gets or sets the palette to be applied.
@@ -282,8 +235,8 @@ namespace ComponentFactory.Krypton.Toolkit
         public PaletteMode PaletteMode
         {
             [System.Diagnostics.DebuggerStepThrough]
-            get { return _paletteMode; }
-            set { _paletteMode = value; }
+            get;
+            set;
         }
 
         private bool ShouldSerializePaletteMode()
@@ -308,8 +261,8 @@ namespace ComponentFactory.Krypton.Toolkit
         public IPalette Palette
         {
             [System.Diagnostics.DebuggerStepThrough]
-            get { return _localPalette; }
-            set { _localPalette = value; }
+            get;
+            set;
         }
 
         /// <summary>
@@ -325,10 +278,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public object Caller
-        {
-            get { return _caller; }
-        }
+        public object Caller { get; private set; }
 
         /// <summary>
         /// Show the context menu at the current mouse location.
@@ -439,10 +389,10 @@ namespace ComponentFactory.Krypton.Toolkit
             bool displayed = false;
 
             // Only need to show if not already displaying it
-            if (_contextMenu == null)
+            if (VisualContextMenu == null)
             {
                 // Remember the caller for us in events
-                _caller = caller;
+                Caller = caller;
 
                 // Give event handler a change to cancel the open request
                 CancelEventArgs cea = new CancelEventArgs();
@@ -451,22 +401,22 @@ namespace ComponentFactory.Krypton.Toolkit
                 if (!cea.Cancel)
                 {
                     // Set a default reason for the menu being dismissed
-                    _closeReason = ToolStripDropDownCloseReason.AppFocusChange;
+                    CloseReason = ToolStripDropDownCloseReason.AppFocusChange;
 
                     // Create the actual control used to show the context menu
-                    _contextMenu = CreateContextMenu(this, _localPalette, _paletteMode, 
+                    VisualContextMenu = CreateContextMenu(this, Palette, PaletteMode, 
                                                      _redirector, _redirectorImages,
                                                      Items, Enabled, keyboardActivated);
 
                     // Need to know when the visual control is removed
-                    _contextMenu.Disposed += new EventHandler(OnContextMenuDisposed);
+                    VisualContextMenu.Disposed += new EventHandler(OnContextMenuDisposed);
 
                     // Request the menu be shown immediately
-                    _contextMenu.Show(screenRect, horz, vert, false, constrain);
+                    VisualContextMenu.Show(screenRect, horz, vert, false, constrain);
 
                     // Override the horz, vert setting so that sub menus appear right and below
-                    _contextMenu.ShowHorz = KryptonContextMenuPositionH.After;
-                    _contextMenu.ShowVert = KryptonContextMenuPositionV.Top;
+                    VisualContextMenu.ShowHorz = KryptonContextMenuPositionH.After;
+                    VisualContextMenu.ShowVert = KryptonContextMenuPositionV.Top;
 
                     // Indicate the context menu is fully constructed and displayed
                     OnOpened(EventArgs.Empty);
@@ -494,10 +444,10 @@ namespace ComponentFactory.Krypton.Toolkit
         public void Close(ToolStripDropDownCloseReason reason)
         {
             // Remove any showing context menu
-            if (_contextMenu != null)
+            if (VisualContextMenu != null)
             {
-                _closeReason = reason;
-                VisualPopupManager.Singleton.EndPopupTracking(_contextMenu);
+                CloseReason = reason;
+                VisualPopupManager.Singleton.EndPopupTracking(VisualContextMenu);
             }
         }
 
@@ -543,8 +493,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <param name="e">A CancelEventArgs containing the event data.</param>
         protected virtual void OnOpening(CancelEventArgs e)
         {
-            if (Opening != null)
-                Opening(this, e);
+            Opening?.Invoke(this, e);
         }
 
         /// <summary>
@@ -553,8 +502,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <param name="e">An EventArgs containing the event data.</param>
         protected virtual void OnOpened(EventArgs e)
         {
-            if (Opened != null)
-                Opened(this, e);
+            Opened?.Invoke(this, e);
         }
 
         /// <summary>
@@ -563,8 +511,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <param name="e">A CancelEventArgs containing the event data.</param>
         internal protected virtual void OnClosing(CancelEventArgs e)
         {
-            if (Closing != null)
-                Closing(this, e);
+            Closing?.Invoke(this, e);
         }
 
         /// <summary>
@@ -573,22 +520,15 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <param name="e">An ToolStripDropDownClosedEventArgs containing the event data.</param>
         protected virtual void OnClosed(ToolStripDropDownClosedEventArgs e)
         {
-            if (Closed != null)
-                Closed(this, e);
+            Closed?.Invoke(this, e);
         }
         #endregion
 
         #region Internal
-        internal ToolStripDropDownCloseReason CloseReason
-        {
-            get { return _closeReason; }
-            set { _closeReason = value; }
-        }
+        internal ToolStripDropDownCloseReason CloseReason { get; set; }
 
-        internal VisualContextMenu VisualContextMenu
-        {
-            get { return _contextMenu; }
-        }
+        internal VisualContextMenu VisualContextMenu { get; private set; }
+
         #endregion
 
         #region Implementation
@@ -602,27 +542,31 @@ namespace ComponentFactory.Krypton.Toolkit
             Debug.Assert(e != null);
 
             // Validate incoming reference
-            if (e == null) throw new ArgumentNullException("e");
+            if (e == null)
+            {
+                throw new ArgumentNullException("e");
+            }
 
             // Pass request onto the displaying control if we have one
-            if (_contextMenu != null)
-                _contextMenu.PerformNeedPaint(e.NeedLayout);
+            VisualContextMenu?.PerformNeedPaint(e.NeedLayout);
         }
 
         private void OnContextMenuDisposed(object sender, EventArgs e)
         {
             // Should still be caching a reference to actual display control
-            if (_contextMenu != null)
+            if (VisualContextMenu != null)
             {
                 // Unhook from control, so it can be garbage collected
-                _contextMenu.Disposed -= new EventHandler(OnContextMenuDisposed);
+                VisualContextMenu.Disposed -= new EventHandler(OnContextMenuDisposed);
 
                 // Copy to ourself the close reason
-                if (_contextMenu.CloseReason.HasValue)
-                    CloseReason = _contextMenu.CloseReason.Value;
+                if (VisualContextMenu.CloseReason.HasValue)
+                {
+                    CloseReason = VisualContextMenu.CloseReason.Value;
+                }
 
                 // No longer need to cache reference
-                _contextMenu = null;
+                VisualContextMenu = null;
 
                 // Notify event handlers the context menu has been closed and why it closed
                 OnClosed(new ToolStripDropDownClosedEventArgs(CloseReason));

@@ -8,20 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.IO;
-using System.Xml;
-using System.Text;
-using System.Data;
-using System.Drawing;
-using System.Drawing.Design;
 using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Windows.Forms;
-using System.Diagnostics;
-using ComponentFactory.Krypton.Toolkit;
-using ComponentFactory.Krypton.Navigator;
-using ComponentFactory.Krypton.Workspace;
 
 namespace ComponentFactory.Krypton.Docking
 {
@@ -69,10 +56,8 @@ namespace ComponentFactory.Krypton.Docking
         /// <summary>
         /// Gets a value indicating if docking specific pin actions should be applied.
         /// </summary>
-        protected override bool ApplyDockingPinAction
-        {
-            get { return false; }
-        }      
+        protected override bool ApplyDockingPinAction => false;
+
         #endregion
     }
 }

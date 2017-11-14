@@ -9,10 +9,7 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
 using System.Diagnostics;
@@ -27,12 +24,13 @@ namespace ComponentFactory.Krypton.Ribbon
                                                       IRibbonViewGroupItemView
     {
         #region Static Fields
-        private static readonly int NULL_CONTROL_WIDTH = 50;
+
+        private const int NULL_CONTROL_WIDTH = 50;
+
         #endregion
 
         #region Instance Fields
         private KryptonRibbon _ribbon;
-        private KryptonRibbonGroupCustomControl _ribbonCustomControl;
         private ViewDrawRibbonGroup _activeGroup;
         private CustomControlController _controller;
         private NeedPaintHandler _needPaint;
@@ -56,16 +54,16 @@ namespace ComponentFactory.Krypton.Ribbon
 
             // Remember incoming references
             _ribbon = ribbon;
-            _ribbonCustomControl = ribbonCustom;
+            GroupCustomControl = ribbonCustom;
             _needPaint = needPaint;
-            _currentSize = _ribbonCustomControl.ItemSizeCurrent;
+            _currentSize = GroupCustomControl.ItemSizeCurrent;
 
             // Hook into the custom control events
-            _ribbonCustomControl.MouseEnterControl += new EventHandler(OnMouseEnterControl);
-            _ribbonCustomControl.MouseLeaveControl += new EventHandler(OnMouseLeaveControl);
+            GroupCustomControl.MouseEnterControl += new EventHandler(OnMouseEnterControl);
+            GroupCustomControl.MouseLeaveControl += new EventHandler(OnMouseLeaveControl);
 
             // Associate this view with the source component (required for design time selection)
-            Component = _ribbonCustomControl;
+            Component = GroupCustomControl;
 
             if (_ribbon.InDesignMode)
             {
@@ -76,7 +74,7 @@ namespace ComponentFactory.Krypton.Ribbon
             }
 
             // Create controller needed for handling focus and key tip actions
-            _controller = new CustomControlController(_ribbon, _ribbonCustomControl, this);
+            _controller = new CustomControlController(_ribbon, GroupCustomControl, this);
             SourceController = _controller;
             KeyController = _controller;
 
@@ -85,13 +83,13 @@ namespace ComponentFactory.Krypton.Ribbon
             _ribbon.ViewRibbonManager.LayoutAfter += new EventHandler(OnLayoutAction);
 
             // Provide back reference to the custom control definition
-            _ribbonCustomControl.CustomControlView = this;
+            GroupCustomControl.CustomControlView = this;
 
             // Give paint delegate to label so its palette changes are redrawn
-            _ribbonCustomControl.ViewPaintDelegate = needPaint;
+            GroupCustomControl.ViewPaintDelegate = needPaint;
 
             // Hook into changes in the ribbon custom definition
-            _ribbonCustomControl.PropertyChanged += new PropertyChangedEventHandler(OnCustomPropertyChanged);
+            GroupCustomControl.PropertyChanged += new PropertyChangedEventHandler(OnCustomPropertyChanged);
         }
 
 		/// <summary>
@@ -112,19 +110,19 @@ namespace ComponentFactory.Krypton.Ribbon
         {
             if (disposing)
             {
-                if (_ribbonCustomControl != null)
+                if (GroupCustomControl != null)
                 {
                     // Must unhook to prevent memory leaks
-                    _ribbonCustomControl.MouseEnterControl -= new EventHandler(OnMouseEnterControl);
-                    _ribbonCustomControl.MouseLeaveControl -= new EventHandler(OnMouseLeaveControl);
-                    _ribbonCustomControl.ViewPaintDelegate = null;
-                    _ribbonCustomControl.PropertyChanged -= new PropertyChangedEventHandler(OnCustomPropertyChanged);
+                    GroupCustomControl.MouseEnterControl -= new EventHandler(OnMouseEnterControl);
+                    GroupCustomControl.MouseLeaveControl -= new EventHandler(OnMouseLeaveControl);
+                    GroupCustomControl.ViewPaintDelegate = null;
+                    GroupCustomControl.PropertyChanged -= new PropertyChangedEventHandler(OnCustomPropertyChanged);
                     _ribbon.ViewRibbonManager.LayoutAfter -= new EventHandler(OnLayoutAction);
                     _ribbon.ViewRibbonManager.LayoutBefore -= new EventHandler(OnLayoutAction);
 
                     // Remove association with definition
-                    _ribbonCustomControl.CustomControlView = null;
-                    _ribbonCustomControl = null;
+                    GroupCustomControl.CustomControlView = null;
+                    GroupCustomControl = null;
                 }
             }
 
@@ -136,10 +134,8 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <summary>
         /// Gets access to the owning group custom instance.
         /// </summary>
-        public KryptonRibbonGroupCustomControl GroupCustomControl
-        {
-            get { return _ribbonCustomControl; }
-        }
+        public KryptonRibbonGroupCustomControl GroupCustomControl { get; private set; }
+
         #endregion
 
         #region LostFocus
@@ -150,7 +146,7 @@ namespace ComponentFactory.Krypton.Ribbon
         public override void LostFocus(Control c)
         {
             // Ask ribbon to shift focus to the hidden control
-            _ribbon.HideFocus(_ribbonCustomControl.CustomControl);
+            _ribbon.HideFocus(GroupCustomControl.CustomControl);
             base.LostFocus(c);
         }
         #endregion
@@ -162,12 +158,16 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <returns>ViewBase of item; otherwise false.</returns>
         public ViewBase GetFirstFocusItem()
         {
-            if ((_ribbonCustomControl.Visible) &&
-                (_ribbonCustomControl.LastCustomControl != null) &&
-                (_ribbonCustomControl.LastCustomControl.CanSelect))
+            if ((GroupCustomControl.Visible) &&
+                (GroupCustomControl.LastCustomControl != null) &&
+                (GroupCustomControl.LastCustomControl.CanSelect))
+            {
                 return this;
+            }
             else
+            {
                 return null;
+            }
         }
         #endregion
 
@@ -178,12 +178,16 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <returns>ViewBase of item; otherwise false.</returns>
         public ViewBase GetLastFocusItem()
         {
-            if ((_ribbonCustomControl.Visible) &&
-                (_ribbonCustomControl.LastCustomControl != null) &&
-                (_ribbonCustomControl.LastCustomControl.CanSelect))
+            if ((GroupCustomControl.Visible) &&
+                (GroupCustomControl.LastCustomControl != null) &&
+                (GroupCustomControl.LastCustomControl.CanSelect))
+            {
                 return this;
+            }
             else
+            {
                 return null;
+            }
         }
         #endregion
 
@@ -246,8 +250,8 @@ namespace ComponentFactory.Krypton.Ribbon
                         break;
                 }
 
-                keyTipList.Add(new KeyTipInfo(_ribbonCustomControl.Enabled, 
-                                              _ribbonCustomControl.KeyTip,
+                keyTipList.Add(new KeyTipInfo(GroupCustomControl.Enabled, 
+                                              GroupCustomControl.KeyTip,
                                               screenPt, 
                                               ClientRectangle,
                                               _controller));
@@ -270,7 +274,7 @@ namespace ComponentFactory.Krypton.Ribbon
         /// </summary>
         public void ResetGroupItemSize()
         {
-            _currentSize = _ribbonCustomControl.ItemSizeCurrent;
+            _currentSize = GroupCustomControl.ItemSizeCurrent;
         }
 
         /// <summary>
@@ -296,12 +300,18 @@ namespace ComponentFactory.Krypton.Ribbon
                 }
             }
             else
+            {
                 preferredSize.Width = NULL_CONTROL_WIDTH;
+            }
 
             if (_currentSize == GroupItemSize.Large)
+            {
                 preferredSize.Height = _ribbon.CalculatedValues.GroupTripleHeight;
+            }
             else
+            {
                 preferredSize.Height = _ribbon.CalculatedValues.GroupLineHeight;
+            }
 
             return preferredSize;
         }
@@ -321,13 +331,10 @@ namespace ComponentFactory.Krypton.Ribbon
             if (!context.ViewManager.DoNotLayoutControls)
             {
                 // If we have an actual control, position it with a pixel padding all around
-                if (LastCustomControl != null)
-                {
-                    LastCustomControl.SetBounds(ClientLocation.X + 1,
-                                                ClientLocation.Y + 1,
-                                                ClientWidth - 2,
-                                                ClientHeight - 2);
-                }
+                LastCustomControl?.SetBounds(ClientLocation.X + 1,
+                    ClientLocation.Y + 1,
+                    ClientWidth - 2,
+                    ClientHeight - 2);
             }
 
             // Let child elements layout in given space
@@ -345,7 +352,7 @@ namespace ComponentFactory.Krypton.Ribbon
             Debug.Assert(context != null);
 
             // If we do not have a custom control
-            if (_ribbonCustomControl.CustomControl == null)
+            if (GroupCustomControl.CustomControl == null)
             {
                 // And we are in design time
                 if (_ribbon.InDesignMode)
@@ -385,7 +392,9 @@ namespace ComponentFactory.Krypton.Ribbon
                 _needPaint(this, new NeedLayoutEventArgs(needLayout));
 
                 if (needLayout)
+                {
                     _ribbon.PerformLayout();
+                }
             }
         }
         #endregion
@@ -393,13 +402,13 @@ namespace ComponentFactory.Krypton.Ribbon
         #region Implementation
         private void OnContextClick(object sender, MouseEventArgs e)
         {
-            _ribbonCustomControl.OnDesignTimeContextMenu(e);
+            GroupCustomControl.OnDesignTimeContextMenu(e);
         }
 
         private void OnCustomPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             bool updateLayout = false;
-            bool updatePaint = false;
+            const bool UPDATE_PAINT = false;
 
             switch (e.PropertyName)
             {
@@ -418,40 +427,42 @@ namespace ComponentFactory.Krypton.Ribbon
             if (updateLayout)
             {
                 // If we are on the currently selected tab then...
-                if ((_ribbonCustomControl.RibbonTab != null) &&
-                    (_ribbon.SelectedTab == _ribbonCustomControl.RibbonTab))
+                if ((GroupCustomControl.RibbonTab != null) &&
+                    (_ribbon.SelectedTab == GroupCustomControl.RibbonTab))
                 {
                     // ...layout so the visible change is made
                     OnNeedPaint(true);
                 }
             }
 
-            if (updatePaint)
+            if (UPDATE_PAINT)
+#pragma warning disable 162
             {
                 // If this button is actually defined as visible...
-                if (_ribbonCustomControl.Visible || _ribbon.InDesignMode)
+                if (GroupCustomControl.Visible || _ribbon.InDesignMode)
                 {
                     // ...and on the currently selected tab then...
-                    if ((_ribbonCustomControl.RibbonTab != null) &&
-                        (_ribbon.SelectedTab == _ribbonCustomControl.RibbonTab))
+                    if ((GroupCustomControl.RibbonTab != null) &&
+                        (_ribbon.SelectedTab == GroupCustomControl.RibbonTab))
                     {
                         // ...repaint it right now
                         OnNeedPaint(false, ClientRectangle);
                     }
                 }
             }
+#pragma warning restore 162
         }
 
         private Control LastParentControl
         {
-            get { return _ribbonCustomControl.LastParentControl; }
-            set { _ribbonCustomControl.LastParentControl = value; }
+            get => GroupCustomControl.LastParentControl;
+            set => GroupCustomControl.LastParentControl = value;
         }
 
         private Control LastCustomControl
         {
-            get { return _ribbonCustomControl.LastCustomControl; }
-            set { _ribbonCustomControl.LastCustomControl = value; }
+            get => GroupCustomControl.LastCustomControl;
+            set => GroupCustomControl.LastCustomControl = value;
         }
 
         private void UpdateParent(Control parentControl)
@@ -459,11 +470,11 @@ namespace ComponentFactory.Krypton.Ribbon
             // Is there a change in the custom control or a change in 
             // the parent control that is hosting the control...
             if ((parentControl != LastParentControl) ||
-                (LastCustomControl != _ribbonCustomControl.CustomControl))
+                (LastCustomControl != GroupCustomControl.CustomControl))
             {
                 // We only modify the parent and visible state if processing for correct container
-                if ((_ribbonCustomControl.RibbonContainer.RibbonGroup.ShowingAsPopup && (parentControl is VisualPopupGroup)) ||
-                    (!_ribbonCustomControl.RibbonContainer.RibbonGroup.ShowingAsPopup && !(parentControl is VisualPopupGroup)))
+                if ((GroupCustomControl.RibbonContainer.RibbonGroup.ShowingAsPopup && (parentControl is VisualPopupGroup)) ||
+                    (!GroupCustomControl.RibbonContainer.RibbonGroup.ShowingAsPopup && !(parentControl is VisualPopupGroup)))
                 {
                     // If we have added the custrom control to a parent before
                     if ((LastCustomControl != null) && (LastParentControl != null))
@@ -477,7 +488,7 @@ namespace ComponentFactory.Krypton.Ribbon
                     }
 
                     // Remember the current control and new parent
-                    LastCustomControl = _ribbonCustomControl.CustomControl;
+                    LastCustomControl = GroupCustomControl.CustomControl;
                     LastParentControl = parentControl;
 
                     // If we have a new custom control and parent
@@ -502,13 +513,13 @@ namespace ComponentFactory.Krypton.Ribbon
             if (c != null)
             {
                 // Start with the enabled state of the group element
-                bool enabled = _ribbonCustomControl.Enabled;
+                bool enabled = GroupCustomControl.Enabled;
 
                 // If we have an associated designer setup...
-                if (!_ribbon.InDesignHelperMode && (_ribbonCustomControl.CustomControlDesigner != null))
+                if (!_ribbon.InDesignHelperMode && (GroupCustomControl.CustomControlDesigner != null))
                 {
                     // And we are not using the design helpers, then use the design specified value
-                    enabled = _ribbonCustomControl.CustomControlDesigner.DesignEnabled;
+                    enabled = GroupCustomControl.CustomControlDesigner.DesignEnabled;
                 }
 
                 c.Enabled = enabled;
@@ -520,13 +531,13 @@ namespace ComponentFactory.Krypton.Ribbon
             if (c != null)
             {
                 // Start with the visible state of the group element
-                bool visible = _ribbonCustomControl.Visible;
+                bool visible = GroupCustomControl.Visible;
 
                 // If we have an associated designer setup...
-                if (!_ribbon.InDesignHelperMode && (_ribbonCustomControl.CustomControlDesigner != null))
+                if (!_ribbon.InDesignHelperMode && (GroupCustomControl.CustomControlDesigner != null))
                 {
                     // And we are not using the design helpers, then use the design specified value
-                    visible = _ribbonCustomControl.CustomControlDesigner.DesignVisible;
+                    visible = GroupCustomControl.CustomControlDesigner.DesignVisible;
                 }
 
                 return visible;
@@ -540,40 +551,43 @@ namespace ComponentFactory.Krypton.Ribbon
             if (c != null)
             {
                 // Start with the visible state of the group element
-                bool visible = _ribbonCustomControl.Visible;
+                bool visible = GroupCustomControl.Visible;
 
                 // If we have an associated designer setup...
-                if (!_ribbon.InDesignHelperMode && (_ribbonCustomControl.CustomControlDesigner != null))
+                if (!_ribbon.InDesignHelperMode && (GroupCustomControl.CustomControlDesigner != null))
                 {
                     // And we are not using the design helpers, then use the design specified value
-                    visible = _ribbonCustomControl.CustomControlDesigner.DesignVisible;
+                    visible = GroupCustomControl.CustomControlDesigner.DesignVisible;
                 }
 
                 if (visible)
                 {
                     // Only visible if on the currently selected page
-                    if ((_ribbonCustomControl.RibbonTab == null) ||
-                        (_ribbon.SelectedTab != _ribbonCustomControl.RibbonTab))
+                    if ((GroupCustomControl.RibbonTab == null) ||
+                        (_ribbon.SelectedTab != GroupCustomControl.RibbonTab))
+                    {
                         visible = false;
+                    }
                     else
                     {
                         // Check the owning group is visible
-                        if ((_ribbonCustomControl.RibbonContainer != null) &&
-                            (_ribbonCustomControl.RibbonContainer.RibbonGroup != null) &&
-                            !_ribbonCustomControl.RibbonContainer.RibbonGroup.Visible &&
-                            !_ribbon.InDesignMode)
+                        if ((GroupCustomControl.RibbonContainer?.RibbonGroup != null) && !GroupCustomControl.RibbonContainer.RibbonGroup.Visible && !_ribbon.InDesignMode)
+                        {
                             visible = false;
+                        }
                         else
                         {
                             // Check that the group is not collapsed
-                            if ((_ribbonCustomControl.RibbonContainer.RibbonGroup.IsCollapsed) &&
-                                ((_ribbon.GetControllerControl(_ribbonCustomControl.LastCustomControl) is KryptonRibbon) ||
-                                 (_ribbon.GetControllerControl(_ribbonCustomControl.LastCustomControl) is VisualPopupMinimized)))
+                            if ((GroupCustomControl.RibbonContainer.RibbonGroup.IsCollapsed) &&
+                                ((_ribbon.GetControllerControl(GroupCustomControl.LastCustomControl) is KryptonRibbon) ||
+                                 (_ribbon.GetControllerControl(GroupCustomControl.LastCustomControl) is VisualPopupMinimized)))
+                            {
                                 visible = false;
+                            }
                             else
                             {
                                 // Check that the hierarchy of containers are all visible
-                                KryptonRibbonGroupContainer container = _ribbonCustomControl.RibbonContainer;
+                                KryptonRibbonGroupContainer container = GroupCustomControl.RibbonContainer;
 
                                 // Keep going until we have searched the entire parent chain of containers
                                 while (container != null)
@@ -600,7 +614,7 @@ namespace ComponentFactory.Krypton.Ribbon
         private void OnLayoutAction(object sender, EventArgs e)
         {
             // If not disposed then we still have a element reference
-            if (_ribbonCustomControl != null)
+            if (GroupCustomControl != null)
             {
                 // Change in selected tab requires a retest of the control visibility/enabled
                 UpdateVisible(LastCustomControl);
@@ -619,9 +633,9 @@ namespace ComponentFactory.Krypton.Ribbon
             // Keep going till we get to the top or find a group
             while (parent != null)
             {
-                if (parent is ViewDrawRibbonGroup)
+                if (parent is ViewDrawRibbonGroup popGroup)
                 {
-                    _activeGroup = (ViewDrawRibbonGroup)parent;
+                    _activeGroup = popGroup;
                     break;
                 }
 

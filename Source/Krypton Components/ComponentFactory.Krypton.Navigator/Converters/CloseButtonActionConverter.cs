@@ -8,9 +8,6 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.ComponentModel;
-
 using ComponentFactory.Krypton.Toolkit;
 
 namespace ComponentFactory.Krypton.Navigator
@@ -21,10 +18,7 @@ namespace ComponentFactory.Krypton.Navigator
     public class CloseButtonActionConverter : StringLookupConverter
     {
         #region Static Fields
-        private Pair[] _pairs = new Pair[] { new Pair(CloseButtonAction.None,                   "None (Do nothing)"),
-                                             new Pair(CloseButtonAction.RemovePage,             "RemovePage"),
-                                             new Pair(CloseButtonAction.RemovePageAndDispose,   "RemovePage & Dispose"),
-                                             new Pair(CloseButtonAction.HidePage,               "Hide Page") };
+
         #endregion
                                              
         #region Identity
@@ -41,10 +35,12 @@ namespace ComponentFactory.Krypton.Navigator
         /// <summary>
         /// Gets an array of lookup pairs.
         /// </summary>
-        protected override Pair[] Pairs 
-        {
-            get { return _pairs; }
-        }
+        protected override Pair[] Pairs { get; } =
+        { new Pair(CloseButtonAction.None,                   "None (Do nothing)"),
+            new Pair(CloseButtonAction.RemovePage,             "RemovePage"),
+            new Pair(CloseButtonAction.RemovePageAndDispose,   "RemovePage & Dispose"),
+            new Pair(CloseButtonAction.HidePage,               "Hide Page") };
+
         #endregion
     }
 }

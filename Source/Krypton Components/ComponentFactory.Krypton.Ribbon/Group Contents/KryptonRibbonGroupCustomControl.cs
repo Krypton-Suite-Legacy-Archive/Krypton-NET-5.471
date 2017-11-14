@@ -9,14 +9,9 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
-using System.Data;
 using System.Drawing;
-using System.Drawing.Design;
 using System.ComponentModel;
-using System.ComponentModel.Design;
 using System.Windows.Forms;
-using System.Diagnostics;
 using ComponentFactory.Krypton.Toolkit;
 
 namespace ComponentFactory.Krypton.Ribbon
@@ -36,14 +31,9 @@ namespace ComponentFactory.Krypton.Ribbon
         private bool _visible;
         private bool _enabled;
         private string _keyTip;
-        private Keys _shortcutKeys;
         private GroupItemSize _itemSizeCurrent;
-        private NeedPaintHandler _viewPaintDelegate;
         private Control _customControl;
-        private Control _lastParentControl;
-        private Control _lastCustomControl;
-        private IKryptonDesignObject _designer;
-        private ViewBase _customControlView;
+
         #endregion
 
         #region Events
@@ -76,7 +66,7 @@ namespace ComponentFactory.Krypton.Ribbon
             _enabled = true;
             _itemSizeCurrent = GroupItemSize.Medium;
             _customControl = null;
-            _shortcutKeys = Keys.None;
+            ShortcutKeys = Keys.None;
             _keyTip = "X";
         }
 
@@ -106,11 +96,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [Localizable(true)]
         [Category("Behavior")]
         [Description("Shortcut key combination to set focus to the custom control.")]
-        public Keys ShortcutKeys
-        {
-            get { return _shortcutKeys; }
-            set { _shortcutKeys = value; }
-        }
+        public Keys ShortcutKeys { get; set; }
 
         private bool ShouldSerializeShortcutKeys()
         {
@@ -135,12 +121,14 @@ namespace ComponentFactory.Krypton.Ribbon
         [DefaultValue("X")]
         public string KeyTip
         {
-            get { return _keyTip; }
+            get => _keyTip;
 
             set
             {
                 if (string.IsNullOrEmpty(value))
+                {
                     value = "X";
+                }
 
                 _keyTip = value.ToUpper();
             }
@@ -155,14 +143,16 @@ namespace ComponentFactory.Krypton.Ribbon
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public Control CustomControl
         {
-            get { return _customControl; }
+            get => _customControl;
 
             set
             {
                 if (value != _customControl)
                 {
                     if (_customControl != null)
+                    {
                         UnmonitorControl(_customControl);
+                    }
 
                     _customControl = value;
 
@@ -186,7 +176,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [DefaultValue(true)]
         public bool Enabled
         {
-            get { return _enabled; }
+            get => _enabled;
 
             set
             {
@@ -210,7 +200,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public override bool Visible
         {
-            get { return _visible; }
+            get => _visible;
 
             set
             {
@@ -270,7 +260,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public override GroupItemSize ItemSizeCurrent
         {
-            get { return _itemSizeCurrent; }
+            get => _itemSizeCurrent;
 
             set
             {
@@ -301,11 +291,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Browsable(false)]
-        public IKryptonDesignObject CustomControlDesigner
-        {
-            get { return _designer; }
-            set { _designer = value; }
-        }
+        public IKryptonDesignObject CustomControlDesigner { get; set; }
 
         /// <summary>
         /// Internal design time properties.
@@ -313,11 +299,8 @@ namespace ComponentFactory.Krypton.Ribbon
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Browsable(false)]
-        public ViewBase CustomControlView
-        {
-            get { return _customControlView; }
-            set { _customControlView = value; }
-        }
+        public ViewBase CustomControlView { get; set; }
+
         #endregion
 
         #region Protected
@@ -327,34 +310,20 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <param name="propertyName">Name of property that has changed.</param>
         protected virtual void OnPropertyChanged(string propertyName)
         {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
 
         #region Internal
-        internal Control LastParentControl
-        {
-            get { return _lastParentControl; }
-            set { _lastParentControl = value; }
-        }
+        internal Control LastParentControl { get; set; }
 
-        internal Control LastCustomControl
-        {
-            get { return _lastCustomControl; }
-            set { _lastCustomControl = value; }
-        }
+        internal Control LastCustomControl { get; set; }
 
-        internal NeedPaintHandler ViewPaintDelegate
-        {
-            get { return _viewPaintDelegate; }
-            set { _viewPaintDelegate = value; }
-        }
+        internal NeedPaintHandler ViewPaintDelegate { get; set; }
 
         internal void OnDesignTimeContextMenu(MouseEventArgs e)
         {
-            if (DesignTimeContextMenu != null)
-                DesignTimeContextMenu(this, e);
+            DesignTimeContextMenu?.Invoke(this, e);
         }
 
         internal override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -371,7 +340,9 @@ namespace ComponentFactory.Krypton.Ribbon
                     {
                         // Can the custom control take the focus
                         if ((CustomControl != null) && (CustomControl.CanFocus))
+                        {
                             CustomControl.Focus();
+                        }
 
                         return true;
                     }
@@ -391,7 +362,9 @@ namespace ComponentFactory.Krypton.Ribbon
 
             // Hook into child controls
             foreach (Control child in c.Controls)
+            {
                 MonitorControl(child);
+            }
         }
 
         private void UnmonitorControl(Control c)
@@ -402,26 +375,25 @@ namespace ComponentFactory.Krypton.Ribbon
 
             // Unhook from child controls
             foreach (Control child in c.Controls)
+            {
                 UnmonitorControl(child);
+            }
         }
 
         private void OnCustomControlEnter(object sender, EventArgs e)
         {
-            if (MouseEnterControl != null)
-                MouseEnterControl(this, e);
+            MouseEnterControl?.Invoke(this, e);
         }
 
         private void OnCustomControlLeave(object sender, EventArgs e)
         {
-            if (MouseLeaveControl != null)
-                MouseLeaveControl(this, e);
+            MouseLeaveControl?.Invoke(this, e);
         }
 
         private void OnPaletteNeedPaint(object sender, NeedLayoutEventArgs e)
         {
             // Pass request onto the view provided paint delegate
-            if (_viewPaintDelegate != null)
-                _viewPaintDelegate(this, e);
+            ViewPaintDelegate?.Invoke(this, e);
         }
         #endregion
     }

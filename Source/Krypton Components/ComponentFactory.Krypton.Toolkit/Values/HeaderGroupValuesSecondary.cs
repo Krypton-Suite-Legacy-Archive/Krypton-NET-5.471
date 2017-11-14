@@ -8,13 +8,8 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Design;
-using System.Windows.Forms;
 using System.ComponentModel;
-using System.Collections.Generic;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -74,8 +69,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue("Description")]
         public override string Heading
         {
-            get { return base.Heading; }
-            set { base.Heading = value; }
+            get => base.Heading;
+            set => base.Heading = value;
         }
         #endregion
     }

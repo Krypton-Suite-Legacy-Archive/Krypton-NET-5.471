@@ -9,11 +9,7 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Diagnostics;
 using ComponentFactory.Krypton.Toolkit;
 
@@ -30,7 +26,6 @@ namespace ComponentFactory.Krypton.Ribbon
         private KryptonRibbonGroup _ribbonGroup;
         private RibbonGroupTextToContent _contentProvider;
         private IDisposable _memento;
-        private int _height;
         private Rectangle _displayRect;
         private int _dirtyPaletteLayout;
         private PaletteState _cacheState;
@@ -101,8 +96,8 @@ namespace ComponentFactory.Krypton.Ribbon
         /// </summary>
         public IPaletteRibbonText PaletteRibbonGroup
         {
-            get { return _contentProvider.PaletteRibbonGroup; }
-            set { _contentProvider.PaletteRibbonGroup = value; }
+            get => _contentProvider.PaletteRibbonGroup;
+            set => _contentProvider.PaletteRibbonGroup = value;
         }
         #endregion
 
@@ -110,11 +105,8 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <summary>
         /// Gets and sets the height of the title string.
         /// </summary>
-        public int Height
-        {
-            get { return _height; }
-            set { _height = value; }
-        }
+        public int Height { get; set; }
+
         #endregion
 
         #region Layout
@@ -124,7 +116,7 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <param name="context">Layout context.</param>
         public override Size GetPreferredSize(ViewLayoutContext context)
         {
-            return new Size(0, _height);
+            return new Size(0, Height);
         }
 
         /// <summary>
@@ -178,10 +170,12 @@ namespace ComponentFactory.Krypton.Ribbon
         {
             // Use renderer to draw the text content
             if (_memento != null)
+            {
                 context.Renderer.RenderStandardContent.DrawContent(context, ClientRectangle,
-                                                                   _contentProvider, _memento,
-                                                                   VisualOrientation.Top, 
-                                                                   PaletteState.Normal, false, true);
+                    _contentProvider, _memento,
+                    VisualOrientation.Top, 
+                    PaletteState.Normal, false, true);
+            }
         }
         #endregion
 
@@ -213,9 +207,13 @@ namespace ComponentFactory.Krypton.Ribbon
         public string GetShortText()
         {
             if (!string.IsNullOrEmpty(_ribbonGroup.TextLine2))
+            {
                 return _ribbonGroup.TextLine1 + " " + _ribbonGroup.TextLine2;
+            }
             else
+            {
                 return _ribbonGroup.TextLine1;
+            }
         }
 
         /// <summary>

@@ -8,12 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Drawing;
-using System.ComponentModel;
 using System.ComponentModel.Design;
-using System.Windows.Forms;
-using System.Windows.Forms.Design;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -46,8 +41,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public PaletteMode PaletteMode
         {
-            get { return _monthCalendar.PaletteMode; }
-            
+            get => _monthCalendar.PaletteMode;
+
             set 
             {
                 if (_monthCalendar.PaletteMode != value)
@@ -63,8 +58,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public int MaxSelectionCount
         {
-            get { return _monthCalendar.MaxSelectionCount; }
-            
+            get => _monthCalendar.MaxSelectionCount;
+
             set 
             {
                 if (_monthCalendar.MaxSelectionCount != value)
@@ -80,7 +75,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public bool ShowToday
         {
-            get { return _monthCalendar.ShowToday; }
+            get => _monthCalendar.ShowToday;
 
             set
             {
@@ -97,7 +92,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public bool ShowTodayCircle
         {
-            get { return _monthCalendar.ShowTodayCircle; }
+            get => _monthCalendar.ShowTodayCircle;
 
             set
             {
@@ -114,7 +109,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public bool ShowWeekNumbers
         {
-            get { return _monthCalendar.ShowWeekNumbers; }
+            get => _monthCalendar.ShowWeekNumbers;
 
             set
             {

@@ -8,14 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
-using System.Drawing;
-using System.Drawing.Design;
-using System.Windows.Forms;
 using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Collections.Generic;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -25,9 +18,7 @@ namespace ComponentFactory.Krypton.Toolkit
     public class KryptonPaletteImagesGalleryButtons : Storage
     {
         #region Instance Fields
-        private KryptonPaletteImagesGalleryButton _up;
-        private KryptonPaletteImagesGalleryButton _down;
-        private KryptonPaletteImagesGalleryButton _dropDown;
+
         #endregion
 
         #region Identity
@@ -43,9 +34,9 @@ namespace ComponentFactory.Krypton.Toolkit
             NeedPaint = needPaint;
 
             // Create the storage
-            _up = new KryptonPaletteImagesGalleryButton(PaletteRibbonGalleryButton.Up, redirector, needPaint);
-            _down = new KryptonPaletteImagesGalleryButton(PaletteRibbonGalleryButton.Down, redirector, needPaint);
-            _dropDown = new KryptonPaletteImagesGalleryButton(PaletteRibbonGalleryButton.DropDown, redirector, needPaint);
+            Up = new KryptonPaletteImagesGalleryButton(PaletteRibbonGalleryButton.Up, redirector, needPaint);
+            Down = new KryptonPaletteImagesGalleryButton(PaletteRibbonGalleryButton.Down, redirector, needPaint);
+            DropDown = new KryptonPaletteImagesGalleryButton(PaletteRibbonGalleryButton.DropDown, redirector, needPaint);
         }
         #endregion
 
@@ -54,16 +45,11 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// Gets a value indicating if all values are default.
 		/// </summary>
 		[Browsable(false)]
-		public override bool IsDefault
-		{
-			get
-			{
-                return _up.IsDefault &&
-                       _down.IsDefault &&
-                       _dropDown.IsDefault;
-            }
-		}
-		#endregion
+		public override bool IsDefault => Up.IsDefault &&
+		                                  Down.IsDefault &&
+		                                  DropDown.IsDefault;
+
+        #endregion
 
         #region PopulateFromBase
         /// <summary>
@@ -71,9 +57,9 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public void PopulateFromBase()
         {
-            _up.PopulateFromBase();
-            _down.PopulateFromBase();
-            _dropDown.PopulateFromBase();
+            Up.PopulateFromBase();
+            Down.PopulateFromBase();
+            DropDown.PopulateFromBase();
         }
         #endregion
 
@@ -85,10 +71,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Gallery up button images.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public KryptonPaletteImagesGalleryButton Up
-        {
-            get { return _up; }
-        }
+        public KryptonPaletteImagesGalleryButton Up { get; }
+
         #endregion
 
         #region Down
@@ -99,10 +83,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Gallery down button images.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public KryptonPaletteImagesGalleryButton Down
-        {
-            get { return _down; }
-        }
+        public KryptonPaletteImagesGalleryButton Down { get; }
+
         #endregion
 
         #region DropDown
@@ -113,10 +95,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Gallery drop down button images.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public KryptonPaletteImagesGalleryButton DropDown
-        {
-            get { return _dropDown; }
-        }
+        public KryptonPaletteImagesGalleryButton DropDown { get; }
+
         #endregion
     }
 }

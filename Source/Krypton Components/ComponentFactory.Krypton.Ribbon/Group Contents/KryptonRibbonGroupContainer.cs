@@ -8,15 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
-using System.Data;
-using System.Drawing;
-using System.Drawing.Design;
 using System.ComponentModel;
-using System.Windows.Forms;
-using System.Diagnostics;
-using ComponentFactory.Krypton.Toolkit;
 
 namespace ComponentFactory.Krypton.Ribbon
 {
@@ -30,7 +22,7 @@ namespace ComponentFactory.Krypton.Ribbon
                                                         IRibbonGroupContainer
     {
         #region Instance Fields
-        private KryptonRibbonGroup _ribbonGroup;
+
         #endregion
 
         #region Identity
@@ -49,11 +41,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public virtual KryptonRibbonGroup RibbonGroup
-        {
-            get { return _ribbonGroup; }
-            set { _ribbonGroup = value; }
-        }
+        public virtual KryptonRibbonGroup RibbonGroup { get; set; }
 
         /// <summary>
         /// Gets an array of all the contained components.

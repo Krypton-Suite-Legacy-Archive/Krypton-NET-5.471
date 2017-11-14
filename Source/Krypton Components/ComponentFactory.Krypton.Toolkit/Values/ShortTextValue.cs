@@ -8,32 +8,20 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
-using System.Drawing;
-using System.Drawing.Design;
-using System.Windows.Forms;
-using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Collections.Generic;
-
 namespace ComponentFactory.Krypton.Toolkit
 {
     internal class ShortTextValue : NullContentValues
     {
         #region Instance Fields
-        private string _shortText;
+
         #endregion
 
         #region Identity
         /// <summary>
         /// Gets and sets the short text value to use.
         /// </summary>
-        public string ShortText
-        {
-            get { return _shortText; }
-            set { _shortText = value; }
-        }
+        public string ShortText { get; set; }
+
         #endregion
 
         #region IContentValues
@@ -43,7 +31,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <returns>String value.</returns>
         public override string GetShortText()
         {
-            return _shortText;
+            return ShortText;
         }
         #endregion
     }

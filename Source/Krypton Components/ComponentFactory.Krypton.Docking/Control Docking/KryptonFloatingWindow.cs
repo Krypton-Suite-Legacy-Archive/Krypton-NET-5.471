@@ -9,18 +9,10 @@
 // *****************************************************************************
 
 using System;
-using System.IO;
-using System.Xml;
-using System.Text;
-using System.Data;
 using System.Drawing;
-using System.Drawing.Design;
 using System.ComponentModel;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
 using System.Windows.Forms;
-using System.Diagnostics;
 using ComponentFactory.Krypton.Toolkit;
 using ComponentFactory.Krypton.Navigator;
 using ComponentFactory.Krypton.Workspace;
@@ -40,8 +32,7 @@ namespace ComponentFactory.Krypton.Docking
         #endregion
 
         #region Instance Fields
-        private KryptonFloatspace _floatspace;
-        private IFloatingMessages _floatingMessages;
+
         #endregion
 
         #region Events
@@ -76,12 +67,12 @@ namespace ComponentFactory.Krypton.Docking
             ButtonSpecMin.ImageStates.ImageDisabled = EMPTY_IMAGE;
 
             // Hook into floatspace events and add as the content of the floating window
-            _floatspace = floatspace;
-            _floatspace.CellCountChanged += new EventHandler(OnFloatspaceCellCountChanged);
-            _floatspace.CellVisibleCountChanged += new EventHandler(OnFloatspaceCellVisibleCountChanged);
-            _floatspace.WorkspaceCellAdding += new EventHandler<WorkspaceCellEventArgs>(OnFloatspaceCellAdding);
-            _floatspace.WorkspaceCellRemoved += new EventHandler<WorkspaceCellEventArgs>(OnFloatspaceCellRemoved);
-            Controls.Add(_floatspace);
+            FloatspaceControl = floatspace;
+            FloatspaceControl.CellCountChanged += new EventHandler(OnFloatspaceCellCountChanged);
+            FloatspaceControl.CellVisibleCountChanged += new EventHandler(OnFloatspaceCellVisibleCountChanged);
+            FloatspaceControl.WorkspaceCellAdding += new EventHandler<WorkspaceCellEventArgs>(OnFloatspaceCellAdding);
+            FloatspaceControl.WorkspaceCellRemoved += new EventHandler<WorkspaceCellEventArgs>(OnFloatspaceCellRemoved);
+            Controls.Add(FloatspaceControl);
         }
 
         /// <summary>
@@ -98,10 +89,8 @@ namespace ComponentFactory.Krypton.Docking
         /// <summary>
         /// Gets access to the contained KryptonFloatspace control.
         /// </summary>
-        public KryptonFloatspace FloatspaceControl
-        {
-            get { return _floatspace; }
-        }
+        public KryptonFloatspace FloatspaceControl { get; }
+
         #endregion
 
         #region Protected
@@ -146,18 +135,18 @@ namespace ComponentFactory.Krypton.Docking
                     break;
                 case PI.WM_KEYDOWN:
                     base.WndProc(ref m);
-                    if (_floatingMessages != null)
-                        _floatingMessages.OnKEYDOWN(ref m);
+                    FloatingMessages?.OnKEYDOWN(ref m);
+
                     return;
                 case PI.WM_MOUSEMOVE:
                     base.WndProc(ref m);
-                    if (_floatingMessages != null)
-                        _floatingMessages.OnMOUSEMOVE();
+                    FloatingMessages?.OnMOUSEMOVE();
+
                     return;
                 case PI.WM_LBUTTONUP:
                     base.WndProc(ref m);
-                    if (_floatingMessages != null)
-                        _floatingMessages.OnLBUTTONUP();
+                    FloatingMessages?.OnLBUTTONUP();
+
                     return;
             }
 
@@ -170,8 +159,7 @@ namespace ComponentFactory.Krypton.Docking
         /// <param name="e">An UniqueNamesEventArgs that contains the event data.</param>
         protected virtual void OnWindowCloseClicked(UniqueNamesEventArgs e)
         {
-            if (WindowCloseClicked != null)
-                WindowCloseClicked(this, e);
+            WindowCloseClicked?.Invoke(this, e);
         }
 
         /// <summary>
@@ -180,8 +168,7 @@ namespace ComponentFactory.Krypton.Docking
         /// <param name="e">An ScreenAndOffsetEventArgs that contains the event data.</param>
         protected virtual void OnWindowCaptionDragging(ScreenAndOffsetEventArgs e)
         {
-            if (WindowCaptionDragging != null)
-                WindowCaptionDragging(this, e);
+            WindowCaptionDragging?.Invoke(this, e);
         }
 
         /// <summary>
@@ -206,7 +193,9 @@ namespace ComponentFactory.Krypton.Docking
             // Generate event so handlers to perform appropriate processing
             string[] uniqueNames = VisibleCloseableUniqueNames();
             if (uniqueNames.Length > 0)
+            {
                 OnWindowCloseClicked(new UniqueNamesEventArgs(uniqueNames));
+            }
 
             base.OnClosing(e);
         }
@@ -236,11 +225,8 @@ namespace ComponentFactory.Krypton.Docking
         /// <summary>
         /// Gets and sets the floating messages interface.
         /// </summary>
-        internal IFloatingMessages FloatingMessages
-        {
-            get { return _floatingMessages; }
-            set { _floatingMessages = value; }
-        }
+        internal IFloatingMessages FloatingMessages { get; set; }
+
         #endregion
 
         #region Implementation
@@ -248,7 +234,9 @@ namespace ComponentFactory.Krypton.Docking
         {
             // When all the cells (and so pages) have been removed we kill ourself
             if (FloatspaceControl.CellCount == 0)
+            {
                 FloatspaceControl.Dispose();
+            }
         }
 
         private void OnFloatspaceCellVisibleCountChanged(object sender, EventArgs e)
@@ -286,9 +274,13 @@ namespace ComponentFactory.Krypton.Docking
                 {
                     // Cell display mode depends on the number of tabs in the cell
                     if (cell.Pages.VisibleCount == 1)
+                    {
                         cell.NavigatorMode = NavigatorMode.HeaderGroup;
+                    }
                     else
+                    {
                         cell.NavigatorMode = NavigatorMode.HeaderGroupTab;
+                    }
                 }
                 else
                 {
@@ -314,8 +306,12 @@ namespace ComponentFactory.Krypton.Docking
             {
                 // Create a list of all the visible page names in the floatspace that are allowed to be closed
                 foreach (KryptonPage page in cell.Pages)
+                {
                     if (page.LastVisibleSet && page.AreFlagsSet(KryptonPageFlags.DockingAllowClose))
+                    {
                         uniqueNames.Add(page.UniqueName);
+                    }
+                }
 
                 cell = FloatspaceControl.NextVisibleCell(cell);
             }

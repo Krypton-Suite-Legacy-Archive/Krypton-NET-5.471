@@ -9,10 +9,8 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.ComponentModel;
@@ -27,7 +25,7 @@ namespace ComponentFactory.Krypton.Ribbon
                                        IContentValues
     {
         #region Static Fields
-        private static string _empty = "<Empty>";
+        private static readonly string _empty = "<Empty>";
         private static Padding _preferredBorder2007 = new Padding(12, 3, 12, 1);
         private static Padding _preferredBorder2010 = new Padding(8, 4, 8, 3);
         private static Padding _layoutBorder2007 = new Padding(4, 3, 4, 1);
@@ -37,9 +35,8 @@ namespace ComponentFactory.Krypton.Ribbon
         #endregion
 
         #region Instance Fields
-        private KryptonRibbon _ribbon;
+
         private KryptonRibbonTab _ribbonTab;
-        private ViewLayoutRibbonTabs _layoutTabs;
         private PaletteRibbonGeneral _paletteGeneral;
         private PaletteRibbonDoubleInheritOverride _overrideStateNormal;
         private PaletteRibbonDoubleInheritOverride _overrideStateTracking;
@@ -53,7 +50,6 @@ namespace ComponentFactory.Krypton.Ribbon
         private RibbonTabToContent _contentProvider;
         private NeedPaintHandler _needPaint;
         private IDisposable[] _mementos;
-        private bool _checked;
         private Size _preferredSize;
         private Rectangle _displayRect;
         private int _dirtyPaletteSize;
@@ -64,13 +60,17 @@ namespace ComponentFactory.Krypton.Ribbon
 		#region Identity
         static ViewDrawRibbonTab()
         {
-            _contextBlend2007 = new Blend();
-            _contextBlend2007.Factors = new float[] { 0.0f, 0.0f, 1.0f, 1.0f };
-            _contextBlend2007.Positions = new float[] { 0.0f, 0.41f, 0.7f, 1.0f };
+            _contextBlend2007 = new Blend
+            {
+                Factors = new float[] { 0.0f, 0.0f, 1.0f, 1.0f },
+                Positions = new float[] { 0.0f, 0.41f, 0.7f, 1.0f }
+            };
 
-            _contextBlend2010 = new Blend();
-            _contextBlend2010.Factors = new float[] { 0.0f, 1.0f, 1.0f };
-            _contextBlend2010.Positions = new float[] { 0.0f, 0.6f, 1.0f };
+            _contextBlend2010 = new Blend
+            {
+                Factors = new float[] { 0.0f, 1.0f, 1.0f },
+                Positions = new float[] { 0.0f, 0.6f, 1.0f }
+            };
         }
 
 		/// <summary>
@@ -88,30 +88,30 @@ namespace ComponentFactory.Krypton.Ribbon
             Debug.Assert(needPaint != null);
 
             // Cache incoming values
-            _ribbon = ribbon;
-            _layoutTabs = layoutTabs;
+            Ribbon = ribbon;
+            ViewLayoutRibbonTabs = layoutTabs;
             _needPaint = needPaint;
 
             // Create overrides for handling a focus state
             _paletteGeneral = ribbon.StateCommon.RibbonGeneral;
-            _overrideStateNormal = new PaletteRibbonDoubleInheritOverride(_ribbon.OverrideFocus.RibbonTab, _ribbon.OverrideFocus.RibbonTab, _ribbon.StateNormal.RibbonTab, _ribbon.StateNormal.RibbonTab, PaletteState.FocusOverride);
-            _overrideStateTracking = new PaletteRibbonDoubleInheritOverride(_ribbon.OverrideFocus.RibbonTab, _ribbon.OverrideFocus.RibbonTab, _ribbon.StateTracking.RibbonTab, _ribbon.StateTracking.RibbonTab, PaletteState.FocusOverride);
-            _overrideStateCheckedNormal = new PaletteRibbonDoubleInheritOverride(_ribbon.OverrideFocus.RibbonTab, _ribbon.OverrideFocus.RibbonTab, _ribbon.StateCheckedNormal.RibbonTab, _ribbon.StateCheckedNormal.RibbonTab, PaletteState.FocusOverride);
-            _overrideStateCheckedTracking = new PaletteRibbonDoubleInheritOverride(_ribbon.OverrideFocus.RibbonTab, _ribbon.OverrideFocus.RibbonTab, _ribbon.StateCheckedTracking.RibbonTab, _ribbon.StateCheckedTracking.RibbonTab, PaletteState.FocusOverride);
-            _overrideStateContextTracking = new PaletteRibbonDoubleInheritOverride(_ribbon.OverrideFocus.RibbonTab, _ribbon.OverrideFocus.RibbonTab, _ribbon.StateContextTracking.RibbonTab, _ribbon.StateContextTracking.RibbonTab, PaletteState.FocusOverride);
-            _overrideStateContextCheckedNormal = new PaletteRibbonDoubleInheritOverride(_ribbon.OverrideFocus.RibbonTab, _ribbon.OverrideFocus.RibbonTab, _ribbon.StateContextCheckedNormal.RibbonTab, _ribbon.StateContextCheckedNormal.RibbonTab, PaletteState.FocusOverride);
-            _overrideStateContextCheckedTracking = new PaletteRibbonDoubleInheritOverride(_ribbon.OverrideFocus.RibbonTab, _ribbon.OverrideFocus.RibbonTab, _ribbon.StateContextCheckedTracking.RibbonTab, _ribbon.StateContextCheckedTracking.RibbonTab, PaletteState.FocusOverride);
+            _overrideStateNormal = new PaletteRibbonDoubleInheritOverride(Ribbon.OverrideFocus.RibbonTab, Ribbon.OverrideFocus.RibbonTab, Ribbon.StateNormal.RibbonTab, Ribbon.StateNormal.RibbonTab, PaletteState.FocusOverride);
+            _overrideStateTracking = new PaletteRibbonDoubleInheritOverride(Ribbon.OverrideFocus.RibbonTab, Ribbon.OverrideFocus.RibbonTab, Ribbon.StateTracking.RibbonTab, Ribbon.StateTracking.RibbonTab, PaletteState.FocusOverride);
+            _overrideStateCheckedNormal = new PaletteRibbonDoubleInheritOverride(Ribbon.OverrideFocus.RibbonTab, Ribbon.OverrideFocus.RibbonTab, Ribbon.StateCheckedNormal.RibbonTab, Ribbon.StateCheckedNormal.RibbonTab, PaletteState.FocusOverride);
+            _overrideStateCheckedTracking = new PaletteRibbonDoubleInheritOverride(Ribbon.OverrideFocus.RibbonTab, Ribbon.OverrideFocus.RibbonTab, Ribbon.StateCheckedTracking.RibbonTab, Ribbon.StateCheckedTracking.RibbonTab, PaletteState.FocusOverride);
+            _overrideStateContextTracking = new PaletteRibbonDoubleInheritOverride(Ribbon.OverrideFocus.RibbonTab, Ribbon.OverrideFocus.RibbonTab, Ribbon.StateContextTracking.RibbonTab, Ribbon.StateContextTracking.RibbonTab, PaletteState.FocusOverride);
+            _overrideStateContextCheckedNormal = new PaletteRibbonDoubleInheritOverride(Ribbon.OverrideFocus.RibbonTab, Ribbon.OverrideFocus.RibbonTab, Ribbon.StateContextCheckedNormal.RibbonTab, Ribbon.StateContextCheckedNormal.RibbonTab, PaletteState.FocusOverride);
+            _overrideStateContextCheckedTracking = new PaletteRibbonDoubleInheritOverride(Ribbon.OverrideFocus.RibbonTab, Ribbon.OverrideFocus.RibbonTab, Ribbon.StateContextCheckedTracking.RibbonTab, Ribbon.StateContextCheckedTracking.RibbonTab, PaletteState.FocusOverride);
             _overrideCurrent = _overrideStateNormal;
             
             // Create and default the setup of the context colors provider
-            _paletteContextCurrent = new PaletteRibbonContextDouble(_ribbon);
+            _paletteContextCurrent = new PaletteRibbonContextDouble(Ribbon);
             _paletteContextCurrent.SetInherit(_overrideCurrent);
 
             // Use a class to convert from ribbon tab to content interface
             _contentProvider = new RibbonTabToContent(_paletteGeneral, _paletteContextCurrent);
 
             // Use a controller to change state because of mouse movement
-            RibbonTabController controller = new RibbonTabController(_ribbon, this, _needPaint);
+            RibbonTabController controller = new RibbonTabController(Ribbon, this, _needPaint);
             controller.Click += new MouseEventHandler(OnTabClicked);
             controller.ContextClick += new MouseEventHandler(OnTabContextClicked);
             MouseController = controller;
@@ -156,8 +156,9 @@ namespace ComponentFactory.Krypton.Ribbon
                 {
                     // Dispose of all the mementos in the array
                     foreach (IDisposable memento in _mementos)
-                        if (memento != null)
-                            memento.Dispose();
+                    {
+                        memento?.Dispose();
+                    }
 
                     _mementos = null;
                 }
@@ -171,20 +172,16 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <summary>
         /// Gets access to the key tip target.
         /// </summary>
-        public IRibbonKeyTipTarget KeyTipTarget
-        {
-            get { return SourceController as IRibbonKeyTipTarget; }
-        }
+        public IRibbonKeyTipTarget KeyTipTarget => SourceController as IRibbonKeyTipTarget;
+
         #endregion
 
         #region ViewLayoutRibbonTabs
         /// <summary>
         /// Gets access to the 
         /// </summary>
-        public ViewLayoutRibbonTabs ViewLayoutRibbonTabs
-        {
-            get { return _layoutTabs; }
-        }
+        public ViewLayoutRibbonTabs ViewLayoutRibbonTabs { get; }
+
         #endregion
 
         #region MakeDirty
@@ -204,7 +201,7 @@ namespace ComponentFactory.Krypton.Ribbon
         /// </summary>
         public bool HasFocus
         {
-            get { return _overrideStateNormal.Apply; }
+            get => _overrideStateNormal.Apply;
 
             set
             {
@@ -223,10 +220,8 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <summary>
         /// Gets access to the owning ribbon control instance.
         /// </summary>
-        public KryptonRibbon Ribbon
-        {
-            get { return _ribbon; }
-        }
+        public KryptonRibbon Ribbon { get; }
+
         #endregion
 
         #region RibbonTab
@@ -235,8 +230,8 @@ namespace ComponentFactory.Krypton.Ribbon
         /// </summary>
         public KryptonRibbonTab RibbonTab
         {
-            get { return _ribbonTab; }
-            
+            get => _ribbonTab;
+
             set 
             {
                 if (_ribbonTab != value)
@@ -274,11 +269,8 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <summary>
         /// Gets and sets the checked state of the tab.
         /// </summary>
-        public bool Checked
-        {
-            get { return _checked; }
-            set { _checked = value; }
-        }
+        public bool Checked { get; set; }
+
         #endregion
 
         #region PreferredBorder
@@ -289,7 +281,7 @@ namespace ComponentFactory.Krypton.Ribbon
         {
             get
             {
-                switch (_ribbon.RibbonShape)
+                switch (Ribbon.RibbonShape)
                 {
                     default:
                     case PaletteRibbonShape.Office2007:
@@ -309,7 +301,7 @@ namespace ComponentFactory.Krypton.Ribbon
         {
             get
             {
-                switch (_ribbon.RibbonShape)
+                switch (Ribbon.RibbonShape)
                 {
                     default:
                     case PaletteRibbonShape.Office2007:
@@ -339,7 +331,7 @@ namespace ComponentFactory.Krypton.Ribbon
             }
 
             // If the palette has changed since we last calculated
-            if (_ribbon.DirtyPaletteCounter != _dirtyPaletteSize)
+            if (Ribbon.DirtyPaletteCounter != _dirtyPaletteSize)
             {
                 // Get the preferred size of the contained content
                 _preferredSize = base.GetPreferredSize(context);
@@ -350,7 +342,7 @@ namespace ComponentFactory.Krypton.Ribbon
                                           _preferredSize.Height + preferredBorder.Vertical);
 
                 // Cached value is valid till dirty palette noticed
-                _dirtyPaletteSize = _ribbon.DirtyPaletteCounter;
+                _dirtyPaletteSize = Ribbon.DirtyPaletteCounter;
             }
 
             return _preferredSize;
@@ -379,7 +371,7 @@ namespace ComponentFactory.Krypton.Ribbon
 
             // Do we need to actually perform the relayout?
             if ((_displayRect != ClientRectangle) ||
-                (_ribbon.DirtyPaletteCounter != _dirtyPaletteLayout))
+                (Ribbon.DirtyPaletteCounter != _dirtyPaletteLayout))
             {
                 // Reduce display rect by our border size
                 Padding layoutBorder = LayoutBorder;
@@ -396,7 +388,7 @@ namespace ComponentFactory.Krypton.Ribbon
 
                 // Cache values that are needed to decide if layout is needed
                 _displayRect = ClientRectangle;
-                _dirtyPaletteLayout = _ribbon.DirtyPaletteCounter;
+                _dirtyPaletteLayout = Ribbon.DirtyPaletteCounter;
             }
         }
 		#endregion
@@ -414,26 +406,30 @@ namespace ComponentFactory.Krypton.Ribbon
             // Grab the context tab set that relates to this tab
             ContextTabSet cts = ViewLayoutRibbonTabs.ContextTabSets[RibbonTab.ContextName];
 
-            switch (_ribbon.RibbonShape)
+            switch (Ribbon.RibbonShape)
             {
                 default:
                 case PaletteRibbonShape.Office2007:
                     if (cts != null)
+                    {
                         RenderBefore2007ContextTab(context, cts);
+                    }
 
                     _paletteContextCurrent.LightBackground = false;
                     break;
                 case PaletteRibbonShape.Office2010:
                     if (cts != null)
+                    {
                         RenderBefore2010ContextTab(context, cts);
+                    }
 
-                    _paletteContextCurrent.LightBackground = _ribbon.CaptionArea.DrawCaptionOnComposition;
+                    _paletteContextCurrent.LightBackground = Ribbon.CaptionArea.DrawCaptionOnComposition;
                     break;
             }
 
             // Use renderer to draw the tab background
             int mementoIndex = StateIndex(State);
-            _mementos[mementoIndex] = context.Renderer.RenderRibbon.DrawRibbonBack(_ribbon.RibbonShape, context, ClientRectangle, State, _paletteContextCurrent, VisualOrientation.Top, false, _mementos[mementoIndex]);
+            _mementos[mementoIndex] = context.Renderer.RenderRibbon.DrawRibbonBack(Ribbon.RibbonShape, context, ClientRectangle, State, _paletteContextCurrent, VisualOrientation.Top, false, _mementos[mementoIndex]);
         }
 
         /// <summary>
@@ -448,7 +444,7 @@ namespace ComponentFactory.Krypton.Ribbon
             // Is this tab part of a context?
             if (cts != null)
             {
-                switch (_ribbon.RibbonShape)
+                switch (Ribbon.RibbonShape)
                 {
                     case PaletteRibbonShape.Office2010:
                         RenderAfter2010ContextTab(context, cts);
@@ -489,7 +485,9 @@ namespace ComponentFactory.Krypton.Ribbon
             // reference and the text is not zero length. We try and prevent
             // an empty string because it makes the tab useless!
             if ((_ribbonTab != null) && (_ribbonTab.Text.Length > 0))
+            {
                 return _ribbonTab.Text;
+            }
 
             return _empty;
         }
@@ -525,10 +523,14 @@ namespace ComponentFactory.Krypton.Ribbon
                     using (Pen sepPen = new Pen(sepBrush))
                     {
                         if (cts.IsFirstTab(this))
+                        {
                             context.Graphics.DrawLine(sepPen, contextRect.X, contextRect.Y, contextRect.X, contextRect.Bottom - 1);
+                        }
 
                         if (cts.IsLastTab(this))
+                        {
                             context.Graphics.DrawLine(sepPen, contextRect.Right - 1, contextRect.Y, contextRect.Right - 1, contextRect.Bottom - 1);
+                        }
                     }
                 }
             }
@@ -600,8 +602,12 @@ namespace ComponentFactory.Krypton.Ribbon
             Array stateValues = Enum.GetValues(typeof(PaletteState));
 
             for (int i = 0; i < stateValues.Length; i++)
+            {
                 if ((PaletteState)stateValues.GetValue(i) == state)
+                {
                     return i;
+                }
+            }
 
             return 0;
         }
@@ -616,7 +622,9 @@ namespace ComponentFactory.Krypton.Ribbon
 
             // Better check we have a child!
             if (Count > 0)
+            {
                 this[0].Enabled = enabled;
+            }
 
             // If disabled...
             if (!enabled)
@@ -630,7 +638,7 @@ namespace ComponentFactory.Krypton.Ribbon
                 PaletteState buttonState = State;
 
                 // Update the checked state
-                Checked = (_ribbon.SelectedTab == RibbonTab);
+                Checked = (Ribbon.SelectedTab == RibbonTab);
 
                 // Is this tab a context tab?
                 bool contextTab = !string.IsNullOrEmpty(RibbonTab.ContextName);
@@ -646,17 +654,25 @@ namespace ComponentFactory.Krypton.Ribbon
                             case PaletteState.CheckedNormal:
                             case PaletteState.ContextCheckedNormal:
                                 if (contextTab)
+                                {
                                     buttonState = PaletteState.ContextCheckedNormal;
+                                }
                                 else
+                                {
                                     buttonState = PaletteState.CheckedNormal;
+                                }
                                 break;
                             case PaletteState.Tracking:
                             case PaletteState.CheckedTracking:
                             case PaletteState.ContextCheckedTracking:
                                 if (contextTab)
+                                {
                                     buttonState = PaletteState.ContextCheckedTracking;
+                                }
                                 else
+                                {
                                     buttonState = PaletteState.CheckedTracking;
+                                }
                                 break;
                         }
                     }
@@ -672,9 +688,13 @@ namespace ComponentFactory.Krypton.Ribbon
                             case PaletteState.CheckedTracking:
                             case PaletteState.ContextCheckedTracking:
                                 if (contextTab)
+                                {
                                     buttonState = PaletteState.ContextTracking;
+                                }
                                 else
+                                {
                                     buttonState = PaletteState.Tracking;
+                                }
                                 break;
                         }
                     }
@@ -716,7 +736,9 @@ namespace ComponentFactory.Krypton.Ribbon
 
                 // Better check we have a child!
                 if (Count > 0)
+                {
                     this[0].ElementState = buttonState;
+                }
 
                 // Update the actual source palette
                 _paletteContextCurrent.SetInherit(_overrideCurrent);
@@ -737,25 +759,27 @@ namespace ComponentFactory.Krypton.Ribbon
                 if (RibbonTab != null)
                 {
                     // Update ribbon so associated tab becomes selected
-                    _ribbon.SelectedTab = RibbonTab;
+                    Ribbon.SelectedTab = RibbonTab;
                 }
             }
         }
 
         private void OnTabContextClicked(object sender, MouseEventArgs e)
         {
-            if (_ribbon.InDesignMode)
+            if (Ribbon.InDesignMode)
+            {
                 _ribbonTab.OnDesignTimeContextMenu(new MouseEventArgs(MouseButtons.Right, 1, e.X, e.Y, 0));
+            }
             else
             {
                 // Convert the mouse point to screen coords from the containing control
-                Point screenPt = _ribbon.TabsArea.TabsContainerControl.ChildControl.PointToScreen(new Point(e.X, e.Y));
+                Point screenPt = Ribbon.TabsArea.TabsContainerControl.ChildControl.PointToScreen(new Point(e.X, e.Y));
 
                 // Convert back to ribbon client coords, needed for the show context menu call
-                Point clientPt = _ribbon.PointToClient(screenPt);
+                Point clientPt = Ribbon.PointToClient(screenPt);
 
                 // Request the context menu be shown
-                _ribbon.DisplayRibbonContextMenu(new MouseEventArgs(e.Button, e.Clicks, clientPt.X, clientPt.Y, e.Delta));
+                Ribbon.DisplayRibbonContextMenu(new MouseEventArgs(e.Button, e.Clicks, clientPt.X, clientPt.Y, e.Delta));
             }
         }
         #endregion

@@ -8,12 +8,8 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
 using System.Drawing;
-using System.ComponentModel;
 using System.ComponentModel.Design;
-using System.Windows.Forms;
-using System.Windows.Forms.Design;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -46,8 +42,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public LabelStyle LabelStyle
         {
-            get { return _label.LabelStyle; }
-            
+            get => _label.LabelStyle;
+
             set 
             {
                 if (_label.LabelStyle != value)
@@ -63,8 +59,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public VisualOrientation Orientation
         {
-            get { return _label.Orientation; }
-            
+            get => _label.Orientation;
+
             set
             {
                 if (_label.Orientation != value)
@@ -80,8 +76,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public string Text
         {
-            get { return _label.Values.Text; }
-            
+            get => _label.Values.Text;
+
             set 
             {
                 if (_label.Values.Text != value)
@@ -97,8 +93,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public string ExtraText
         {
-            get { return _label.Values.ExtraText; }
-            
+            get => _label.Values.ExtraText;
+
             set 
             {
                 if (_label.Values.ExtraText != value)
@@ -114,8 +110,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public Image Image
         {
-            get { return _label.Values.Image; }
-            
+            get => _label.Values.Image;
+
             set 
             {
                 if (_label.Values.Image != value)
@@ -131,8 +127,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public PaletteMode PaletteMode
         {
-            get { return _label.PaletteMode; }
-            
+            get => _label.PaletteMode;
+
             set 
             {
                 if (_label.PaletteMode != value)

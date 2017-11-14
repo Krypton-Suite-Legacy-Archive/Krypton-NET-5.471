@@ -9,7 +9,6 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Diagnostics;
@@ -25,8 +24,7 @@ namespace ComponentFactory.Krypton.Ribbon
 	{
 		#region Instance Fields
         private NeedPaintHandler _needPaint;
-        private ViewBase _target;
-        private bool _mouseOver;
+	    private bool _mouseOver;
         private bool _rightButtonDown;
         #endregion
 
@@ -54,7 +52,7 @@ namespace ComponentFactory.Krypton.Ribbon
             Debug.Assert(target != null);
             Debug.Assert(needPaint != null);
 
-			_target = target;
+			Target = target;
             NeedPaint = needPaint;
         }
 		#endregion
@@ -92,13 +90,17 @@ namespace ComponentFactory.Krypton.Ribbon
         public virtual bool MouseDown(Control c, Point pt, MouseButtons button)
 		{
             if ((_mouseOver) && (button == MouseButtons.Left))
+            {
                 OnClick(EventArgs.Empty);
+            }
 
-            // Remember the user has pressed the right mouse button down
+		    // Remember the user has pressed the right mouse button down
             if (button == MouseButtons.Right)
+            {
                 _rightButtonDown = true;
+            }
 
-            return false;
+		    return false;
 		}
 
 		/// <summary>
@@ -149,11 +151,9 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <summary>
         /// Should the left mouse down be ignored when present on a visual form border area.
         /// </summary>
-        public virtual bool IgnoreVisualFormLeftButtonDown
-        {
-            get { return false; }
-        }
-        #endregion
+        public virtual bool IgnoreVisualFormLeftButtonDown => false;
+
+	    #endregion
 
         #region Public
         /// <summary>
@@ -161,7 +161,7 @@ namespace ComponentFactory.Krypton.Ribbon
         /// </summary>
         public NeedPaintHandler NeedPaint
         {
-            get { return _needPaint; }
+            get => _needPaint;
 
             set
             {
@@ -176,12 +176,9 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <summary>
         /// Gets access to the associated target of the controller.
         /// </summary>
-        public ViewBase Target
-        {
-            get { return _target; }
-        }
+        public ViewBase Target { get; }
 
-		/// <summary>
+	    /// <summary>
 		/// Fires the NeedPaint event.
 		/// </summary>
 		public void PerformNeedPaint()
@@ -207,9 +204,13 @@ namespace ComponentFactory.Krypton.Ribbon
         protected void UpdateTargetState(Control c)
         {
             if ((c == null) || c.IsDisposed)
+            {
                 UpdateTargetState(new Point(int.MaxValue, int.MaxValue));
+            }
             else
+            {
                 UpdateTargetState(c.PointToClient(Control.MousePosition));
+            }
         }
 
         /// <summary>
@@ -222,9 +223,9 @@ namespace ComponentFactory.Krypton.Ribbon
             PaletteState newState = (_mouseOver ? PaletteState.Tracking : PaletteState.Normal);
 
             // If state has changed
-            if (_target.ElementState != newState)
+            if (Target.ElementState != newState)
             {
-                _target.ElementState = newState;
+                Target.ElementState = newState;
 
                 // Redraw to show the change in visual state
                 OnNeedPaint(false);
@@ -237,9 +238,8 @@ namespace ComponentFactory.Krypton.Ribbon
 		/// <param name="needLayout">Does the palette change require a layout.</param>
 		protected virtual void OnNeedPaint(bool needLayout)
 		{
-            if (_needPaint != null)
-                _needPaint(this, new NeedLayoutEventArgs(needLayout, _target.ClientRectangle));
-		}
+            _needPaint?.Invoke(this, new NeedLayoutEventArgs(needLayout, Target.ClientRectangle));
+        }
 
         /// <summary>
         /// Raises the Click event.
@@ -247,8 +247,7 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <param name="e">An EventArgs containing the event data.</param>
         protected virtual void OnClick(EventArgs e)
         {
-            if (Click != null)
-                Click(this, e);
+            Click?.Invoke(this, e);
         }
 
         /// <summary>
@@ -257,8 +256,7 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <param name="e">A MouseEventArgs containing the event data.</param>
         protected virtual void OnContextClick(MouseEventArgs e)
         {
-            if (ContextClick != null)
-                ContextClick(this, e);
+            ContextClick?.Invoke(this, e);
         }
         #endregion
     }

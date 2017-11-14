@@ -9,10 +9,7 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Diagnostics;
 using ComponentFactory.Krypton.Toolkit;
@@ -25,7 +22,7 @@ namespace ComponentFactory.Krypton.Ribbon
     internal class ViewLayoutRibbonCenterPadding : ViewLayoutRibbonCenter
     {
         #region Instance Fields
-        private Padding _preferredPadding;
+
         #endregion
 
         #region Identity
@@ -35,7 +32,7 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <param name="preferredPadding">Padding to use when calculating space.</param>
         public ViewLayoutRibbonCenterPadding(Padding preferredPadding)
         {
-            _preferredPadding = preferredPadding;
+            PreferredPadding = preferredPadding;
         }
 
 		/// <summary>
@@ -53,11 +50,8 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <summary>
         /// Gets and sets the preferred padding.
         /// </summary>
-        public Padding PreferredPadding
-        {
-            get { return _preferredPadding; }
-            set { _preferredPadding = value; }
-        }
+        public Padding PreferredPadding { get; set; }
+
         #endregion
 
         #region Layout
@@ -71,8 +65,8 @@ namespace ComponentFactory.Krypton.Ribbon
             Size preferredSize = base.GetPreferredSize(context);
 
             // Add on the padding we need around edges
-            return new Size(preferredSize.Width + _preferredPadding.Horizontal,
-                            preferredSize.Height + _preferredPadding.Vertical);
+            return new Size(preferredSize.Width + PreferredPadding.Horizontal,
+                            preferredSize.Height + PreferredPadding.Vertical);
         }
 
         /// <summary>
@@ -84,7 +78,10 @@ namespace ComponentFactory.Krypton.Ribbon
             Debug.Assert(context != null);
 
             // Validate incoming reference
-            if (context == null) throw new ArgumentNullException("context");
+            if (context == null)
+            {
+                throw new ArgumentNullException("context");
+            }
 
             // We take on all the available display area
             ClientRectangle = context.DisplayRectangle;
@@ -106,8 +103,14 @@ namespace ComponentFactory.Krypton.Ribbon
                     Size childPreferred = child.GetPreferredSize(context);
 
                     // Make sure the child is never bigger than the available space
-                    if (childPreferred.Width > ClientRectangle.Width) childPreferred.Width = ClientWidth;
-                    if (childPreferred.Height > ClientRectangle.Height) childPreferred.Height = ClientHeight;
+                    if (childPreferred.Width > ClientRectangle.Width)
+                    {
+                        childPreferred.Width = ClientWidth;
+                    }
+                    if (childPreferred.Height > ClientRectangle.Height)
+                    {
+                        childPreferred.Height = ClientHeight;
+                    }
 
                     // Find vertical and horizontal offsets for centering
                     int xOffset = (innerRectangle.Width - childPreferred.Width) / 2;

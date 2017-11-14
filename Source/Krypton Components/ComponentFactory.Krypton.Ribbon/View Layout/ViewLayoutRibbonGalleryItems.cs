@@ -9,10 +9,7 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Diagnostics;
 using ComponentFactory.Krypton.Toolkit;
@@ -25,7 +22,9 @@ namespace ComponentFactory.Krypton.Ribbon
     internal class ViewLayoutRibbonGalleryItems : ViewComposite
     {
         #region Static Fields
-        private static readonly int SCROLL_MOVE = 10;
+
+        private const int SCROLL_MOVE = 10;
+
         #endregion
 
         #region Instance Fields
@@ -46,7 +45,7 @@ namespace ComponentFactory.Krypton.Ribbon
         private int _offset;
         private int _beginLine;
         private int _bringIntoView;
-        private bool _scrollIntoView;
+
         #endregion
 
         #region Identity
@@ -79,7 +78,7 @@ namespace ComponentFactory.Krypton.Ribbon
             _buttonDown = buttonDown;
             _buttonContext = buttonContext;
             _bringIntoView = -1;
-            _scrollIntoView = true;
+            ScrollIntoView = true;
 
             // Need to know when any button is clicked
             _buttonUp.Click += new MouseEventHandler(OnButtonUp);
@@ -94,8 +93,10 @@ namespace ComponentFactory.Krypton.Ribbon
                                                  PaletteContentStyle.ButtonLowProfile);
 
             // Setup timer to use for scrolling lines
-            _scrollTimer = new Timer();
-            _scrollTimer.Interval = 40;
+            _scrollTimer = new Timer
+            {
+                Interval = 40
+            };
             _scrollTimer.Tick += new EventHandler(OnScrollTick);
         }
 
@@ -114,19 +115,12 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <summary>
         /// Gets and sets the scrolling into view setting.
         /// </summary>
-        public bool ScrollIntoView
-        {
-            get { return _scrollIntoView; }
-            set { _scrollIntoView = value; }
-        }
+        public bool ScrollIntoView { get; set; }
 
         /// <summary>
         /// Gets the number of items currently displayed on a line.
         /// </summary>
-        public int ActualLineItems
-        {
-            get { return Math.Max(1, _lineItems); }
-        }
+        public int ActualLineItems => Math.Max(1, _lineItems);
 
         /// <summary>
         /// Move tracking to the first item.
@@ -134,7 +128,9 @@ namespace ComponentFactory.Krypton.Ribbon
         public void TrackMoveHome()
         {
             if (Count > 0)
+            {
                 _gallery.SetTrackingIndex(0, true);
+            }
         }
 
         /// <summary>
@@ -143,7 +139,9 @@ namespace ComponentFactory.Krypton.Ribbon
         public void TrackMoveEnd()
         {
             if (Count > 0)
+            {
                 _gallery.SetTrackingIndex(Count - 1, true);
+            }
         }
 
         /// <summary>
@@ -264,18 +262,12 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <summary>
         /// Is there a next line that can be displayed.
         /// </summary>
-        public bool CanNextLine
-        {
-            get { return (_topLine < _endLine); }
-        }
+        public bool CanNextLine => (_topLine < _endLine);
 
         /// <summary>
         /// Is there a previous line that can be displayed.
         /// </summary>
-        public bool CanPrevLine
-        {
-            get { return (_topLine > 0); }
-        }
+        public bool CanPrevLine => (_topLine > 0);
 
         /// <summary>
         /// Scroll to make the next line visible.
@@ -296,7 +288,9 @@ namespace ComponentFactory.Krypton.Ribbon
                 {
                     // Ensure the old top line can be displayed during scrolling
                     if ((_beginLine == -1) || (_beginLine > prevTopLine))
+                    {
                         _beginLine = prevTopLine;
+                    }
                 }
 
                 // Start the scrolling
@@ -323,7 +317,9 @@ namespace ComponentFactory.Krypton.Ribbon
                 {
                     // Ensure the old top line can be displayed during scrolling
                     if ((_beginLine == -1) || (_beginLine < prevTopLine))
+                    {
                         _beginLine = prevTopLine;
+                    }
                 }
 
                 // Start the scrolling
@@ -336,7 +332,7 @@ namespace ComponentFactory.Krypton.Ribbon
         /// </summary>
         public ButtonStyle ButtonStyle
         {
-            get { return _style; }
+            get => _style;
 
             set
             {
@@ -401,9 +397,12 @@ namespace ComponentFactory.Krypton.Ribbon
 			Debug.Assert(context != null);
 
             // Validate incoming reference
-            if (context == null) throw new ArgumentNullException("context");
-            
-            // We take on all the available display area
+            if (context == null)
+            {
+                throw new ArgumentNullException("context");
+            }
+
+		    // We take on all the available display area
 			ClientRectangle = context.DisplayRectangle;
 
             // Ensure that the correct number of children are created
@@ -422,7 +421,7 @@ namespace ComponentFactory.Krypton.Ribbon
                 _lineItems = Math.Max(1, displayRect.Width / _itemSize.Width);
 
                 // Number of lines needed to show all the items
-                _layoutLines = Math.Max(1, (Count + _lineItems - 1) / _lineItems);
+                _layoutLines = Math.Max(1, ((Count + _lineItems) - 1) / _lineItems);
 
                 // Number of display lines that can be shown at a time
                 _displayLines = Math.Max(1, Math.Min(_layoutLines, displayRect.Height / _itemSize.Height));
@@ -460,8 +459,10 @@ namespace ComponentFactory.Krypton.Ribbon
                         int extraLines = _topLine - _beginLine;
 
                         // Limit check the number of previous lines to show
-                        if (_topLine - extraLines < 0)
+                        if ((_topLine - extraLines) < 0)
+                        {
                             extraLines = _topLine;
+                        }
 
                         // Move start to ensure that the previous lines are visible
                         start -= (extraLines * _lineItems);
@@ -479,7 +480,9 @@ namespace ComponentFactory.Krypton.Ribbon
 
                         // Limit check the end item to stop it overflowing number of items
                         if (end > Count)
+                        {
                             end = Count;
+                        }
                     }
                 }
 
@@ -493,7 +496,9 @@ namespace ComponentFactory.Krypton.Ribbon
 
                     // Should this item be visible
                     if ((i < start) || (i >= end))
+                    {
                         childItem.Visible = false;
+                    }
                     else
                     {
                         childItem.Visible = true;
@@ -539,7 +544,9 @@ namespace ComponentFactory.Krypton.Ribbon
 
             // Find out how many children we need
             if (imageList != null)
+            {
                 required = _gallery.ImageList.Images.Count;
+            }
 
             // If we do not have enough already
             if (Count < required)
@@ -547,14 +554,18 @@ namespace ComponentFactory.Krypton.Ribbon
                 // Create and add the number extra needed
                 int create = required - Count;
                 for (int i = 0; i < create; i++)
+                {
                     Add(new ViewDrawRibbonGalleryItem(_gallery, _triple, this, _needPaint));
+                }
             }
             else if (Count > required)
             {
                 // Destroy the extra ones no longer needed
                 int remove = Count - required;
                 for (int i = 0; i < remove; i++)
+                {
                     RemoveAt(0);
+                }
             }
 
             // Tell each item the image it should be displaying
@@ -591,9 +602,13 @@ namespace ComponentFactory.Krypton.Ribbon
             if (_offset != 0)
             {
                 if (_offset > 0)
+                {
                     _offset = Math.Max(0, _offset - SCROLL_MOVE);
+                }
                 else
+                {
                     _offset = Math.Min(0, _offset + SCROLL_MOVE);
+                }
             }
 
             // If we have finished the scrolling
@@ -621,7 +636,9 @@ namespace ComponentFactory.Krypton.Ribbon
 
                     // Limit check to the last line for display purposes
                     if (line > _endLine)
+                    {
                         line = _endLine;
+                    }
 
                     // Cache top line before any changes made to it
                     int prevTopLine = _topLine;
@@ -674,13 +691,17 @@ namespace ComponentFactory.Krypton.Ribbon
                     {
                         // Ensure the old top line can be displayed during scrolling
                         if ((_beginLine == -1) || (_beginLine > prevTopLine))
+                        {
                             _beginLine = prevTopLine;
+                        }
                     }
                     else if (_offset > 0)
                     {
                         // Ensure the old top line can be displayed during scrolling
                         if ((_beginLine == -1) || (_beginLine < prevTopLine))
+                        {
                             _beginLine = prevTopLine;
+                        }
                     }
                 }
 

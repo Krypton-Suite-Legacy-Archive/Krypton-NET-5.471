@@ -8,15 +8,8 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Design;
-using System.Windows.Forms;
 using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -70,20 +63,15 @@ namespace ComponentFactory.Krypton.Toolkit
         /// Gets a value indicating if all values are default.
         /// </summary>
         [Browsable(false)]
-        public override bool IsDefault
-        {
-            get
-            {
-                return ((Feedback == PaletteDragFeedback.Inherit) &&
-                        (SolidBack == Color.Empty) &&
-                        (SolidBorder == Color.Empty) &&
-                        (SolidOpacity == -1.0f) &&
-                        (DropDockBack == Color.Empty) &&
-                        (DropDockBorder == Color.Empty) &&
-                        (DropDockActive == Color.Empty) &&
-                        (DropDockInactive == Color.Empty));
-            }
-        }
+        public override bool IsDefault => ((Feedback == PaletteDragFeedback.Inherit) &&
+                                           (SolidBack == Color.Empty) &&
+                                           (SolidBorder == Color.Empty) &&
+                                           (SolidOpacity == -1.0f) &&
+                                           (DropDockBack == Color.Empty) &&
+                                           (DropDockBorder == Color.Empty) &&
+                                           (DropDockActive == Color.Empty) &&
+                                           (DropDockInactive == Color.Empty));
+
         #endregion
 
         #region SetInherit
@@ -124,7 +112,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [RefreshPropertiesAttribute(RefreshProperties.All)]
         public PaletteDragFeedback Feedback
         {
-            get { return _feedback; }
+            get => _feedback;
 
             set
             {
@@ -151,9 +139,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public PaletteDragFeedback GetDragDropFeedback()
         {
             if (Feedback != PaletteDragFeedback.Inherit)
+            {
                 return Feedback;
+            }
             else
+            {
                 return _inherit.GetDragDropFeedback();
+            }
         }
         #endregion
 
@@ -168,7 +160,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [RefreshPropertiesAttribute(RefreshProperties.All)]
         public Color SolidBack
         {
-            get { return _solidBack; }
+            get => _solidBack;
 
             set
             {
@@ -195,9 +187,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public Color GetDragDropSolidBack()
         {
             if (SolidBack != Color.Empty)
+            {
                 return SolidBack;
+            }
             else
+            {
                 return _inherit.GetDragDropSolidBack();
+            }
         }
         #endregion
 
@@ -212,7 +208,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [RefreshPropertiesAttribute(RefreshProperties.All)]
         public Color SolidBorder
         {
-            get { return _solidBorder; }
+            get => _solidBorder;
 
             set
             {
@@ -239,9 +235,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public Color GetDragDropSolidBorder()
         {
             if (SolidBorder != Color.Empty)
+            {
                 return SolidBorder;
+            }
             else
+            {
                 return _inherit.GetDragDropSolidBorder();
+            }
         }
         #endregion
 
@@ -256,7 +256,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [RefreshPropertiesAttribute(RefreshProperties.All)]
         public float SolidOpacity
         {
-            get { return _solidOpacity; }
+            get => _solidOpacity;
 
             set
             {
@@ -283,9 +283,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public virtual float GetDragDropSolidOpacity()
         {
             if (SolidOpacity >= 0.0f)
+            {
                 return SolidOpacity;
+            }
             else
+            {
                 return _inherit.GetDragDropSolidOpacity();
+            }
         }
         #endregion
 
@@ -300,7 +304,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [RefreshPropertiesAttribute(RefreshProperties.All)]
         public Color DropDockBack
         {
-            get { return _dropDockBack; }
+            get => _dropDockBack;
 
             set
             {
@@ -328,9 +332,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public Color GetDragDropDockBack()
         {
             if (DropDockBack != Color.Empty)
+            {
                 return DropDockBack;
+            }
             else
+            {
                 return _inherit.GetDragDropDockBack();
+            }
         }
         #endregion
 
@@ -345,7 +353,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [RefreshPropertiesAttribute(RefreshProperties.All)]
         public Color DropDockBorder
         {
-            get { return _dropDockBorder; }
+            get => _dropDockBorder;
 
             set
             {
@@ -372,9 +380,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public Color GetDragDropDockBorder()
         {
             if (DropDockBorder != Color.Empty)
+            {
                 return DropDockBorder;
+            }
             else
+            {
                 return _inherit.GetDragDropDockBorder();
+            }
         }
         #endregion
 
@@ -389,7 +401,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [RefreshPropertiesAttribute(RefreshProperties.All)]
         public Color DropDockActive
         {
-            get { return _dropDockActive; }
+            get => _dropDockActive;
 
             set
             {
@@ -416,9 +428,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public Color GetDragDropDockActive()
         {
             if (DropDockActive != Color.Empty)
+            {
                 return DropDockActive;
+            }
             else
+            {
                 return _inherit.GetDragDropDockActive();
+            }
         }
         #endregion
 
@@ -433,7 +449,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [RefreshPropertiesAttribute(RefreshProperties.All)]
         public Color DropDockInactive
         {
-            get { return _dropDockInactive; }
+            get => _dropDockInactive;
 
             set
             {
@@ -460,9 +476,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public Color GetDragDropDockInactive()
         {
             if (DropDockInactive != Color.Empty)
+            {
                 return DropDockInactive;
+            }
             else
+            {
                 return _inherit.GetDragDropDockInactive();
+            }
         }
         #endregion
     }

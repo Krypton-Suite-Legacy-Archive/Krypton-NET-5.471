@@ -8,15 +8,8 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
-using System.Data;
 using System.Drawing;
-using System.Drawing.Design;
 using System.ComponentModel;
-using System.Windows.Forms;
-using System.Diagnostics;
-using ComponentFactory.Krypton.Toolkit;
 
 namespace ComponentFactory.Krypton.Ribbon
 {
@@ -69,7 +62,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [DefaultValue("Heading")]
         public string Heading
         {
-            get { return _heading; }
+            get => _heading;
 
             set
             {
@@ -89,7 +82,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [DefaultValue(-1)]
         public int ImageIndexStart
         {
-            get { return _imageIndexStart; }
+            get => _imageIndexStart;
 
             set
             {
@@ -109,7 +102,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [DefaultValue(-1)]
         public int ImageIndexEnd
         {
-            get { return _imageIndexEnd; }
+            get => _imageIndexEnd;
 
             set
             {
@@ -129,8 +122,7 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <param name="propertyName">Name of property that has changed.</param>
         protected virtual void OnPropertyChanged(string propertyName)
         {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
     }

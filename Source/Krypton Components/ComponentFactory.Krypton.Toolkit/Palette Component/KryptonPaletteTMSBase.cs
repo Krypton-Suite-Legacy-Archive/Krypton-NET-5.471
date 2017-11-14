@@ -8,14 +8,6 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
-using System.Drawing;
-using System.Drawing.Design;
-using System.Windows.Forms;
-using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace ComponentFactory.Krypton.Toolkit
@@ -26,7 +18,7 @@ namespace ComponentFactory.Krypton.Toolkit
 	public abstract class KryptonPaletteTMSBase : Storage
     {
         #region Instance Fields
-        private KryptonInternalKCT _internalKCT;
+
         #endregion
         
         #region Identity
@@ -40,7 +32,7 @@ namespace ComponentFactory.Krypton.Toolkit
 		{
             Debug.Assert(internalKCT != null);
 
-            _internalKCT = internalKCT;
+            InternalKCT = internalKCT;
 
             // Store the provided paint notification delegate
             NeedPaint = needPaint;
@@ -51,10 +43,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Gets access to the internal class used to inherit values.
         /// </summary>
-        internal KryptonInternalKCT InternalKCT
-        {
-            get { return _internalKCT; }
-        }
+        internal KryptonInternalKCT InternalKCT { get; }
+
         #endregion
     }
 }

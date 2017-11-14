@@ -9,7 +9,6 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
 using System.Drawing;
 using System.Windows.Forms;
 using System.ComponentModel;
@@ -27,8 +26,8 @@ namespace ComponentFactory.Krypton.Toolkit
         private bool _mouseOver;
         private ViewDrawMenuItem _menuItem;
 		private NeedPaintHandler _needPaint;
-        private ViewContextMenuManager _viewManager;
-		#endregion
+
+	    #endregion
 
 		#region Identity
 		/// <summary>
@@ -45,7 +44,7 @@ namespace ComponentFactory.Krypton.Toolkit
             Debug.Assert(menuItem != null);
             Debug.Assert(needPaint != null);
 
-            _viewManager = viewManager;
+            ViewManager = viewManager;
             _menuItem = menuItem;
             NeedPaint = needPaint;
         }
@@ -55,12 +54,9 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Returns if the item shows a sub menu when selected.
         /// </summary>
-        public virtual bool HasSubMenu
-        {
-            get { return _menuItem.HasSubMenu; }
-        }
+        public virtual bool HasSubMenu => _menuItem.HasSubMenu;
 
-        /// <summary>
+	    /// <summary>
         /// This target should display as the active target.
         /// </summary>
         public virtual void ShowTarget()
@@ -101,9 +97,13 @@ namespace ComponentFactory.Krypton.Toolkit
         {
             // Can only select if the item is actually enabled
             if (_menuItem.ItemEnabled)
+            {
                 return Control.IsMnemonic(charCode, _menuItem.ItemText);
+            }
             else
+            {
                 return false;
+            }
         }
 
         /// <summary>
@@ -116,9 +116,13 @@ namespace ComponentFactory.Krypton.Toolkit
             {
                 // Do we press the item or show the sub menu?
                 if (!_menuItem.HasSubMenu)
+                {
                     PressMenuItem();
+                }
                 else
+                {
                     _menuItem.ShowSubMenu(true);
+                }
             }
         }
 
@@ -134,12 +138,9 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Get the client rectangle for the display of this target.
         /// </summary>
-        public Rectangle ClientRectangle 
-        {
-            get { return _menuItem.ClientRectangle; }
-        }
+        public Rectangle ClientRectangle => _menuItem.ClientRectangle;
 
-        /// <summary>
+	    /// <summary>
         /// Should a mouse down at the provided point cause the currently stacked context menu to become current.
         /// </summary>
         /// <param name="pt">Client coordinates point.</param>
@@ -150,7 +151,9 @@ namespace ComponentFactory.Krypton.Toolkit
             // because we do not want pressed it to cause the context menu to become current. This
             // cause the showing sub menu to be dismissed.
             if (_menuItem.ItemEnabled)
+            {
                 return !_menuItem.PointInSubMenu(pt);
+            }
 
             return true;
         }
@@ -189,10 +192,14 @@ namespace ComponentFactory.Krypton.Toolkit
         public virtual bool MouseDown(Control c, Point pt, MouseButtons button)
 		{
             if (_menuItem.ItemEnabled)
+            {
                 if (_menuItem.PointInSubMenu(pt))
+                {
                     _menuItem.ShowSubMenu(false);
+                }
+            }
 
-			return false;
+            return false;
 		}
 
 		/// <summary>
@@ -208,9 +215,13 @@ namespace ComponentFactory.Krypton.Toolkit
             {
                 // Is mouse in the area of the item for indicating a sub menu
                 if (_menuItem.PointInSubMenu(pt))
+                {
                     _menuItem.ShowSubMenu(false);
+                }
                 else
+                {
                     PressMenuItem();
+                }
             }
 		}
 
@@ -240,11 +251,9 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Should the left mouse down be ignored when present on a visual form border area.
         /// </summary>
-        public virtual bool IgnoreVisualFormLeftButtonDown
-        {
-            get { return false; }
-        }
-        #endregion
+        public virtual bool IgnoreVisualFormLeftButtonDown => false;
+
+	    #endregion
 
         #region Key Notifications
         /// <summary>
@@ -258,8 +267,15 @@ namespace ComponentFactory.Krypton.Toolkit
             Debug.Assert(e != null);
 
             // Validate incoming references
-            if (c == null)  throw new ArgumentNullException("c");
-            if (e == null)  throw new ArgumentNullException("e");
+            if (c == null)
+            {
+                throw new ArgumentNullException("c");
+            }
+
+            if (e == null)
+            {
+                throw new ArgumentNullException("e");
+            }
 
             switch (e.KeyCode)
             {
@@ -270,29 +286,33 @@ namespace ComponentFactory.Krypton.Toolkit
                     {
                         // Do we press the item or show the sub menu?
                         if (!_menuItem.HasSubMenu)
+                        {
                             PressMenuItem();
+                        }
                         else
+                        {
                             _menuItem.ShowSubMenu(true);
+                        }
                     }
                     break;
                 case Keys.Tab:
-                    _viewManager.KeyTab(e.Shift);
+                    ViewManager.KeyTab(e.Shift);
                     break;
                 case Keys.Home:
-                    _viewManager.KeyHome();
+                    ViewManager.KeyHome();
                     break;
                 case Keys.End:
-                    _viewManager.KeyEnd();
+                    ViewManager.KeyEnd();
                     break;
                 case Keys.Up:
-                    _viewManager.KeyUp();
+                    ViewManager.KeyUp();
                     break;
                 case Keys.Down:
-                    _viewManager.KeyDown();
+                    ViewManager.KeyDown();
                     break;
                 case Keys.Left:
                     // We wrap if are the first context menu shown, rather than a sub menu showing
-                    if (_viewManager.KeyLeft(!_menuItem.HasParentMenu))
+                    if (ViewManager.KeyLeft(!_menuItem.HasParentMenu))
                     {
                         // User tried to fall off the left edge, so dismiss ourself and let the
                         // keyboard access take us back to the owning context menu instance
@@ -302,9 +322,14 @@ namespace ComponentFactory.Krypton.Toolkit
                 case Keys.Right:
                     // If enabled and with a sub menu, then show the sub menu
                     if (_menuItem.ItemEnabled && _menuItem.HasSubMenu)
+                    {
                         _menuItem.ShowSubMenu(true);
+                    }
                     else
-                        _viewManager.KeyRight();
+                    {
+                        ViewManager.KeyRight();
+                    }
+
                     break;
             }
         }
@@ -320,10 +345,17 @@ namespace ComponentFactory.Krypton.Toolkit
             Debug.Assert(e != null);
 
             // Validate incoming references
-            if (c == null) throw new ArgumentNullException("c");
-            if (e == null) throw new ArgumentNullException("e");
+            if (c == null)
+            {
+                throw new ArgumentNullException("c");
+            }
 
-            _viewManager.KeyMnemonic(e.KeyChar);
+            if (e == null)
+            {
+                throw new ArgumentNullException("e");
+            }
+
+            ViewManager.KeyMnemonic(e.KeyChar);
         }
 
         /// <summary>
@@ -338,8 +370,15 @@ namespace ComponentFactory.Krypton.Toolkit
             Debug.Assert(e != null);
 
             // Validate incoming references
-            if (c == null) throw new ArgumentNullException("c");
-            if (e == null) throw new ArgumentNullException("e");
+            if (c == null)
+            {
+                throw new ArgumentNullException("c");
+            }
+
+            if (e == null)
+            {
+                throw new ArgumentNullException("e");
+            }
 
             return false;
         }
@@ -369,7 +408,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public NeedPaintHandler NeedPaint
         {
-            get { return _needPaint; }
+            get => _needPaint;
 
             set
             {
@@ -392,12 +431,9 @@ namespace ComponentFactory.Krypton.Toolkit
 		#endregion
 
         #region Implementation
-        private ViewContextMenuManager ViewManager
-        {
-            get { return _viewManager; }
-        }
+        private ViewContextMenuManager ViewManager { get; }
 
-        private void PressMenuItem()
+	    private void PressMenuItem()
         {
             // Should we automatically try and close the context menu stack
             if (_menuItem.KryptonContextMenuItem.AutoClose)
@@ -464,9 +500,8 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// <param name="needLayout">Does the palette change require a layout.</param>
 		protected virtual void OnNeedPaint(bool needLayout)
 		{
-            if (_needPaint != null)
-                _needPaint(this, new NeedLayoutEventArgs(needLayout, _menuItem.ClientRectangle));
-		}
+            _needPaint?.Invoke(this, new NeedLayoutEventArgs(needLayout, _menuItem.ClientRectangle));
+        }
 		#endregion
 	}
 }

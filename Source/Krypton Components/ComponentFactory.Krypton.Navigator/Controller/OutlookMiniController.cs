@@ -9,7 +9,6 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Diagnostics;
@@ -28,8 +27,7 @@ namespace ComponentFactory.Krypton.Navigator
         private NeedPaintHandler _needPaint;
         private ViewBase _target;
         private bool _fixedTracking;
-		private bool _captured;
-        private bool _mouseOver;
+	    private bool _mouseOver;
 		#endregion
 
 		#region Events
@@ -64,7 +62,7 @@ namespace ComponentFactory.Krypton.Navigator
             if (_fixedTracking)
             {
                 // Mouse no longer considered pressed down
-                _captured = false;
+                Captured = false;
 
                 // No longer in fixed state mode
                 _fixedTracking = false;
@@ -87,7 +85,9 @@ namespace ComponentFactory.Krypton.Navigator
 
             // Update the visual state
             if (!_fixedTracking)
+            {
                 UpdateTargetState(c);
+            }
 		}
 
         /// <summary>
@@ -114,13 +114,13 @@ namespace ComponentFactory.Krypton.Navigator
             if (button == MouseButtons.Left)
             {
                // Capturing mouse input
-                _captured = true;
+                Captured = true;
 
                 // Update the visual state
                 UpdateTargetState(pt);
             }
 
-            return _captured;
+            return Captured;
 		}
 
 		/// <summary>
@@ -131,10 +131,10 @@ namespace ComponentFactory.Krypton.Navigator
 		/// <param name="button">Mouse button released.</param>
         public virtual void MouseUp(Control c, Point pt, MouseButtons button)
 		{
-            if (_captured)
+            if (Captured)
             {
                 // Not capturing mouse input anymore
-                _captured = false;
+                Captured = false;
 
                 // Only interested in left mouse being released
                 if (button == MouseButtons.Left)
@@ -185,7 +185,7 @@ namespace ComponentFactory.Krypton.Navigator
             if (!_fixedTracking)
             {
                 // If leaving the view then cannot be capturing mouse input anymore
-                _captured = false;
+                Captured = false;
 
                 UpdateTargetState(c);
             }
@@ -203,11 +203,9 @@ namespace ComponentFactory.Krypton.Navigator
         /// <summary>
         /// Should the left mouse down be ignored when present on a visual form border area.
         /// </summary>
-        public virtual bool IgnoreVisualFormLeftButtonDown
-        {
-            get { return false; }
-        }
-        #endregion
+        public virtual bool IgnoreVisualFormLeftButtonDown => false;
+
+	    #endregion
 
         #region Key Notifications
         /// <summary>
@@ -221,13 +219,19 @@ namespace ComponentFactory.Krypton.Navigator
             Debug.Assert(e != null);
 
             // Validate incoming references
-            if (c == null) throw new ArgumentNullException("c");
-            if (e == null) throw new ArgumentNullException("e");
+            if (c == null)
+            {
+                throw new ArgumentNullException("c");
+            }
+            if (e == null)
+            {
+                throw new ArgumentNullException("e");
+            }
 
             if (e.KeyCode == Keys.Space)
             {
                 // Enter the captured mode and pretend mouse is over area
-                _captured = true;
+                Captured = true;
                 _mouseOver = true;
 
                 // Update target to reflect new state
@@ -259,18 +263,24 @@ namespace ComponentFactory.Krypton.Navigator
             Debug.Assert(e != null);
 
             // Validate incoming references
-            if (c == null) throw new ArgumentNullException("c");
-            if (e == null) throw new ArgumentNullException("e");
+            if (c == null)
+            {
+                throw new ArgumentNullException("c");
+            }
+            if (e == null)
+            {
+                throw new ArgumentNullException("e");
+            }
 
             // If the user pressed the escape key
             if ((e.KeyCode == Keys.Escape) || (e.KeyCode == Keys.Space))
             {
                 // If we are capturing mouse input
-                if (_captured)
+                if (Captured)
                 {
                     // Release the mouse capture
                     c.Capture = false;
-                    _captured = false;
+                    Captured = false;
 
                     // Recalculate if the mouse is over the button area
                     _mouseOver = _target.ClientRectangle.Contains(c.PointToClient(Control.MousePosition));
@@ -290,7 +300,7 @@ namespace ComponentFactory.Krypton.Navigator
                 }
             }
 
-            return _captured;
+            return Captured;
         }
         #endregion
 
@@ -300,7 +310,7 @@ namespace ComponentFactory.Krypton.Navigator
         /// </summary>
         public NeedPaintHandler NeedPaint
         {
-            get { return _needPaint; }
+            get => _needPaint;
 
             set
             {
@@ -326,22 +336,22 @@ namespace ComponentFactory.Krypton.Navigator
         /// <summary>
         /// Gets a value indicating if mouse input is being captured.
         /// </summary>
-        protected bool Captured
-        {
-            get { return _captured; }
-            set { _captured = value; }
-        }
+        protected bool Captured { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// Set the correct visual state of the target.
         /// </summary>
         /// <param name="c">Owning control.</param>
         protected void UpdateTargetState(Control c)
         {
             if ((c == null) || c.IsDisposed)
+            {
                 UpdateTargetState(new Point(int.MaxValue, int.MaxValue));
+            }
             else
+            {
                 UpdateTargetState(c.PointToClient(Control.MousePosition));
+            }
         }
 
         /// <summary>
@@ -356,26 +366,36 @@ namespace ComponentFactory.Krypton.Navigator
             // When disabled the button itself is shown as normal, the 
             // content is expected to draw itself as disbled though
             if (!_target.Enabled)
+            {
                 newState = PaletteState.Normal;
+            }
             else
             {
                 newState = PaletteState.Normal;
 
                 // If capturing input....
-                if (_captured)
+                if (Captured)
                 {
                     if (_target.ClientRectangle.Contains(pt))
+                    {
                         newState = PaletteState.Pressed;
+                    }
                     else
+                    {
                         newState = PaletteState.Normal;
+                    }
                 }
                 else
                 {
                     // Only hot tracking, so show tracking only if mouse over the target or has focus
                     if (_mouseOver || _fixedTracking)
+                    {
                         newState = PaletteState.Tracking;
+                    }
                     else
+                    {
                         newState = PaletteState.Normal;
+                    }
                 }
             }
 
@@ -395,9 +415,8 @@ namespace ComponentFactory.Krypton.Navigator
         /// <param name="e">An EventArgs containing the event data.</param>
 		protected virtual void OnClick(EventArgs e)
 		{
-			if (Click != null)
-				Click(_target, e);
-		}
+            Click?.Invoke(_target, e);
+        }
 
         /// <summary>
 		/// Raises the NeedPaint event.
@@ -405,9 +424,8 @@ namespace ComponentFactory.Krypton.Navigator
 		/// <param name="needLayout">Does the palette change require a layout.</param>
 		protected virtual void OnNeedPaint(bool needLayout)
 		{
-            if (_needPaint != null)
-                _needPaint(this, new NeedLayoutEventArgs(needLayout, _target.ClientRectangle));
-		}
+            _needPaint?.Invoke(this, new NeedLayoutEventArgs(needLayout, _target.ClientRectangle));
+        }
 		#endregion
     }
 }

@@ -8,12 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
-using System.Drawing;
-using System.Drawing.Text;
 using System.ComponentModel;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Diagnostics;
 using ComponentFactory.Krypton.Toolkit;
@@ -74,23 +69,18 @@ namespace ComponentFactory.Krypton.Navigator
 		/// Gets a value indicating if all values are default.
 		/// </summary>
 		[Browsable(false)]
-		public override bool IsDefault
-		{
-			get
-			{
-				return (base.IsDefault &&
-                        BarPaddingTabs.Equals(CommonHelper.InheritPadding) &&
-                        BarPaddingInside.Equals(CommonHelper.InheritPadding) &&
-                        BarPaddingOutside.Equals(CommonHelper.InheritPadding) &&
-                        BarPaddingOnly.Equals(CommonHelper.InheritPadding) &&
-                        ButtonPadding.Equals(CommonHelper.InheritPadding) &&
-                        (ButtonEdgeOutside == -1) &&
-                        (ButtonEdgeInside == -1) &&
-                        (CheckButtonGap == -1) &&
-                        (RibbonTabGap == -1));
-			}
-		}
-		#endregion
+		public override bool IsDefault => (base.IsDefault &&
+		                                   BarPaddingTabs.Equals(CommonHelper.InheritPadding) &&
+		                                   BarPaddingInside.Equals(CommonHelper.InheritPadding) &&
+		                                   BarPaddingOutside.Equals(CommonHelper.InheritPadding) &&
+		                                   BarPaddingOnly.Equals(CommonHelper.InheritPadding) &&
+		                                   ButtonPadding.Equals(CommonHelper.InheritPadding) &&
+		                                   (ButtonEdgeOutside == -1) &&
+		                                   (ButtonEdgeInside == -1) &&
+		                                   (CheckButtonGap == -1) &&
+		                                   (RibbonTabGap == -1));
+
+	    #endregion
 
         #region BarPaddingTabs
         /// <summary>
@@ -102,7 +92,7 @@ namespace ComponentFactory.Krypton.Navigator
         [RefreshPropertiesAttribute(RefreshProperties.All)]
         public Padding BarPaddingTabs
         {
-            get { return _barPaddingTabs; }
+            get => _barPaddingTabs;
 
             set
             {
@@ -133,7 +123,7 @@ namespace ComponentFactory.Krypton.Navigator
         [RefreshPropertiesAttribute(RefreshProperties.All)]
         public Padding BarPaddingInside
         {
-            get { return _barPaddingInside; }
+            get => _barPaddingInside;
 
             set
             {
@@ -164,7 +154,7 @@ namespace ComponentFactory.Krypton.Navigator
         [RefreshPropertiesAttribute(RefreshProperties.All)]
         public Padding BarPaddingOutside
         {
-            get { return _barPaddingOutside; }
+            get => _barPaddingOutside;
 
             set
             {
@@ -195,7 +185,7 @@ namespace ComponentFactory.Krypton.Navigator
         [RefreshPropertiesAttribute(RefreshProperties.All)]
         public Padding BarPaddingOnly
         {
-            get { return _barPaddingOnly; }
+            get => _barPaddingOnly;
 
             set
             {
@@ -226,7 +216,7 @@ namespace ComponentFactory.Krypton.Navigator
         [RefreshPropertiesAttribute(RefreshProperties.All)]
         public Padding ButtonPadding
         {
-            get { return _buttonPadding; }
+            get => _buttonPadding;
 
             set
             {
@@ -257,7 +247,7 @@ namespace ComponentFactory.Krypton.Navigator
         [RefreshPropertiesAttribute(RefreshProperties.All)]
         public int ButtonEdgeOutside
         {
-            get { return _buttonEdgeOutside; }
+            get => _buttonEdgeOutside;
 
             set
             {
@@ -288,7 +278,7 @@ namespace ComponentFactory.Krypton.Navigator
         [RefreshPropertiesAttribute(RefreshProperties.All)]
         public int ButtonEdgeInside
         {
-            get { return _buttonEdgeInside; }
+            get => _buttonEdgeInside;
 
             set
             {
@@ -319,7 +309,7 @@ namespace ComponentFactory.Krypton.Navigator
         [RefreshPropertiesAttribute(RefreshProperties.All)]
         public int CheckButtonGap
         {
-            get { return _checkButtonGap; }
+            get => _checkButtonGap;
 
             set
             {
@@ -350,7 +340,7 @@ namespace ComponentFactory.Krypton.Navigator
         [RefreshPropertiesAttribute(RefreshProperties.All)]
         public int RibbonTabGap
         {
-            get { return _ribbonTabGap; }
+            get => _ribbonTabGap;
 
             set
             {
@@ -381,25 +371,32 @@ namespace ComponentFactory.Krypton.Navigator
         public override int GetMetricInt(PaletteState state, PaletteMetricInt metric)
         {
             // Is this the metric we provide?
-            if (metric == PaletteMetricInt.BarButtonEdgeOutside)
+            switch (metric)
             {
-                if (ButtonEdgeOutside != -1)
-                    return ButtonEdgeOutside;
-            }
-            else if (metric == PaletteMetricInt.BarButtonEdgeInside)
-            {
-                if (ButtonEdgeInside != -1)
-                    return ButtonEdgeInside;
-            }
-            else if (metric == PaletteMetricInt.CheckButtonGap)
-            {
-                if (CheckButtonGap != -1)
-                    return CheckButtonGap;
-            }
-            else if (metric == PaletteMetricInt.RibbonTabGap)
-            {
-                if (RibbonTabGap != -1)
-                    return RibbonTabGap;
+                case PaletteMetricInt.BarButtonEdgeOutside:
+                    if (ButtonEdgeOutside != -1)
+                    {
+                        return ButtonEdgeOutside;
+                    }
+                    break;
+                case PaletteMetricInt.BarButtonEdgeInside:
+                    if (ButtonEdgeInside != -1)
+                    {
+                        return ButtonEdgeInside;
+                    }
+                    break;
+                case PaletteMetricInt.CheckButtonGap:
+                    if (CheckButtonGap != -1)
+                    {
+                        return CheckButtonGap;
+                    }
+                    break;
+                case PaletteMetricInt.RibbonTabGap:
+                    if (RibbonTabGap != -1)
+                    {
+                        return RibbonTabGap;
+                    }
+                    break;
             }
 
             // Pass onto the inheritance
@@ -430,23 +427,33 @@ namespace ComponentFactory.Krypton.Navigator
             {
                 case PaletteMetricPadding.BarButtonPadding:
                     if (!ButtonPadding.Equals(CommonHelper.InheritPadding))
+                    {
                         return ButtonPadding;
+                    }
                     break;
                 case PaletteMetricPadding.BarPaddingTabs:
                     if (!BarPaddingTabs.Equals(CommonHelper.InheritPadding))
+                    {
                         return BarPaddingInside;
+                    }
                     break;
                 case PaletteMetricPadding.BarPaddingInside:
                     if (!BarPaddingInside.Equals(CommonHelper.InheritPadding))
+                    {
                         return BarPaddingInside;
+                    }
                     break;
                 case PaletteMetricPadding.BarPaddingOutside:
                     if (!BarPaddingOutside.Equals(CommonHelper.InheritPadding))
+                    {
                         return BarPaddingOutside;
+                    }
                     break;
                 case PaletteMetricPadding.BarPaddingOnly:
                     if (!BarPaddingOnly.Equals(CommonHelper.InheritPadding))
+                    {
                         return BarPaddingOnly;
+                    }
                     break;
             }
 

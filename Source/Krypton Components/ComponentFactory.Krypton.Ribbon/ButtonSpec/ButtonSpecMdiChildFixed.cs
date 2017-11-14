@@ -8,15 +8,8 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
-using System.Drawing;
-using System.Drawing.Design;
 using System.Windows.Forms;
 using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Collections.Generic;
-using System.Diagnostics;
 using ComponentFactory.Krypton.Toolkit;
 
 namespace ComponentFactory.Krypton.Ribbon
@@ -27,7 +20,7 @@ namespace ComponentFactory.Krypton.Ribbon
     public abstract class ButtonSpecMdiChildFixed : ButtonSpec
     {
         #region Instance Fields
-        private Form _mdiChild;
+
         #endregion
 
         #region Identity
@@ -48,21 +41,16 @@ namespace ComponentFactory.Krypton.Ribbon
         /// </summary>
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool AllowComponent
-        {
-            get { return false; }
-        }
+        public override bool AllowComponent => false;
+
         #endregion
 
         #region MdiChild
         /// <summary>
         /// Gets access to the owning krypton form.
         /// </summary>
-        public Form MdiChild
-        {
-            get { return _mdiChild; }
-            set { _mdiChild = value; }
-        }
+        public Form MdiChild { get; set; }
+
         #endregion
 
         #region ButtonSpecStype
@@ -71,8 +59,8 @@ namespace ComponentFactory.Krypton.Ribbon
         /// </summary>
         public PaletteButtonSpecStyle ButtonSpecType
         {
-            get { return ProtectedType; }
-            set { ProtectedType = value; }
+            get => ProtectedType;
+            set => ProtectedType = value;
         }
         #endregion
 

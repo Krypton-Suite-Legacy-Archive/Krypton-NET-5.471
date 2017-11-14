@@ -9,13 +9,9 @@
 // *****************************************************************************
 
 using System;
-using System.IO;
 using System.Drawing;
 using System.ComponentModel;
 using System.Windows.Forms;
-using System.Diagnostics;
-using System.Collections.Generic;
-using System.Reflection;
 using ComponentFactory.Krypton.Toolkit;
 
 namespace ComponentFactory.Krypton.Navigator
@@ -33,26 +29,17 @@ namespace ComponentFactory.Krypton.Navigator
         /// <summary>
         /// Gets the top level control of the source.
         /// </summary>
-        public override Control SeparatorControl
-        {
-            get { return _viewOutlook.ViewControl.ChildControl; }
-        }
+        public override Control SeparatorControl => _viewOutlook.ViewControl.ChildControl;
 
         /// <summary>
         /// Gets the box representing the minimum and maximum allowed splitter movement.
         /// </summary>
-        public override Rectangle SeparatorMoveBox
-        {
-            get { return _viewOutlook.ViewControl.ChildControl.ClientRectangle; }
-        }
+        public override Rectangle SeparatorMoveBox => _viewOutlook.ViewControl.ChildControl.ClientRectangle;
 
         /// <summary>
         /// Gets a value indicating if the mode is a tab strip style mode.
         /// </summary>
-        public override bool IsTabStripMode
-        {
-            get { return false; }
-        }
+        public override bool IsTabStripMode => false;
 
         /// <summary>
         /// Process a change in the selected page
@@ -99,17 +86,25 @@ namespace ComponentFactory.Krypton.Navigator
             {
                 // Then use the states defined in the navigator itself
                 if (Navigator.Enabled)
+                {
                     buttonEdge = Navigator.StateNormal.BorderEdge;
+                }
                 else
+                {
                     buttonEdge = Navigator.StateDisabled.BorderEdge;
+                }
             }
             else
             {
                 // Use states defined in the selected page
                 if (Navigator.SelectedPage.Enabled)
+                {
                     buttonEdge = Navigator.SelectedPage.StateNormal.BorderEdge;
+                }
                 else
+                {
                     buttonEdge = Navigator.SelectedPage.StateDisabled.BorderEdge;
+                }
             }
 
             // Update the main view elements
@@ -128,7 +123,9 @@ namespace ComponentFactory.Krypton.Navigator
         public override bool DesignerGetHitTest(Point pt)
         {
             if (base.DesignerGetHitTest(pt))
+            {
                 return true;
+            }
 
             // Check that the point is into the stack scrolling viewport
             if (_viewOutlook.ClientRectangle.Contains(pt))
@@ -141,15 +138,27 @@ namespace ComponentFactory.Krypton.Navigator
 
                 // Check if any of the stack check buttons want the point
                 foreach (ViewBase item in _viewLayout)
+                {
                     if (item is ViewDrawNavOutlookStack)
+                    {
                         if (item.ClientRectangle.Contains(pt))
+                        {
                             return true;
+                        }
+                    }
+                }
 
                 // Check if any of the overflow check buttons want the point
                 foreach (ViewBase item in _viewOverflowLayout)
+                {
                     if (item is ViewDrawNavOutlookOverflow)
+                    {
                         if (item.ClientRectangle.Contains(pt))
+                        {
                             return true;
+                        }
+                    }
+                }
             }
 
             return false;
@@ -179,8 +188,10 @@ namespace ComponentFactory.Krypton.Navigator
         protected override ViewBase CreateMainLayout()
         {
             // Layout contains all the stack elements
-            _viewLayout = new ViewLayoutDocker();
-            _viewLayout.PreferredSizeAll = true;
+            _viewLayout = new ViewLayoutDocker
+            {
+                PreferredSizeAll = true
+            };
 
             // Cache the border edge palette to use
             PaletteBorderEdge buttonEdgePalette = (Navigator.Enabled ? Navigator.StateNormal.BorderEdge :

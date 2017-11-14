@@ -9,13 +9,8 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
-using System.Data;
 using System.Drawing;
-using System.Drawing.Design;
 using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 
@@ -37,11 +32,8 @@ namespace ComponentFactory.Krypton.Toolkit
     public class KryptonLinkLabel : KryptonLabel
 	{
 		#region Instance Fields
-        private PaletteContent _stateVisited;
-        private PaletteContent _stateNotVisited;
-        private PaletteContent _statePressed;
-        private PaletteContent _stateFocus;
-        private PaletteContentInheritRedirect _stateVisitedRedirect;
+
+	    private PaletteContentInheritRedirect _stateVisitedRedirect;
         private PaletteContentInheritRedirect _stateNotVisitedRedirect;
         private PaletteContentInheritRedirect _statePressedRedirect;
         private PaletteContentInheritRedirect _stateFocusRedirect;
@@ -80,20 +72,20 @@ namespace ComponentFactory.Krypton.Toolkit
             _stateNotVisitedRedirect = new PaletteContentInheritRedirect(Redirector, PaletteContentStyle.LabelNormalControl);
             _statePressedRedirect = new PaletteContentInheritRedirect(Redirector, PaletteContentStyle.LabelNormalControl);
             _stateFocusRedirect = new PaletteContentInheritRedirect(Redirector, PaletteContentStyle.LabelNormalControl);
-            _stateVisited = new PaletteContent(_stateVisitedRedirect, NeedPaintDelegate);
-            _stateNotVisited = new PaletteContent(_stateNotVisitedRedirect, NeedPaintDelegate);
-            _stateFocus = new PaletteContent(_stateFocusRedirect, NeedPaintDelegate);
-            _statePressed = new PaletteContent(_statePressedRedirect, NeedPaintDelegate);
+            OverrideVisited = new PaletteContent(_stateVisitedRedirect, NeedPaintDelegate);
+            OverrideNotVisited = new PaletteContent(_stateNotVisitedRedirect, NeedPaintDelegate);
+            OverrideFocus = new PaletteContent(_stateFocusRedirect, NeedPaintDelegate);
+            OverridePressed = new PaletteContent(_statePressedRedirect, NeedPaintDelegate);
 
             // Override the normal state to implement the underling logic
             _inheritBehavior = new LinkLabelBehaviorInherit(StateNormal, KryptonLinkBehavior.AlwaysUnderline);
 
             // Create the override handling classes
-            _overrideVisited = new PaletteContentInheritOverride(_stateVisited, _inheritBehavior, PaletteState.LinkVisitedOverride, false);
-            _overrideNotVisited = new PaletteContentInheritOverride(_stateNotVisited, _overrideVisited, PaletteState.LinkNotVisitedOverride, true);
-            _overrideFocusNotVisited = new PaletteContentInheritOverride(_stateFocus, _overrideNotVisited, PaletteState.FocusOverride, false);
-            _overridePressed = new PaletteContentInheritOverride(_statePressed, _inheritBehavior, PaletteState.LinkPressedOverride, false);
-            _overridePressedFocus = new PaletteContentInheritOverride(_stateFocus, _overridePressed, PaletteState.FocusOverride, false);
+            _overrideVisited = new PaletteContentInheritOverride(OverrideVisited, _inheritBehavior, PaletteState.LinkVisitedOverride, false);
+            _overrideNotVisited = new PaletteContentInheritOverride(OverrideNotVisited, _overrideVisited, PaletteState.LinkNotVisitedOverride, true);
+            _overrideFocusNotVisited = new PaletteContentInheritOverride(OverrideFocus, _overrideNotVisited, PaletteState.FocusOverride, false);
+            _overridePressed = new PaletteContentInheritOverride(OverridePressed, _inheritBehavior, PaletteState.LinkPressedOverride, false);
+            _overridePressedFocus = new PaletteContentInheritOverride(OverrideFocus, _overridePressed, PaletteState.FocusOverride, false);
 
             // Create controller for updating the view state/click events
             _controller = new LinkLabelController(ViewDrawContent, StateDisabled, _overrideFocusNotVisited, _overrideFocusNotVisited, _overridePressedFocus, _overridePressed, NeedPaintDelegate);
@@ -115,7 +107,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [Description("Determines the underline behavior of the link label.")]
         public KryptonLinkBehavior LinkBehavior
         {
-            get { return _inheritBehavior.LinkBehavior; }
+            get => _inheritBehavior.LinkBehavior;
 
             set
             {
@@ -145,7 +137,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue(false)]
         public bool LinkVisited
         {
-            get { return _overrideVisited.Apply; }
+            get => _overrideVisited.Apply;
 
             set
             {
@@ -164,14 +156,11 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining pressed label appearance.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public PaletteContent OverridePressed
-        {
-            get { return _statePressed; }
-        }
+        public PaletteContent OverridePressed { get; }
 
-        private bool ShouldSerializeOverridePressed()
+	    private bool ShouldSerializeOverridePressed()
         {
-            return !_statePressed.IsDefault;
+            return !OverridePressed.IsDefault;
         }
 
         /// <summary>
@@ -180,14 +169,11 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining label appearance when it has focus.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public PaletteContent OverrideFocus
-        {
-            get { return _stateFocus; }
-        }
+        public PaletteContent OverrideFocus { get; }
 
-        private bool ShouldSerializeOverrideFocus()
+	    private bool ShouldSerializeOverrideFocus()
         {
-            return !_stateFocus.IsDefault;
+            return !OverrideFocus.IsDefault;
         }
 
         /// <summary>
@@ -196,14 +182,11 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for modifying normal state when label has been visited.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public PaletteContent OverrideVisited
-        {
-            get { return _stateVisited; }
-        }
+        public PaletteContent OverrideVisited { get; }
 
-        private bool ShouldSerializeOverrideVisited()
+	    private bool ShouldSerializeOverrideVisited()
         {
-            return !_stateVisited.IsDefault;
+            return !OverrideVisited.IsDefault;
         }
 
         /// <summary>
@@ -212,14 +195,11 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for modifying normal state when label has not been visited.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public PaletteContent OverrideNotVisited
-        {
-            get { return _stateNotVisited; }
-        }
+        public PaletteContent OverrideNotVisited { get; }
 
-        private bool ShouldSerializeOverrideNotVisited()
+	    private bool ShouldSerializeOverrideNotVisited()
         {
-            return !_stateNotVisited.IsDefault;
+            return !OverrideNotVisited.IsDefault;
         }
 
         /// <summary>
@@ -230,8 +210,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public override Control Target
         {
-            get { return base.Target; }
-            set { base.Target = value; }
+            get => base.Target;
+            set => base.Target = value;
         }
 
         /// <summary>
@@ -256,12 +236,10 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <param name="e">An EventArgs containing the event data.</param>
         protected virtual void OnLinkClicked(LinkClickedEventArgs e)
         {
-            if (LinkClicked != null)
-                LinkClicked(this, e);
+            LinkClicked?.Invoke(this, e);
 
             // If we have an attached command then execute it
-            if (KryptonCommand != null)
-                KryptonCommand.PerformExecute();
+            KryptonCommand?.PerformExecute();
         }
         #endregion
 

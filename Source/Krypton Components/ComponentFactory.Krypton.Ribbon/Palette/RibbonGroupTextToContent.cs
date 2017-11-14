@@ -8,12 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Diagnostics;
 using ComponentFactory.Krypton.Toolkit;
 
@@ -22,7 +17,7 @@ namespace ComponentFactory.Krypton.Ribbon
     internal class RibbonGroupTextToContent : RibbonToContent
     {
         #region Instance Fields
-        private IPaletteRibbonText _ribbonGroupText;
+
         #endregion
 
         #region Identity
@@ -36,7 +31,7 @@ namespace ComponentFactory.Krypton.Ribbon
             : base(ribbonGeneral)
         {
             Debug.Assert(ribbonGroupText != null);
-            _ribbonGroupText = ribbonGroupText;
+            PaletteRibbonGroup = ribbonGroupText;
         }
         #endregion
 
@@ -44,11 +39,8 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <summary>
         /// Gets and sets the ribbon group palette to use.
         /// </summary>
-        public IPaletteRibbonText PaletteRibbonGroup
-        {
-            get { return _ribbonGroupText; }
-            set { _ribbonGroupText = value; }
-        }
+        public IPaletteRibbonText PaletteRibbonGroup { get; set; }
+
         #endregion
 
         #region IPaletteContent
@@ -59,7 +51,7 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <returns>Color value.</returns>
         public override Color GetContentShortTextColor1(PaletteState state)
         {
-            return _ribbonGroupText.GetRibbonTextColor(state);
+            return PaletteRibbonGroup.GetRibbonTextColor(state);
         }
 
         /// <summary>
@@ -69,7 +61,7 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <returns>Color value.</returns>
         public override Color GetContentShortTextColor2(PaletteState state)
         {
-            return _ribbonGroupText.GetRibbonTextColor(state);
+            return PaletteRibbonGroup.GetRibbonTextColor(state);
         }
 
         /// <summary>
@@ -79,7 +71,7 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <returns>Color value.</returns>
         public override Color GetContentLongTextColor1(PaletteState state)
         {
-            return _ribbonGroupText.GetRibbonTextColor(state);
+            return PaletteRibbonGroup.GetRibbonTextColor(state);
         }
 
         /// <summary>
@@ -89,7 +81,7 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <returns>Color value.</returns>
         public override Color GetContentLongTextColor2(PaletteState state)
         {
-            return _ribbonGroupText.GetRibbonTextColor(state);
+            return PaletteRibbonGroup.GetRibbonTextColor(state);
         }
         #endregion
     }

@@ -9,11 +9,8 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Security;
-using System.Security.Permissions;
 using System.ComponentModel;
 using System.Diagnostics;
 
@@ -30,7 +27,6 @@ namespace ComponentFactory.Krypton.Toolkit
     {
         #region Instance Fields
         private KryptonContextMenuMonthCalendar _monthCalendar;
-        private ViewContextMenuManager _viewManager;
         private ViewLayoutMonths _months;
         private NeedPaintHandler _needPaint;
         private DateTime _selectionStart;
@@ -52,7 +48,7 @@ namespace ComponentFactory.Krypton.Toolkit
                                        NeedPaintHandler needPaint)
 		{
             _monthCalendar = monthCalendar;
-            _viewManager = viewManager;
+            ViewManager = viewManager;
             _months = months;
             _needPaint = needPaint;
             _mouseOver = false;
@@ -64,10 +60,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Returns if the item shows a sub menu when selected.
         /// </summary>
-        public virtual bool HasSubMenu
-        {
-            get { return false; }
-        }
+        public virtual bool HasSubMenu => false;
 
         /// <summary>
         /// This target should display as the active target.
@@ -130,10 +123,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Get the client rectangle for the display of this target.
         /// </summary>
-        public Rectangle ClientRectangle
-        {
-            get { return _months.ClientRectangle; }
-        }
+        public Rectangle ClientRectangle => _months.ClientRectangle;
 
         /// <summary>
         /// Should a mouse down at the provided point cause the currently stacked context menu to become current.
@@ -155,8 +145,7 @@ namespace ComponentFactory.Krypton.Toolkit
         {
             _mouseOver = true;
 
-            if (ViewManager != null)
-                ViewManager.SetTarget(this, true);
+            ViewManager?.SetTarget(this, true);
         }
 
         /// <summary>
@@ -183,14 +172,18 @@ namespace ComponentFactory.Krypton.Toolkit
                         if (selectEnd > selectStart)
                         {
                             if ((selectEnd - selectStart) > span)
+                            {
                                 selectEnd = selectStart + span;
+                            }
 
                             _months.FocusDay = selectEnd;
                         }
                         else if (selectEnd < selectStart)
                         {
                             if ((selectStart - selectEnd) > span)
+                            {
                                 selectEnd = selectStart - span;
+                            }
 
                             // Switch around so the begin is before the end
                             DateTime temp = selectEnd;
@@ -229,8 +222,10 @@ namespace ComponentFactory.Krypton.Toolkit
                 _captured = true;
 
                 // Ensure the month calendar has the focus
-                if ((c != null) && (c is KryptonMonthCalendar) && !c.ContainsFocus)
+                if (c is KryptonMonthCalendar && !c.ContainsFocus)
+                {
                     c.Focus();
+                }
 
                 // Set the selection to be the day clicked
                 DateTime? clickDay = _months.DayFromPoint(pt, false);
@@ -243,7 +238,9 @@ namespace ComponentFactory.Krypton.Toolkit
                     _needPaint(_months, new NeedLayoutEventArgs(true));
                 }
                 else
+                {
                     _selectionStart = DateTime.MinValue;
+                }
             }
 
             return _captured;
@@ -303,8 +300,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 _mouseOver = false;
                 _months.TrackingDay = null;
 
-                if (ViewManager != null)
-                    ViewManager.ClearTarget(this);
+                ViewManager?.ClearTarget(this);
             }
         }
 
@@ -320,10 +316,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Should the left mouse down be ignored when present on a visual form border area.
         /// </summary>
-        public virtual bool IgnoreVisualFormLeftButtonDown
-        {
-            get { return false; }
-        }
+        public virtual bool IgnoreVisualFormLeftButtonDown => false;
+
         #endregion
 
         #region Key Notifications
@@ -338,15 +332,22 @@ namespace ComponentFactory.Krypton.Toolkit
             Debug.Assert(e != null);
 
             // Validate incoming references
-            if (c == null) throw new ArgumentNullException("c");
-            if (e == null) throw new ArgumentNullException("e");
+            if (c == null)
+            {
+                throw new ArgumentNullException("c");
+            }
 
-            if (_viewManager != null)
+            if (e == null)
+            {
+                throw new ArgumentNullException("e");
+            }
+
+            if (ViewManager != null)
             {
                 switch (e.KeyCode)
                 {
                     case Keys.Tab:
-                        _viewManager.KeyTab(e.Shift);
+                        ViewManager.KeyTab(e.Shift);
                         return;
                 }
             }
@@ -360,15 +361,25 @@ namespace ComponentFactory.Krypton.Toolkit
             {
                 case Keys.Left:
                     if (e.Control)
+                    {
                         focusDate = focusDate.AddMonths(-1);
+                    }
                     else
+                    {
                         focusDate = focusDate.AddDays(-1);
+                    }
+
                     break;
                 case Keys.Right:
                     if (e.Control)
+                    {
                         focusDate = focusDate.AddMonths(1);
+                    }
                     else
+                    {
                         focusDate = focusDate.AddDays(1);
+                    }
+
                     break;
                 case Keys.Up:
                     focusDate = focusDate.AddDays(-7);
@@ -383,7 +394,10 @@ namespace ComponentFactory.Krypton.Toolkit
                         focusDate = new DateTime(focusDate.Year, focusDate.Month, 1);
                     }
                     else
+                    {
                         focusDate = new DateTime(focusDate.Year, focusDate.Month, 1);
+                    }
+
                     break;
                 case Keys.End:
                     if (e.Control)
@@ -400,15 +414,25 @@ namespace ComponentFactory.Krypton.Toolkit
                     break;
                 case Keys.PageUp:
                     if (e.Control)
+                    {
                         focusDate = focusDate.AddMonths(-1 * _months.Months);
+                    }
                     else
+                    {
                         focusDate = focusDate.AddMonths(-1);
+                    }
+
                     break;
                 case Keys.PageDown:
                     if (e.Control)
+                    {
                         focusDate = focusDate.AddMonths(1 * _months.Months);
+                    }
                     else
+                    {
                         focusDate = focusDate.AddMonths(1);
+                    }
+
                     break;
                 case Keys.Enter:
                 case Keys.Space:
@@ -440,8 +464,10 @@ namespace ComponentFactory.Krypton.Toolkit
                 _months.FocusDay = focusDate;
                 _months.Calendar.SetSelectionRange(focusDate, focusDate);
 
-                if (_viewManager != null)
+                if (ViewManager != null)
+                {
                     _needPaint(this, new NeedLayoutEventArgs(true));
+                }
             }
             else
             {
@@ -452,7 +478,9 @@ namespace ComponentFactory.Krypton.Toolkit
                 {
                     // Cannot extend selection beyond the max selection count
                     if ((anchorDate - focusDate).Days >= _months.Calendar.MaxSelectionCount)
+                    {
                         focusDate = anchorDate.AddDays(-(_months.Calendar.MaxSelectionCount - 1));
+                    }
 
                     startDate = focusDate;
                     endDate = anchorDate;
@@ -461,7 +489,9 @@ namespace ComponentFactory.Krypton.Toolkit
                 {
                     // Cannot extend selection beyond the max selection count
                     if ((focusDate - anchorDate).Days >= _months.Calendar.MaxSelectionCount)
+                    {
                         focusDate = anchorDate.AddDays(_months.Calendar.MaxSelectionCount - 1);
+                    }
 
                     startDate = anchorDate;
                     endDate = focusDate;
@@ -471,8 +501,10 @@ namespace ComponentFactory.Krypton.Toolkit
                 _months.FocusDay = focusDate;
                 _months.Calendar.SetSelectionRange(startDate, endDate);
 
-                if (_viewManager != null)
+                if (ViewManager != null)
+                {
                     _needPaint(this, new NeedLayoutEventArgs(true));
+                }
             }
         }
 
@@ -507,7 +539,10 @@ namespace ComponentFactory.Krypton.Toolkit
             Debug.Assert(c != null);
 
             // Validate incoming references
-            if (c == null) throw new ArgumentNullException("c");
+            if (c == null)
+            {
+                throw new ArgumentNullException("c");
+            }
         }
 
         /// <summary>
@@ -519,15 +554,16 @@ namespace ComponentFactory.Krypton.Toolkit
             Debug.Assert(c != null);
 
             // Validate incoming references
-            if (c == null) throw new ArgumentNullException("c");
+            if (c == null)
+            {
+                throw new ArgumentNullException("c");
+            }
         }
         #endregion
 
         #region Implementation
-        private ViewContextMenuManager ViewManager
-        {
-            get { return _viewManager; }
-        }
+        private ViewContextMenuManager ViewManager { get; }
+
         #endregion
     }
 }

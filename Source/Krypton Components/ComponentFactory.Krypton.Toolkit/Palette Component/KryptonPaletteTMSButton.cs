@@ -8,14 +8,8 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Design;
-using System.Windows.Forms;
 using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Collections.Generic;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -42,36 +36,31 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// Gets a value indicating if all values are default.
 		/// </summary>
 		[Browsable(false)]
-		public override bool IsDefault
-		{
-			get
-			{
-                return (InternalKCT.InternalButtonCheckedGradientBegin == Color.Empty) &&
-                       (InternalKCT.InternalButtonCheckedGradientEnd == Color.Empty) &&
-                       (InternalKCT.InternalButtonCheckedGradientMiddle == Color.Empty) &&
-                       (InternalKCT.InternalButtonCheckedHighlight == Color.Empty) &&
-                       (InternalKCT.InternalButtonCheckedHighlightBorder == Color.Empty) &&
-                       (InternalKCT.InternalButtonPressedBorder == Color.Empty) &&
-                       (InternalKCT.InternalButtonPressedGradientBegin == Color.Empty) &&
-                       (InternalKCT.InternalButtonPressedGradientEnd == Color.Empty) &&
-                       (InternalKCT.InternalButtonPressedGradientMiddle == Color.Empty) &&
-                       (InternalKCT.InternalButtonPressedHighlight == Color.Empty) &&
-                       (InternalKCT.InternalButtonPressedHighlightBorder == Color.Empty) &&
-                       (InternalKCT.InternalButtonSelectedBorder == Color.Empty) &&
-                       (InternalKCT.InternalButtonSelectedGradientBegin == Color.Empty) &&
-                       (InternalKCT.InternalButtonSelectedGradientEnd == Color.Empty) &&
-                       (InternalKCT.InternalButtonSelectedGradientMiddle == Color.Empty) &&
-                       (InternalKCT.InternalButtonSelectedHighlight == Color.Empty) &&
-                       (InternalKCT.InternalButtonSelectedHighlightBorder == Color.Empty) &&
-                       (InternalKCT.InternalCheckBackground == Color.Empty) &&
-                       (InternalKCT.InternalCheckPressedBackground == Color.Empty) &&
-                       (InternalKCT.InternalCheckSelectedBackground == Color.Empty) &&
-                       (InternalKCT.InternalOverflowButtonGradientBegin == Color.Empty) &&
-                       (InternalKCT.InternalOverflowButtonGradientEnd == Color.Empty) &&
-                       (InternalKCT.InternalOverflowButtonGradientMiddle == Color.Empty);
-			}
-		}
-		#endregion
+		public override bool IsDefault => (InternalKCT.InternalButtonCheckedGradientBegin == Color.Empty) &&
+		                                  (InternalKCT.InternalButtonCheckedGradientEnd == Color.Empty) &&
+		                                  (InternalKCT.InternalButtonCheckedGradientMiddle == Color.Empty) &&
+		                                  (InternalKCT.InternalButtonCheckedHighlight == Color.Empty) &&
+		                                  (InternalKCT.InternalButtonCheckedHighlightBorder == Color.Empty) &&
+		                                  (InternalKCT.InternalButtonPressedBorder == Color.Empty) &&
+		                                  (InternalKCT.InternalButtonPressedGradientBegin == Color.Empty) &&
+		                                  (InternalKCT.InternalButtonPressedGradientEnd == Color.Empty) &&
+		                                  (InternalKCT.InternalButtonPressedGradientMiddle == Color.Empty) &&
+		                                  (InternalKCT.InternalButtonPressedHighlight == Color.Empty) &&
+		                                  (InternalKCT.InternalButtonPressedHighlightBorder == Color.Empty) &&
+		                                  (InternalKCT.InternalButtonSelectedBorder == Color.Empty) &&
+		                                  (InternalKCT.InternalButtonSelectedGradientBegin == Color.Empty) &&
+		                                  (InternalKCT.InternalButtonSelectedGradientEnd == Color.Empty) &&
+		                                  (InternalKCT.InternalButtonSelectedGradientMiddle == Color.Empty) &&
+		                                  (InternalKCT.InternalButtonSelectedHighlight == Color.Empty) &&
+		                                  (InternalKCT.InternalButtonSelectedHighlightBorder == Color.Empty) &&
+		                                  (InternalKCT.InternalCheckBackground == Color.Empty) &&
+		                                  (InternalKCT.InternalCheckPressedBackground == Color.Empty) &&
+		                                  (InternalKCT.InternalCheckSelectedBackground == Color.Empty) &&
+		                                  (InternalKCT.InternalOverflowButtonGradientBegin == Color.Empty) &&
+		                                  (InternalKCT.InternalOverflowButtonGradientEnd == Color.Empty) &&
+		                                  (InternalKCT.InternalOverflowButtonGradientMiddle == Color.Empty);
+
+        #endregion
 
         #region PopulateFromBase
         /// <summary>
@@ -115,8 +104,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [KryptonDefaultColorAttribute()]
         public Color ButtonCheckedGradientBegin
         {
-            get { return InternalKCT.InternalButtonCheckedGradientBegin; }
-            
+            get => InternalKCT.InternalButtonCheckedGradientBegin;
+
             set 
             { 
                 InternalKCT.InternalButtonCheckedGradientBegin = value;
@@ -143,8 +132,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [KryptonDefaultColorAttribute()]
         public Color ButtonCheckedGradientEnd
         {
-            get { return InternalKCT.InternalButtonCheckedGradientEnd; }
-            
+            get => InternalKCT.InternalButtonCheckedGradientEnd;
+
             set 
             { 
                 InternalKCT.InternalButtonCheckedGradientEnd = value;
@@ -171,8 +160,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [KryptonDefaultColorAttribute()]
         public Color ButtonCheckedGradientMiddle
         {
-            get { return InternalKCT.InternalButtonCheckedGradientMiddle; }
-            
+            get => InternalKCT.InternalButtonCheckedGradientMiddle;
+
             set 
             { 
                 InternalKCT.InternalButtonCheckedGradientMiddle = value;
@@ -199,8 +188,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [KryptonDefaultColorAttribute()]
         public Color ButtonCheckedHighlight
         {
-            get { return InternalKCT.InternalButtonCheckedHighlight; }
-            
+            get => InternalKCT.InternalButtonCheckedHighlight;
+
             set 
             { 
                 InternalKCT.InternalButtonCheckedHighlight = value;
@@ -227,8 +216,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [KryptonDefaultColorAttribute()]
         public Color ButtonCheckedHighlightBorder
         {
-            get { return InternalKCT.InternalButtonCheckedHighlightBorder; }
-            
+            get => InternalKCT.InternalButtonCheckedHighlightBorder;
+
             set 
             { 
                 InternalKCT.InternalButtonCheckedHighlightBorder = value;
@@ -255,8 +244,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [KryptonDefaultColorAttribute()]
         public Color ButtonPressedBorder
         {
-            get { return InternalKCT.InternalButtonPressedBorder; }
-            
+            get => InternalKCT.InternalButtonPressedBorder;
+
             set 
             { 
                 InternalKCT.InternalButtonPressedBorder = value;
@@ -283,8 +272,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [KryptonDefaultColorAttribute()]
         public Color ButtonPressedGradientBegin
         {
-            get { return InternalKCT.InternalButtonPressedGradientBegin; }
-            
+            get => InternalKCT.InternalButtonPressedGradientBegin;
+
             set 
             { 
                 InternalKCT.InternalButtonPressedGradientBegin = value;
@@ -311,8 +300,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [KryptonDefaultColorAttribute()]
         public Color ButtonPressedGradientEnd
         {
-            get { return InternalKCT.InternalButtonPressedGradientEnd; }
-            
+            get => InternalKCT.InternalButtonPressedGradientEnd;
+
             set 
             { 
                 InternalKCT.InternalButtonPressedGradientEnd = value;
@@ -339,8 +328,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [KryptonDefaultColorAttribute()]
         public Color ButtonPressedGradientMiddle
         {
-            get { return InternalKCT.InternalButtonPressedGradientMiddle; }
-           
+            get => InternalKCT.InternalButtonPressedGradientMiddle;
+
             set 
             { 
                 InternalKCT.InternalButtonPressedGradientMiddle = value;
@@ -367,8 +356,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [KryptonDefaultColorAttribute()]
         public Color ButtonPressedHighlight
         {
-            get { return InternalKCT.InternalButtonPressedHighlight; }
-            
+            get => InternalKCT.InternalButtonPressedHighlight;
+
             set 
             { 
                 InternalKCT.InternalButtonPressedHighlight = value;
@@ -395,8 +384,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [KryptonDefaultColorAttribute()]
         public Color ButtonPressedHighlightBorder
         {
-            get { return InternalKCT.InternalButtonPressedHighlightBorder; }
-            
+            get => InternalKCT.InternalButtonPressedHighlightBorder;
+
             set 
             { 
                 InternalKCT.InternalButtonPressedHighlightBorder = value;
@@ -423,8 +412,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [KryptonDefaultColorAttribute()]
         public Color ButtonSelectedBorder
         {
-            get { return InternalKCT.InternalButtonSelectedBorder; }
-            
+            get => InternalKCT.InternalButtonSelectedBorder;
+
             set 
             { 
                 InternalKCT.InternalButtonSelectedBorder = value;
@@ -451,8 +440,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [KryptonDefaultColorAttribute()]
         public Color ButtonSelectedGradientBegin
         {
-            get { return InternalKCT.InternalButtonSelectedGradientBegin; }
-            
+            get => InternalKCT.InternalButtonSelectedGradientBegin;
+
             set 
             { 
                 InternalKCT.InternalButtonSelectedGradientBegin = value;
@@ -479,8 +468,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [KryptonDefaultColorAttribute()]
         public Color ButtonSelectedGradientEnd
         {
-            get { return InternalKCT.InternalButtonSelectedGradientEnd; }
-            
+            get => InternalKCT.InternalButtonSelectedGradientEnd;
+
             set 
             { 
                 InternalKCT.InternalButtonSelectedGradientEnd = value;
@@ -507,8 +496,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [KryptonDefaultColorAttribute()]
         public Color ButtonSelectedGradientMiddle
         {
-            get { return InternalKCT.InternalButtonSelectedGradientMiddle; }
-            
+            get => InternalKCT.InternalButtonSelectedGradientMiddle;
+
             set 
             { 
                 InternalKCT.InternalButtonSelectedGradientMiddle = value;
@@ -535,8 +524,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [KryptonDefaultColorAttribute()]
         public Color ButtonSelectedHighlight
         {
-            get { return InternalKCT.InternalButtonSelectedHighlight; }
-            
+            get => InternalKCT.InternalButtonSelectedHighlight;
+
             set 
             { 
                 InternalKCT.InternalButtonSelectedHighlight = value;
@@ -563,8 +552,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [KryptonDefaultColorAttribute()]
         public Color ButtonSelectedHighlightBorder
         {
-            get { return InternalKCT.InternalButtonSelectedHighlightBorder; }
-            
+            get => InternalKCT.InternalButtonSelectedHighlightBorder;
+
             set 
             { 
                 InternalKCT.InternalButtonSelectedHighlightBorder = value;
@@ -591,8 +580,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [KryptonDefaultColorAttribute()]
         public Color CheckBackground
         {
-            get { return InternalKCT.InternalCheckBackground; }
-            
+            get => InternalKCT.InternalCheckBackground;
+
             set 
             { 
                 InternalKCT.InternalCheckBackground = value;
@@ -619,8 +608,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [KryptonDefaultColorAttribute()]
         public Color CheckPressedBackground
         {
-            get { return InternalKCT.InternalCheckPressedBackground; }
-            
+            get => InternalKCT.InternalCheckPressedBackground;
+
             set 
             { 
                 InternalKCT.InternalCheckPressedBackground = value;
@@ -647,8 +636,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [KryptonDefaultColorAttribute()]
         public Color CheckSelectedBackground
         {
-            get { return InternalKCT.InternalCheckSelectedBackground; }
-            
+            get => InternalKCT.InternalCheckSelectedBackground;
+
             set 
             { 
                 InternalKCT.InternalCheckSelectedBackground = value;
@@ -675,8 +664,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [KryptonDefaultColorAttribute()]
         public Color OverflowButtonGradientBegin
         {
-            get { return InternalKCT.InternalOverflowButtonGradientBegin; }
-            
+            get => InternalKCT.InternalOverflowButtonGradientBegin;
+
             set 
             { 
                 InternalKCT.InternalOverflowButtonGradientBegin = value;
@@ -703,8 +692,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [KryptonDefaultColorAttribute()]
         public Color OverflowButtonGradientEnd
         {
-            get { return InternalKCT.InternalOverflowButtonGradientEnd; }
-            
+            get => InternalKCT.InternalOverflowButtonGradientEnd;
+
             set 
             { 
                 InternalKCT.InternalOverflowButtonGradientEnd = value;
@@ -731,8 +720,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [KryptonDefaultColorAttribute()]
         public Color OverflowButtonGradientMiddle
         {
-            get { return InternalKCT.InternalOverflowButtonGradientMiddle; }
-            
+            get => InternalKCT.InternalOverflowButtonGradientMiddle;
+
             set 
             { 
                 InternalKCT.InternalOverflowButtonGradientMiddle = value;

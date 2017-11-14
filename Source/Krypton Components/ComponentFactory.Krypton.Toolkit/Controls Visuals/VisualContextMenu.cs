@@ -9,18 +9,10 @@
 // *****************************************************************************
 
 using System;
-using System.Data;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Text;
-using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using Microsoft.Win32;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -35,7 +27,7 @@ namespace ComponentFactory.Krypton.Toolkit
         private ContextMenuProvider _provider;
         private ViewDrawDocker _drawDocker;
         private ViewLayoutStack _viewColumns;
-        private PaletteRedirect _redirector;
+
         #endregion
 
         #region Identity
@@ -50,16 +42,20 @@ namespace ComponentFactory.Krypton.Toolkit
                                  bool keyboardActivated)
             : base(true)
         {
-            _redirector = provider.ProviderRedirector;
+            Redirector = provider.ProviderRedirector;
 
             // Create the view manager instance with root element
             ViewManager = new ViewContextMenuManager(this, new ViewLayoutNull());
 
             // Set the initial resolved palette to the appropriate setting
             if (provider.ProviderPalette != null)
+            {
                 SetPalette(provider.ProviderPalette);
+            }
             else
+            {
                 SetPalette(KryptonManager.GetPaletteForMode(provider.ProviderPaletteMode));
+            }
 
             // Set of context menu columns
             _viewColumns = new ViewLayoutStack(true);
@@ -95,16 +91,20 @@ namespace ComponentFactory.Krypton.Toolkit
             : base(true)
         {
             _contextMenu = contextMenu;
-            _redirector = redirector;
+            Redirector = redirector;
 
             // Create the view manager instance with root element
             ViewManager = new ViewContextMenuManager(this, new ViewLayoutNull());
 
             // Set the initial resolved palette to the appropriate setting
             if (palette != null)
+            {
                 SetPalette(palette);
+            }
             else
+            {
                 SetPalette(KryptonManager.GetPaletteForMode(paletteMode));
+            }
 
             // Set of context menu columns
             _viewColumns = new ViewLayoutStack(true);
@@ -146,10 +146,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Sets the reason for the context menu being closed.
         /// </summary>
-        public Nullable<ToolStripDropDownCloseReason> CloseReason 
-        {
-            get { return _provider.ProviderCloseReason; }
-        }
+        public Nullable<ToolStripDropDownCloseReason> CloseReason => _provider.ProviderCloseReason;
 
         /// <summary>
         /// Show the context menu relative to the current mouse location.
@@ -322,10 +319,14 @@ namespace ComponentFactory.Krypton.Toolkit
                 screenPt.Y = Math.Max(screenPt.Y, workingArea.Y);
 
                 if ((screenPt.X + preferredSize.Width) > workingArea.Right)
+                {
                     screenPt.X = workingArea.Right - preferredSize.Width;
+                }
 
                 if ((screenPt.Y + preferredSize.Height) > workingArea.Bottom)
+                {
                     screenPt.Y = workingArea.Bottom - preferredSize.Height;
+                }
             }
 
             // Cache the information used to create this menu
@@ -359,8 +360,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public KryptonContextMenuPositionH ShowHorz
         {
-            get { return _provider.ProviderShowHorz; }
-            set { _provider.ProviderShowHorz = value; }
+            get => _provider.ProviderShowHorz;
+            set => _provider.ProviderShowHorz = value;
         }
 
         /// <summary>
@@ -368,17 +369,14 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public KryptonContextMenuPositionV ShowVert
         {
-            get { return _provider.ProviderShowVert; }
-            set { _provider.ProviderShowVert = value; }
+            get => _provider.ProviderShowVert;
+            set => _provider.ProviderShowVert = value;
         }
 
         /// <summary>
         /// Gets access to the view manager for the context menu.
         /// </summary>
-        public ViewContextMenuManager ViewContextMenuManager
-        {
-            get { return (ViewContextMenuManager)ViewManager; }
-        }
+        public ViewContextMenuManager ViewContextMenuManager => (ViewContextMenuManager)ViewManager;
 
         /// <summary>
         /// Should a mouse down at the provided point cause it to become the current tracking popup.
@@ -400,7 +398,7 @@ namespace ComponentFactory.Krypton.Toolkit
         protected PaletteRedirect Redirector
         {
             [System.Diagnostics.DebuggerStepThrough]
-            get { return _redirector; }
+            get;
         }
 
         /// <summary>
@@ -473,8 +471,10 @@ namespace ComponentFactory.Krypton.Toolkit
             items.GenerateView(_provider, this, _viewColumns, true, true);
 
             // Create the control panel canvas
-            ViewDrawCanvas mainBackground = new ViewDrawCanvas(_provider.ProviderStateCommon.ControlInner.Back, _provider.ProviderStateCommon.ControlInner.Border, VisualOrientation.Top);
-            mainBackground.Add(_viewColumns);
+            ViewDrawCanvas mainBackground = new ViewDrawCanvas(_provider.ProviderStateCommon.ControlInner.Back, _provider.ProviderStateCommon.ControlInner.Border, VisualOrientation.Top)
+            {
+                _viewColumns
+            };
 
             ViewLayoutDocker layoutDocker = new ViewLayoutDocker();
             Padding outerPadding = _provider.ProviderRedirector.GetMetricPadding(PaletteState.Normal, PaletteMetricPadding.ContextMenuItemOuter);
@@ -485,14 +485,18 @@ namespace ComponentFactory.Krypton.Toolkit
             layoutDocker.Add(mainBackground, ViewDockStyle.Fill);
 
             // Create the docking element that gives us a border and background
-            _drawDocker = new ViewDrawDocker(_provider.ProviderStateCommon.ControlOuter.Back, _provider.ProviderStateCommon.ControlOuter.Border, null);
-            _drawDocker.Add(layoutDocker, ViewDockStyle.Fill);
+            _drawDocker = new ViewDrawDocker(_provider.ProviderStateCommon.ControlOuter.Back, _provider.ProviderStateCommon.ControlOuter.Border, null)
+            {
+                { layoutDocker, ViewDockStyle.Fill }
+            };
             _drawDocker.KeyController = new ContextMenuController((ViewContextMenuManager)ViewManager);
             ViewManager.Root = _drawDocker;
 
             // With keyboard activate we select the first valid item
             if (keyboardActivated)
+            {
                 ((ViewContextMenuManager)ViewManager).KeyDown();
+            }
         }
 
         private Size CalculatePreferredSize()
@@ -504,7 +508,9 @@ namespace ComponentFactory.Krypton.Toolkit
             {
                 // Find the preferred size which fits exactly the calculated contents size
                 using (ViewLayoutContext context = new ViewLayoutContext(this, Renderer))
+                {
                     return ViewManager.Root.GetPreferredSize(context);
+                }
             }
             finally
             {
@@ -529,7 +535,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 _palette = palette;
 
                 // Update redirector to use palette as source for obtaining values
-                _redirector.Target = _palette;
+                Redirector.Target = _palette;
 
                 // Get the renderer associated with the palette
                 Renderer = _palette.GetRenderer();
@@ -552,14 +558,12 @@ namespace ComponentFactory.Krypton.Toolkit
 
         private void OnProviderClosing(object sender, CancelEventArgs e)
         {
-            if (_contextMenu != null)
-                _contextMenu.OnClosing(e);
+            _contextMenu?.OnClosing(e);
         }
 
         private void OnProviderClose(object sender, CloseReasonEventArgs e)
         {
-            if (_contextMenu != null)
-                _contextMenu.Close(e.CloseReason);
+            _contextMenu?.Close(e.CloseReason);
         }
 
         private void OnProviderClose(object sender, EventArgs e)

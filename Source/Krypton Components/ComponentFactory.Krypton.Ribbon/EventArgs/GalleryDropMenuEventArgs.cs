@@ -8,9 +8,6 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Drawing;
-using System.Diagnostics;
 using System.ComponentModel;
 using ComponentFactory.Krypton.Toolkit;
 
@@ -22,8 +19,8 @@ namespace ComponentFactory.Krypton.Ribbon
 	public class GalleryDropMenuEventArgs : CancelEventArgs
 	{
 		#region Instance Fields
-        private KryptonContextMenu _contextMenu;
-		#endregion
+
+	    #endregion
 
 		#region Identity
 		/// <summary>
@@ -32,7 +29,7 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <param name="contextMenu">Context menu.</param>
         public GalleryDropMenuEventArgs(KryptonContextMenu contextMenu)
 		{
-            _contextMenu = contextMenu;
+            KryptonContextMenu = contextMenu;
 		}
 		#endregion
 
@@ -40,10 +37,8 @@ namespace ComponentFactory.Krypton.Ribbon
 		/// <summary>
 		/// KryptonContextMenu for display.
 		/// </summary>
-        public KryptonContextMenu KryptonContextMenu
-		{
-            get { return _contextMenu; }
-		}
-		#endregion
+        public KryptonContextMenu KryptonContextMenu { get; }
+
+	    #endregion
 	}
 }

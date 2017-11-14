@@ -8,14 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
-using System.Drawing;
-using System.Drawing.Text;
 using System.ComponentModel;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using System.Diagnostics;
 using ComponentFactory.Krypton.Toolkit;
 
 namespace ComponentFactory.Krypton.Ribbon
@@ -49,12 +42,10 @@ namespace ComponentFactory.Krypton.Ribbon
 		/// Gets a value indicating if all values are default.
 		/// </summary>
 		[Browsable(false)]
-		public override bool IsDefault
-		{
-            get { return (base.IsDefault &&
-                          RibbonGroupArea.IsDefault); }
-		}
-		#endregion
+		public override bool IsDefault => (base.IsDefault &&
+		                                   RibbonGroupArea.IsDefault);
+
+	    #endregion
 
         #region PopulateFromBase
         /// <summary>
@@ -86,12 +77,9 @@ namespace ComponentFactory.Krypton.Ribbon
         [Category("Visuals")]
         [Description("Overrides for defining ribbon group area appearance.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public virtual PaletteRibbonBack RibbonGroupArea
-        {
-            get { return _ribbonGroupArea; }
-        }
+        public virtual PaletteRibbonBack RibbonGroupArea => _ribbonGroupArea;
 
-        private bool ShouldSerializeRibbonGroupArea()
+	    private bool ShouldSerializeRibbonGroupArea()
         {
             return !_ribbonGroupArea.IsDefault;
         }

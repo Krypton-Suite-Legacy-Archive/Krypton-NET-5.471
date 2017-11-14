@@ -9,12 +9,7 @@
 // *****************************************************************************
 
 using System;
-using System.Drawing;
-using System.Diagnostics;
-using System.ComponentModel; 
-using ComponentFactory.Krypton.Toolkit;
 using ComponentFactory.Krypton.Navigator;
-using ComponentFactory.Krypton.Workspace;
 
 namespace ComponentFactory.Krypton.Docking
 {
@@ -24,8 +19,8 @@ namespace ComponentFactory.Krypton.Docking
 	public class PagesEventArgs : EventArgs
 	{
 		#region Instance Fields
-        private KryptonPageCollection _pages;
-		#endregion
+
+	    #endregion
 
 		#region Identity
 		/// <summary>
@@ -34,7 +29,7 @@ namespace ComponentFactory.Krypton.Docking
         /// <param name="pages">Collection of pages.</param>
         public PagesEventArgs(KryptonPageCollection pages)
 		{
-            _pages = pages;
+            Pages = pages;
 		}
         #endregion
 
@@ -42,10 +37,8 @@ namespace ComponentFactory.Krypton.Docking
         /// <summary>
         /// Gets access to a collection of pages.
         /// </summary>
-        public KryptonPageCollection Pages
-        {
-            get { return _pages; }
-        }
-        #endregion
+        public KryptonPageCollection Pages { get; }
+
+	    #endregion
 	}
 }

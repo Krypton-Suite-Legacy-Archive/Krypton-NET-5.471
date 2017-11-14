@@ -9,13 +9,8 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
-using System.Data;
 using System.Drawing;
-using System.Drawing.Design;
 using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 
@@ -38,10 +33,7 @@ namespace ComponentFactory.Krypton.Toolkit
 		#region Instance Fields
         private Orientation _orientation;
         private PaletteBorderInheritRedirect _borderRedirect;
-        private PaletteBorderEdgeRedirect _stateCommon;
-        private PaletteBorderEdge _stateDisabled;
-        private PaletteBorderEdge _stateNormal;
-        private PaletteBorderEdge _stateCurrent;
+	    private PaletteBorderEdge _stateCurrent;
         private PaletteState _state;
         private ViewDrawPanel _drawPanel;
         #endregion
@@ -60,14 +52,14 @@ namespace ComponentFactory.Krypton.Toolkit
 
             // Create the palette storage
             _borderRedirect = new PaletteBorderInheritRedirect(Redirector, PaletteBorderStyle.ControlClient);
-            _stateCommon = new PaletteBorderEdgeRedirect(_borderRedirect, NeedPaintDelegate);
-            _stateDisabled = new PaletteBorderEdge(_stateCommon, NeedPaintDelegate);
-            _stateNormal = new PaletteBorderEdge(_stateCommon, NeedPaintDelegate);
-            _stateCurrent = _stateNormal;
+            StateCommon = new PaletteBorderEdgeRedirect(_borderRedirect, NeedPaintDelegate);
+            StateDisabled = new PaletteBorderEdge(StateCommon, NeedPaintDelegate);
+            StateNormal = new PaletteBorderEdge(StateCommon, NeedPaintDelegate);
+            _stateCurrent = StateNormal;
             _state = PaletteState.Normal;
 
             // Our view contains just a simple canvas that covers entire client area
-            _drawPanel = new ViewDrawPanel(_stateNormal);
+            _drawPanel = new ViewDrawPanel(StateNormal);
 
             // Create the view manager instance
             ViewManager = new ViewManager(this, _drawPanel);
@@ -86,8 +78,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [Bindable(false)]
         public override Color BackColor
         {
-            get { return base.BackColor; }
-            set { base.BackColor = value; }
+            get => base.BackColor;
+            set => base.BackColor = value;
         }
 
         /// <summary>
@@ -97,8 +89,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [Bindable(false)]
         public override Font Font
         {
-            get { return base.Font; }
-            set { base.Font = value; }
+            get => base.Font;
+            set => base.Font = value;
         }
 
         /// <summary>
@@ -108,8 +100,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [Bindable(false)]
         public override Color ForeColor
         {
-            get { return base.ForeColor; }
-            set { base.ForeColor = value; }
+            get => base.ForeColor;
+            set => base.ForeColor = value;
         }
 
         /// <summary>
@@ -120,8 +112,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public new int TabIndex
         {
-            get { return base.TabIndex; }
-            set { base.TabIndex = value; }
+            get => base.TabIndex;
+            set => base.TabIndex = value;
         }
 
         /// <summary>
@@ -132,8 +124,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public new bool TabStop
         {
-            get { return base.TabStop; }
-            set { base.TabStop = value; }
+            get => base.TabStop;
+            set => base.TabStop = value;
         }
 
         /// <summary>
@@ -145,8 +137,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public new Padding Padding
         {
-            get { return base.Padding; }
-            set { base.Padding = value; }
+            get => base.Padding;
+            set => base.Padding = value;
         }
 
         /// <summary>
@@ -160,8 +152,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue(true)]
         public override bool AutoSize
         {
-            get { return base.AutoSize; }
-            set { base.AutoSize = value; }
+            get => base.AutoSize;
+            set => base.AutoSize = value;
         }
 
         /// <summary>
@@ -172,7 +164,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue(typeof(AutoSizeMode), "GrowAndShrink")]
         public AutoSizeMode AutoSizeMode
         {
-            get { return base.GetAutoSizeMode(); }
+            get => base.GetAutoSizeMode();
 
             set
             {
@@ -183,7 +175,9 @@ namespace ComponentFactory.Krypton.Toolkit
                     // Only perform an immediate layout if
                     // currently performing auto size operations
                     if (AutoSize)
+                    {
                         PerformNeedPaint(true);
+                    }
                 }
             }
         }
@@ -195,7 +189,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [Description("Border style.")]
         public PaletteBorderStyle BorderStyle
         {
-            get { return _borderRedirect.Style; }
+            get => _borderRedirect.Style;
 
             set
             {
@@ -225,9 +219,9 @@ namespace ComponentFactory.Krypton.Toolkit
 		[DefaultValue(typeof(Orientation), "Horizontal")]
 		public virtual Orientation Orientation
 		{
-			get { return _orientation; }
+			get => _orientation;
 
-			set
+            set
 			{
 				if (_orientation != value)
 				{
@@ -243,14 +237,11 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining common border edge appearance that other states can override.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public PaletteBorderEdgeRedirect StateCommon
-        {
-            get { return _stateCommon; }
-        }
+        public PaletteBorderEdgeRedirect StateCommon { get; }
 
-        private bool ShouldSerializeStateCommon()
+	    private bool ShouldSerializeStateCommon()
         {
-            return !_stateCommon.IsDefault;
+            return !StateCommon.IsDefault;
         }
 
         /// <summary>
@@ -259,14 +250,11 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining disabled border edge appearance.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public PaletteBorderEdge StateDisabled
-        {
-            get { return _stateDisabled; }
-        }
+        public PaletteBorderEdge StateDisabled { get; }
 
-        private bool ShouldSerializeStateDisabled()
+	    private bool ShouldSerializeStateDisabled()
         {
-            return !_stateDisabled.IsDefault;
+            return !StateDisabled.IsDefault;
         }
 
         /// <summary>
@@ -275,14 +263,11 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining normal border edge appearance.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public PaletteBorderEdge StateNormal
-        {
-            get { return _stateNormal; }
-        }
+        public PaletteBorderEdge StateNormal { get; }
 
-        private bool ShouldSerializeStateNormal()
+	    private bool ShouldSerializeStateNormal()
         {
-            return !_stateNormal.IsDefault;
+            return !StateNormal.IsDefault;
         }
 
         /// <summary>
@@ -299,9 +284,13 @@ namespace ComponentFactory.Krypton.Toolkit
             if (AutoSize)
             {
                 if (Orientation == Orientation.Horizontal)
+                {
                     proposedSize.Height = _stateCurrent.GetBorderWidth(_state);
+                }
                 else
+                {
                     proposedSize.Width = _stateCurrent.GetBorderWidth(_state);
+                }
             }
 
             return proposedSize;
@@ -322,12 +311,9 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Gets the default size of the control.
         /// </summary>
-        protected override Size DefaultSize
-        {
-            get { return new Size(50, 50); }
-        }
+        protected override Size DefaultSize => new Size(50, 50);
 
-        /// <summary>
+	    /// <summary>
         /// Raises the EnabledChanged event.
         /// </summary>
         /// <param name="e">An EventArgs that contains the event data.</param>
@@ -336,12 +322,12 @@ namespace ComponentFactory.Krypton.Toolkit
             // Cache the new state
             if (Enabled)
             {
-                _stateCurrent = _stateNormal;
+                _stateCurrent = StateNormal;
                 _state = PaletteState.Normal;
             }
             else
             {
-                _stateCurrent = _stateDisabled;
+                _stateCurrent = StateDisabled;
                 _state = PaletteState.Disabled;
             }
 

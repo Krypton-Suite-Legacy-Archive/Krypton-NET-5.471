@@ -8,12 +8,8 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Drawing;
-using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Windows.Forms;
-using System.Windows.Forms.Design;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -46,7 +42,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public DateTimePickerFormat Format
         {
-            get { return _dateTimePicker.Format; }
+            get => _dateTimePicker.Format;
 
             set
             {
@@ -63,7 +59,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public bool ShowUpDown
         {
-            get { return _dateTimePicker.ShowUpDown; }
+            get => _dateTimePicker.ShowUpDown;
 
             set
             {
@@ -80,7 +76,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public bool ShowCheckBox
         {
-            get { return _dateTimePicker.ShowCheckBox; }
+            get => _dateTimePicker.ShowCheckBox;
 
             set
             {
@@ -97,7 +93,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public bool Checked
         {
-            get { return _dateTimePicker.Checked; }
+            get => _dateTimePicker.Checked;
 
             set
             {
@@ -114,8 +110,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public PaletteMode PaletteMode
         {
-            get { return _dateTimePicker.PaletteMode; }
-            
+            get => _dateTimePicker.PaletteMode;
+
             set 
             {
                 if (_dateTimePicker.PaletteMode != value)

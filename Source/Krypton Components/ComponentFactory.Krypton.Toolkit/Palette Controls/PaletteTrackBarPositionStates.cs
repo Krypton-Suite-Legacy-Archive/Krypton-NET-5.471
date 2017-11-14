@@ -8,13 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
-using System.Drawing;
-using System.Drawing.Text;
 using System.ComponentModel;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Diagnostics;
 
 namespace ComponentFactory.Krypton.Toolkit
@@ -25,8 +19,8 @@ namespace ComponentFactory.Krypton.Toolkit
 	public class PaletteTrackBarPositionStates : Storage
 	{
 		#region Instance Fields
-        private PaletteElementColor _positionState;
-        #endregion
+
+	    #endregion
 
 		#region Identity
 		/// <summary>
@@ -54,7 +48,7 @@ namespace ComponentFactory.Krypton.Toolkit
             NeedPaint = needPaint;
 
             // Create storage that maps onto the inherit instances
-            _positionState = new PaletteElementColor(inheritPosition, needPaint);
+            Position = new PaletteElementColor(inheritPosition, needPaint);
         }
 		#endregion
 
@@ -63,14 +57,9 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// Gets a value indicating if all values are default.
 		/// </summary>
 		[Browsable(false)]
-		public override bool IsDefault
-		{
-			get 
-			{
-                return Position.IsDefault;
-			}
-		}
-		#endregion
+		public override bool IsDefault => Position.IsDefault;
+
+	    #endregion
 
         #region SetInherit
         /// <summary>
@@ -79,7 +68,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <param name="inheritPosition">Source for inheriting position values.</param>
         public void SetInherit(IPaletteElementColor inheritPosition)
         {
-            _positionState.SetInherit(inheritPosition);
+            Position.SetInherit(inheritPosition);
         }
         #endregion
 
@@ -90,7 +79,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <param name="state">Palette state to use when populating.</param>
         public void PopulateFromBase(PaletteState state)
         {
-            _positionState.PopulateFromBase(state);
+            Position.PopulateFromBase(state);
         }
         #endregion
 
@@ -102,14 +91,11 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining position appearance.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public PaletteElementColor Position
-        {
-            get { return _positionState; }
-        }
+        public PaletteElementColor Position { get; }
 
-        private bool ShouldSerializePosition()
+	    private bool ShouldSerializePosition()
         {
-            return !_positionState.IsDefault;
+            return !Position.IsDefault;
         }
         #endregion
 	}

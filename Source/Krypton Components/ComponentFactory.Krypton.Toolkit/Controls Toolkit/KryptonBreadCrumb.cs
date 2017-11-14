@@ -9,20 +9,10 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
-using System.Data;
 using System.Drawing;
-using System.Drawing.Text;
-using System.Drawing.Imaging;
-using System.Drawing.Drawing2D;
-using System.Drawing.Design;
 using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Collections.Generic;
 using System.Windows.Forms;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
-using Microsoft.Win32;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -61,22 +51,12 @@ namespace ComponentFactory.Krypton.Toolkit
         #endregion
         
         #region Instance Fields
-        private bool _initializing;
-        private bool _initialized;
-        private bool _allowButtonSpecToolTips;
-        private bool _dropDownNavigaton;
+
+	    private bool _dropDownNavigaton;
         private ViewDrawDocker _drawDocker;
-        private PaletteBreadCrumbRedirect _stateCommon;
-        private PaletteBreadCrumbDoubleState _stateDisabled;
-        private PaletteBreadCrumbDoubleState _stateNormal;
-        private PaletteBreadCrumbState _stateTracking;
-        private PaletteBreadCrumbState _statePressed;
-        private BreadCrumbButtonSpecCollection _buttonSpecs;
-        private ButtonSpecManagerDraw _buttonManager;
+	    private ButtonSpecManagerDraw _buttonManager;
         private VisualPopupToolTip _visualPopupToolTip;
-        private ToolTipManager _toolTipManager;
-        private KryptonBreadCrumbItem _rootItem;
-        private KryptonBreadCrumbItem _selectedItem;
+	    private KryptonBreadCrumbItem _selectedItem;
         private ViewLayoutCrumbs _layoutCrumbs;
         private ButtonStyle _buttonStyle;
         #endregion
@@ -124,42 +104,44 @@ namespace ComponentFactory.Krypton.Toolkit
             _selectedItem = null;
             _dropDownNavigaton = true;
             _buttonStyle = ButtonStyle.BreadCrumb;
-            _rootItem = new KryptonBreadCrumbItem("Root");
-            _rootItem.PropertyChanged += new PropertyChangedEventHandler(OnCrumbItemChanged);
-            _allowButtonSpecToolTips = false;
+            RootItem = new KryptonBreadCrumbItem("Root");
+            RootItem.PropertyChanged += new PropertyChangedEventHandler(OnCrumbItemChanged);
+            AllowButtonSpecToolTips = false;
 
 			// Create storage objects
-            _buttonSpecs = new BreadCrumbButtonSpecCollection(this);
+            ButtonSpecs = new BreadCrumbButtonSpecCollection(this);
 
 			// Create the palette storage
-            _stateCommon = new PaletteBreadCrumbRedirect(Redirector, NeedPaintDelegate);
-            _stateDisabled = new PaletteBreadCrumbDoubleState(_stateCommon, NeedPaintDelegate);
-            _stateNormal = new PaletteBreadCrumbDoubleState(_stateCommon, NeedPaintDelegate);
-            _stateTracking = new PaletteBreadCrumbState(_stateCommon, NeedPaintDelegate);
-            _statePressed = new PaletteBreadCrumbState(_stateCommon, NeedPaintDelegate);
+            StateCommon = new PaletteBreadCrumbRedirect(Redirector, NeedPaintDelegate);
+            StateDisabled = new PaletteBreadCrumbDoubleState(StateCommon, NeedPaintDelegate);
+            StateNormal = new PaletteBreadCrumbDoubleState(StateCommon, NeedPaintDelegate);
+            StateTracking = new PaletteBreadCrumbState(StateCommon, NeedPaintDelegate);
+            StatePressed = new PaletteBreadCrumbState(StateCommon, NeedPaintDelegate);
 
 			// Our view contains background and border with crumbs inside
             _layoutCrumbs = new ViewLayoutCrumbs(this, NeedPaintDelegate);
-            _drawDocker = new ViewDrawDocker(_stateNormal.Back, _stateNormal.Border, null);
-            _drawDocker.Add(_layoutCrumbs, ViewDockStyle.Fill);
+            _drawDocker = new ViewDrawDocker(StateNormal.Back, StateNormal.Border, null)
+            {
+                { _layoutCrumbs, ViewDockStyle.Fill }
+            };
 
-			// Create the view manager instance
-			ViewManager = new ViewManager(this, _drawDocker);
+            // Create the view manager instance
+            ViewManager = new ViewManager(this, _drawDocker);
 
             // Create button specification collection manager
-            _buttonManager = new ButtonSpecManagerDraw(this, Redirector, _buttonSpecs, null,
+            _buttonManager = new ButtonSpecManagerDraw(this, Redirector, ButtonSpecs, null,
                                                        new ViewDrawDocker[] { _drawDocker },
-                                                       new IPaletteMetric[] { _stateCommon },
+                                                       new IPaletteMetric[] { StateCommon },
                                                        new PaletteMetricInt[] { PaletteMetricInt.HeaderButtonEdgeInsetPrimary },
                                                        new PaletteMetricPadding[] { PaletteMetricPadding.None },
                                                        new GetToolStripRenderer(CreateToolStripRenderer),
                                                        NeedPaintDelegate);
 
             // Create the manager for handling tooltips
-            _toolTipManager = new ToolTipManager();
-            _toolTipManager.ShowToolTip += new EventHandler<ToolTipEventArgs>(OnShowToolTip);
-            _toolTipManager.CancelToolTip += new EventHandler(OnCancelToolTip);
-            _buttonManager.ToolTipManager = _toolTipManager;
+            ToolTipManager = new ToolTipManager();
+            ToolTipManager.ShowToolTip += new EventHandler<ToolTipEventArgs>(OnShowToolTip);
+            ToolTipManager.CancelToolTip += new EventHandler(OnCancelToolTip);
+            _buttonManager.ToolTipManager = ToolTipManager;
 		}
 
         /// <summary>
@@ -188,7 +170,7 @@ namespace ComponentFactory.Krypton.Toolkit
         public virtual void BeginInit()
         {
             // Remember that fact we are inside a BeginInit/EndInit pair
-            _initializing = true;
+            IsInitializing = true;
         }
 
         /// <summary>
@@ -197,13 +179,15 @@ namespace ComponentFactory.Krypton.Toolkit
         public virtual void EndInit()
         {
             // We are now initialized
-            _initialized = true;
+            IsInitialized = true;
 
             // We are no longer initializing
-            _initializing = false;
+            IsInitializing = false;
 
             if (SelectedItem == null)
+            {
                 SelectedItem = RootItem;
+            }
 
             OnNeedPaint(this, new NeedLayoutEventArgs(true));
 
@@ -219,21 +203,23 @@ namespace ComponentFactory.Krypton.Toolkit
         public bool IsInitialized
         {
             [System.Diagnostics.DebuggerStepThrough]
-            get { return _initialized; }
-        }
+            get;
+            private set;
+	    }
 
-        /// <summary>
+	    /// <summary>
         /// Gets a value indicating if the control is initialized.
         /// </summary>
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         public bool IsInitializing
-        {
-            [System.Diagnostics.DebuggerStepThrough]
-            get { return _initializing; }
-        }
-            
-        /// <summary>
+	    {
+	        [System.Diagnostics.DebuggerStepThrough]
+	        get;
+	        private set;
+	    }
+
+	    /// <summary>
         /// Gets or sets the text associated with this control.
         /// </summary>
         [Browsable(false)]
@@ -241,9 +227,9 @@ namespace ComponentFactory.Krypton.Toolkit
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public override string Text
         {
-            get { return base.Text; }
-            set { base.Text = value; }
-        }
+            get => base.Text;
+	        set => base.Text = value;
+	    }
 
         /// <summary>
         /// Gets and sets the automatic resize of the control to fit contents.
@@ -256,8 +242,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue(true)]
         public override bool AutoSize
         {
-            get { return base.AutoSize; }
-            set { base.AutoSize = value; }
+            get => base.AutoSize;
+            set => base.AutoSize = value;
         }
 
         /// <summary>
@@ -268,7 +254,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue(true)]
         public bool UseMnemonic
         {
-            get { return _buttonManager.UseMnemonic; }
+            get => _buttonManager.UseMnemonic;
 
             set
             {
@@ -286,12 +272,9 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Collection of button specifications.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public BreadCrumbButtonSpecCollection ButtonSpecs
-        {
-            get { return _buttonSpecs; }
-        }
+        public BreadCrumbButtonSpecCollection ButtonSpecs { get; }
 
-        /// <summary>
+	    /// <summary>
         /// Gets and sets a value indicating if drop down buttons should allow navigation to children.
         /// </summary>
         [Category("Visuals")]
@@ -299,9 +282,9 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue(true)]
         public bool DropDownNavigation
         {
-            get { return _dropDownNavigaton; }
-            
-            set 
+            get => _dropDownNavigaton;
+
+	        set 
             {
                 if (_dropDownNavigaton != value)
                 {
@@ -317,26 +300,22 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Should tooltips be displayed for button specs.")]
         [DefaultValue(false)]
-        public bool AllowButtonSpecToolTips
-        {
-            get { return _allowButtonSpecToolTips; }
-            set { _allowButtonSpecToolTips = value; }
-        }
+        public bool AllowButtonSpecToolTips { get; set; }
 
-		/// <summary>
+	    /// <summary>
 		/// Gets and sets the background style for the control.
 		/// </summary>
 		[Category("Visuals")]
 		[Description("Background style for the control.")]
 		public PaletteBackStyle ControlBackStyle
 		{
-            get { return _stateCommon.BackStyle; }
+            get => StateCommon.BackStyle;
 
-            set
+	        set
             {
-                if (_stateCommon.BackStyle != value)
+                if (StateCommon.BackStyle != value)
                 {
-                    _stateCommon.BackStyle = value;
+                    StateCommon.BackStyle = value;
                     PerformNeedPaint(true);
                 }
             }
@@ -359,14 +338,14 @@ namespace ComponentFactory.Krypton.Toolkit
         [Description("Button style used for drawing each bread crumb.")]
         public ButtonStyle CrumbButtonStyle
         {
-            get { return _buttonStyle; }
+            get => _buttonStyle;
 
             set
             {
                 if (_buttonStyle != value)
                 {
                     _buttonStyle = value;
-                    _stateCommon.BreadCrumb.SetStyles(value);
+                    StateCommon.BreadCrumb.SetStyles(value);
                     PerformNeedPaint(true);
                 }
             }
@@ -390,13 +369,13 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue(typeof(PaletteBorderStyle), "Control - Client")]
         public PaletteBorderStyle ControlBorderStyle
         {
-            get { return _stateCommon.BorderStyle; }
+            get => StateCommon.BorderStyle;
 
             set
             {
-                if (_stateCommon.BorderStyle != value)
+                if (StateCommon.BorderStyle != value)
                 {
-                    _stateCommon.BorderStyle = value;
+                    StateCommon.BorderStyle = value;
                     PerformNeedPaint(true);
                 }
             }
@@ -418,12 +397,9 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Data")]
         [Description("Root bread crumb item.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public KryptonBreadCrumbItem RootItem
-        {
-            get { return _rootItem; }
-        }
+        public KryptonBreadCrumbItem RootItem { get; }
 
-        /// <summary>
+	    /// <summary>
         /// Gets and sets the selected bread crumb item.
         /// </summary>
         [Category("Data")]
@@ -431,19 +407,23 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue(null)]
         public KryptonBreadCrumbItem SelectedItem
         {
-            get { return _selectedItem; }
-            
-            set 
+            get => _selectedItem;
+
+	        set 
             {
                 if (value != _selectedItem)
                 {
                     // Check that the item has a chain that ends at our root item or is null
                     KryptonBreadCrumbItem temp = value;
                     while ((temp != null) && (temp != RootItem))
+                    {
                         temp = temp.Parent;
+                    }
 
                     if ((value != null) && (temp == null))
+                    {
                         throw new ArgumentOutOfRangeException("value", "Item must be inside the RootItem hierarchy.");
+                    }
 
                     _selectedItem = value;
                     OnSelectedItemChanged(EventArgs.Empty);
@@ -458,14 +438,11 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining common bread crumb appearance that other states can override.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public PaletteBreadCrumbRedirect StateCommon
-        {
-            get { return _stateCommon; }
-        }
+        public PaletteBreadCrumbRedirect StateCommon { get; }
 
-        private bool ShouldSerializeStateCommon()
+	    private bool ShouldSerializeStateCommon()
         {
-            return !_stateCommon.IsDefault;
+            return !StateCommon.IsDefault;
         }
         
         /// <summary>
@@ -474,14 +451,11 @@ namespace ComponentFactory.Krypton.Toolkit
 		[Category("Visuals")]
         [Description("Overrides for defining disabled appearance.")]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public PaletteBreadCrumbDoubleState StateDisabled
-		{
-			get { return _stateDisabled; }
-		}
+        public PaletteBreadCrumbDoubleState StateDisabled { get; }
 
-		private bool ShouldSerializeStateDisabled()
+	    private bool ShouldSerializeStateDisabled()
 		{
-			return !_stateDisabled.IsDefault;
+			return !StateDisabled.IsDefault;
 		}
 
 		/// <summary>
@@ -490,14 +464,11 @@ namespace ComponentFactory.Krypton.Toolkit
 		[Category("Visuals")]
 		[Description("Overrides for defining normal appearance.")]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public PaletteBreadCrumbDoubleState StateNormal
-		{
-			get { return _stateNormal; }
-		}
+        public PaletteBreadCrumbDoubleState StateNormal { get; }
 
-		private bool ShouldSerializeStateNormal()
+	    private bool ShouldSerializeStateNormal()
 		{
-			return !_stateNormal.IsDefault;
+			return !StateNormal.IsDefault;
 		}
 
         /// <summary>
@@ -506,14 +477,11 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining tracking bread crumb appearance.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public PaletteBreadCrumbState StateTracking
-        {
-            get { return _stateTracking; }
-        }
+        public PaletteBreadCrumbState StateTracking { get; }
 
-        private bool ShouldSerializeStateTracking()
+	    private bool ShouldSerializeStateTracking()
         {
-            return !_stateTracking.IsDefault;
+            return !StateTracking.IsDefault;
         }
 
         /// <summary>
@@ -522,14 +490,11 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining pressed bread crumb appearance.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public PaletteBreadCrumbState StatePressed
-        {
-            get { return _statePressed; }
-        }
+        public PaletteBreadCrumbState StatePressed { get; }
 
-        private bool ShouldSerializeStatePressed()
+	    private bool ShouldSerializeStatePressed()
         {
-            return !_statePressed.IsDefault;
+            return !StatePressed.IsDefault;
         }
 
         /// <summary>
@@ -537,12 +502,9 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public ToolTipManager ToolTipManager
-        {
-            get { return _toolTipManager; }
-        }
+        public ToolTipManager ToolTipManager { get; }
 
-        /// <summary>
+	    /// <summary>
         /// Fix the control to a particular palette state.
         /// </summary>
         /// <param name="state">Palette state to fix.</param>
@@ -562,13 +524,19 @@ namespace ComponentFactory.Krypton.Toolkit
         {
             // Ignore call as view builder is already destructed
             if (IsDisposed)
+            {
                 return false;
+            }
 
             // Check if any of the button specs want the point
             if ((_buttonManager != null) && _buttonManager.DesignerGetHitTest(pt))
+            {
                 return true;
+            }
             else
+            {
                 return false;
+            }
         }
 
         /// <summary>
@@ -581,7 +549,9 @@ namespace ComponentFactory.Krypton.Toolkit
         {
             // Ignore call as view builder is already destructed
             if (IsDisposed)
+            {
                 return null;
+            }
 
             // Ask the current view for a decision
             return ViewManager.ComponentFromPoint(pt);
@@ -623,7 +593,9 @@ namespace ComponentFactory.Krypton.Toolkit
             {
                 // Pass request onto the button spec manager
                 if (_buttonManager.ProcessMnemonic(charCode))
+                {
                     return true;
+                }
             }
 
             // No match found, let base class do standard processing
@@ -638,9 +610,13 @@ namespace ComponentFactory.Krypton.Toolkit
 		{
 			// Push correct palettes into the view
 			if (Enabled)
-				_drawDocker.SetPalettes(_stateNormal.Back, _stateNormal.Border);
-			else
-				_drawDocker.SetPalettes(_stateDisabled.Back, _stateDisabled.Border);
+            {
+                _drawDocker.SetPalettes(StateNormal.Back, StateNormal.Border);
+            }
+            else
+            {
+                _drawDocker.SetPalettes(StateDisabled.Back, StateDisabled.Border);
+            }
 
             _drawDocker.Enabled = Enabled;
 
@@ -657,12 +633,9 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
 		/// Gets the default size of the control.
 		/// </summary>
-		protected override Size DefaultSize
-		{
-			get { return new Size(200, 28); }
-		}
+		protected override Size DefaultSize => new Size(200, 28);
 
-        /// <summary>
+	    /// <summary>
         /// Processes a notification from palette storage of a button spec change.
         /// </summary>
         /// <param name="sender">Source of notification.</param>
@@ -684,8 +657,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <param name="e">An ContextPositionMenuArgs containing the event data.</param>
         internal protected virtual void OnCrumbDropDown(BreadCrumbMenuArgs e)
         {
-            if (CrumbDropDown != null)
-                CrumbDropDown(this, e);
+            CrumbDropDown?.Invoke(this, e);
         }
 
         /// <summary>
@@ -694,8 +666,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <param name="e">An ContextPositionMenuArgs containing the event data.</param>
         internal protected virtual void OnOverflowDropDown(ContextPositionMenuArgs e)
         {
-            if (OverflowDropDown != null)
-                OverflowDropDown(this, e);
+            OverflowDropDown?.Invoke(this, e);
         }
 
         /// <summary>
@@ -704,8 +675,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <param name="e">An EventArgs containing the event data.</param>
         protected virtual void OnSelectedItemChanged(EventArgs e)
         {
-            if (SelectedItemChanged != null)
-                SelectedItemChanged(this, e);
+            SelectedItemChanged?.Invoke(this, e);
         }
 
         /// <summary>
@@ -714,15 +684,14 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <param name="e">An EventArgs containing the event data.</param>
         protected virtual void OnInitialized(EventArgs e)
         {
-            if (Initialized != null)
-                Initialized(this, EventArgs.Empty);
+            Initialized?.Invoke(this, EventArgs.Empty);
         }
         #endregion
 
         #region Internal
         internal PaletteBreadCrumbRedirect GetStateCommon()
         {
-            return _stateCommon;
+            return StateCommon;
         }
 
         internal PaletteRedirect GetRedirector()
@@ -743,12 +712,16 @@ namespace ComponentFactory.Krypton.Toolkit
                     // Check that the current selected item has a chain that ends at our root
                     KryptonBreadCrumbItem temp = SelectedItem;
                     while ((temp != null) && (temp != RootItem))
+                    {
                         temp = temp.Parent;
+                    }
 
                     // If selected item is no longer valid, then reset back to null
                     if (temp == null)
+                    {
                         SelectedItem = null;
-               }
+                    }
+                }
             }
 
             // Relayout and paint to reflect change in crumb settings
@@ -762,7 +735,9 @@ namespace ComponentFactory.Krypton.Toolkit
                 // Do not show tooltips when the form we are in does not have focus
                 Form topForm = FindForm();
                 if ((topForm != null) && !topForm.ContainsFocus)
+                {
                     return;
+                }
 
                 // Never show tooltips are design time
                 if (!DesignMode)
@@ -794,8 +769,7 @@ namespace ComponentFactory.Krypton.Toolkit
                     if (sourceContent != null)
                     {
                         // Remove any currently showing tooltip
-                        if (_visualPopupToolTip != null)
-                            _visualPopupToolTip.Dispose();
+                        _visualPopupToolTip?.Dispose();
 
                         // Create the actual tooltip popup object
                         _visualPopupToolTip = new VisualPopupToolTip(Redirector,
@@ -817,8 +791,7 @@ namespace ComponentFactory.Krypton.Toolkit
         private void OnCancelToolTip(object sender, EventArgs e)
         {
             // Remove any currently showing tooltip
-            if (_visualPopupToolTip != null)
-                _visualPopupToolTip.Dispose();
+            _visualPopupToolTip?.Dispose();
         }
 
         private void OnVisualPopupToolTipDisposed(object sender, EventArgs e)

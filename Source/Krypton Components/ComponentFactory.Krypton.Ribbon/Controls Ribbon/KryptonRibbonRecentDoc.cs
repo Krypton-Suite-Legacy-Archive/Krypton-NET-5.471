@@ -9,14 +9,8 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
-using System.Data;
 using System.Drawing;
-using System.Drawing.Design;
 using System.ComponentModel;
-using System.Windows.Forms;
-using System.Diagnostics;
-using ComponentFactory.Krypton.Toolkit;
 
 namespace ComponentFactory.Krypton.Ribbon
 {
@@ -72,16 +66,20 @@ namespace ComponentFactory.Krypton.Ribbon
         [DefaultValue("Recent Document")]
         public string Text
         {
-            get { return _text; }
+            get => _text;
 
             set
             {
                 // We never allow an empty text value
                 if (string.IsNullOrEmpty(value))
+                {
                     value = "Recent Document";
+                }
 
                 if (value != _text)
+                {
                     _text = value;
+                }
             }
         }
 
@@ -96,12 +94,14 @@ namespace ComponentFactory.Krypton.Ribbon
         [DefaultValue("")]
         public string ExtraText
         {
-            get { return _extraText; }
+            get => _extraText;
 
             set
             {
                 if (value != _extraText)
+                {
                     _extraText = value;
+                }
             }
         }
 
@@ -116,12 +116,14 @@ namespace ComponentFactory.Krypton.Ribbon
         [DefaultValue(null)]
         public Image Image
         {
-            get { return _image; }
+            get => _image;
 
             set
             {
                 if (_image != value)
+                {
                     _image = value;
+                }
             }
         }
 
@@ -135,12 +137,14 @@ namespace ComponentFactory.Krypton.Ribbon
         [Bindable(true)]
         public Color ImageTransparentColor
         {
-            get { return _imageTransparentColor; }
+            get => _imageTransparentColor;
 
             set
             {
                 if (value != _imageTransparentColor)
+                {
                     _imageTransparentColor = value;
+                }
             }
         }
 
@@ -153,12 +157,14 @@ namespace ComponentFactory.Krypton.Ribbon
         [Bindable(true)]
         public object Tag
         {
-            get { return _tag; }
+            get => _tag;
 
             set
             {
                 if (value != _tag)
+                {
                     _tag = value;
+                }
             }
         }
 
@@ -188,8 +194,7 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <param name="e">An EventArgs that contains the event data.</param>
         protected virtual void OnClick(EventArgs e)
         {
-            if (Click != null)
-                Click(this, e);
+            Click?.Invoke(this, e);
         }
         #endregion
     }

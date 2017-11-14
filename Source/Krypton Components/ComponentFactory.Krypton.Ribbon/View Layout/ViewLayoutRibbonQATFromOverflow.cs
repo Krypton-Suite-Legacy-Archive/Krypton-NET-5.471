@@ -8,10 +8,6 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
-using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Diagnostics;
@@ -25,7 +21,7 @@ namespace ComponentFactory.Krypton.Ribbon
     internal class ViewLayoutRibbonQATFromOverflow : ViewLayoutRibbonQATContents
     {
         #region Instance Fields
-        private Control _parentControl;
+
         private ViewLayoutRibbonQATContents _contents;
         #endregion
 
@@ -49,7 +45,7 @@ namespace ComponentFactory.Krypton.Ribbon
             Debug.Assert(contents != null);
             
             _contents = contents;
-            _parentControl = parentControl;
+            ParentControl = parentControl;
         }
         #endregion
 
@@ -73,7 +69,9 @@ namespace ComponentFactory.Krypton.Ribbon
 
                         //...but the view is not displayed, then show on overflow
                         if ((qatView != null) && !qatView.Visible)
+                        {
                             qatOverflow.Add(qatButton);
+                        }
                     }
                 }
 
@@ -87,10 +85,8 @@ namespace ComponentFactory.Krypton.Ribbon
         /// Gets a reference to the owning control of this element.
         /// </summary>
         /// <returns>Control reference.</returns>
-        public override Control ParentControl
-        {
-            get { return _parentControl; }
-        }
+        public override Control ParentControl { get; }
+
         #endregion
     }
 }

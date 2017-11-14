@@ -8,14 +8,8 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Design;
-using System.Windows.Forms;
 using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Collections.Generic;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -56,15 +50,10 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// Gets a value indicating if all values are default.
 		/// </summary>
 		[Browsable(false)]
-		public override bool IsDefault
-		{
-			get
-			{
-                return (_plus == null) &&
-                       (_minus == null);
-            }
-		}
-		#endregion
+		public override bool IsDefault => (_plus == null) &&
+		                                  (_minus == null);
+
+        #endregion
 
         #region PopulateFromBase
         /// <summary>
@@ -100,7 +89,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [RefreshPropertiesAttribute(RefreshProperties.All)]
         public Image Plus
         {
-            get { return _plus; }
+            get => _plus;
 
             set
             {
@@ -132,7 +121,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [RefreshPropertiesAttribute(RefreshProperties.All)]
         public Image Minus
         {
-            get { return _minus; }
+            get => _minus;
 
             set
             {

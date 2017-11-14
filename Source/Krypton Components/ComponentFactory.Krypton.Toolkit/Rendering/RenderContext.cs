@@ -9,9 +9,7 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
 using System.Drawing;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Diagnostics;
 
@@ -23,7 +21,7 @@ namespace ComponentFactory.Krypton.Toolkit
 	public class RenderContext : ViewContext
     {
         #region Instance Fields
-        private Rectangle _clipRect;
+
         #endregion
 
         #region Identity
@@ -76,7 +74,7 @@ namespace ComponentFactory.Krypton.Toolkit
 							 IRenderer renderer)
             : base(manager, control, alignControl, graphics, renderer)
 		{
-            _clipRect = clipRect;
+            ClipRect = clipRect;
 		}
 		#endregion
 
@@ -84,12 +82,9 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Gets the rectangle that needs rendering.
         /// </summary>
-        public Rectangle ClipRect
-        {
-            get { return _clipRect; }
-        }
+        public Rectangle ClipRect { get; }
 
-		/// <summary>
+        /// <summary>
 		/// Calculate a rectangle in control coodinates that is aligned for gradient drawing.
 		/// </summary>
 		/// <param name="align">How to align the gradient.</param>
@@ -106,9 +101,14 @@ namespace ComponentFactory.Krypton.Toolkit
 				case PaletteRectangleAlign.Control:
                     Rectangle clientRect = Rectangle.Empty;
                     if (AlignControl == Control)
-                         clientRect = Control.ClientRectangle;
+                    {
+                        clientRect = Control.ClientRectangle;
+                    }
                     else
+                    {
                         clientRect = Control.RectangleToClient(AlignControl.RectangleToScreen(AlignControl.ClientRectangle));
+                    }
+
                     clientRect.Inflate(2, 2);
                     return clientRect;
 				case PaletteRectangleAlign.Form:

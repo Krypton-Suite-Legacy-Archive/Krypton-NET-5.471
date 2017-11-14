@@ -8,12 +8,8 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
 using System.Drawing;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.ComponentModel;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -24,8 +20,8 @@ namespace ComponentFactory.Krypton.Toolkit
 	{
 		#region Instance Fields
 		private PaletteRedirect _redirect;
-        private PaletteRibbonTextStyle _styleText;
-        #endregion
+
+	    #endregion
 
 		#region Identity
         /// <summary>
@@ -39,7 +35,7 @@ namespace ComponentFactory.Krypton.Toolkit
 			Debug.Assert(redirect != null);
 
 			_redirect = redirect;
-            _styleText = styleText;
+            StyleText = styleText;
 		}
 		#endregion
 
@@ -58,12 +54,9 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Gets and sets the ribbon text style to use when inheriting.
         /// </summary>
-        public PaletteRibbonTextStyle StyleText
-        {
-            get { return _styleText; }
-            set { _styleText = value; }
-        }
-        #endregion
+        public PaletteRibbonTextStyle StyleText { get; set; }
+
+	    #endregion
 
         #region IPaletteRibbonBack
         /// <summary>
@@ -73,7 +66,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <returns>Color value.</returns>
         public override Color GetRibbonTextColor(PaletteState state)      
         {
-            return _redirect.GetRibbonTextColor(_styleText, state);
+            return _redirect.GetRibbonTextColor(StyleText, state);
         }
         #endregion
     }

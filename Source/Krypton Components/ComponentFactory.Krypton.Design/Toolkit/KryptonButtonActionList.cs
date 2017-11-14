@@ -8,12 +8,8 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
 using System.Drawing;
-using System.ComponentModel;
 using System.ComponentModel.Design;
-using System.Windows.Forms;
-using System.Windows.Forms.Design;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -46,8 +42,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public ButtonStyle ButtonStyle
         {
-            get { return _button.ButtonStyle; }
-           
+            get => _button.ButtonStyle;
+
             set
             {
                 if (_button.ButtonStyle != value)
@@ -63,8 +59,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public VisualOrientation Orientation
         {
-            get { return _button.Orientation; }
-            
+            get => _button.Orientation;
+
             set 
             {
                 if (_button.Orientation != value)
@@ -80,8 +76,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public string Text
         {
-            get { return _button.Values.Text; }
-            
+            get => _button.Values.Text;
+
             set 
             {
                 if (_button.Values.Text != value)
@@ -97,8 +93,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public string ExtraText
         {
-            get { return _button.Values.ExtraText; }
-            
+            get => _button.Values.ExtraText;
+
             set 
             {
                 if (_button.Values.ExtraText != value)
@@ -114,7 +110,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public Image Image
         {
-            get { return _button.Values.Image; }
+            get => _button.Values.Image;
 
             set
             {
@@ -131,8 +127,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public PaletteMode PaletteMode
         {
-            get { return _button.PaletteMode; }
-            
+            get => _button.PaletteMode;
+
             set 
             {
                 if (_button.PaletteMode != value)

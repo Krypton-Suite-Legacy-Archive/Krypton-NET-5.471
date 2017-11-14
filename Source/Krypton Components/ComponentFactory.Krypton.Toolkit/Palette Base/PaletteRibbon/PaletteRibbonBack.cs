@@ -8,14 +8,8 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Design;
-using System.Windows.Forms;
 using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace ComponentFactory.Krypton.Toolkit
@@ -66,18 +60,13 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// Gets a value indicating if all values are default.
 		/// </summary>
 		[Browsable(false)]
-		public override bool IsDefault
-		{
-            get
-            {
-                return (BackColor1 == Color.Empty) &&
-                       (BackColor2 == Color.Empty) &&
-                       (BackColor3 == Color.Empty) &&
-                       (BackColor4 == Color.Empty) &&
-                       (BackColor5 == Color.Empty);
-            }
-		}
-		#endregion
+		public override bool IsDefault => (BackColor1 == Color.Empty) &&
+		                                  (BackColor2 == Color.Empty) &&
+		                                  (BackColor3 == Color.Empty) &&
+		                                  (BackColor4 == Color.Empty) &&
+		                                  (BackColor5 == Color.Empty);
+
+        #endregion
 
         #region SetInherit
         /// <summary>
@@ -127,7 +116,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [RefreshPropertiesAttribute(RefreshProperties.All)]
         public virtual Color BackColor1
         {
-            get { return _backColor1; }
+            get => _backColor1;
 
             set
             {
@@ -155,9 +144,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public Color GetRibbonBackColor1(PaletteState state)
         {
             if (BackColor1 != Color.Empty)
+            {
                 return BackColor1;
+            }
             else
+            {
                 return _inheritBack.GetRibbonBackColor1(state);
+            }
         }
         #endregion
 
@@ -172,7 +165,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [RefreshPropertiesAttribute(RefreshProperties.All)]
         public virtual Color BackColor2
         {
-            get { return _backColor2; }
+            get => _backColor2;
 
             set
             {
@@ -200,9 +193,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public Color GetRibbonBackColor2(PaletteState state)
         {
             if (BackColor2 != Color.Empty)
+            {
                 return BackColor2;
+            }
             else
+            {
                 return _inheritBack.GetRibbonBackColor2(state);
+            }
         }
         #endregion
 
@@ -217,7 +214,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [RefreshPropertiesAttribute(RefreshProperties.All)]
         public virtual Color BackColor3
         {
-            get { return _backColor3; }
+            get => _backColor3;
 
             set
             {
@@ -245,9 +242,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public Color GetRibbonBackColor3(PaletteState state)
         {
             if (BackColor3 != Color.Empty)
+            {
                 return BackColor3;
+            }
             else
+            {
                 return _inheritBack.GetRibbonBackColor3(state);
+            }
         }
         #endregion
 
@@ -262,7 +263,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [RefreshPropertiesAttribute(RefreshProperties.All)]
         public virtual Color BackColor4
         {
-            get { return _backColor4; }
+            get => _backColor4;
 
             set
             {
@@ -290,9 +291,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public Color GetRibbonBackColor4(PaletteState state)
         {
             if (BackColor4 != Color.Empty)
+            {
                 return BackColor4;
+            }
             else
+            {
                 return _inheritBack.GetRibbonBackColor4(state);
+            }
         }
         #endregion
 
@@ -307,7 +312,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [RefreshPropertiesAttribute(RefreshProperties.All)]
         public virtual Color BackColor5
         {
-            get { return _backColor5; }
+            get => _backColor5;
 
             set
             {
@@ -335,9 +340,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public Color GetRibbonBackColor5(PaletteState state)
         {
             if (BackColor5 != Color.Empty)
+            {
                 return BackColor5;
+            }
             else
+            {
                 return _inheritBack.GetRibbonBackColor5(state);
+            }
         }
         #endregion
     }

@@ -9,10 +9,7 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.ComponentModel;
@@ -27,9 +24,7 @@ namespace ComponentFactory.Krypton.Toolkit
 
         #region Instance Fields
         private IContextMenuProvider _provider;
-        private KryptonContextMenuItem _menuItem;
         private ViewDrawMenuImageCanvas _imageCanvas;
-        private ViewDrawMenuSeparator _splitSeparator;
         private ViewDrawContent _imageContent;
         private ViewDrawMenuItemContent _textContent;
         private FixedContentValue _fixedImage;
@@ -40,8 +35,7 @@ namespace ComponentFactory.Krypton.Toolkit
         private KryptonCommand _cachedCommand;
         private bool _imageColumn;
         private bool _standardStyle;
-        private bool _itemEnabled;
-        private bool _hasSubMenu;
+
         #endregion
 
         #region Identity
@@ -71,19 +65,19 @@ namespace ComponentFactory.Krypton.Toolkit
 		{
             // Remember values
             _provider = provider;
-            _menuItem = menuItem;
+            KryptonContextMenuItem = menuItem;
             _imageColumn = imageColumn;
             _standardStyle = standardStyle;
 
             // Give the item object the redirector to use when inheriting values
-            _menuItem.SetPaletteRedirect(provider);
+            KryptonContextMenuItem.SetPaletteRedirect(provider);
 
             // Create a stack of horizontal items inside the item
             ViewLayoutDocker docker = new ViewLayoutDocker();
 
             // Decide on the enabled state of the display
-            _itemEnabled = provider.ProviderEnabled && ResolveEnabled;
-            PaletteContextMenuItemState menuItemState = (_itemEnabled ? _menuItem.StateNormal : _menuItem.StateDisabled);
+            ItemEnabled = provider.ProviderEnabled && ResolveEnabled;
+            PaletteContextMenuItemState menuItemState = (ItemEnabled ? KryptonContextMenuItem.StateNormal : KryptonContextMenuItem.StateDisabled);
 
             // Calculate the image to show inside in the image column
             Image itemColumnImage = ResolveImage;
@@ -113,46 +107,51 @@ namespace ComponentFactory.Krypton.Toolkit
             }
 
             // Column Image
-            PaletteTripleJustImage justImage = (ResolveChecked ? _menuItem.StateChecked.ItemImage : menuItemState.ItemImage);
+            PaletteTripleJustImage justImage = (ResolveChecked ? KryptonContextMenuItem.StateChecked.ItemImage : menuItemState.ItemImage);
             _fixedImage = new FixedContentValue(null, null, itemColumnImage, itemImageTransparent);
             _imageContent = new ViewDrawContent(justImage.Content, _fixedImage, VisualOrientation.Top);
-            _imageCanvas = new ViewDrawMenuImageCanvas(justImage.Back, justImage.Border, 0, false);
-            _imageCanvas.Add(_imageContent);
+            _imageCanvas = new ViewDrawMenuImageCanvas(justImage.Back, justImage.Border, 0, false)
+            {
+                _imageContent
+            };
             docker.Add(new ViewLayoutCenter(_imageCanvas), ViewDockStyle.Left);
-            _imageContent.Enabled = _itemEnabled;
+            _imageContent.Enabled = ItemEnabled;
 
             // Text/Extra Text
             PaletteContentJustText menuItemStyle = (standardStyle ? menuItemState.ItemTextStandard : menuItemState.ItemTextAlternate);
             _fixedTextExtraText = new FixedContentValue(ResolveText, ResolveExtraText, null, Color.Empty);
             _textContent = new ViewDrawMenuItemContent(menuItemStyle, _fixedTextExtraText, 1);
             docker.Add(_textContent, ViewDockStyle.Fill);
-            _textContent.Enabled = _itemEnabled;
+            _textContent.Enabled = ItemEnabled;
             
             // Shortcut
-            if (_menuItem.ShowShortcutKeys)
+            if (KryptonContextMenuItem.ShowShortcutKeys)
             {
-                string shortcutString = _menuItem.ShortcutKeyDisplayString;
+                string shortcutString = KryptonContextMenuItem.ShortcutKeyDisplayString;
                 if (string.IsNullOrEmpty(shortcutString))
-                    shortcutString = (_menuItem.ShortcutKeys != Keys.None) ? new KeysConverter().ConvertToString(_menuItem.ShortcutKeys) : string.Empty;
+                {
+                    shortcutString = (KryptonContextMenuItem.ShortcutKeys != Keys.None) ? new KeysConverter().ConvertToString(KryptonContextMenuItem.ShortcutKeys) : string.Empty;
+                }
+
                 if (shortcutString.Length > 0)
                 {
                     _shortcutContent = new ViewDrawMenuItemContent(menuItemState.ItemShortcutText, new FixedContentValue(shortcutString, null, null, Color.Empty), 2);
                     docker.Add(_shortcutContent, ViewDockStyle.Right);
-                    _shortcutContent.Enabled = _itemEnabled;
+                    _shortcutContent.Enabled = ItemEnabled;
                 }
             }
 
             // Add split item separator
-            _splitSeparator = new ViewDrawMenuSeparator(menuItemState.ItemSplit);
-            docker.Add(_splitSeparator, ViewDockStyle.Right);
-            _splitSeparator.Enabled = _itemEnabled;
-            _splitSeparator.Draw = (_menuItem.Items.Count > 0) && _menuItem.SplitSubMenu;
+            SplitSeparator = new ViewDrawMenuSeparator(menuItemState.ItemSplit);
+            docker.Add(SplitSeparator, ViewDockStyle.Right);
+            SplitSeparator.Enabled = ItemEnabled;
+            SplitSeparator.Draw = (KryptonContextMenuItem.Items.Count > 0) && KryptonContextMenuItem.SplitSubMenu;
 
             // SubMenu Indicator
-            _hasSubMenu = (_menuItem.Items.Count > 0);
-            _subMenuContent = new ViewDrawMenuItemContent(menuItemState.ItemImage.Content, new FixedContentValue(null, null, (!_hasSubMenu ? _empty16x16 : provider.ProviderImages.GetContextMenuSubMenuImage()), (_menuItem.Items.Count == 0 ? Color.Magenta : Color.Empty)), 3);
+            HasSubMenu = (KryptonContextMenuItem.Items.Count > 0);
+            _subMenuContent = new ViewDrawMenuItemContent(menuItemState.ItemImage.Content, new FixedContentValue(null, null, (!HasSubMenu ? _empty16x16 : provider.ProviderImages.GetContextMenuSubMenuImage()), (KryptonContextMenuItem.Items.Count == 0 ? Color.Magenta : Color.Empty)), 3);
             docker.Add(new ViewLayoutCenter(_subMenuContent), ViewDockStyle.Right);
-            _subMenuContent.Enabled = _itemEnabled;
+            _subMenuContent.Enabled = ItemEnabled;
             
             Add(docker);
 
@@ -162,13 +161,13 @@ namespace ComponentFactory.Krypton.Toolkit
             KeyController = mic;
 
             // Want to know when a property changes whilst displayed
-            _menuItem.PropertyChanged += new PropertyChangedEventHandler(OnPropertyChanged);
+            KryptonContextMenuItem.PropertyChanged += new PropertyChangedEventHandler(OnPropertyChanged);
             
             // We need to know if a property of the command changes
-            if (_menuItem.KryptonCommand != null)
+            if (KryptonContextMenuItem.KryptonCommand != null)
             {
-                _cachedCommand = _menuItem.KryptonCommand;
-                _menuItem.KryptonCommand.PropertyChanged += new PropertyChangedEventHandler(OnCommandPropertyChanged);
+                _cachedCommand = KryptonContextMenuItem.KryptonCommand;
+                KryptonContextMenuItem.KryptonCommand.PropertyChanged += new PropertyChangedEventHandler(OnCommandPropertyChanged);
             }
         }
 
@@ -191,7 +190,7 @@ namespace ComponentFactory.Krypton.Toolkit
             if (disposing)
             {
                 // Unhook from events
-                _menuItem.PropertyChanged -= new PropertyChangedEventHandler(OnPropertyChanged);
+                KryptonContextMenuItem.PropertyChanged -= new PropertyChangedEventHandler(OnPropertyChanged);
 
                 if (_cachedCommand != null)
                 {
@@ -208,50 +207,40 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Gets access to the context menu item we represent.
         /// </summary>
-        public KryptonContextMenuItem KryptonContextMenuItem
-        {
-            get { return _menuItem; }
-        }
+        public KryptonContextMenuItem KryptonContextMenuItem { get; }
+
         #endregion
 
         #region SplitSeparator
         /// <summary>
         /// Gets the view element used to draw the split separator.
         /// </summary>
-        public ViewDrawMenuSeparator SplitSeparator
-        {
-            get { return _splitSeparator; }
-        }
+        public ViewDrawMenuSeparator SplitSeparator { get; }
+
         #endregion
 
         #region ItemEnabled
         /// <summary>
         /// Gets the enabled state of the entire item and not for a particular view element.
         /// </summary>
-        public bool ItemEnabled
-        {
-            get { return _itemEnabled; }
-        }
+        public bool ItemEnabled { get; private set; }
+
         #endregion
 
         #region ItemText
         /// <summary>
         /// Gets the short text value of the menu item.
         /// </summary>
-        public string ItemText
-        {
-            get { return _textContent.Values.GetShortText(); }
-        }
+        public string ItemText => _textContent.Values.GetShortText();
+
         #endregion
 
         #region ItemExtraText
         /// <summary>
         /// Gets the long text value of the menu item.
         /// </summary>
-        public string ItemExtraText
-        {
-            get { return _textContent.Values.GetLongText(); }
-        }
+        public string ItemExtraText => _textContent.Values.GetLongText();
+
         #endregion
 
         #region ResolveEnabled
@@ -263,9 +252,13 @@ namespace ComponentFactory.Krypton.Toolkit
             get
             {
                 if (_cachedCommand != null)
+                {
                     return _cachedCommand.Enabled;
+                }
                 else
-                    return _menuItem.Enabled;
+                {
+                    return KryptonContextMenuItem.Enabled;
+                }
             }
         }
         #endregion
@@ -280,13 +273,19 @@ namespace ComponentFactory.Krypton.Toolkit
             {
                 if (_cachedCommand != null)
                 {
-                    if (_menuItem.LargeKryptonCommandImage)
+                    if (KryptonContextMenuItem.LargeKryptonCommandImage)
+                    {
                         return _cachedCommand.ImageLarge;
+                    }
                     else
+                    {
                         return _cachedCommand.ImageSmall;
+                    }
                 }
                 else
-                    return _menuItem.Image;
+                {
+                    return KryptonContextMenuItem.Image;
+                }
             }
         }
         #endregion
@@ -300,9 +299,13 @@ namespace ComponentFactory.Krypton.Toolkit
             get
             {
                 if (_cachedCommand != null)
+                {
                     return _cachedCommand.ImageTransparentColor;
+                }
                 else
-                    return _menuItem.ImageTransparentColor;
+                {
+                    return KryptonContextMenuItem.ImageTransparentColor;
+                }
             }
         }
         #endregion
@@ -316,9 +319,13 @@ namespace ComponentFactory.Krypton.Toolkit
             get
             {
                 if (_cachedCommand != null)
+                {
                     return _cachedCommand.Text;
+                }
                 else
-                    return _menuItem.Text;
+                {
+                    return KryptonContextMenuItem.Text;
+                }
             }
         }
         #endregion
@@ -332,9 +339,13 @@ namespace ComponentFactory.Krypton.Toolkit
             get
             {
                 if (_cachedCommand != null)
+                {
                     return _cachedCommand.ExtraText;
+                }
                 else
-                    return _menuItem.ExtraText;
+                {
+                    return KryptonContextMenuItem.ExtraText;
+                }
             }
         }
         #endregion
@@ -348,9 +359,13 @@ namespace ComponentFactory.Krypton.Toolkit
             get
             {
                 if (_cachedCommand != null)
+                {
                     return _cachedCommand.Checked;
+                }
                 else
-                    return _menuItem.Checked;
+                {
+                    return KryptonContextMenuItem.Checked;
+                }
             }
         }
         #endregion
@@ -364,9 +379,13 @@ namespace ComponentFactory.Krypton.Toolkit
             get
             {
                 if (_cachedCommand != null)
+                {
                     return _cachedCommand.CheckState;
+                }
                 else
-                    return _menuItem.CheckState;
+                {
+                    return KryptonContextMenuItem.CheckState;
+                }
             }
         }
         #endregion
@@ -383,11 +402,11 @@ namespace ComponentFactory.Krypton.Toolkit
             if (HasSubMenu)
             {
                 // If menu item is split into regular button and sub menu areas
-                if (_splitSeparator.Draw)
+                if (SplitSeparator.Draw)
                 {
                     // If mouse is inside or to the right of the slip indicator, 
                     // then a sub menu is required when the button is used
-                    return (pt.X > _splitSeparator.ClientRectangle.X);
+                    return (pt.X > SplitSeparator.ClientRectangle.X);
                 }
 
                 // Whole item is the sub menu area
@@ -402,20 +421,16 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Returns if the item shows a sub menu when selected.
         /// </summary>
-        public bool HasSubMenu
-        {
-            get { return _hasSubMenu; }
-        }
+        public bool HasSubMenu { get; }
+
         #endregion
 
         #region CanCloseMenu
         /// <summary>
         /// Gets a value indicating if the menu is capable of being closed.
         /// </summary>
-        public bool CanCloseMenu
-        {
-            get { return _provider.ProviderCanCloseMenu; }
-        }
+        public bool CanCloseMenu => _provider.ProviderCanCloseMenu;
+
         #endregion
 
         #region Closing
@@ -454,10 +469,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Gets a value indicating if the menu item has a parent menu.
         /// </summary>
-        public bool HasParentMenu
-        {
-            get { return _provider.HasParentProvider; }
-        }
+        public bool HasParentMenu => _provider.HasParentProvider;
+
         #endregion
 
         #region ShowSubMenu
@@ -476,7 +489,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 if (HasSubMenu)
                 {
                     // Create the actual control used to show the context menu
-                    _contextMenu = new VisualContextMenu(_provider, _menuItem.Items, keyboardActivated);
+                    _contextMenu = new VisualContextMenu(_provider, KryptonContextMenuItem.Items, keyboardActivated);
 
                     // Need to know when the visual control is removed
                     _contextMenu.Disposed += new EventHandler(OnContextMenuDisposed);
@@ -485,10 +498,10 @@ namespace ComponentFactory.Krypton.Toolkit
                     Rectangle menuDrawRect = this.OwningControl.RectangleToScreen(ClientRectangle);
 
                     // Should this menu item be shown at a fixed screen rectangle?
-                    if (_provider.ProviderShowSubMenuFixed(_menuItem))
+                    if (_provider.ProviderShowSubMenuFixed(KryptonContextMenuItem))
                     {
                         // Request the menu be shown at fixed screen rectangle
-                        _contextMenu.ShowFixed(_provider.ProviderShowSubMenuFixedRect(_menuItem),
+                        _contextMenu.ShowFixed(_provider.ProviderShowSubMenuFixedRect(KryptonContextMenuItem),
                                                _provider.ProviderShowHorz,
                                                _provider.ProviderShowVert);
                     }
@@ -512,7 +525,9 @@ namespace ComponentFactory.Krypton.Toolkit
         public void ClearSubMenu()
         {
             if (_contextMenu != null)
+            {
                 VisualPopupManager.Singleton.EndPopupTracking(_contextMenu);
+            }
         }
         #endregion
 
@@ -547,28 +562,31 @@ namespace ComponentFactory.Krypton.Toolkit
             {
                 default:
                 case PaletteState.Normal:
-                    SetPalettes(_menuItem.StateNormal.ItemHighlight.Back,
-                                _menuItem.StateNormal.ItemHighlight.Border,
-                                _menuItem.StateNormal.ItemHighlight);
-                    splitPalette = _menuItem.StateNormal.ItemSplit;
+                    SetPalettes(KryptonContextMenuItem.StateNormal.ItemHighlight.Back,
+                                KryptonContextMenuItem.StateNormal.ItemHighlight.Border,
+                                KryptonContextMenuItem.StateNormal.ItemHighlight);
+                    splitPalette = KryptonContextMenuItem.StateNormal.ItemSplit;
                     break;
                 case PaletteState.Disabled:
-                    SetPalettes(_menuItem.StateDisabled.ItemHighlight.Back,
-                                _menuItem.StateDisabled.ItemHighlight.Border,
-                                _menuItem.StateDisabled.ItemHighlight);
-                    splitPalette = _menuItem.StateDisabled.ItemSplit;
+                    SetPalettes(KryptonContextMenuItem.StateDisabled.ItemHighlight.Back,
+                                KryptonContextMenuItem.StateDisabled.ItemHighlight.Border,
+                                KryptonContextMenuItem.StateDisabled.ItemHighlight);
+                    splitPalette = KryptonContextMenuItem.StateDisabled.ItemSplit;
                     break;
                 case PaletteState.Tracking:
-                    SetPalettes(_menuItem.StateHighlight.ItemHighlight.Back,
-                                _menuItem.StateHighlight.ItemHighlight.Border,
-                                _menuItem.StateHighlight.ItemHighlight);
-                    splitPalette = _menuItem.StateHighlight.ItemSplit;
+                    SetPalettes(KryptonContextMenuItem.StateHighlight.ItemHighlight.Back,
+                                KryptonContextMenuItem.StateHighlight.ItemHighlight.Border,
+                                KryptonContextMenuItem.StateHighlight.ItemHighlight);
+                    splitPalette = KryptonContextMenuItem.StateHighlight.ItemSplit;
                     break;
             }
 
 
             // Validate incoming reference
-            if (context == null) throw new ArgumentNullException("context");
+            if (context == null)
+            {
+                throw new ArgumentNullException("context");
+            }
 
             // If we have image display
             if (_fixedImage != null)
@@ -600,22 +618,23 @@ namespace ComponentFactory.Krypton.Toolkit
                 }
 
                 // Decide on the enabled state of the display
-                _itemEnabled = _provider.ProviderEnabled && ResolveEnabled;
-                PaletteContextMenuItemState menuItemState = (_itemEnabled ? _menuItem.StateNormal : _menuItem.StateDisabled);
+                ItemEnabled = _provider.ProviderEnabled && ResolveEnabled;
+                PaletteContextMenuItemState menuItemState = (ItemEnabled ? KryptonContextMenuItem.StateNormal : KryptonContextMenuItem.StateDisabled);
 
                 // Update palettes based on Checked state
-                PaletteTripleJustImage justImage = (ResolveChecked ? _menuItem.StateChecked.ItemImage : menuItemState.ItemImage);
-                if (_imageCanvas != null)
-                    _imageCanvas.SetPalettes(justImage.Back, justImage.Border);
+                PaletteTripleJustImage justImage = (ResolveChecked ? KryptonContextMenuItem.StateChecked.ItemImage : menuItemState.ItemImage);
+                _imageCanvas?.SetPalettes(justImage.Back, justImage.Border);
 
                 // Update the Enabled state
                 _imageContent.SetPalette(justImage.Content);
-                _imageContent.Enabled = _itemEnabled;
-                _textContent.Enabled = _itemEnabled;
-                _splitSeparator.Enabled = _itemEnabled;
-                _subMenuContent.Enabled = _itemEnabled;
+                _imageContent.Enabled = ItemEnabled;
+                _textContent.Enabled = ItemEnabled;
+                SplitSeparator.Enabled = ItemEnabled;
+                _subMenuContent.Enabled = ItemEnabled;
                 if (_shortcutContent != null)
-                    _shortcutContent.Enabled = _itemEnabled;
+                {
+                    _shortcutContent.Enabled = ItemEnabled;
+                }
 
                 // Update the Text/ExtraText
                 _fixedTextExtraText.ShortText = ResolveText;
@@ -627,8 +646,7 @@ namespace ComponentFactory.Krypton.Toolkit
 
             }
 
-            if (_splitSeparator != null)
-                _splitSeparator.SetPalettes(splitPalette.Back, splitPalette.Border);
+            SplitSeparator?.SetPalettes(splitPalette.Back, splitPalette.Border);
 
             return base.GetPreferredSize(context);
         }
@@ -666,12 +684,16 @@ namespace ComponentFactory.Krypton.Toolkit
                 case "KryptonCommand":
                     // Unhook from any existing command
                     if (_cachedCommand != null)
+                    {
                         _cachedCommand.PropertyChanged -= new PropertyChangedEventHandler(OnCommandPropertyChanged);
+                    }
 
                     // Hook into the new command
-                    _cachedCommand = _menuItem.KryptonCommand;
+                    _cachedCommand = KryptonContextMenuItem.KryptonCommand;
                     if (_cachedCommand != null)
+                    {
                         _cachedCommand.PropertyChanged += new PropertyChangedEventHandler(OnCommandPropertyChanged);
+                    }
 
                     // Update to show new state
                     _provider.ProviderNeedPaintDelegate(this, new NeedLayoutEventArgs(true));

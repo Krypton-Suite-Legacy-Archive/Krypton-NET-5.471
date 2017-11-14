@@ -10,14 +10,11 @@
 
 using System;
 using System.Drawing;
-using System.Drawing.Design;
 using System.Collections;
 using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
-using System.Windows.Forms.Design.Behavior;
-using System.Diagnostics;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -48,14 +45,18 @@ namespace ComponentFactory.Krypton.Toolkit
 			// Hook into changes in selected component
 			IComponentChangeService service = (IComponentChangeService)GetService(typeof(IComponentChangeService));
 			if (service != null)
-				service.ComponentChanged += new ComponentChangedEventHandler(OnComponentChanged);
+			{
+			    service.ComponentChanged += new ComponentChangedEventHandler(OnComponentChanged);
+			}
 
-			// If inside a Krypton split container then always lock the component from user size/location change
+		    // If inside a Krypton split container then always lock the component from user size/location change
             if (_panel != null)
             {
                 PropertyDescriptor descriptor = TypeDescriptor.GetProperties(component)["Locked"];
                 if ((descriptor != null) && (_panel.Parent is KryptonSplitContainer))
+                {
                     descriptor.SetValue(component, true);
+                }
             }
 		}
 
@@ -80,27 +81,30 @@ namespace ComponentFactory.Krypton.Toolkit
 				// If the panel is inside our Krypton split container then prevent 
 				// user changing the size or location of the split panel instance
 				if (Control.Parent is KryptonSplitContainer)
-					return (SelectionRules.None | SelectionRules.Locked);
+				{
+				    return (SelectionRules.None | SelectionRules.Locked);
+				}
 				else
-					return SelectionRules.None;
+				{
+				    return SelectionRules.None;
+				}
 			}
 		}
 
         /// <summary>
         /// Should painting be performed for the selection glyph.
         /// </summary>
-        public bool CanPaint
-        {
-            get { return true; }
-        }
+        public bool CanPaint => true;
 
-        /// <summary>
+	    /// <summary>
         /// Select the control that contains the group panel.
         /// </summary>
         public void SelectParentControl()
         {
-            if ((_panel != null) && (_panel.Parent != null))
+            if (_panel?.Parent != null)
+            {
                 _selectionService.SetSelectedComponents(new object[] { _panel.Parent }, SelectionTypes.Primary);
+            }
         }
         #endregion
 
@@ -120,7 +124,9 @@ namespace ComponentFactory.Krypton.Toolkit
 
                     // Must unhook our event from the service so we can be garbage collected
                     if (service != null)
+                    {
                         service.ComponentChanged -= new ComponentChangedEventHandler(OnComponentChanged);
+                    }
                 }
             }
             finally
@@ -141,7 +147,9 @@ namespace ComponentFactory.Krypton.Toolkit
 
 			// If the panel has no children, then draw the watermark
 			if ((_panel != null) && (_panel.Controls.Count == 0))
-				DrawWaterMark(pe.Graphics);
+			{
+			    DrawWaterMark(pe.Graphics);
+			}
 		}
 
 		/// <summary>
@@ -185,13 +193,15 @@ namespace ComponentFactory.Krypton.Toolkit
 			get
 			{
 				// If we have a valid Krypton splitter panel instance
-				if ((_panel != null) && (_panel.Parent != null))
+				if (_panel?.Parent != null)
 				{
 					// Then get the attribute associated with the parent of the panel
 					return (InheritanceAttribute)TypeDescriptor.GetAttributes(_panel.Parent)[typeof(InheritanceAttribute)];
 				}
 				else
-					return base.InheritanceAttribute;
+				{
+				    return base.InheritanceAttribute;
+				}
 			}
 		}
 		#endregion
@@ -200,14 +210,16 @@ namespace ComponentFactory.Krypton.Toolkit
 		private void OnComponentChanged(object sender, ComponentChangedEventArgs e)
 		{
 			// Assuming the panel has a parent
-			if ((_panel != null) && (_panel.Parent != null))
+			if (_panel?.Parent != null)
 			{
 				// And the panel does not have any children yet
 				if (_panel.Controls.Count == 0)
 				{
 					// Then we need to draw a watermark to indicate no children
 					using(Graphics g = _panel.CreateGraphics())
-						DrawWaterMark(g);
+					{
+					    DrawWaterMark(g);
+					}
 				}
 				else
 				{

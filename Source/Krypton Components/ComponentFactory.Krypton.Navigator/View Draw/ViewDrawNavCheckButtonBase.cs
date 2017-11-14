@@ -9,10 +9,7 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.ComponentModel;
@@ -27,11 +24,10 @@ namespace ComponentFactory.Krypton.Navigator
                                                          IContentValues
 	{
 		#region Instance Fields
-        private KryptonNavigator _navigator;
-        private KryptonPage _page;
+
+	    private KryptonPage _page;
         private NeedPaintHandler _needPaint;
-        private ButtonSpecNavManagerLayoutBar _buttonManager;
-        private PageButtonController _buttonController;
+	    private PageButtonController _buttonController;
         private DateTime _lastClick;
 
         /// <summary>Override for accessing the disable state.</summary>
@@ -125,7 +121,7 @@ namespace ComponentFactory.Krypton.Navigator
         {
             Debug.Assert(navigator != null);
 
-            _navigator = navigator;
+            Navigator = navigator;
             _page = page;
             _lastClick = DateTime.Now.AddDays(-1);
 
@@ -157,17 +153,19 @@ namespace ComponentFactory.Krypton.Navigator
             if (AllowButtonSpecs)
             {
                 // Create button specification collection manager
-                _buttonManager = new ButtonSpecNavManagerLayoutBar(Navigator, Navigator.InternalRedirector, Page.ButtonSpecs, null,
+                ButtonSpecManager = new ButtonSpecNavManagerLayoutBar(Navigator, Navigator.InternalRedirector, Page.ButtonSpecs, null,
                                                                    new ViewLayoutDocker[] { LayoutDocker },
                                                                    new IPaletteMetric[] { Navigator.StateCommon },
                                                                    new PaletteMetricInt[] { PaletteMetricInt.PageButtonInset },
                                                                    new PaletteMetricInt[] { PaletteMetricInt.PageButtonInset },
                                                                    new PaletteMetricPadding[] { PaletteMetricPadding.PageButtonPadding },
                                                                    new GetToolStripRenderer(Navigator.CreateToolStripRenderer),
-                                                                   null);
+                                                                   null)
+                {
 
-                // Hook up the tooltip manager so that tooltips can be generated
-                _buttonManager.ToolTipManager = Navigator.ToolTipManager;
+                    // Hook up the tooltip manager so that tooltips can be generated
+                    ToolTipManager = Navigator.ToolTipManager
+                };
 
                 // Allow derived classes to update the remapping with different values
                 UpdateButtonSpecMapping();
@@ -180,10 +178,10 @@ namespace ComponentFactory.Krypton.Navigator
         /// <param name="disposing">Called from Dispose method.</param>
         protected override void Dispose(bool disposing)
         {
-            if (_buttonManager != null)
+            if (ButtonSpecManager != null)
             {
-                _buttonManager.Destruct();
-                _buttonManager = null;
+                ButtonSpecManager.Destruct();
+                ButtonSpecManager = null;
             }
 
             // Must call base class to finish disposing
@@ -209,7 +207,7 @@ namespace ComponentFactory.Krypton.Navigator
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public NeedPaintHandler NeedPaint
         {
-            get { return _needPaint; }
+            get => _needPaint;
 
             set
             {
@@ -219,8 +217,10 @@ namespace ComponentFactory.Krypton.Navigator
 
                 _needPaint = value;
 
-                if (_buttonManager != null)
-                    _buttonManager.NeedPaint = _needPaint;
+                if (ButtonSpecManager != null)
+                {
+                    ButtonSpecManager.NeedPaint = _needPaint;
+                }
             }
         }
         #endregion
@@ -231,7 +231,7 @@ namespace ComponentFactory.Krypton.Navigator
         /// </summary>
         public bool HasFocus
         {
-            get { return _overrideDisabled.Apply; }
+            get => _overrideDisabled.Apply;
 
             set
             {
@@ -253,7 +253,7 @@ namespace ComponentFactory.Krypton.Navigator
         /// </summary>
         public virtual KryptonPage Page
         {
-            get { return _page; }
+            get => _page;
 
             set
             {
@@ -286,11 +286,9 @@ namespace ComponentFactory.Krypton.Navigator
         /// <summary>
         /// Gets the navigator that owns this view.
         /// </summary>
-        public KryptonNavigator Navigator
-        {
-            get { return _navigator; }
-        }
-        #endregion
+        public KryptonNavigator Navigator { get; }
+
+	    #endregion
 
         #region ButtonSpecFromView
         /// <summary>
@@ -300,10 +298,7 @@ namespace ComponentFactory.Krypton.Navigator
         /// <returns>Reference to ButtonSpec; otherwise null.</returns>
         public ButtonSpec ButtonSpecFromView(ViewBase element)
         {
-            if (_buttonManager != null)
-                return _buttonManager.ButtonSpecFromView(element);
-            else
-                return null;
+            return ButtonSpecManager?.ButtonSpecFromView(element);
         }
         #endregion
 
@@ -311,11 +306,9 @@ namespace ComponentFactory.Krypton.Navigator
         /// <summary>
         /// Gets a value indicating if button specs are allowed on the button.
         /// </summary>
-        public virtual bool AllowButtonSpecs
-        {
-            get { return true; }
-        }
-        #endregion
+        public virtual bool AllowButtonSpecs => true;
+
+	    #endregion
 
         #region PerformClick
         /// <summary>
@@ -362,21 +355,17 @@ namespace ComponentFactory.Krypton.Navigator
         /// <summary>
         /// Should the item be selected on the mouse down.
         /// </summary>
-        protected virtual bool ButtonClickOnDown
-        {
-            get { return false; }
-        }
-        #endregion
+        protected virtual bool ButtonClickOnDown => false;
+
+	    #endregion
 
         #region ButtonSpecManager
         /// <summary>
         /// Gets access to the button spec manager used for this button.
         /// </summary>
-        public ButtonSpecNavManagerLayoutBar ButtonSpecManager
-        {
-            get { return _buttonManager; }
-        }
-        #endregion
+        public ButtonSpecNavManagerLayoutBar ButtonSpecManager { get; private set; }
+
+	    #endregion
 
         #region UpdateButtonSpecMapping
         /// <summary>
@@ -385,8 +374,8 @@ namespace ComponentFactory.Krypton.Navigator
         public virtual void UpdateButtonSpecMapping()
         {
             // Define a default mapping for text color and recreate to use that new setting
-            _buttonManager.SetRemapTarget(Navigator.Bar.CheckButtonStyle);
-            _buttonManager.RecreateButtons();
+            ButtonSpecManager.SetRemapTarget(Navigator.Bar.CheckButtonStyle);
+            ButtonSpecManager.RecreateButtons();
         }
         #endregion
 
@@ -398,8 +387,10 @@ namespace ComponentFactory.Krypton.Navigator
         protected virtual IMouseController CreateMouseController()
         {
             // Create the button controller
-            _buttonController = new PageButtonController(this, new NeedPaintHandler(OnNeedPaint));
-            _buttonController.ClickOnDown = true;
+            _buttonController = new PageButtonController(this, new NeedPaintHandler(OnNeedPaint))
+            {
+                ClickOnDown = true
+            };
             _buttonController.Click += new MouseEventHandler(OnClick);
             _buttonController.RightClick += new MouseEventHandler(OnRightClick);
 
@@ -420,8 +411,8 @@ namespace ComponentFactory.Krypton.Navigator
             KeyController = _buttonController;
 
             // Create two decorators in order to support tooltips and hover events
-            ToolTipController toolTipController = new ToolTipController(_navigator.ToolTipManager, this, _buttonController);
-            ToolTipController hoverController = new ToolTipController(_navigator.HoverManager, this, toolTipController);
+            ToolTipController toolTipController = new ToolTipController(Navigator.ToolTipManager, this, _buttonController);
+            ToolTipController hoverController = new ToolTipController(Navigator.HoverManager, this, toolTipController);
             return hoverController;
         }
         #endregion
@@ -434,8 +425,7 @@ namespace ComponentFactory.Krypton.Navigator
         /// <param name="e">An NeedLayoutEventArgs containing event data.</param>
         protected virtual void OnNeedPaint(object sender, NeedLayoutEventArgs e)
         {
-            if (_needPaint != null)
-                _needPaint(this, e);
+            _needPaint?.Invoke(this, e);
         }
         #endregion
 
@@ -467,11 +457,13 @@ namespace ComponentFactory.Krypton.Navigator
             _lastClick = now;
 
             // Can only select the page if not already selected and allowed to have a selected tab
-            if ((_navigator.SelectedPage != _page) && _navigator.AllowTabSelect)
+            if ((Navigator.SelectedPage != _page) && Navigator.AllowTabSelect)
             {
                 // This event might have caused the page to be removed or hidden and so check the page is still present before selecting it
-                if (_navigator.ChildPanel.Controls.Contains(_page) && _page.LastVisibleSet)
-                    _navigator.SelectedPage = _page;
+                if (Navigator.ChildPanel.Controls.Contains(_page) && _page.LastVisibleSet)
+                {
+                    Navigator.SelectedPage = _page;
+                }
             }
         }
 
@@ -483,22 +475,28 @@ namespace ComponentFactory.Krypton.Navigator
         protected virtual void OnRightClick(object sender, MouseEventArgs e)
         {
             // Can only select the page if not already selected and allowed to select a tab
-            if ((_navigator.SelectedPage != _page) && _navigator.AllowTabSelect)
-                _navigator.SelectedPage = _page;
+            if ((Navigator.SelectedPage != _page) && Navigator.AllowTabSelect)
+            {
+                Navigator.SelectedPage = _page;
+            }
 
             // Generate event so user can decide what, if any, context menu to show
-            ShowContextMenuArgs scma = new ShowContextMenuArgs(_page, _navigator.Pages.IndexOf(_page));
-            _navigator.OnShowContextMenu(scma);
+            ShowContextMenuArgs scma = new ShowContextMenuArgs(_page, Navigator.Pages.IndexOf(_page));
+            Navigator.OnShowContextMenu(scma);
 
             // Do we need to show a context menu
             if (!scma.Cancel)
             {
                 if (CommonHelper.ValidKryptonContextMenu(scma.KryptonContextMenu))
-                    scma.KryptonContextMenu.Show(_navigator, _navigator.PointToScreen(new Point(e.X, e.Y)));
+                {
+                    scma.KryptonContextMenu.Show(Navigator, Navigator.PointToScreen(new Point(e.X, e.Y)));
+                }
                 else 
                 {
                     if (CommonHelper.ValidContextMenuStrip(scma.ContextMenuStrip))
-                        scma.ContextMenuStrip.Show(_navigator.PointToScreen(new Point(e.X, e.Y)));
+                    {
+                        scma.ContextMenuStrip.Show(Navigator.PointToScreen(new Point(e.X, e.Y)));
+                    }
                 }
             }
         }
@@ -507,34 +505,32 @@ namespace ComponentFactory.Krypton.Navigator
         #region Implementation
         private void OnDragStart(object sender, DragStartEventCancelArgs e)
         {
-            _navigator.InternalDragStart(e, _page);
+            Navigator.InternalDragStart(e, _page);
         }
 
         private void OnDragMove(object sender, PointEventArgs e)
         {
-            _navigator.InternalDragMove(e);
+            Navigator.InternalDragMove(e);
         }
 
         private void OnDragEnd(object sender, PointEventArgs e)
         {
-            _navigator.InternalDragEnd(e);
+            Navigator.InternalDragEnd(e);
         }
 
         private void OnDragQuit(object sender, EventArgs e)
         {
-            _navigator.InternalDragQuit();
+            Navigator.InternalDragQuit();
         }
 
         private void OnButtonDragRectangle(object sender, ButtonDragRectangleEventArgs e)
         {
-            if (ButtonDragRectangle != null)
-                ButtonDragRectangle(this, e);
+            ButtonDragRectangle?.Invoke(this, e);
         }
 
         private void OnButtonDragOffset(object sender, ButtonDragOffsetEventArgs e)
         {
-            if (ButtonDragOffset != null)
-                ButtonDragOffset(this, e);
+            ButtonDragOffset?.Invoke(this, e);
         }
         #endregion
     }

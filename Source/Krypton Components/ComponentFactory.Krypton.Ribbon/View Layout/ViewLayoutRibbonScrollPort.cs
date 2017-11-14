@@ -9,19 +9,16 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Diagnostics;
 using ComponentFactory.Krypton.Toolkit;
 
 namespace ComponentFactory.Krypton.Ribbon
 {
-	/// <summary>
-	/// Sizes and positions a provided view but provides scrolling if too big for area.
-	/// </summary>
+    /// <summary>
+    /// Sizes and positions a provided view but provides scrolling if too big for area.
+    /// </summary>
     internal class ViewLayoutRibbonScrollPort : ViewComposite
     {
         #region Type Definintions
@@ -44,8 +41,10 @@ namespace ComponentFactory.Krypton.Ribbon
                 _ribbon = ribbon;
 
                 // Create and add a hidden button to act as the focus target
-                _hiddenFocusTarget = new Button();
-                _hiddenFocusTarget.TabStop = false;
+                _hiddenFocusTarget = new Button
+                {
+                    TabStop = false
+                };
                 _hiddenFocusTarget.Location = new Point(-_hiddenFocusTarget.Width, -_hiddenFocusTarget.Height);
                 CommonHelper.AddControlToParent(this, _hiddenFocusTarget);
             }
@@ -75,14 +74,14 @@ namespace ComponentFactory.Krypton.Ribbon
 
                 // Grab the view manager handling the focus view
                 ViewBase focusView = null;
-                if (c is VisualPopupGroup)
+                if (c is VisualPopupGroup popGroup)
                 {
-                    ViewRibbonPopupGroupManager manager = (ViewRibbonPopupGroupManager)((VisualPopupGroup)c).GetViewManager();
+                    ViewRibbonPopupGroupManager manager = (ViewRibbonPopupGroupManager)popGroup.GetViewManager();
                     focusView = manager.FocusView;
                 }
-                else if (c is VisualPopupMinimized)
+                else if (c is VisualPopupMinimized minimized)
                 {
-                    ViewRibbonMinimizedManager manager = (ViewRibbonMinimizedManager)((VisualPopupMinimized)c).GetViewManager();
+                    ViewRibbonMinimizedManager manager = (ViewRibbonMinimizedManager)minimized.GetViewManager();
                     focusView = manager.FocusView;
                 }
 
@@ -113,7 +112,9 @@ namespace ComponentFactory.Krypton.Ribbon
         #endregion
 
         #region Static Fields
-        private static int SCROLL_GAP = 8;
+
+        private const int SCROLL_GAP = 8;
+
         #endregion
 
         #region Instance Fields
@@ -121,7 +122,6 @@ namespace ComponentFactory.Krypton.Ribbon
         private NeedPaintHandler _needPaintDelegate;
         private Orientation _orientation;
         private ViewBase _viewFiller;
-        private ViewLayoutControl _viewControl;
         private ViewLayoutRibbonScroller _nearScroller;
         private ViewLayoutRibbonScroller _farScroller;
         private ViewLayoutRibbonTabs _ribbonTabs;
@@ -176,12 +176,14 @@ namespace ComponentFactory.Krypton.Ribbon
             // from drawing over the end scrollers.
             _viewControlContent = new RibbonViewControl(ribbon);
             _viewControlContent.PaintBackground += new PaintEventHandler(OnViewControlPaintBackground);
-            _viewControl = new ViewLayoutControl(_viewControlContent, ribbon, _viewFiller);
+            ViewLayoutControl = new ViewLayoutControl(_viewControlContent, ribbon, _viewFiller);
 
             // For ribbon tabs we want to monitor and intercept the WM_NCHITTEST so that the remainder of the 
             // tabs area acts like the application title bar and can be used to manipulate the application
             if (_ribbonTabs != null)
-                _viewControl.ChildControl.WndProcHitTest += new EventHandler<ViewControlHitTestArgs>(OnChildWndProcHitTest);
+            {
+                ViewLayoutControl.ChildControl.WndProcHitTest += new EventHandler<ViewControlHitTestArgs>(OnChildWndProcHitTest);
+            }
 
             // Create the two scrollers used when not enough space for filler
             _nearScroller = new ViewLayoutRibbonScroller(ribbon, NearOrientation, insetForTabs, needPaintDelegate);
@@ -192,30 +194,28 @@ namespace ComponentFactory.Krypton.Ribbon
             _farScroller.Click += new EventHandler(OnFarClick);
 
             // Add elements in correct order
-            Add(_viewControl);
+            Add(ViewLayoutControl);
             Add(_nearScroller);
             Add(_farScroller);
         }
 
-		/// <summary>
-		/// Obtains the String representation of this instance.
-		/// </summary>
-		/// <returns>User readable name of the instance.</returns>
-		public override string ToString()
-		{
-			// Return the class name and instance identifier
+        /// <summary>
+        /// Obtains the String representation of this instance.
+        /// </summary>
+        /// <returns>User readable name of the instance.</returns>
+        public override string ToString()
+        {
+            // Return the class name and instance identifier
             return "ViewLayoutRibbonScrollPort:" + Id;
-		}
-		#endregion
+        }
+        #endregion
 
         #region NeedPaintHandler
         /// <summary>
         /// Gets access to the paint delegate to redraw the owning control.
         /// </summary>
-        public NeedPaintHandler ViewControlPaintDelegate
-        {
-            get { return _viewControl.ChildPaintDelegate; }
-        }
+        public NeedPaintHandler ViewControlPaintDelegate => ViewLayoutControl.ChildPaintDelegate;
+
         #endregion
 
         #region TransparentBackground
@@ -224,8 +224,8 @@ namespace ComponentFactory.Krypton.Ribbon
         /// </summary>
         public bool TransparentBackground
         {
-            get { return _viewControl.ChildTransparentBackground; }
-            set { _viewControl.ChildTransparentBackground = value; }
+            get => ViewLayoutControl.ChildTransparentBackground;
+            set => ViewLayoutControl.ChildTransparentBackground = value;
         }
         #endregion
 
@@ -233,10 +233,8 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <summary>
         /// Gets access to the actual control instance.
         /// </summary>
-        public ViewLayoutControl ViewLayoutControl
-        {
-            get { return _viewControl; }
-        }
+        public ViewLayoutControl ViewLayoutControl { get; }
+
         #endregion
 
         #region Visible
@@ -245,8 +243,8 @@ namespace ComponentFactory.Krypton.Ribbon
         /// </summary>
         public override bool Visible
         {
-            get { return base.Visible; }
-            
+            get => base.Visible;
+
             set
             {
                 if (base.Visible != value)
@@ -254,7 +252,7 @@ namespace ComponentFactory.Krypton.Ribbon
                     base.Visible = value;
 
                     // Only want the child real control to show when we are
-                    _viewControl.Visible = value;
+                    ViewLayoutControl.Visible = value;
                 }
             }
         }
@@ -266,7 +264,7 @@ namespace ComponentFactory.Krypton.Ribbon
         /// </summary>
         public override bool Enabled
         {
-            get { return base.Enabled; }
+            get => base.Enabled;
 
             set
             {
@@ -275,7 +273,7 @@ namespace ComponentFactory.Krypton.Ribbon
                     base.Enabled = value;
 
                     // Only want the child real control to be enabled when we are
-                    _viewControl.Enabled = value;
+                    ViewLayoutControl.Enabled = value;
                 }
             }
         }
@@ -287,10 +285,10 @@ namespace ComponentFactory.Krypton.Ribbon
         /// </summary>
         public Orientation Orientation
         {
-            get { return _orientation; }
-            
-            set 
-            { 
+            get => _orientation;
+
+            set
+            {
                 _orientation = value;
                 _nearScroller.Orientation = NearOrientation;
                 _farScroller.Orientation = FarOrientation;
@@ -305,10 +303,9 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <returns>Array of KeyTipInfo; otherwise null.</returns>
         public KeyTipInfo[] GetGroupKeyTips()
         {
-            ViewLayoutRibbonGroups groups = _viewFiller as ViewLayoutRibbonGroups;
 
             // If we contain a groups layout
-            if (groups != null)
+            if (_viewFiller is ViewLayoutRibbonGroups groups)
             {
                 KeyTipInfoList keyTips = new KeyTipInfoList();
 
@@ -317,13 +314,19 @@ namespace ComponentFactory.Krypton.Ribbon
 
                 // Remove all those that do not intercept the view rectangle
                 for (int i = 0; i < keyTips.Count; i++)
+                {
                     if (!_viewClipRect.Contains(keyTips[i].ClientRect))
+                    {
                         keyTips[i].Visible = false;
+                    }
+                }
 
                 return keyTips.ToArray();
             }
             else
+            {
                 return new KeyTipInfo[] { };
+            }
         }
         #endregion
 
@@ -335,17 +338,18 @@ namespace ComponentFactory.Krypton.Ribbon
         public ViewBase GetFirstFocusItem()
         {
             ViewBase view = null;
-            ViewLayoutRibbonGroups groups = _viewFiller as ViewLayoutRibbonGroups;
 
             // If we contain a groups layout
-            if (groups != null)
+            if (_viewFiller is ViewLayoutRibbonGroups groups)
             {
                 // Ask the groups for the first focus item
                 view = groups.GetFirstFocusItem();
 
                 // Make sure client area of view is visible
                 if (view != null)
+                {
                     ScrollIntoView(view.ClientRectangle, true);
+                }
             }
 
             return view;
@@ -360,17 +364,18 @@ namespace ComponentFactory.Krypton.Ribbon
         public ViewBase GetLastFocusItem()
         {
             ViewBase view = null;
-            ViewLayoutRibbonGroups groups = _viewFiller as ViewLayoutRibbonGroups;
 
             // If we contain a groups layout
-            if (groups != null)
+            if (_viewFiller is ViewLayoutRibbonGroups groups)
             {
                 // Ask the groups for the first focus item
                 view = groups.GetLastFocusItem();
 
                 // Make sure client area of view is visible
                 if (view != null)
+                {
                     ScrollIntoView(view.ClientRectangle, true);
+                }
             }
 
             return view;
@@ -386,17 +391,18 @@ namespace ComponentFactory.Krypton.Ribbon
         public ViewBase GetNextFocusItem(ViewBase current)
         {
             ViewBase view = null;
-            ViewLayoutRibbonGroups groups = _viewFiller as ViewLayoutRibbonGroups;
 
             // If we contain a groups layout
-            if (groups != null)
+            if (_viewFiller is ViewLayoutRibbonGroups groups)
             {
                 // Ask the groups for the next focus item
                 view = groups.GetNextFocusItem(current);
 
                 // Make sure client area of view is visible
                 if (view != null)
+                {
                     ScrollIntoView(view.ClientRectangle, true);
+                }
             }
 
             return view;
@@ -412,17 +418,18 @@ namespace ComponentFactory.Krypton.Ribbon
         public ViewBase GetPreviousFocusItem(ViewBase current)
         {
             ViewBase view = null;
-            ViewLayoutRibbonGroups groups = _viewFiller as ViewLayoutRibbonGroups;
 
             // If we contain a groups layout
-            if (groups != null)
+            if (_viewFiller is ViewLayoutRibbonGroups groups)
             {
                 // Ask the groups for the previous focus item
                 view = groups.GetPreviousFocusItem(current);
 
                 // Make sure client area of view is visible
                 if (view != null)
+                {
                     ScrollIntoView(view.ClientRectangle, true);
+                }
             }
 
             return view;
@@ -437,15 +444,15 @@ namespace ComponentFactory.Krypton.Ribbon
         public override Size GetPreferredSize(ViewLayoutContext context)
         {
             // We always want to be the size needed to show the filler completely
-            return _viewControl.GetPreferredSize(context);
+            return ViewLayoutControl.GetPreferredSize(context);
         }
 
-		/// <summary>
-		/// Perform a layout of the elements.
-		/// </summary>
-		/// <param name="context">Layout context.</param>
-		public override void Layout(ViewLayoutContext context)
-		{
+        /// <summary>
+        /// Perform a layout of the elements.
+        /// </summary>
+        /// <param name="context">Layout context.</param>
+        public override void Layout(ViewLayoutContext context)
+        {
             Debug.Assert(context != null);
 
             // Out enabled state is the same as that of the ribbon itself
@@ -458,19 +465,23 @@ namespace ComponentFactory.Krypton.Ribbon
             Rectangle controlRect = new Rectangle(Point.Empty, ClientSize);
 
             // Reset the the view control layout offset to be zero again
-            _viewControl.LayoutOffset = Point.Empty;
+            ViewLayoutControl.LayoutOffset = Point.Empty;
 
             // Ask the view control the size it would like to be, this is the requested filler
             // size of the control. If it wants more than we can give then scroll buttons are
             // needed, otherwise we can give it the requested size and any extra available.
             _ribbon.GetViewManager().DoNotLayoutControls = true;
-            _viewControl.GetPreferredSize(context);
+            ViewLayoutControl.GetPreferredSize(context);
 
             // Ensure context has the correct control
-            if ((_viewControl.ChildControl != null) && !_viewControl.ChildControl.IsDisposed)
-                using (CorrectContextControl ccc = new CorrectContextControl(context, _viewControl.ChildControl))
+            if ((ViewLayoutControl.ChildControl != null) && !ViewLayoutControl.ChildControl.IsDisposed)
+            {
+                using (CorrectContextControl ccc = new CorrectContextControl(context, ViewLayoutControl.ChildControl))
+                {
                     _viewFiller.Layout(context);
-           
+                }
+            }
+
             _ribbon.GetViewManager().DoNotLayoutControls = false;
             Size fillerSize = _viewFiller.ClientSize;
 
@@ -492,7 +503,7 @@ namespace ComponentFactory.Krypton.Ribbon
                 _farScroller.Visible = false;
 
                 // We need to layout again but this time we do layout the actual children
-                _viewControl.Layout(context);
+                ViewLayoutControl.Layout(context);
             }
             else
             {
@@ -525,15 +536,21 @@ namespace ComponentFactory.Krypton.Ribbon
                     _nearScroller.Layout(context);
                 }
                 else
+                {
                     _nearScroller.Visible = false;
+                }
 
                 int maxOffset = 0;
 
                 // Work out the maximum scroll offset needed to show all of the filler
                 if (Orientation == Orientation.Horizontal)
+                {
                     maxOffset = fillerSize.Width - layoutRect.Width;
+                }
                 else
+                {
                     maxOffset = fillerSize.Height - layoutRect.Height;
+                }
 
                 // We only need the far scroller if we are not at the right scroll position
                 if (_scrollOffset < maxOffset)
@@ -560,13 +577,19 @@ namespace ComponentFactory.Krypton.Ribbon
                     _farScroller.Layout(context);
                 }
                 else
+                {
                     _farScroller.Visible = false;
+                }
 
                 // Calculate the maximum offset again with all scrollers positioned
                 if (Orientation == Orientation.Horizontal)
+                {
                     maxOffset = fillerSize.Width - layoutRect.Width;
+                }
                 else
+                {
                     maxOffset = fillerSize.Height - layoutRect.Height;
+                }
 
                 // Limit check the current offset
                 _scrollOffset = Math.Min(_scrollOffset, maxOffset);
@@ -576,14 +599,18 @@ namespace ComponentFactory.Krypton.Ribbon
 
                 // Apply the offset to the display of the view filler
                 if (Orientation == Orientation.Horizontal)
-                    _viewControl.LayoutOffset = new Point(-_scrollOffset, 0);
+                {
+                    ViewLayoutControl.LayoutOffset = new Point(-_scrollOffset, 0);
+                }
                 else
-                    _viewControl.LayoutOffset = new Point(0, -_scrollOffset);
-                
+                {
+                    ViewLayoutControl.LayoutOffset = new Point(0, -_scrollOffset);
+                }
+
                 // Position the filler in the remaining space
                 context.DisplayRectangle = layoutRect;
-                _viewControl.GetPreferredSize(context);
-                _viewControl.Layout(context);
+                ViewLayoutControl.GetPreferredSize(context);
+                ViewLayoutControl.Layout(context);
             }
 
             // Put back the original display value now we have finished
@@ -600,7 +627,7 @@ namespace ComponentFactory.Krypton.Ribbon
                 {
                     // Cast to correct type
                     ViewBase viewTab = layoutTabs.GetViewForRibbonTab(_ribbon.SelectedTab);
-                    
+
                     // If a scroll change is required to bring it into view
                     if (ScrollIntoView(viewTab.ClientRectangle, false))
                     {
@@ -610,7 +637,7 @@ namespace ComponentFactory.Krypton.Ribbon
                 }
             }
         }
-		#endregion
+        #endregion
 
         #region Paint
         /// <summary>
@@ -649,7 +676,9 @@ namespace ComponentFactory.Krypton.Ribbon
                         }
                     }
                     else
+                    {
                         child.Render(context);
+                    }
                 }
             }
         }
@@ -658,15 +687,12 @@ namespace ComponentFactory.Krypton.Ribbon
         #region Implementation
         private void OnChildWndProcHitTest(object sender, ViewControlHitTestArgs e)
         {
-            if (_ribbonTabs != null)
+            if (_ribbonTabs?.GetViewForSpare != null)
             {
-                if (_ribbonTabs.GetViewForSpare != null)
+                if (_ribbonTabs.GetViewForSpare.ClientRectangle.Contains(e.Point))
                 {
-                    if (_ribbonTabs.GetViewForSpare.ClientRectangle.Contains(e.Point))
-                    {
-                        e.Cancel = false;
-                        e.Result = (IntPtr)PI.HTTRANSPARENT;
-                    }
+                    e.Cancel = false;
+                    e.Result = (IntPtr)PI.HTTRANSPARENT;
                 }
             }
         }
@@ -679,15 +705,21 @@ namespace ComponentFactory.Krypton.Ribbon
             {
                 // If off the right hand side of the area
                 if (rect.Right > _viewClipRect.Right)
+                {
                     _scrollOffset += (rect.Right - _viewClipRect.Right) + (SCROLL_GAP * 2);
+                }
 
                 // If off the left hand side of the area
                 if (rect.Left < _viewClipRect.Left)
+                {
                     _scrollOffset -= (_viewClipRect.Left - rect.Left) + SCROLL_GAP;
+                }
 
                 // Request a layout with new scroll settings
                 if (paint)
+                {
                     _needPaintDelegate(this, new NeedLayoutEventArgs(true));
+                }
 
                 // A change was made to the scroll offset
                 return true;
@@ -752,8 +784,7 @@ namespace ComponentFactory.Krypton.Ribbon
 
         private void OnViewControlPaintBackground(object sender, PaintEventArgs e)
         {
-            if (PaintBackground != null)
-                PaintBackground(sender, e);
+            PaintBackground?.Invoke(sender, e);
         }
         #endregion
     }

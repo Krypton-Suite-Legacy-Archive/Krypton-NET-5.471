@@ -8,12 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
-using System.Drawing;
-using System.Drawing.Text;
 using System.ComponentModel;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Diagnostics;
 
@@ -59,15 +54,10 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// Gets a value indicating if all values are default.
 		/// </summary>
 		[Browsable(false)]
-		public override bool IsDefault
-		{
-			get
-			{
-				return (base.IsDefault &&
-                        Padding.Equals(CommonHelper.InheritPadding));
-			}
-		}
-		#endregion
+		public override bool IsDefault => (base.IsDefault &&
+		                                   Padding.Equals(CommonHelper.InheritPadding));
+
+	    #endregion
 
         #region PopulateFromBase
         /// <summary>
@@ -90,11 +80,9 @@ namespace ComponentFactory.Krypton.Toolkit
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public new PaletteBorder Border
-        {
-            get { return base.Border; }
-        }
-        #endregion
+        public new PaletteBorder Border => base.Border;
+
+	    #endregion
 
 		#region Padding
 		/// <summary>
@@ -107,9 +95,9 @@ namespace ComponentFactory.Krypton.Toolkit
 		[RefreshPropertiesAttribute(RefreshProperties.All)]
 		public Padding Padding
 		{
-			get { return _separatorPadding; }
+			get => _separatorPadding;
 
-			set
+		    set
 			{
 				if (_separatorPadding != value)
 				{
@@ -169,7 +157,9 @@ namespace ComponentFactory.Krypton.Toolkit
             {
                 // If the user has defined an actual value to use
                 if (!Padding.Equals(CommonHelper.InheritPadding))
+                {
                     return Padding;
+                }
             }
 
             // Pass onto the inheritance

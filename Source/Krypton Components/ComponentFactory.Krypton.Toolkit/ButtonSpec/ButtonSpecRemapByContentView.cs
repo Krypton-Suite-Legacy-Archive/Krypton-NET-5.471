@@ -8,15 +8,6 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
-using System.Drawing;
-using System.Drawing.Text;
-using System.Drawing.Drawing2D;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using System.Diagnostics;
-
 namespace ComponentFactory.Krypton.Toolkit
 {
     /// <summary>
@@ -25,7 +16,7 @@ namespace ComponentFactory.Krypton.Toolkit
     public class ButtonSpecRemapByContentView : ButtonSpecRemapByContentBase
     {
         #region Instance Fields
-        private ViewDrawContent _foreground;
+
         #endregion
 
         #region Identity
@@ -45,37 +36,24 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Gets and sets the foreground to use for color map redirection.
         /// </summary>
-        public ViewDrawContent Foreground
-        {
-            get { return _foreground; }
-            set { _foreground = value; }
-        }
+        public ViewDrawContent Foreground { get; set; }
+
         #endregion
 
         #region PaletteContent
         /// <summary>
         /// Gets the palette content to use for remapping.
         /// </summary>
-        public override IPaletteContent PaletteContent 
-        {
-            get
-            {
-                if (_foreground != null)
-                    return _foreground.GetPalette();
-                else
-                    return null;
-            }
-        }
+        public override IPaletteContent PaletteContent => Foreground?.GetPalette();
+
         #endregion
 
         #region PaletteState
         /// <summary>
         /// Gets the state of the remapping area
         /// </summary>
-        public override PaletteState PaletteState 
-        {
-            get { return _foreground.State; }
-        }
+        public override PaletteState PaletteState => Foreground.State;
+
         #endregion
     }
 }

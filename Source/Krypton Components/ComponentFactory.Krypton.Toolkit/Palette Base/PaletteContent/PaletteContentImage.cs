@@ -8,14 +8,8 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Text;
 using System.ComponentModel;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using System.Diagnostics;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -49,17 +43,11 @@ namespace ComponentFactory.Krypton.Toolkit
             /// <summary>
             /// Gets a value indicating if all values are default.
             /// </summary>
-            public bool IsDefault
-            {
-                get
-                {
-                    return ((ContentImageH == PaletteRelativeAlign.Inherit) &&
-                            (ContentImageV == PaletteRelativeAlign.Inherit) &&
-                            (ContentEffect == PaletteImageEffect.Inherit) &&
-                            (ContentImageColorMap == Color.Empty) &&
-                            (ContentImageColorTo == Color.Empty));
-                }
-            }
+            public bool IsDefault => ((ContentImageH == PaletteRelativeAlign.Inherit) &&
+                                      (ContentImageV == PaletteRelativeAlign.Inherit) &&
+                                      (ContentEffect == PaletteImageEffect.Inherit) &&
+                                      (ContentImageColorMap == Color.Empty) &&
+                                      (ContentImageColorTo == Color.Empty));
         }
         #endregion
 
@@ -93,14 +81,9 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// Gets a value indicating if all values are default.
 		/// </summary>
 		[Browsable(false)]
-		public override bool IsDefault
-		{
-			get 
-			{
-                return ((_storage == null) || _storage.IsDefault);
-			}
-		}
-		#endregion
+		public override bool IsDefault => ((_storage == null) || _storage.IsDefault);
+
+	    #endregion
 
 		#region ImageH
 		/// <summary>
@@ -116,9 +99,13 @@ namespace ComponentFactory.Krypton.Toolkit
 			get 
             {
                 if (_storage == null)
+                {
                     return PaletteRelativeAlign.Inherit;
+                }
                 else
+                {
                     return _storage.ContentImageH;
+                }
             }
 
 			set
@@ -136,8 +123,10 @@ namespace ComponentFactory.Krypton.Toolkit
                 {
                     if (value != PaletteRelativeAlign.Inherit)
                     {
-                        _storage = new InternalStorage();
-                        _storage.ContentImageH = value;
+                        _storage = new InternalStorage
+                        {
+                            ContentImageH = value
+                        };
                         OnPropertyChanged("ImageH");
                         PerformNeedPaint(true);
                     }
@@ -160,9 +149,13 @@ namespace ComponentFactory.Krypton.Toolkit
             get
             {
                 if (_storage == null)
+                {
                     return PaletteRelativeAlign.Inherit;
+                }
                 else
+                {
                     return _storage.ContentImageV;
+                }
             }
 
 			set
@@ -180,8 +173,10 @@ namespace ComponentFactory.Krypton.Toolkit
                 {
                     if (value != PaletteRelativeAlign.Inherit)
                     {
-                        _storage = new InternalStorage();
-                        _storage.ContentImageV = value;
+                        _storage = new InternalStorage
+                        {
+                            ContentImageV = value
+                        };
                         OnPropertyChanged("ImageV");
                         PerformNeedPaint(true);
                     }
@@ -204,9 +199,13 @@ namespace ComponentFactory.Krypton.Toolkit
             get
             {
                 if (_storage == null)
+                {
                     return PaletteImageEffect.Inherit;
+                }
                 else
+                {
                     return _storage.ContentEffect;
+                }
             }
 
 			set
@@ -224,8 +223,10 @@ namespace ComponentFactory.Krypton.Toolkit
                 {
                     if (value != PaletteImageEffect.Inherit)
                     {
-                        _storage = new InternalStorage();
-                        _storage.ContentEffect = value;
+                        _storage = new InternalStorage
+                        {
+                            ContentEffect = value
+                        };
                         OnPropertyChanged("Effect");
                         PerformNeedPaint();
                     }
@@ -248,9 +249,13 @@ namespace ComponentFactory.Krypton.Toolkit
             get
             {
                 if (_storage == null)
+                {
                     return Color.Empty;
+                }
                 else
+                {
                     return _storage.ContentImageColorMap;
+                }
             }
 
             set
@@ -268,8 +273,10 @@ namespace ComponentFactory.Krypton.Toolkit
                 {
                     if (value != Color.Empty)
                     {
-                        _storage = new InternalStorage();
-                        _storage.ContentImageColorMap = value;
+                        _storage = new InternalStorage
+                        {
+                            ContentImageColorMap = value
+                        };
                         OnPropertyChanged("ImageColorMap");
                         PerformNeedPaint();
                     }
@@ -292,9 +299,13 @@ namespace ComponentFactory.Krypton.Toolkit
             get
             {
                 if (_storage == null)
+                {
                     return Color.Empty;
+                }
                 else
+                {
                     return _storage.ContentImageColorTo;
+                }
             }
 
             set
@@ -312,8 +323,10 @@ namespace ComponentFactory.Krypton.Toolkit
                 {
                     if (value != Color.Empty)
                     {
-                        _storage = new InternalStorage();
-                        _storage.ContentImageColorTo = value;
+                        _storage = new InternalStorage
+                        {
+                            ContentImageColorTo = value
+                        };
                         OnPropertyChanged("ImageColorTo");
                         PerformNeedPaint();
                     }
@@ -329,8 +342,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <param name="property">Name of the property changed.</param>
         protected virtual void OnPropertyChanged(string property)
         {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(property));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
         }
         #endregion
     }

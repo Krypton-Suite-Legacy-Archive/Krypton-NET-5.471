@@ -8,14 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
-using System.Drawing;
-using System.Drawing.Design;
-using System.Windows.Forms;
 using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Collections.Generic;
 using System.Diagnostics;
 using ComponentFactory.Krypton.Toolkit;
 
@@ -44,8 +37,8 @@ namespace ComponentFactory.Krypton.Navigator
         [EditorBrowsable(EditorBrowsableState.Never)]
         public new PaletteButtonSpecStyle Type
         {
-            get { return ProtectedType; }
-            set { ProtectedType = value; }
+            get => ProtectedType;
+            set => ProtectedType = value;
         }
         #endregion
 
@@ -60,7 +53,7 @@ namespace ComponentFactory.Krypton.Navigator
         [DefaultValue(typeof(PaletteNavButtonSpecStyle), "Generic")]
         public PaletteNavButtonSpecStyle TypeRestricted
         {
-            get { return PaletteTypeToNavigator(ProtectedType); }
+            get => PaletteTypeToNavigator(ProtectedType);
 
             set
             {

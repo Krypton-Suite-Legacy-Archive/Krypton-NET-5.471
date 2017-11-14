@@ -8,15 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
-using System.Drawing;
-using System.Drawing.Design;
-using System.Windows.Forms;
 using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -26,7 +18,7 @@ namespace ComponentFactory.Krypton.Toolkit
     public class PaletteMonthCalendarStateRedirect : Storage
     {
         #region Instance Fields
-        private PaletteTripleRedirect _paletteDay;
+
         #endregion
 
         #region Identity
@@ -46,7 +38,7 @@ namespace ComponentFactory.Krypton.Toolkit
         public PaletteMonthCalendarStateRedirect(PaletteRedirect redirect,
                                                  NeedPaintHandler needPaint) 
 		{
-            _paletteDay = new PaletteTripleRedirect(redirect, 
+            Day = new PaletteTripleRedirect(redirect, 
                                                     PaletteBackStyle.ButtonCalendarDay, 
                                                     PaletteBorderStyle.ButtonCalendarDay, 
                                                     PaletteContentStyle.ButtonCalendarDay, 
@@ -59,14 +51,9 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// Gets a value indicating if all values are default.
 		/// </summary>
 		[Browsable(false)]
-		public override bool IsDefault
-		{
-            get
-            {
-                return _paletteDay.IsDefault;
-            }
-		}
-		#endregion
+		public override bool IsDefault => Day.IsDefault;
+
+        #endregion
 
         #region SetRedirector
         /// <summary>
@@ -75,14 +62,14 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <param name="redirect">Target redirector.</param>
         public void SetRedirector(PaletteRedirect redirect)
         {
-            _paletteDay.SetRedirector(redirect);
+            Day.SetRedirector(redirect);
         }
         #endregion
 
         #region Styles
         internal ButtonStyle DayStyle
         {
-            set { _paletteDay.SetStyles(value); }
+            set => Day.SetStyles(value);
         }
         #endregion
 
@@ -93,14 +80,11 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining day appearance entries.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public PaletteTripleRedirect Day
-        {
-            get { return _paletteDay; }
-        }
+        public PaletteTripleRedirect Day { get; }
 
         private bool ShouldSerializeContent()
         {
-            return !_paletteDay.IsDefault;
+            return !Day.IsDefault;
         }
         #endregion
     }

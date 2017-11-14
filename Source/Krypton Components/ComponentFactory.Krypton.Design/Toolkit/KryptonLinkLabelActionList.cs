@@ -10,10 +10,7 @@
 
 using System;
 using System.Drawing;
-using System.ComponentModel;
 using System.ComponentModel.Design;
-using System.Windows.Forms;
-using System.Windows.Forms.Design;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -41,9 +38,13 @@ namespace ComponentFactory.Krypton.Toolkit
             {
                 // Decide on the next action to take given the current setting
                 if (_linkLabel.LinkVisited)
+                {
                     _action = "Link has not been visited";
+                }
                 else
+                {
                     _action = "Link has been visited";
+                }
             }
 
             // Cache service used to notify when a property has changed
@@ -57,8 +58,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public LabelStyle LabelStyle
         {
-            get { return _linkLabel.LabelStyle; }
-            
+            get => _linkLabel.LabelStyle;
+
             set 
             {
                 if (_linkLabel.LabelStyle != value)
@@ -74,8 +75,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public VisualOrientation Orientation
         {
-            get { return _linkLabel.Orientation; }
-            
+            get => _linkLabel.Orientation;
+
             set
             {
                 if (_linkLabel.Orientation != value)
@@ -91,7 +92,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public KryptonLinkBehavior LinkBehavior
         {
-            get { return _linkLabel.LinkBehavior; }
+            get => _linkLabel.LinkBehavior;
 
             set
             {
@@ -108,7 +109,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public bool LinkVisited
         {
-            get { return _linkLabel.LinkVisited; }
+            get => _linkLabel.LinkVisited;
 
             set
             {
@@ -125,8 +126,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public string Text
         {
-            get { return _linkLabel.Values.Text; }
-            
+            get => _linkLabel.Values.Text;
+
             set 
             {
                 if (_linkLabel.Values.Text != value)
@@ -142,8 +143,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public string ExtraText
         {
-            get { return _linkLabel.Values.ExtraText; }
-            
+            get => _linkLabel.Values.ExtraText;
+
             set 
             {
                 if (_linkLabel.Values.ExtraText != value)
@@ -159,8 +160,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public Image Image
         {
-            get { return _linkLabel.Values.Image; }
-            
+            get => _linkLabel.Values.Image;
+
             set 
             {
                 if (_linkLabel.Values.Image != value)
@@ -176,8 +177,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public PaletteMode PaletteMode
         {
-            get { return _linkLabel.PaletteMode; }
-            
+            get => _linkLabel.PaletteMode;
+
             set 
             {
                 if (_linkLabel.PaletteMode != value)
@@ -224,26 +225,30 @@ namespace ComponentFactory.Krypton.Toolkit
         private void OnLinkVisitedClick(object sender, EventArgs e)
         {
             // Cast to the correct type
-            DesignerVerb verb = sender as DesignerVerb;
-            
+
             // Double check the source is the expected type
-            if (verb != null)
+            if (sender is DesignerVerb verb)
             {
                 // Invert the visited setting
                 _linkLabel.LinkVisited = !_linkLabel.LinkVisited;
 
                 // Decide on the next action to take given the new setting
                 if (_linkLabel.LinkVisited)
+                {
                     _action = "Link has not been visited";
+                }
                 else
+                {
                     _action = "Link has been visited";
+                }
 
                 // Get the user interface service associated with actions
-                DesignerActionUIService service = GetService(typeof(DesignerActionUIService)) as DesignerActionUIService;
 
                 // If we managed to get it then request it update to reflect new action setting
-                if (service != null)
+                if (GetService(typeof(DesignerActionUIService)) is DesignerActionUIService service)
+                {
                     service.Refresh(_linkLabel);
+                }
             }
         }
         #endregion   

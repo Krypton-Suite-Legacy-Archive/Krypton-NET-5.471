@@ -8,13 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
-using System.Drawing;
-using System.Drawing.Text;
 using System.ComponentModel;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Diagnostics;
 
 namespace ComponentFactory.Krypton.Toolkit
@@ -27,8 +21,8 @@ namespace ComponentFactory.Krypton.Toolkit
 	{
 		#region Instance Fields
         private PaletteRedirect _redirect;
-        private PaletteTripleRedirect _nodeRedirect;
-		#endregion
+
+	    #endregion
 
 		#region Identity
 		/// <summary>
@@ -54,7 +48,7 @@ namespace ComponentFactory.Krypton.Toolkit
             _redirect = redirect;
 
             // Create the item redirector
-            _nodeRedirect = new PaletteTripleRedirect(redirect,
+            Node = new PaletteTripleRedirect(redirect,
                                                       PaletteBackStyle.ButtonListItem,
                                                       PaletteBorderStyle.ButtonListItem,
                                                       PaletteContentStyle.ButtonListItem,
@@ -67,14 +61,9 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// Gets a value indicating if all values are default.
 		/// </summary>
 		[Browsable(false)]
-		public override bool IsDefault
-		{
-			get
-			{
-                return (base.IsDefault && _nodeRedirect.IsDefault);
-			}
-		}
-		#endregion
+		public override bool IsDefault => (base.IsDefault && Node.IsDefault);
+
+	    #endregion
 
         #region Node
         /// <summary>
@@ -84,14 +73,11 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining node appearance.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public PaletteTripleRedirect Node
-        {
-            get { return _nodeRedirect; }
-        }
+        public PaletteTripleRedirect Node { get; }
 
-        private bool ShouldSerializeItem()
+	    private bool ShouldSerializeItem()
         {
-            return !_nodeRedirect.IsDefault;
+            return !Node.IsDefault;
         }
         #endregion
     }

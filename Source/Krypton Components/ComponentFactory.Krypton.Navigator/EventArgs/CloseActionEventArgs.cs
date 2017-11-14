@@ -8,8 +8,6 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-
 namespace ComponentFactory.Krypton.Navigator
 {
 	/// <summary>
@@ -18,8 +16,8 @@ namespace ComponentFactory.Krypton.Navigator
     public class CloseActionEventArgs : KryptonPageEventArgs
 	{
 		#region Instance Fields
-		private CloseButtonAction _action;
-		#endregion
+
+	    #endregion
 
 		#region Identity
 		/// <summary>
@@ -33,7 +31,7 @@ namespace ComponentFactory.Krypton.Navigator
                                     CloseButtonAction action)
 			: base(page, index)
 		{
-            _action = action;
+            Action = action;
 		}
 		#endregion
 
@@ -41,11 +39,8 @@ namespace ComponentFactory.Krypton.Navigator
         /// <summary>
 		/// Gets and sets the close action to take.
 		/// </summary>
-        public CloseButtonAction Action
-		{
-            get { return _action; }
-            set { _action = value; }
-		}
-		#endregion
+        public CloseButtonAction Action { get; set; }
+
+	    #endregion
 	}
 }

@@ -9,10 +9,7 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
 using System.Diagnostics;
@@ -33,7 +30,6 @@ namespace ComponentFactory.Krypton.Ribbon
 
         #region Instance Fields
         private KryptonRibbon _ribbon;
-        private KryptonRibbonGroupButton _ribbonButton;
         private NeedPaintHandler _needPaint;
         private ViewDrawRibbonGroupButtonBackBorder _viewLarge;
         private ViewLayoutRibbonRowCenter _viewLargeCenter;
@@ -71,12 +67,12 @@ namespace ComponentFactory.Krypton.Ribbon
 
             // Remember incoming references
             _ribbon = ribbon;
-            _ribbonButton = ribbonButton;
+            GroupButton = ribbonButton;
             _needPaint = needPaint;
-            _currentSize = _ribbonButton.ItemSizeCurrent;
+            _currentSize = GroupButton.ItemSizeCurrent;
 
             // Associate this view with the source component (required for design time selection)
-            Component = _ribbonButton;
+            Component = GroupButton;
 
             // Create the different views for different sizes of the button
             CreateLargeButtonView();
@@ -89,7 +85,7 @@ namespace ComponentFactory.Krypton.Ribbon
             UpdateItemSizeState();
 
             // Hook into changes in the ribbon button definition
-            _ribbonButton.PropertyChanged += new PropertyChangedEventHandler(OnButtonPropertyChanged);
+            GroupButton.PropertyChanged += new PropertyChangedEventHandler(OnButtonPropertyChanged);
         }
 
 		/// <summary>
@@ -110,14 +106,14 @@ namespace ComponentFactory.Krypton.Ribbon
         {
             if (disposing)
             {
-                if (_ribbonButton != null)
+                if (GroupButton != null)
                 {
                     // Must unhook to prevent memory leaks
-                    _ribbonButton.PropertyChanged -= new PropertyChangedEventHandler(OnButtonPropertyChanged);
+                    GroupButton.PropertyChanged -= new PropertyChangedEventHandler(OnButtonPropertyChanged);
 
                     // Remove association with definition
-                    _ribbonButton.ButtonView = null;
-                    _ribbonButton = null;
+                    GroupButton.ButtonView = null;
+                    GroupButton = null;
                 }
             }
 
@@ -129,10 +125,8 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <summary>
         /// Gets access to the connected button definition.
         /// </summary>
-        public KryptonRibbonGroupButton GroupButton
-        {
-            get { return _ribbonButton; }
-        }
+        public KryptonRibbonGroupButton GroupButton { get; private set; }
+
         #endregion
 
         #region GetFirstFocusItem
@@ -143,15 +137,21 @@ namespace ComponentFactory.Krypton.Ribbon
         public ViewBase GetFirstFocusItem()
         {
             // Only take focus if we are visible and enabled
-            if (_ribbonButton.Visible && _ribbonButton.Enabled)
+            if (GroupButton.Visible && GroupButton.Enabled)
             {
-                if (_viewLarge == _ribbonButton.ButtonView)
+                if (_viewLarge == GroupButton.ButtonView)
+                {
                     return _viewLarge;
+                }
                 else
+                {
                     return _viewMediumSmall;
+                }
             }
             else
+            {
                 return null;
+            }
         }
         #endregion
 
@@ -163,15 +163,21 @@ namespace ComponentFactory.Krypton.Ribbon
         public ViewBase GetLastFocusItem()
         {
             // Only take focus if we are visible and enabled
-            if (_ribbonButton.Visible && _ribbonButton.Enabled)
+            if (GroupButton.Visible && GroupButton.Enabled)
             {
-                if (_viewLarge == _ribbonButton.ButtonView)
+                if (_viewLarge == GroupButton.ButtonView)
+                {
                     return _viewLarge;
+                }
                 else
+                {
                     return _viewMediumSmall;
+                }
             }
             else
+            {
                 return null;
+            }
         }
         #endregion
 
@@ -236,7 +242,7 @@ namespace ComponentFactory.Krypton.Ribbon
                         break;
                 }
 
-                keyTipList.Add(new KeyTipInfo(_ribbonButton.Enabled, _ribbonButton.KeyTip, 
+                keyTipList.Add(new KeyTipInfo(GroupButton.Enabled, GroupButton.KeyTip, 
                                               screenPt, this[0].ClientRectangle, controller));
             }
         }
@@ -269,18 +275,22 @@ namespace ComponentFactory.Krypton.Ribbon
             bool drawNonTrackingAreas = (_ribbon.RibbonShape != PaletteRibbonShape.Office2010);
 
             // Update the views with the type of button being used
-            _viewLarge.ButtonType = _ribbonButton.ButtonType;
+            _viewLarge.ButtonType = GroupButton.ButtonType;
             _viewLarge.DrawNonTrackingAreas = drawNonTrackingAreas;
-            _viewMediumSmall.ButtonType = _ribbonButton.ButtonType;
+            _viewMediumSmall.ButtonType = GroupButton.ButtonType;
             _viewMediumSmall.DrawNonTrackingAreas = drawNonTrackingAreas;
 
             // Get the preferred size of button view
             Size preferredSize = base.GetPreferredSize(context);
 
             if (_currentSize == GroupItemSize.Large)
+            {
                 preferredSize.Height = _ribbon.CalculatedValues.GroupTripleHeight;
+            }
             else
+            {
                 preferredSize.Height = _ribbon.CalculatedValues.GroupLineHeight;
+            }
 
             return preferredSize;
         }
@@ -305,7 +315,7 @@ namespace ComponentFactory.Krypton.Ribbon
             base.Layout(context);
 
             // For split buttons we need to calculate the split button areas
-            if (_ribbonButton.ButtonType == GroupButtonType.Split)
+            if (GroupButton.ButtonType == GroupButtonType.Split)
             {
                 // Find the start positions of the split areas for both views
                 int largeSplitTop = _viewLargeImage.ClientRectangle.Bottom + 1;
@@ -345,7 +355,9 @@ namespace ComponentFactory.Krypton.Ribbon
                 _needPaint(this, new NeedLayoutEventArgs(needLayout, invalidRect));
 
                 if (needLayout)
+                {
                     _ribbon.PerformLayout();
+                }
             }
         }
         #endregion
@@ -354,33 +366,39 @@ namespace ComponentFactory.Krypton.Ribbon
         private void CreateLargeButtonView()
         {
             // Create the background and border view
-            _viewLarge = new ViewDrawRibbonGroupButtonBackBorder(_ribbon, _ribbonButton,
+            _viewLarge = new ViewDrawRibbonGroupButtonBackBorder(_ribbon, GroupButton,
                                                                  _ribbon.StateCommon.RibbonGroupButton.PaletteBack,
                                                                  _ribbon.StateCommon.RibbonGroupButton.PaletteBorder,
-                                                                 false, _needPaint);
-            _viewLarge.SplitVertical = true;
+                                                                 false, _needPaint)
+            {
+                SplitVertical = true
+            };
             _viewLarge.Click += new EventHandler(OnLargeButtonClick);
             _viewLarge.DropDown += new EventHandler(OnLargeButtonDropDown);
 
             if (_ribbon.InDesignMode)
+            {
                 _viewLarge.ContextClick += new MouseEventHandler(OnContextClick);
+            }
 
             // Create the layout docker for the contents of the button
             ViewLayoutDocker contentLayout = new ViewLayoutDocker();
 
             // Add the large button at the top
-            _viewLargeImage = new ViewDrawRibbonGroupButtonImage(_ribbon, _ribbonButton, true);
-            ViewLayoutRibbonCenterPadding largeImagePadding = new ViewLayoutRibbonCenterPadding(_largeImagePadding);
-            largeImagePadding.Add(_viewLargeImage);
+            _viewLargeImage = new ViewDrawRibbonGroupButtonImage(_ribbon, GroupButton, true);
+            ViewLayoutRibbonCenterPadding largeImagePadding = new ViewLayoutRibbonCenterPadding(_largeImagePadding)
+            {
+                _viewLargeImage
+            };
             contentLayout.Add(largeImagePadding, ViewDockStyle.Top);
 
             // Add the first line of text
-            _viewLargeText1 = new ViewDrawRibbonGroupButtonText(_ribbon, _ribbonButton, true);
+            _viewLargeText1 = new ViewDrawRibbonGroupButtonText(_ribbon, GroupButton, true);
             contentLayout.Add(_viewLargeText1, ViewDockStyle.Bottom);
 
             // Add the second line of text
             _viewLargeCenter = new ViewLayoutRibbonRowCenter();
-            _viewLargeText2 = new ViewDrawRibbonGroupButtonText(_ribbon, _ribbonButton, false);
+            _viewLargeText2 = new ViewDrawRibbonGroupButtonText(_ribbon, GroupButton, false);
             _viewLargeDropArrow = new ViewDrawRibbonDropArrow(_ribbon);
             _viewLargeText2Sep1 = new ViewLayoutRibbonSeparator(4, false);
             _viewLargeText2Sep2 = new ViewLayoutRibbonSeparator(4, false);
@@ -404,38 +422,46 @@ namespace ComponentFactory.Krypton.Ribbon
         private void CreateMediumSmallButtonView()
         {
             // Create the background and border view
-            _viewMediumSmall = new ViewDrawRibbonGroupButtonBackBorder(_ribbon, _ribbonButton,
+            _viewMediumSmall = new ViewDrawRibbonGroupButtonBackBorder(_ribbon, GroupButton,
                                                                        _ribbon.StateCommon.RibbonGroupButton.PaletteBack,
                                                                        _ribbon.StateCommon.RibbonGroupButton.PaletteBorder,
-                                                                       false, _needPaint);
-            _viewMediumSmall.SplitVertical = false;
+                                                                       false, _needPaint)
+            {
+                SplitVertical = false
+            };
             _viewMediumSmall.Click += new EventHandler(OnMediumSmallButtonClick);
             _viewMediumSmall.DropDown += new EventHandler(OnMediumSmallButtonDropDown);
 
             if (_ribbon.InDesignMode)
+            {
                 _viewMediumSmall.ContextClick += new MouseEventHandler(OnContextClick);
+            }
 
             // Create the layout docker for the contents of the button
             ViewLayoutDocker contentLayout = new ViewLayoutDocker();
 
             // Create the image and drop down content
-            _viewMediumSmallImage = new ViewDrawRibbonGroupButtonImage(_ribbon, _ribbonButton, false);
-            _viewMediumSmallText1 = new ViewDrawRibbonGroupButtonText(_ribbon, _ribbonButton, true);
-            _viewMediumSmallText2 = new ViewDrawRibbonGroupButtonText(_ribbon, _ribbonButton, false);
+            _viewMediumSmallImage = new ViewDrawRibbonGroupButtonImage(_ribbon, GroupButton, false);
+            _viewMediumSmallText1 = new ViewDrawRibbonGroupButtonText(_ribbon, GroupButton, true);
+            _viewMediumSmallText2 = new ViewDrawRibbonGroupButtonText(_ribbon, GroupButton, false);
             _viewMediumSmallDropArrow = new ViewDrawRibbonDropArrow(_ribbon);
             _viewMediumSmallText2Sep2 = new ViewLayoutRibbonSeparator(3, false);
             _viewMediumSmallText2Sep3 = new ViewLayoutRibbonSeparator(3, false);
-            ViewLayoutRibbonCenterPadding imagePadding = new ViewLayoutRibbonCenterPadding(_smallImagePadding);
-            imagePadding.Add(_viewMediumSmallImage);
+            ViewLayoutRibbonCenterPadding imagePadding = new ViewLayoutRibbonCenterPadding(_smallImagePadding)
+            {
+                _viewMediumSmallImage
+            };
 
             // Layout the content in the center of a row
-            _viewMediumSmallCenter = new ViewLayoutRibbonRowCenter();
-            _viewMediumSmallCenter.Add(imagePadding);
-            _viewMediumSmallCenter.Add(_viewMediumSmallText1);
-            _viewMediumSmallCenter.Add(_viewMediumSmallText2);
-            _viewMediumSmallCenter.Add(_viewMediumSmallText2Sep2);
-            _viewMediumSmallCenter.Add(_viewMediumSmallDropArrow);
-            _viewMediumSmallCenter.Add(_viewMediumSmallText2Sep3);
+            _viewMediumSmallCenter = new ViewLayoutRibbonRowCenter
+            {
+                imagePadding,
+                _viewMediumSmallText1,
+                _viewMediumSmallText2,
+                _viewMediumSmallText2Sep2,
+                _viewMediumSmallDropArrow,
+                _viewMediumSmallText2Sep3
+            };
 
             // Use content as only fill item
             contentLayout.Add(_viewMediumSmallCenter, ViewDockStyle.Fill);
@@ -457,15 +483,17 @@ namespace ComponentFactory.Krypton.Ribbon
             Add(view);
 
             // Provide back reference to the button definition
-            _ribbonButton.ButtonView = view;
+            GroupButton.ButtonView = view;
         }
 
         private void UpdateEnabledState()
         {
             // Get the correct enabled state from the button definition
-            bool buttonEnabled = _ribbonButton.Enabled;
-            if (_ribbonButton.KryptonCommand != null)
-                buttonEnabled = _ribbonButton.KryptonCommand.Enabled;
+            bool buttonEnabled = GroupButton.Enabled;
+            if (GroupButton.KryptonCommand != null)
+            {
+                buttonEnabled = GroupButton.KryptonCommand.Enabled;
+            }
 
             // Take into account the ribbon state and mode
             bool enabled = _ribbon.InDesignHelperMode || (buttonEnabled && _ribbon.Enabled);
@@ -490,12 +518,16 @@ namespace ComponentFactory.Krypton.Ribbon
             bool checkedState = false;
 
             // Only show as checked if also a check type button
-            if (_ribbonButton.ButtonType == GroupButtonType.Check)
+            if (GroupButton.ButtonType == GroupButtonType.Check)
             {
-                if (_ribbonButton.KryptonCommand != null)
-                    checkedState = _ribbonButton.KryptonCommand.Checked;
+                if (GroupButton.KryptonCommand != null)
+                {
+                    checkedState = GroupButton.KryptonCommand.Checked;
+                }
                 else
-                    checkedState = _ribbonButton.Checked;
+                {
+                    checkedState = GroupButton.Checked;
+                }
             }
 
             _viewLarge.Checked = checkedState;
@@ -504,11 +536,11 @@ namespace ComponentFactory.Krypton.Ribbon
 
         private void UpdateDropDownState()
         {
-            bool dropDown = (_ribbonButton.ButtonType == GroupButtonType.DropDown);
-            bool splitButton = (_ribbonButton.ButtonType == GroupButtonType.Split);
+            bool dropDown = (GroupButton.ButtonType == GroupButtonType.DropDown);
+            bool splitButton = (GroupButton.ButtonType == GroupButtonType.Split);
 
             // Only show text line 2 separators is a drop down is showing with no text
-            bool separators = (dropDown || splitButton) && (!string.IsNullOrEmpty(_ribbonButton.TextLine2));
+            bool separators = (dropDown || splitButton) && (!string.IsNullOrEmpty(GroupButton.TextLine2));
 
             // Update large view
             _viewLargeDropArrow.Visible = (dropDown || splitButton);
@@ -523,7 +555,7 @@ namespace ComponentFactory.Krypton.Ribbon
 
         private void UpdateItemSizeState()
         {
-            UpdateItemSizeState(_ribbonButton.ItemSizeCurrent);
+            UpdateItemSizeState(GroupButton.ItemSizeCurrent);
         }
 
         private void UpdateItemSizeState(GroupItemSize size)
@@ -629,8 +661,8 @@ namespace ComponentFactory.Krypton.Ribbon
             if (updateLayout)
             {
                 // If we are on the currently selected tab then...
-                if ((_ribbonButton.RibbonTab != null) &&
-                    (_ribbon.SelectedTab == _ribbonButton.RibbonTab))
+                if ((GroupButton.RibbonTab != null) &&
+                    (_ribbon.SelectedTab == GroupButton.RibbonTab))
                 {
                     // ...layout so the visible change is made
                     OnNeedPaint(true);
@@ -640,11 +672,11 @@ namespace ComponentFactory.Krypton.Ribbon
             if (updatePaint)
             {
                 // If this button is actually defined as visible...
-                if (_ribbonButton.Visible || _ribbon.InDesignMode)
+                if (GroupButton.Visible || _ribbon.InDesignMode)
                 {
                     // ...and on the currently selected tab then...
-                    if ((_ribbonButton.RibbonTab != null) &&
-                        (_ribbon.SelectedTab == _ribbonButton.RibbonTab))
+                    if ((GroupButton.RibbonTab != null) &&
+                        (_ribbon.SelectedTab == GroupButton.RibbonTab))
                     {
                         // ...repaint it right now
                         OnNeedPaint(false, ClientRectangle);

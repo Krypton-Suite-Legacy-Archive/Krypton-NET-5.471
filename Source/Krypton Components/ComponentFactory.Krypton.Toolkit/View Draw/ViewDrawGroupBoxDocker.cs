@@ -9,11 +9,7 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Diagnostics;
 
 namespace ComponentFactory.Krypton.Toolkit
@@ -24,7 +20,7 @@ namespace ComponentFactory.Krypton.Toolkit
     public class ViewDrawGroupBoxDocker : ViewDrawDocker
     {
         #region Instance Fields
-        private double _overlap;
+
         private Rectangle _cacheClientRect;
         #endregion
 
@@ -38,7 +34,7 @@ namespace ComponentFactory.Krypton.Toolkit
                                       IPaletteBorder paletteBorder)
             : base(paletteBack, paletteBorder)
         {
-            _overlap = 0.5;
+            CaptionOverlap = 0.5;
         }
 
 		/// <summary>
@@ -56,21 +52,16 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Gets and the sets the percentage of overlap for the caption and group area.
         /// </summary>
-        public double CaptionOverlap
-        {
-            get { return _overlap; }
-            set { _overlap = value; }
-        }
+        public double CaptionOverlap { get; set; }
+
         #endregion
 
         #region DrawBorderAfter
         /// <summary>
         /// Gets the drawing of the border before or after children.
         /// </summary>
-        public override bool DrawBorderLast
-        {
-            get { return false; }
-        }
+        public override bool DrawBorderLast => false;
+
         #endregion
 
         #region Eval
@@ -95,7 +86,10 @@ namespace ComponentFactory.Krypton.Toolkit
             Debug.Assert(context != null);
 
             // Validate incoming reference
-            if (context == null) throw new ArgumentNullException("context");
+            if (context == null)
+            {
+                throw new ArgumentNullException("context");
+            }
 
             if (this[0].Visible)
             {
@@ -152,13 +146,18 @@ namespace ComponentFactory.Krypton.Toolkit
             Debug.Assert(context != null);
 
             // Validate incoming reference
-            if (context == null) throw new ArgumentNullException("context");
+            if (context == null)
+            {
+                throw new ArgumentNullException("context");
+            }
 
             base.RenderAfter(context);
 
             // Restore original client rectangle
             if (this[0].Visible)
+            {
                 ClientRectangle = _cacheClientRect;
+            }
         }
 
         /// <summary>

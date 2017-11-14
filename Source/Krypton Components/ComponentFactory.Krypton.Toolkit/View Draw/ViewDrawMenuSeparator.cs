@@ -8,12 +8,6 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
-using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Diagnostics;
 
 namespace ComponentFactory.Krypton.Toolkit
@@ -24,7 +18,7 @@ namespace ComponentFactory.Krypton.Toolkit
     public class ViewDrawMenuSeparator : ViewDrawDocker
     {
         #region Instance Fields
-        private bool _draw;
+
         #endregion
 
         #region Identity
@@ -38,15 +32,19 @@ namespace ComponentFactory.Krypton.Toolkit
             : base(separator.StateNormal.Back, separator.StateNormal.Border)
 		{
             // Draw the separator by default
-            _draw = true;
+            Draw = true;
 
             // Give the separator object the redirector to use when inheriting values
             separator.SetPaletteRedirect(palette);
 
             if (separator.Horizontal)
+            {
                 Orientation = VisualOrientation.Top;
+            }
             else
+            {
                 Orientation = VisualOrientation.Left;
+            }
 
             // We need to be big enough to contain 1 pixel square spacer
             Add(new ViewLayoutSeparator(1));
@@ -79,11 +77,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Gets and sets the drawing of the separator.
         /// </summary>
-        public bool Draw
-        {
-            get { return _draw; }
-            set { _draw = value; }
-        }
+        public bool Draw { get; set; }
+
         #endregion
 
         #region Paint
@@ -96,7 +91,9 @@ namespace ComponentFactory.Krypton.Toolkit
             Debug.Assert(context != null);
 
             if (Draw)
+            {
                 base.Render(context);
+            }
         }
         #endregion
     }

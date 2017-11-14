@@ -8,12 +8,8 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Drawing;
-using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Windows.Forms;
-using System.Windows.Forms.Design;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -46,7 +42,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public ButtonStyle ItemStyle
         {
-            get { return _listBox.ItemStyle; }
+            get => _listBox.ItemStyle;
 
             set
             {
@@ -63,7 +59,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public PaletteBackStyle BackStyle
         {
-            get { return _listBox.BackStyle; }
+            get => _listBox.BackStyle;
 
             set
             {
@@ -80,7 +76,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public PaletteBorderStyle BorderStyle
         {
-            get { return _listBox.BorderStyle; }
+            get => _listBox.BorderStyle;
 
             set
             {
@@ -97,7 +93,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public SelectionMode SelectionMode
         {
-            get { return _listBox.SelectionMode; }
+            get => _listBox.SelectionMode;
 
             set
             {
@@ -114,7 +110,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public bool Sorted
         {
-            get { return _listBox.Sorted; }
+            get => _listBox.Sorted;
 
             set
             {
@@ -131,8 +127,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public PaletteMode PaletteMode
         {
-            get { return _listBox.PaletteMode; }
-            
+            get => _listBox.PaletteMode;
+
             set 
             {
                 if (_listBox.PaletteMode != value)

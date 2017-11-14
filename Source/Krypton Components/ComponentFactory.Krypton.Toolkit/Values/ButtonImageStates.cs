@@ -8,14 +8,8 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Design;
-using System.Windows.Forms;
 using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Collections.Generic;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -36,16 +30,11 @@ namespace ComponentFactory.Krypton.Toolkit
         /// Gets a value indicating if all values are default.
         /// </summary>
         [Browsable(false)]
-        public override bool IsDefault
-        {
-            get
-            {
-                return (ImageNormal == null) &&
-                       (ImageDisabled == null) &&
-                       (ImagePressed == null) &&
-                       (ImageTracking == null);
-            }
-        }
+        public override bool IsDefault => (ImageNormal == null) &&
+                                          (ImageDisabled == null) &&
+                                          (ImagePressed == null) &&
+                                          (ImageTracking == null);
+
         #endregion
 
         #region ImageNormal
@@ -60,7 +49,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue(null)]
         public Image ImageNormal
         {
-            get { return _imageNormal; }
+            get => _imageNormal;
 
             set
             {
@@ -98,7 +87,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue(null)]
         public Image ImageDisabled
         {
-            get { return _imageDisabled; }
+            get => _imageDisabled;
 
             set
             {
@@ -136,7 +125,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue(null)]
         public Image ImagePressed
         {
-            get { return _imagePressed; }
+            get => _imagePressed;
 
             set
             {
@@ -174,7 +163,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue(null)]
         public Image ImageTracking
         {
-            get { return _imageTracking; }
+            get => _imageTracking;
 
             set
             {

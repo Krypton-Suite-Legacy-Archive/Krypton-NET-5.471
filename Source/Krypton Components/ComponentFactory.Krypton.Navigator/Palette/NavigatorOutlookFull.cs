@@ -8,13 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
-using System.Drawing;
-using System.Drawing.Text;
 using System.ComponentModel;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Diagnostics;
 using ComponentFactory.Krypton.Toolkit;
 
@@ -67,19 +61,13 @@ namespace ComponentFactory.Krypton.Navigator
         /// Gets a value indicating if all values are default.
         /// </summary>
         [Browsable(false)]
-        public override bool IsDefault
-        {
-            get
-            {
-                return ((OverflowMapImage == MapKryptonPageImage.Small) &&
-                        (OverflowMapText == MapKryptonPageText.None) &&
-                        (OverflowMapExtraText == MapKryptonPageText.None) &&
-                        (StackMapImage == MapKryptonPageImage.MediumSmall) &&
-                        (StackMapText == MapKryptonPageText.TextTitle) &&
-                        (StackMapExtraText == MapKryptonPageText.None));
-                        
-            }
-        }
+        public override bool IsDefault => ((OverflowMapImage == MapKryptonPageImage.Small) &&
+                                           (OverflowMapText == MapKryptonPageText.None) &&
+                                           (OverflowMapExtraText == MapKryptonPageText.None) &&
+                                           (StackMapImage == MapKryptonPageImage.MediumSmall) &&
+                                           (StackMapText == MapKryptonPageText.TextTitle) &&
+                                           (StackMapExtraText == MapKryptonPageText.None));
+
         #endregion
 
         #region OverflowMapImage
@@ -93,7 +81,7 @@ namespace ComponentFactory.Krypton.Navigator
         [DefaultValue(typeof(MapKryptonPageImage), "Small")]
         public virtual MapKryptonPageImage OverflowMapImage
         {
-            get { return _overflowMapImage; }
+            get => _overflowMapImage;
 
             set
             {
@@ -124,7 +112,7 @@ namespace ComponentFactory.Krypton.Navigator
         [DefaultValue(typeof(MapKryptonPageText), "None (Empty string)")]
         public MapKryptonPageText OverflowMapText
         {
-            get { return _overflowMapText; }
+            get => _overflowMapText;
 
             set
             {
@@ -155,7 +143,7 @@ namespace ComponentFactory.Krypton.Navigator
         [DefaultValue(typeof(MapKryptonPageText), "None (Empty string)")]
         public MapKryptonPageText OverflowMapExtraText
         {
-            get { return _overflowMapExtraText; }
+            get => _overflowMapExtraText;
 
             set
             {
@@ -187,7 +175,7 @@ namespace ComponentFactory.Krypton.Navigator
         [DefaultValue(typeof(MapKryptonPageImage), "MediumSmall")]
         public virtual MapKryptonPageImage StackMapImage
         {
-            get { return _stackMapImage; }
+            get => _stackMapImage;
 
             set
             {
@@ -218,7 +206,7 @@ namespace ComponentFactory.Krypton.Navigator
         [DefaultValue(typeof(MapKryptonPageText), "Text - Title")]
         public MapKryptonPageText StackMapText
         {
-            get { return _stackMapText; }
+            get => _stackMapText;
 
             set
             {
@@ -249,7 +237,7 @@ namespace ComponentFactory.Krypton.Navigator
         [DefaultValue(typeof(MapKryptonPageText), "None (Empty string)")]
         public MapKryptonPageText StackMapExtraText
         {
-            get { return _stackMapExtraText; }
+            get => _stackMapExtraText;
 
             set
             {

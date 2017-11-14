@@ -8,14 +8,8 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
-using System.Drawing;
-using System.Drawing.Text;
 using System.ComponentModel;
-using System.Collections.Generic;
 using System.Windows.Forms;
-using System.Diagnostics;
 using ComponentFactory.Krypton.Toolkit;
 
 namespace ComponentFactory.Krypton.Navigator
@@ -56,14 +50,9 @@ namespace ComponentFactory.Krypton.Navigator
         /// Gets a value indicating if all values are default.
         /// </summary>
         [Browsable(false)]
-        public override bool IsDefault
-        {
-            get
-            {
-                return ((PageButtonSpecInset == -1) && 
-                         PageButtonSpecPadding.Equals(CommonHelper.InheritPadding));
-            }
-        }
+        public override bool IsDefault => ((PageButtonSpecInset == -1) && 
+                                           PageButtonSpecPadding.Equals(CommonHelper.InheritPadding));
+
         #endregion
 
         #region PageButtonSpecInset
@@ -76,7 +65,7 @@ namespace ComponentFactory.Krypton.Navigator
         [DefaultValue(-1)]
         public int PageButtonSpecInset
         {
-            get { return _pageButtonSpecInset; }
+            get => _pageButtonSpecInset;
 
             set
             {
@@ -84,8 +73,7 @@ namespace ComponentFactory.Krypton.Navigator
                 {
                     _pageButtonSpecInset = value;
 
-                    if (_navigator != null)
-                        _navigator.OnViewBuilderPropertyChanged("PageButtonSpecInset");
+                    _navigator?.OnViewBuilderPropertyChanged("PageButtonSpecInset");
                 }
             }
         }
@@ -108,7 +96,7 @@ namespace ComponentFactory.Krypton.Navigator
         [RefreshPropertiesAttribute(RefreshProperties.All)]
         public Padding PageButtonSpecPadding
         {
-            get { return _pageButtonSpecPadding; }
+            get => _pageButtonSpecPadding;
 
             set
             {
@@ -116,8 +104,7 @@ namespace ComponentFactory.Krypton.Navigator
                 {
                     _pageButtonSpecPadding = value;
 
-                    if (_navigator != null)
-                        _navigator.OnViewBuilderPropertyChanged("PageButtonSpecPadding");
+                    _navigator?.OnViewBuilderPropertyChanged("PageButtonSpecPadding");
                 }
             }
         }

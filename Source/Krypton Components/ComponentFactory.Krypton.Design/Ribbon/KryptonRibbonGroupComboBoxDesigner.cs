@@ -11,11 +11,9 @@
 using System;
 using System.Collections;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Windows.Forms;
-using System.Windows.Forms.Design;
 using System.Diagnostics;
 using ComponentFactory.Krypton.Toolkit;
 
@@ -42,8 +40,7 @@ namespace ComponentFactory.Krypton.Ribbon
         private ToolStripMenuItem _moveNextMenu;
         private ToolStripMenuItem _moveLastMenu;
         private ToolStripMenuItem _deleteComboBoxMenu;
-        private bool _visible;
-        private bool _enabled;
+
         #endregion
 
         #region Identity
@@ -65,7 +62,10 @@ namespace ComponentFactory.Krypton.Ribbon
             Debug.Assert(component != null);
 
             // Validate the parameter reference
-            if (component == null) throw new ArgumentNullException("component");
+            if (component == null)
+            {
+                throw new ArgumentNullException("component");
+            }
 
             // Let base class do standard stuff
             base.Initialize(component);
@@ -113,8 +113,8 @@ namespace ComponentFactory.Krypton.Ribbon
         /// </summary>
         public bool DesignEnabled 
         { 
-            get { return Enabled; }
-            set { Enabled = value; }
+            get => Enabled;
+            set => Enabled = value;
         }
 
         /// <summary>
@@ -122,8 +122,8 @@ namespace ComponentFactory.Krypton.Ribbon
         /// </summary>
         public bool DesignVisible 
         {
-            get { return Visible; }
-            set { Visible = value; }
+            get => Visible;
+            set => Visible = value;
         }
         #endregion
 
@@ -160,30 +160,25 @@ namespace ComponentFactory.Krypton.Ribbon
 
             // Setup the array of properties we override
             Attribute[] attributes = new Attribute[0];
-            string[] strArray = new string[] { "Visible", "Enabled" };
+            string[] strArray = { "Visible", "Enabled" };
 
             // Adjust our list of properties
             for (int i = 0; i < strArray.Length; i++)
             {
                 PropertyDescriptor descrip = (PropertyDescriptor)properties[strArray[i]];
                 if (descrip != null)
+                {
                     properties[strArray[i]] = TypeDescriptor.CreateProperty(typeof(KryptonRibbonGroupComboBoxDesigner), descrip, attributes);
+                }
             }
         }
         #endregion
 
         #region Internal
-        internal bool Visible
-        {
-            get { return _visible; }
-            set { _visible = value; }
-        }
+        internal bool Visible { get; set; }
 
-        internal bool Enabled
-        {
-            get { return _enabled; }
-            set { _enabled = value; }
-        }
+        internal bool Enabled { get; set; }
+
         #endregion
 
         #region Implementation
@@ -228,7 +223,7 @@ namespace ComponentFactory.Krypton.Ribbon
             bool moveNext = false;
             bool moveLast = false;
 
-            if ((_ribbonComboBox != null) && (_ribbonComboBox.Ribbon != null))
+            if (_ribbonComboBox?.Ribbon != null)
             {
                 TypedRestrictCollection<KryptonRibbonGroupItem> items = ParentItems;
                 moveFirst = (items.IndexOf(_ribbonComboBox) > 0);
@@ -246,13 +241,15 @@ namespace ComponentFactory.Krypton.Ribbon
         private void OnToggleHelpers(object sender, EventArgs e)
         {
             // Invert the current toggle helper mode
-            if ((_ribbonComboBox != null) && (_ribbonComboBox.Ribbon != null))
+            if (_ribbonComboBox?.Ribbon != null)
+            {
                 _ribbonComboBox.Ribbon.InDesignHelperMode = !_ribbonComboBox.Ribbon.InDesignHelperMode;
+            }
         }
 
         private void OnMoveFirst(object sender, EventArgs e)
         {
-            if ((_ribbonComboBox != null) && (_ribbonComboBox.Ribbon != null))
+            if (_ribbonComboBox?.Ribbon != null)
             {
                 // Get access to the parent collection of items
                 TypedRestrictCollection<KryptonRibbonGroupItem> items = ParentItems;
@@ -277,15 +274,14 @@ namespace ComponentFactory.Krypton.Ribbon
                 finally
                 {
                     // If we managed to create the transaction, then do it
-                    if (transaction != null)
-                        transaction.Commit();
+                    transaction?.Commit();
                 }
             }
         }
 
         private void OnMovePrevious(object sender, EventArgs e)
         {
-            if ((_ribbonComboBox != null) && (_ribbonComboBox.Ribbon != null))
+            if (_ribbonComboBox?.Ribbon != null)
             {
                 // Get access to the parent collection of items
                 TypedRestrictCollection<KryptonRibbonGroupItem> items = ParentItems;
@@ -312,15 +308,14 @@ namespace ComponentFactory.Krypton.Ribbon
                 finally
                 {
                     // If we managed to create the transaction, then do it
-                    if (transaction != null)
-                        transaction.Commit();
+                    transaction?.Commit();
                 }
             }
         }
 
         private void OnMoveNext(object sender, EventArgs e)
         {
-            if ((_ribbonComboBox != null) && (_ribbonComboBox.Ribbon != null))
+            if (_ribbonComboBox?.Ribbon != null)
             {
                 // Get access to the parent collection of items
                 TypedRestrictCollection<KryptonRibbonGroupItem> items = ParentItems;
@@ -347,15 +342,14 @@ namespace ComponentFactory.Krypton.Ribbon
                 finally
                 {
                     // If we managed to create the transaction, then do it
-                    if (transaction != null)
-                        transaction.Commit();
+                    transaction?.Commit();
                 }
             }
         }
 
         private void OnMoveLast(object sender, EventArgs e)
         {
-            if ((_ribbonComboBox != null) && (_ribbonComboBox.Ribbon != null))
+            if (_ribbonComboBox?.Ribbon != null)
             {
                 // Get access to the parent collection of items
                 TypedRestrictCollection<KryptonRibbonGroupItem> items = ParentItems;
@@ -380,15 +374,14 @@ namespace ComponentFactory.Krypton.Ribbon
                 finally
                 {
                     // If we managed to create the transaction, then do it
-                    if (transaction != null)
-                        transaction.Commit();
+                    transaction?.Commit();
                 }
             }
         }
 
         private void OnDeleteTextBox(object sender, EventArgs e)
         {
-            if ((_ribbonComboBox != null) && (_ribbonComboBox.Ribbon != null))
+            if (_ribbonComboBox?.Ribbon != null)
             {
                 // Get access to the parent collection of items
                 TypedRestrictCollection<KryptonRibbonGroupItem> items = ParentItems;
@@ -416,15 +409,14 @@ namespace ComponentFactory.Krypton.Ribbon
                 finally
                 {
                     // If we managed to create the transaction, then do it
-                    if (transaction != null)
-                        transaction.Commit();
+                    transaction?.Commit();
                 }
             }
         }
 
         private void OnEnabled(object sender, EventArgs e)
         {
-            if ((_ribbonComboBox != null) && (_ribbonComboBox.Ribbon != null))
+            if (_ribbonComboBox?.Ribbon != null)
             {
                 PropertyDescriptor propertyEnabled = TypeDescriptor.GetProperties(_ribbonComboBox)["Enabled"];
                 bool oldValue = (bool)propertyEnabled.GetValue(_ribbonComboBox);
@@ -436,7 +428,7 @@ namespace ComponentFactory.Krypton.Ribbon
 
         private void OnVisible(object sender, EventArgs e)
         {
-            if ((_ribbonComboBox != null) && (_ribbonComboBox.Ribbon != null))
+            if (_ribbonComboBox?.Ribbon != null)
             {
                 PropertyDescriptor propertyVisible = TypeDescriptor.GetProperties(_ribbonComboBox)["Visible"];
                 bool oldValue = (bool)propertyVisible.GetValue(_ribbonComboBox);
@@ -453,7 +445,7 @@ namespace ComponentFactory.Krypton.Ribbon
 
         private void OnContextMenu(object sender, MouseEventArgs e)
         {
-            if ((_ribbonComboBox != null) && (_ribbonComboBox.Ribbon != null))
+            if (_ribbonComboBox?.Ribbon != null)
             {
                 // Create the menu strip the first time around
                 if (_cms == null)
@@ -496,21 +488,16 @@ namespace ComponentFactory.Krypton.Ribbon
         {
             get
             {
-                if (_ribbonComboBox.RibbonContainer is KryptonRibbonGroupTriple)
+                switch (_ribbonComboBox.RibbonContainer)
                 {
-                    KryptonRibbonGroupTriple triple = (KryptonRibbonGroupTriple)_ribbonComboBox.RibbonContainer;
-                    return triple.Items;
-                }
-                else if (_ribbonComboBox.RibbonContainer is KryptonRibbonGroupLines)
-                {
-                    KryptonRibbonGroupLines lines = (KryptonRibbonGroupLines)_ribbonComboBox.RibbonContainer;
-                    return lines.Items;
-                }
-                else
-                {
-                    // Should never happen!
-                    Debug.Assert(false);
-                    return null;
+                    case KryptonRibbonGroupTriple triple:
+                        return triple.Items;
+                    case KryptonRibbonGroupLines lines:
+                        return lines.Items;
+                    default:
+                        // Should never happen!
+                        Debug.Assert(false);
+                        return null;
                 }
             }
         }

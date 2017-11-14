@@ -8,14 +8,8 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Design;
-using System.Windows.Forms;
 using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Collections.Generic;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -42,15 +36,10 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// Gets a value indicating if all values are default.
 		/// </summary>
 		[Browsable(false)]
-		public override bool IsDefault
-		{
-			get
-			{
-                return (InternalKCT.InternalGripDark == Color.Empty) &&
-                       (InternalKCT.InternalGripLight == Color.Empty);
-            }
-		}
-		#endregion
+		public override bool IsDefault => (InternalKCT.InternalGripDark == Color.Empty) &&
+		                                  (InternalKCT.InternalGripLight == Color.Empty);
+
+        #endregion
 
         #region PopulateFromBase
         /// <summary>
@@ -73,8 +62,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [KryptonDefaultColorAttribute()]
         public Color GripDark
         {
-            get { return InternalKCT.InternalGripDark; }
-            
+            get => InternalKCT.InternalGripDark;
+
             set 
             { 
                 InternalKCT.InternalGripDark = value;
@@ -101,8 +90,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [KryptonDefaultColorAttribute()]
         public Color GripLight
         {
-            get { return InternalKCT.InternalGripLight; }
-            
+            get => InternalKCT.InternalGripLight;
+
             set 
             { 
                 InternalKCT.InternalGripLight = value;

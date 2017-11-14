@@ -8,16 +8,8 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
-using System.Data;
 using System.Drawing;
-using System.Drawing.Design;
 using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using System.Runtime.InteropServices;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -34,7 +26,7 @@ namespace ComponentFactory.Krypton.Toolkit
         private string _longText;
         private Image _image;
         private Color _imageTransparentColor;
-        private object _tag;
+
         #endregion
 
         #region Events
@@ -124,8 +116,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [Localizable(true)]
         public string ShortText
         {
-            get { return _shortText; }
-            
+            get => _shortText;
+
             set 
             {
                 if (_shortText != value)
@@ -151,7 +143,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [Localizable(true)]
         public string LongText
         {
-            get { return _longText; }
+            get => _longText;
 
             set 
             {
@@ -178,7 +170,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [Localizable(true)]
         public Image Image
         {
-            get { return _image; }
+            get => _image;
 
             set 
             {
@@ -205,8 +197,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [Localizable(true)]
         public Color ImageTransparentColor
         {
-            get { return _imageTransparentColor; }
-            
+            get => _imageTransparentColor;
+
             set 
             {
                 if (_imageTransparentColor != value)
@@ -231,11 +223,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [Description("User-defined data associated with the object.")]
         [TypeConverter(typeof(StringConverter))]
         [DefaultValue(null)]
-        public object Tag
-        {
-            get { return _tag; }
-            set { _tag = value; }
-        }
+        public object Tag { get; set; }
+
         #endregion
 
         #region IContentValues
@@ -285,8 +274,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <param name="e">A PropertyChangedEventArgs containing the event data.</param>
         protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
         {
-            if (PropertyChanged != null)
-                PropertyChanged(this, e);
+            PropertyChanged?.Invoke(this, e);
         }
         #endregion    
     }

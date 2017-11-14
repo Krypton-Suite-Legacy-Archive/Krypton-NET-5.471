@@ -8,13 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
-using System.Drawing;
-using System.Drawing.Text;
 using System.ComponentModel;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Diagnostics;
 
 namespace ComponentFactory.Krypton.Toolkit
@@ -50,11 +44,9 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// Gets a value indicating if all values are default.
 		/// </summary>
 		[Browsable(false)]
-		public override bool IsDefault
-		{
-            get { return (Background.IsDefault && base.IsDefault); }
-		}
-		#endregion
+		public override bool IsDefault => (Background.IsDefault && base.IsDefault);
+
+	    #endregion
 
         #region PopulateFromBase
         /// <summary>
@@ -70,9 +62,14 @@ namespace ComponentFactory.Krypton.Toolkit
             base.PopulateFromBase(common, state, gridStyle);
 
             if (gridStyle == GridStyle.List)
+            {
                 common.StateCommon.BackStyle = PaletteBackStyle.GridBackgroundList;
+            }
             else
+            {
                 common.StateCommon.BackStyle = PaletteBackStyle.GridBackgroundSheet;
+            }
+
             _background.PopulateFromBase(state);
         }
         #endregion
@@ -96,12 +93,9 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining data grid view background appearance.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public virtual PaletteBack Background
-        {
-            get { return _background.Back; }
-        }
+        public virtual PaletteBack Background => _background.Back;
 
-        private bool ShouldSerializeBackground()
+	    private bool ShouldSerializeBackground()
         {
             return !_background.IsDefault;
         }

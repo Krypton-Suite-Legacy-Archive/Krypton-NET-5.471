@@ -8,12 +8,8 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Drawing;
-using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Windows.Forms;
-using System.Windows.Forms.Design;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -46,8 +42,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public SeparatorStyle SeparatorStyle
         {
-            get { return _separator.SeparatorStyle; }
-            
+            get => _separator.SeparatorStyle;
+
             set 
             {
                 if (_separator.SeparatorStyle != value)
@@ -63,8 +59,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public Orientation Orientation
         {
-            get { return _separator.Orientation; }
-            
+            get => _separator.Orientation;
+
             set
             {
                 if (_separator.Orientation != value)
@@ -80,8 +76,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public PaletteMode PaletteMode
         {
-            get { return _separator.PaletteMode; }
-            
+            get => _separator.PaletteMode;
+
             set 
             {
                 if (_separator.PaletteMode != value)

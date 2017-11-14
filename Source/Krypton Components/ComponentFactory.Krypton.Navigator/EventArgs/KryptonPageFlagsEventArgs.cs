@@ -9,7 +9,6 @@
 // *****************************************************************************
 
 using System;
-using System.Diagnostics;
 
 namespace ComponentFactory.Krypton.Navigator
 {
@@ -19,8 +18,8 @@ namespace ComponentFactory.Krypton.Navigator
 	public class KryptonPageFlagsEventArgs : EventArgs
 	{
 		#region Instance Fields
-		private KryptonPageFlags _flags;
-		#endregion
+
+	    #endregion
 
 		#region Identity
 		/// <summary>
@@ -30,7 +29,7 @@ namespace ComponentFactory.Krypton.Navigator
         public KryptonPageFlagsEventArgs(KryptonPageFlags flags)
 		{
 			// Remember parameter details
-            _flags = flags;
+            Flags = flags;
 		}
 		#endregion
 
@@ -38,10 +37,8 @@ namespace ComponentFactory.Krypton.Navigator
 		/// <summary>
         /// Gets the KryptonPageFlags enumeration value.
 		/// </summary>
-        public KryptonPageFlags Flags
-		{
-			get { return _flags; }
-		}
-		#endregion
+        public KryptonPageFlags Flags { get; }
+
+	    #endregion
 	}
 }

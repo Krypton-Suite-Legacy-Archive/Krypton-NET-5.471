@@ -8,12 +8,9 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
 using System.Drawing;
-using System.Collections;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using System.Text;
 using System.Diagnostics;
 
 namespace ComponentFactory.Krypton.Toolkit
@@ -72,8 +69,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public override bool Enabled
         {
-            get { return _child.Enabled; }
-            set { _child.Enabled = value; }
+            get => _child.Enabled;
+            set => _child.Enabled = value;
         }
         #endregion
 
@@ -83,8 +80,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public override bool Visible
         {
-            get { return _child.Visible; }
-            set { _child.Visible = value; }
+            get => _child.Visible;
+            set => _child.Visible = value;
         }
         #endregion
 
@@ -94,8 +91,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public override Rectangle ClientRectangle
         {
-            get { return _child.ClientRectangle; }
-            set { _child.ClientRectangle = value; }
+            get => _child.ClientRectangle;
+            set => _child.ClientRectangle = value;
         }
 
         /// <summary>
@@ -103,8 +100,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public override Point ClientLocation
         {
-            get { return _child.ClientLocation; }
-            set { _child.ClientLocation = value; }
+            get => _child.ClientLocation;
+            set => _child.ClientLocation = value;
         }
 
         /// <summary>
@@ -112,8 +109,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public override Size ClientSize
         {
-            get { return _child.ClientSize; }
-            set { _child.ClientSize = value; }
+            get => _child.ClientSize;
+            set => _child.ClientSize = value;
         }
 
         /// <summary>
@@ -121,8 +118,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public override int ClientWidth
         {
-            get { return _child.ClientWidth; }
-            set { _child.ClientWidth = value; }
+            get => _child.ClientWidth;
+            set => _child.ClientWidth = value;
         }
 
         /// <summary>
@@ -130,8 +127,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public override int ClientHeight
         {
-            get { return _child.ClientHeight; }
-            set { _child.ClientHeight = value; }
+            get => _child.ClientHeight;
+            set => _child.ClientHeight = value;
         }
         #endregion
 
@@ -239,12 +236,9 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Gets the number of views in collection.
         /// </summary>
-        public override int Count 
-        { 
-            get { return _child.Count; }
-        }
+        public override int Count => _child.Count;
 
-        /// <summary>
+	    /// <summary>
         /// Determines the index of the specified view in the collection.
         /// </summary>
         /// <param name="item">ViewBase reference.</param>
@@ -280,8 +274,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <returns>ViewBase at specified index.</returns>
         public override ViewBase this[int index] 
         { 
-            get { return _child[index]; }
-            set { _child[index] = value; }
+            get => _child[index];
+            set => _child[index] = value;
         }
 
         /// <summary>
@@ -327,8 +321,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public override IMouseController MouseController
         {
-            get { return _child.MouseController; }
-            set { _child.MouseController = value; }
+            get => _child.MouseController;
+            set => _child.MouseController = value;
         }
 
         /// <summary>
@@ -336,8 +330,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public override IKeyController KeyController
         {
-            get { return _child.KeyController; }
-            set { _child.KeyController = value; }
+            get => _child.KeyController;
+            set => _child.KeyController = value;
         }
 
         /// <summary>
@@ -345,8 +339,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public override ISourceController SourceController
         {
-            get { return _child.SourceController; }
-            set { _child.SourceController = value; }
+            get => _child.SourceController;
+            set => _child.SourceController = value;
         }
         #endregion
 
@@ -357,8 +351,7 @@ namespace ComponentFactory.Krypton.Toolkit
         public override void MouseEnter()
         {
             // Bubble event up to the parent
-            if (Parent != null)
-                Parent.MouseEnter();
+            Parent?.MouseEnter();
         }
 
         /// <summary>
@@ -368,8 +361,7 @@ namespace ComponentFactory.Krypton.Toolkit
         public override void MouseMove(Point pt)
         {
             // Bubble event up to the parent
-            if (Parent != null)
-                Parent.MouseMove(pt);
+            Parent?.MouseMove(pt);
         }
 
         /// <summary>
@@ -382,9 +374,13 @@ namespace ComponentFactory.Krypton.Toolkit
         {
             // Bubble event up to the parent
             if (Parent != null)
+            {
                 return Parent.MouseDown(pt, button);
+            }
             else
+            {
                 return false;
+            }
         }
 
         /// <summary>
@@ -396,7 +392,9 @@ namespace ComponentFactory.Krypton.Toolkit
         {
             // Bubble event up to the parent
             if (Parent != null)
+            {
                 Parent.MouseUp(pt, button);
+            }
         }
 
         /// <summary>
@@ -406,8 +404,7 @@ namespace ComponentFactory.Krypton.Toolkit
         public override void MouseLeave(ViewBase next)
         {
             // Bubble event up to the parent
-            if (Parent != null)
-                Parent.MouseLeave(next);
+            Parent?.MouseLeave(next);
         }
         #endregion
 
@@ -419,8 +416,7 @@ namespace ComponentFactory.Krypton.Toolkit
         public override void KeyDown(KeyEventArgs e)
         {
             // Bubble event up to the parent
-            if (Parent != null)
-                Parent.KeyDown(e);
+            Parent?.KeyDown(e);
         }
 
         /// <summary>
@@ -430,8 +426,7 @@ namespace ComponentFactory.Krypton.Toolkit
         public override void KeyPress(KeyPressEventArgs e)
         {
             // Bubble event up to the parent
-            if (Parent != null)
-                Parent.KeyPress(e);
+            Parent?.KeyPress(e);
         }
 
         /// <summary>
@@ -443,9 +438,13 @@ namespace ComponentFactory.Krypton.Toolkit
         {
             // Bubble event up to the parent
             if (Parent != null)
+            {
                 return Parent.KeyUp(e);
+            }
             else
+            {
                 return false;
+            }
         }
         #endregion
 
@@ -457,8 +456,7 @@ namespace ComponentFactory.Krypton.Toolkit
         public override void GotFocus(Control c)
         {
             // Bubble event up to the parent
-            if (Parent != null)
-                Parent.GotFocus(c);
+            Parent?.GotFocus(c);
         }
 
         /// <summary>
@@ -468,8 +466,7 @@ namespace ComponentFactory.Krypton.Toolkit
         public override void LostFocus(Control c)
         {
             // Bubble event up to the parent
-            if (Parent != null)
-                Parent.LostFocus(c);
+            Parent?.LostFocus(c);
         }
         #endregion
 
@@ -479,8 +476,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public override PaletteState ElementState
         {
-            get { return _child.ElementState; }
-            set { _child.ElementState = value; }
+            get => _child.ElementState;
+            set => _child.ElementState = value;
         }
 
         /// <summary>
@@ -499,8 +496,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public override PaletteState FixedState
         {
-            get { return _child.FixedState; }
-            set { _child.FixedState = value; }
+            get => _child.FixedState;
+            set => _child.FixedState = value;
         }
 
         /// <summary>
@@ -514,11 +511,9 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Gets a value indicating if view is using a fixed state.
         /// </summary>
-        public override bool IsFixed
-        {
-            get { return _child.IsFixed; }
-        }
-        #endregion
+        public override bool IsFixed => _child.IsFixed;
+
+	    #endregion
 
         #region EnableDependant
         /// <summary>
@@ -526,18 +521,16 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public override ViewBase DependantEnabledState
         {
-            get { return _child.DependantEnabledState; }
-            set { _child.DependantEnabledState = value;  }
+            get => _child.DependantEnabledState;
+            set => _child.DependantEnabledState = value;
         }
 
         /// <summary>
         /// Gets a value indicating if view enabled state is depedant on another view.
         /// </summary>
-        public override bool IsEnableDependant
-        {
-            get { return _child.IsEnableDependant; }
-        }
-        #endregion
+        public override bool IsEnableDependant => _child.IsEnableDependant;
+
+	    #endregion
 
         #region ViewFromPoint
         /// <summary>

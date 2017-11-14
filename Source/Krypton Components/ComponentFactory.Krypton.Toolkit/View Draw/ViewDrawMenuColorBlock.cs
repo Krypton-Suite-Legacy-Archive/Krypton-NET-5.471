@@ -9,11 +9,7 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using System.ComponentModel;
 using System.Diagnostics;
 
@@ -26,12 +22,10 @@ namespace ComponentFactory.Krypton.Toolkit
     {
         #region Instance Fields
         private IContextMenuProvider _provider;
-        private KryptonContextMenuColorColumns _colorColumns;
-        private Color _color;
         private Size _blockSize;
         private bool _first;
         private bool _last;
-        private bool _enabled;
+
         #endregion
 
         #region Identity
@@ -52,11 +46,11 @@ namespace ComponentFactory.Krypton.Toolkit
                                       bool enabled)
         {
             _provider = provider;
-            _colorColumns = colorColumns;
-            _color = color;
+            KryptonContextMenuColorColumns = colorColumns;
+            Color = color;
             _first = first;
             _last = last;
-            _enabled = enabled;
+            ItemEnabled = enabled;
             _blockSize = colorColumns.BlockSize;
 
             // Use context menu specific version of the radio button controller
@@ -81,30 +75,24 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Gets the enabled state of the item.
         /// </summary>
-        public bool ItemEnabled
-        {
-            get { return _enabled; }
-        }
+        public bool ItemEnabled { get; }
+
         #endregion
 
         #region KryptonContextMenuColorColumns
         /// <summary>
         /// Gets access to the actual color columns definiton.
         /// </summary>
-        public KryptonContextMenuColorColumns KryptonContextMenuColorColumns
-        {
-            get { return _colorColumns; }
-        }
+        public KryptonContextMenuColorColumns KryptonContextMenuColorColumns { get; }
+
         #endregion
 
         #region CanCloseMenu
         /// <summary>
         /// Gets a value indicating if the menu is capable of being closed.
         /// </summary>
-        public bool CanCloseMenu
-        {
-            get { return _provider.ProviderCanCloseMenu; }
-        }
+        public bool CanCloseMenu => _provider.ProviderCanCloseMenu;
+
         #endregion
 
         #region Closing
@@ -133,10 +121,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Gets the color associated with the block.
         /// </summary>
-        public Color Color
-        {
-            get { return _color; }
-        }
+        public Color Color { get; }
+
         #endregion
 
         #region Layout
@@ -149,7 +135,10 @@ namespace ComponentFactory.Krypton.Toolkit
             Debug.Assert(context != null);
 
             // Validate incoming reference
-            if (context == null) throw new ArgumentNullException("context");
+            if (context == null)
+            {
+                throw new ArgumentNullException("context");
+            }
 
             return _blockSize;
         }
@@ -163,7 +152,10 @@ namespace ComponentFactory.Krypton.Toolkit
             Debug.Assert(context != null);
 
             // Validate incoming reference
-            if (context == null) throw new ArgumentNullException("context");
+            if (context == null)
+            {
+                throw new ArgumentNullException("context");
+            }
 
             // We take on all the available display area
             ClientRectangle = context.DisplayRectangle;
@@ -180,7 +172,10 @@ namespace ComponentFactory.Krypton.Toolkit
             Debug.Assert(context != null);
 
             // Validate incoming reference
-            if (context == null) throw new ArgumentNullException("context");
+            if (context == null)
+            {
+                throw new ArgumentNullException("context");
+            }
 
             // Start with the full client rectangle
             Rectangle drawRect = ClientRectangle;
@@ -198,11 +193,15 @@ namespace ComponentFactory.Krypton.Toolkit
 
             // Do we need to prevent drawing over last line?
             if (_last)
+            {
                 drawRect.Height -= 1;
+            }
 
             // Draw ourself in the designated color
-            using(SolidBrush brush = new SolidBrush(_color))
+            using (SolidBrush brush = new SolidBrush(Color))
+            {
                 context.Graphics.FillRectangle(brush, drawRect);
+            }
         }
 
         /// <summary>
@@ -214,19 +213,22 @@ namespace ComponentFactory.Krypton.Toolkit
             Debug.Assert(context != null);
 
             // Validate incoming reference
-            if (context == null) throw new ArgumentNullException("context");
+            if (context == null)
+            {
+                throw new ArgumentNullException("context");
+            }
 
             // If not in normal state, then need to adorn display
             Color outside = Color.Empty;
             Color inside = Color.Empty;
 
             // Is this element selected?
-            bool selected = (_colorColumns.SelectedColor != null) && (_colorColumns.SelectedColor.Equals(_color));
+            bool selected = (KryptonContextMenuColorColumns.SelectedColor != null) && (KryptonContextMenuColorColumns.SelectedColor.Equals(Color));
 
             switch (ElementState)
             {
                 case PaletteState.Tracking:
-                    if (_enabled)
+                    if (ItemEnabled)
                     {
                         outside = _provider.ProviderStateChecked.ItemImage.Border.GetBorderColor1(PaletteState.CheckedNormal);
                         inside = _provider.ProviderStateChecked.ItemImage.Back.GetBackColor1(PaletteState.CheckedNormal);
@@ -263,7 +265,7 @@ namespace ComponentFactory.Krypton.Toolkit
         #region Private
         private void OnClick(object sender, EventArgs e)
         {
-            _colorColumns.SelectedColor = _color;
+            KryptonContextMenuColorColumns.SelectedColor = Color;
         }
         #endregion
     }

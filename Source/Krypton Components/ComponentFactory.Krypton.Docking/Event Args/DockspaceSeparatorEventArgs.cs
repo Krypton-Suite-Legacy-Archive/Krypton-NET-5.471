@@ -9,10 +9,7 @@
 // *****************************************************************************
 
 using System;
-using System.Drawing;
-using System.Diagnostics;
 using ComponentFactory.Krypton.Toolkit;
-using ComponentFactory.Krypton.Workspace;
 
 namespace ComponentFactory.Krypton.Docking
 {
@@ -22,9 +19,8 @@ namespace ComponentFactory.Krypton.Docking
 	public class DockspaceSeparatorEventArgs : EventArgs
 	{
 		#region Instance Fields
-        private KryptonSeparator _separator;
-        private KryptonDockingDockspace _element;
-		#endregion
+
+	    #endregion
 
 		#region Identity
 		/// <summary>
@@ -35,8 +31,8 @@ namespace ComponentFactory.Krypton.Docking
         public DockspaceSeparatorEventArgs(KryptonSeparator separator,
                                            KryptonDockingDockspace element)
 		{
-            _separator = separator;
-            _element = element;
+            SeparatorControl = separator;
+            DockspaceElement = element;
 		}
 		#endregion
 
@@ -44,18 +40,13 @@ namespace ComponentFactory.Krypton.Docking
         /// <summary>
         /// Gets a reference to the KryptonSeparator control..
         /// </summary>
-        public KryptonSeparator SeparatorControl
-        {
-            get { return _separator; }
-        }
+        public KryptonSeparator SeparatorControl { get; }
 
-        /// <summary>
+	    /// <summary>
         /// Gets a reference to the KryptonDockingDockspace that is managing the dockspace.
         /// </summary>
-        public KryptonDockingDockspace DockspaceElement
-        {
-            get { return _element; }
-        }
-        #endregion
+        public KryptonDockingDockspace DockspaceElement { get; }
+
+	    #endregion
 	}
 }

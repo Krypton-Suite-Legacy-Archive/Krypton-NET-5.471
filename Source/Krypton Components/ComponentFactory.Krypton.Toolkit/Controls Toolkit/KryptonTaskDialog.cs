@@ -9,24 +9,10 @@
 // *****************************************************************************
 
 using System;
-using System.IO;
-using System.Xml;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Design;
-using System.Reflection;
 using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Collections.Generic;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Runtime.Serialization;
 using System.Windows.Forms;
-using System.Diagnostics;
-using System.Globalization;
-using System.Threading;
 using System.Runtime.InteropServices;
-using System.Media;
-using Microsoft.Win32;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -49,8 +35,6 @@ namespace ComponentFactory.Krypton.Toolkit
         private string _content;
         private Image _customIcon;
         private MessageBoxIcon _icon;
-        private KryptonTaskDialogCommandCollection _radioButtons;
-        private KryptonTaskDialogCommandCollection _commandButtons;
         private KryptonTaskDialogCommand _defaultRadioButton;
         private TaskDialogButtons _commonButtons;
         private TaskDialogButtons _defaultButton;
@@ -61,7 +45,7 @@ namespace ComponentFactory.Krypton.Toolkit
         private string _checkboxText;
         private bool _checkboxState;
         private bool _allowDialogClose;
-        private object _tag;
+
         #endregion
 
         #region Events
@@ -86,8 +70,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public KryptonTaskDialog()
         {
-            _radioButtons = new KryptonTaskDialogCommandCollection();
-            _commandButtons = new KryptonTaskDialogCommandCollection();
+            RadioButtons = new KryptonTaskDialogCommandCollection();
+            CommandButtons = new KryptonTaskDialogCommandCollection();
             _commonButtons = TaskDialogButtons.OK;
         }
 
@@ -121,8 +105,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [Bindable(true)]
         public string WindowTitle
         {
-            get { return _windowTitle; }
-            
+            get => _windowTitle;
+
             set 
             {
                 if (_windowTitle != value)
@@ -143,7 +127,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [Bindable(true)]
         public string MainInstruction
         {
-            get { return _mainInstruction; }
+            get => _mainInstruction;
 
             set
             {
@@ -165,7 +149,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [Bindable(true)]
         public string Content
         {
-            get { return _content; }
+            get => _content;
 
             set
             {
@@ -185,7 +169,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue(typeof(MessageBoxIcon), "None")]
         public MessageBoxIcon Icon
         {
-            get { return _icon; }
+            get => _icon;
 
             set
             {
@@ -205,7 +189,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue(null)]
         public Image CustomIcon
         {
-            get { return _customIcon; }
+            get => _customIcon;
 
             set
             {
@@ -226,10 +210,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         [RefreshProperties(RefreshProperties.All)]
         [Browsable(true)]
-        public KryptonTaskDialogCommandCollection RadioButtons
-        {
-            get { return _radioButtons; }
-        }
+        public KryptonTaskDialogCommandCollection RadioButtons { get; }
 
         /// <summary>
         /// Gets access to the collection of command button definitions.
@@ -240,10 +221,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         [RefreshProperties(RefreshProperties.All)]
         [Browsable(true)]
-        public KryptonTaskDialogCommandCollection CommandButtons
-        {
-            get { return _commandButtons; }
-        }
+        public KryptonTaskDialogCommandCollection CommandButtons { get; }
 
         /// <summary>
         /// Gets and sets the common dialog buttons.
@@ -253,7 +231,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue(typeof(TaskDialogButtons), "OK")]
         public TaskDialogButtons CommonButtons
         {
-            get { return _commonButtons; }
+            get => _commonButtons;
 
             set
             {
@@ -273,7 +251,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue(typeof(TaskDialogButtons), "None")]
         public KryptonTaskDialogCommand DefaultRadioButton
         {
-            get { return _defaultRadioButton; }
+            get => _defaultRadioButton;
 
             set
             {
@@ -293,7 +271,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue(typeof(TaskDialogButtons), "None")]
         public TaskDialogButtons DefaultButton
         {
-            get { return _defaultButton; }
+            get => _defaultButton;
 
             set
             {
@@ -313,7 +291,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue(typeof(MessageBoxIcon), "None")]
         public MessageBoxIcon FooterIcon
         {
-            get { return _footerIcon; }
+            get => _footerIcon;
 
             set
             {
@@ -333,7 +311,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue(null)]
         public Image CustomFooterIcon
         {
-            get { return _customFooterIcon; }
+            get => _customFooterIcon;
 
             set
             {
@@ -355,7 +333,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [Bindable(true)]
         public string FooterText
         {
-            get { return _footerText; }
+            get => _footerText;
 
             set
             {
@@ -377,7 +355,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [Bindable(true)]
         public string FooterHyperlink
         {
-            get { return _footerHyperlink; }
+            get => _footerHyperlink;
 
             set
             {
@@ -399,7 +377,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [Bindable(true)]
         public string CheckboxText
         {
-            get { return _checkboxText; }
+            get => _checkboxText;
 
             set
             {
@@ -421,7 +399,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [Bindable(true)]
         public bool CheckboxState
         {
-            get { return _checkboxState; }
+            get => _checkboxState;
 
             set
             {
@@ -441,7 +419,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue(false)]
         public bool AllowDialogClose
         {
-            get { return _allowDialogClose; }
+            get => _allowDialogClose;
 
             set
             {
@@ -460,11 +438,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [Description("User-defined data associated with the object.")]
         [TypeConverter(typeof(StringConverter))]
         [Bindable(true)]
-        public object Tag
-        {
-            get { return _tag; }
-            set { _tag = value; }
-        }
+        public object Tag { get; set; }
 
         private void ResetTag()
         {
@@ -493,16 +467,19 @@ namespace ComponentFactory.Krypton.Toolkit
         public DialogResult ShowDialog(IWin32Window owner)
         {
             // Remove any exising task dialog that is showing
-            if (_taskDialog != null)
-                _taskDialog.Dispose();
+            _taskDialog?.Dispose();
 
             // Create visual form to show our defined task properties
             _taskDialog = new VisualTaskDialog(this);
 
             if (owner == null)
+            {
                 _taskDialog.StartPosition = FormStartPosition.CenterScreen;
+            }
             else
+            {
                 _taskDialog.StartPosition = FormStartPosition.CenterParent;
+            }
 
             // Return result of showing the task dialog
             return _taskDialog.ShowDialog(owner);
@@ -546,8 +523,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <param name="e">An EventArgs containing the event data.</param>
         protected virtual void OnFooterHyperlinkClicked(EventArgs e)
         {
-            if (FooterHyperlinkClicked != null)
-                FooterHyperlinkClicked(this, e);
+            FooterHyperlinkClicked?.Invoke(this, e);
         }
 
         /// <summary>
@@ -556,8 +532,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <param name="e">A PropertyChangedEventArgs containing the event data.</param>
         protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
         {
-            if (PropertyChanged != null)
-                PropertyChanged(this, e);
+            PropertyChanged?.Invoke(this, e);
         }
         #endregion
 

@@ -19,9 +19,7 @@ using System.Drawing.Imaging;
 using System.Threading;
 using System.Collections;
 using System.Windows.Forms;
-using System.Runtime.InteropServices;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Runtime.Serialization;
 using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Diagnostics;
@@ -58,14 +56,8 @@ namespace ComponentFactory.Krypton.Toolkit
         private const int VK_CONTROL = 0x11;
         private const int VK_MENU = 0x12;
         
-        private static readonly char[] _singleDateFormat = new char[] { 'd', 'f', 'F', 'g', 'h', 'H', 'K', 'm', 'M', 's', 't', 'y', 'z' };
-        private static readonly Padding _inheritPadding = new Padding(-1);
+        private static readonly char[] _singleDateFormat = { 'd', 'f', 'F', 'g', 'h', 'H', 'K', 'm', 'M', 's', 't', 'y', 'z' };
         private static readonly int[] _daysInMonth = new int[12] { 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334 };
-        private static readonly ColorMatrix _matrixDisabled = new ColorMatrix(new float[][]{new float[]{0.3f,0.3f,0.3f,0,0},
-														                                    new float[]{0.59f,0.59f,0.59f,0,0},
-														                                    new float[]{0.11f,0.11f,0.11f,0,0},
-														                                    new float[]{0,0,0,0.5f,0},
-														                                    new float[]{0,0,0,0,1}});
 
         private static int _nextId = 1000;
         private static DateTime _baseDate = new DateTime(2000, 1, 1);
@@ -73,14 +65,12 @@ namespace ComponentFactory.Krypton.Toolkit
         private static PropertyInfo _cachedDesignModePI;
         private static MethodInfo _cachedShortcutMI;
         private static NullContentValues _nullContentValues;
-        private static Point _nullPoint = new Point(Int32.MaxValue, Int32.MaxValue);
-        private static Rectangle _nullRectangle = new Rectangle(Int32.MaxValue, Int32.MaxValue, 0, 0);
         private static DoubleConverter _dc = new DoubleConverter();
         private static SizeConverter _sc = new SizeConverter();
         private static PointConverter _pc = new PointConverter();
         private static BooleanConverter _bc = new BooleanConverter();
         private static ColorConverter _cc = new ColorConverter();
-        private static Form _activeFloatingWindow;
+
         #endregion
 
         #region Public Static
@@ -90,8 +80,8 @@ namespace ComponentFactory.Krypton.Toolkit
         public static Point NullPoint
         {
             [System.Diagnostics.DebuggerStepThrough]
-            get { return _nullPoint; }
-        }
+            get;
+        } = new Point(Int32.MaxValue, Int32.MaxValue);
 
         /// <summary>
         /// Gets access to the global null rectangle value.
@@ -99,8 +89,8 @@ namespace ComponentFactory.Krypton.Toolkit
         public static Rectangle NullRectangle
         {
             [System.Diagnostics.DebuggerStepThrough]
-            get { return _nullRectangle; }
-        }
+            get;
+        } = new Rectangle(Int32.MaxValue, Int32.MaxValue, 0, 0);
 
         /// <summary>
         /// Color matrix used to adjust colors to look disabled.
@@ -108,8 +98,12 @@ namespace ComponentFactory.Krypton.Toolkit
         public static ColorMatrix MatrixDisabled
         {
             [System.Diagnostics.DebuggerStepThrough]
-            get { return _matrixDisabled; }
-        }
+            get;
+        } = new ColorMatrix(new float[][]{new float[]{0.3f,0.3f,0.3f,0,0},
+            new float[]{0.59f,0.59f,0.59f,0,0},
+            new float[]{0.11f,0.11f,0.11f,0,0},
+            new float[]{0,0,0,0.5f,0},
+            new float[]{0,0,0,0,1}});
 
         /// <summary>
         /// Gets the next global identifier in sequence.
@@ -145,8 +139,8 @@ namespace ComponentFactory.Krypton.Toolkit
         public static Padding InheritPadding
         {
             [System.Diagnostics.DebuggerStepThrough]
-            get { return _inheritPadding; }
-        }
+            get;
+        } = new Padding(-1);
 
         /// <summary>
         /// Check a short cut menu for a matching short and invoke that item if found.
@@ -186,7 +180,9 @@ namespace ComponentFactory.Krypton.Toolkit
 
                     // Return the 'ProcessCmdKey' result
                     if (ret != null)
+                    {
                         return (bool)ret;
+                    }
                 }
             }
 
@@ -202,7 +198,9 @@ namespace ComponentFactory.Krypton.Toolkit
             {
                 // Only create the instance when it is first needed
                 if (_nullContentValues == null)
+                {
                     _nullContentValues = new NullContentValues();
+                }
 
                 return _nullContentValues;
             }
@@ -413,17 +411,14 @@ namespace ComponentFactory.Krypton.Toolkit
             bool rtl = false;
 
             // We need a valid control to find a top level form
-            if (control != null)
-            {
-                // Search for a top level form associated with the control
-                Form topForm = control.FindForm();
+            // Search for a top level form associated with the control
+            Form topForm = control?.FindForm();
 
-                // If can find an owning form
-                if (topForm != null)
-                {
-                    // Use the form setting instead
-                    rtl = topForm.RightToLeftLayout;
-                }
+            // If can find an owning form
+            if (topForm != null)
+            {
+                // Use the form setting instead
+                rtl = topForm.RightToLeftLayout;
             }
 
             return rtl;
@@ -624,11 +619,15 @@ namespace ComponentFactory.Krypton.Toolkit
         {
             // No need to perform an change for top orientation
             if (orientation == VisualOrientation.Top)
+            {
                 return borders;
+            }
 
             // No need to change the All or None values
             if ((borders == PaletteDrawBorders.All) || (borders == PaletteDrawBorders.None))
+            {
                 return borders;
+            }
 
             PaletteDrawBorders ret = PaletteDrawBorders.None;
 
@@ -637,24 +636,72 @@ namespace ComponentFactory.Krypton.Toolkit
             {
                 case VisualOrientation.Bottom:
                     // Invert sides
-                    if (CommonHelper.HasTopBorder(borders)) ret |= PaletteDrawBorders.Bottom;
-                    if (CommonHelper.HasBottomBorder(borders)) ret |= PaletteDrawBorders.Top;
-                    if (CommonHelper.HasLeftBorder(borders)) ret |= PaletteDrawBorders.Right;
-                    if (CommonHelper.HasRightBorder(borders)) ret |= PaletteDrawBorders.Left;
+                    if (CommonHelper.HasTopBorder(borders))
+                    {
+                        ret |= PaletteDrawBorders.Bottom;
+                    }
+
+                    if (CommonHelper.HasBottomBorder(borders))
+                    {
+                        ret |= PaletteDrawBorders.Top;
+                    }
+
+                    if (CommonHelper.HasLeftBorder(borders))
+                    {
+                        ret |= PaletteDrawBorders.Right;
+                    }
+
+                    if (CommonHelper.HasRightBorder(borders))
+                    {
+                        ret |= PaletteDrawBorders.Left;
+                    }
+
                     break;
                 case VisualOrientation.Left:
                     // Rotate one anti-clockwise
-                    if (CommonHelper.HasTopBorder(borders)) ret |= PaletteDrawBorders.Left;
-                    if (CommonHelper.HasBottomBorder(borders)) ret |= PaletteDrawBorders.Right;
-                    if (CommonHelper.HasLeftBorder(borders)) ret |= PaletteDrawBorders.Bottom;
-                    if (CommonHelper.HasRightBorder(borders)) ret |= PaletteDrawBorders.Top;
+                    if (CommonHelper.HasTopBorder(borders))
+                    {
+                        ret |= PaletteDrawBorders.Left;
+                    }
+
+                    if (CommonHelper.HasBottomBorder(borders))
+                    {
+                        ret |= PaletteDrawBorders.Right;
+                    }
+
+                    if (CommonHelper.HasLeftBorder(borders))
+                    {
+                        ret |= PaletteDrawBorders.Bottom;
+                    }
+
+                    if (CommonHelper.HasRightBorder(borders))
+                    {
+                        ret |= PaletteDrawBorders.Top;
+                    }
+
                     break;
                 case VisualOrientation.Right:
                     // Rotate sides one clockwise
-                    if (CommonHelper.HasTopBorder(borders)) ret |= PaletteDrawBorders.Right;
-                    if (CommonHelper.HasBottomBorder(borders)) ret |= PaletteDrawBorders.Left;
-                    if (CommonHelper.HasLeftBorder(borders)) ret |= PaletteDrawBorders.Top;
-                    if (CommonHelper.HasRightBorder(borders)) ret |= PaletteDrawBorders.Bottom;
+                    if (CommonHelper.HasTopBorder(borders))
+                    {
+                        ret |= PaletteDrawBorders.Right;
+                    }
+
+                    if (CommonHelper.HasBottomBorder(borders))
+                    {
+                        ret |= PaletteDrawBorders.Left;
+                    }
+
+                    if (CommonHelper.HasLeftBorder(borders))
+                    {
+                        ret |= PaletteDrawBorders.Top;
+                    }
+
+                    if (CommonHelper.HasRightBorder(borders))
+                    {
+                        ret |= PaletteDrawBorders.Bottom;
+                    }
+
                     break;
                 default:
                     // Should never happen!
@@ -676,11 +723,15 @@ namespace ComponentFactory.Krypton.Toolkit
         {
             // No need to perform an change for top orientation
             if (orientation == VisualOrientation.Top)
+            {
                 return borders;
+            }
 
             // No need to change the All or None values
             if ((borders == PaletteDrawBorders.All) || (borders == PaletteDrawBorders.None))
+            {
                 return borders;
+            }
 
             PaletteDrawBorders ret = PaletteDrawBorders.None;
 
@@ -689,24 +740,72 @@ namespace ComponentFactory.Krypton.Toolkit
             {
                 case VisualOrientation.Bottom:
                     // Invert sides
-                    if (CommonHelper.HasTopBorder(borders)) ret |= PaletteDrawBorders.Bottom;
-                    if (CommonHelper.HasBottomBorder(borders)) ret |= PaletteDrawBorders.Top;
-                    if (CommonHelper.HasLeftBorder(borders)) ret |= PaletteDrawBorders.Right;
-                    if (CommonHelper.HasRightBorder(borders)) ret |= PaletteDrawBorders.Left;
+                    if (CommonHelper.HasTopBorder(borders))
+                    {
+                        ret |= PaletteDrawBorders.Bottom;
+                    }
+
+                    if (CommonHelper.HasBottomBorder(borders))
+                    {
+                        ret |= PaletteDrawBorders.Top;
+                    }
+
+                    if (CommonHelper.HasLeftBorder(borders))
+                    {
+                        ret |= PaletteDrawBorders.Right;
+                    }
+
+                    if (CommonHelper.HasRightBorder(borders))
+                    {
+                        ret |= PaletteDrawBorders.Left;
+                    }
+
                     break;
                 case VisualOrientation.Right:
                     // Rotate one anti-clockwise
-                    if (CommonHelper.HasTopBorder(borders)) ret |= PaletteDrawBorders.Left;
-                    if (CommonHelper.HasBottomBorder(borders)) ret |= PaletteDrawBorders.Right;
-                    if (CommonHelper.HasLeftBorder(borders)) ret |= PaletteDrawBorders.Bottom;
-                    if (CommonHelper.HasRightBorder(borders)) ret |= PaletteDrawBorders.Top;
+                    if (CommonHelper.HasTopBorder(borders))
+                    {
+                        ret |= PaletteDrawBorders.Left;
+                    }
+
+                    if (CommonHelper.HasBottomBorder(borders))
+                    {
+                        ret |= PaletteDrawBorders.Right;
+                    }
+
+                    if (CommonHelper.HasLeftBorder(borders))
+                    {
+                        ret |= PaletteDrawBorders.Bottom;
+                    }
+
+                    if (CommonHelper.HasRightBorder(borders))
+                    {
+                        ret |= PaletteDrawBorders.Top;
+                    }
+
                     break;
                 case VisualOrientation.Left:
                     // Rotate sides one clockwise
-                    if (CommonHelper.HasTopBorder(borders)) ret |= PaletteDrawBorders.Right;
-                    if (CommonHelper.HasBottomBorder(borders)) ret |= PaletteDrawBorders.Left;
-                    if (CommonHelper.HasLeftBorder(borders)) ret |= PaletteDrawBorders.Top;
-                    if (CommonHelper.HasRightBorder(borders)) ret |= PaletteDrawBorders.Bottom;
+                    if (CommonHelper.HasTopBorder(borders))
+                    {
+                        ret |= PaletteDrawBorders.Right;
+                    }
+
+                    if (CommonHelper.HasBottomBorder(borders))
+                    {
+                        ret |= PaletteDrawBorders.Left;
+                    }
+
+                    if (CommonHelper.HasLeftBorder(borders))
+                    {
+                        ret |= PaletteDrawBorders.Top;
+                    }
+
+                    if (CommonHelper.HasRightBorder(borders))
+                    {
+                        ret |= PaletteDrawBorders.Bottom;
+                    }
+
                     break;
                 default:
                     // Should never happen!
@@ -862,12 +961,35 @@ namespace ComponentFactory.Krypton.Toolkit
             int blue = (int)(color1.B / percentB);
 
             // Limit check against individual component
-            if (red < 0) red = 0;
-            if (red > 255) red = 255;
-            if (green < 0) green = 0;
-            if (green > 255) green = 255;
-            if (blue < 0) blue = 0;
-            if (blue > 255) blue = 255;
+            if (red < 0)
+            {
+                red = 0;
+            }
+
+            if (red > 255)
+            {
+                red = 255;
+            }
+
+            if (green < 0)
+            {
+                green = 0;
+            }
+
+            if (green > 255)
+            {
+                green = 255;
+            }
+
+            if (blue < 0)
+            {
+                blue = 0;
+            }
+
+            if (blue > 255)
+            {
+                blue = 255;
+            }
 
             // Return the whitened color
             return Color.FromArgb(color1.A, red, green, blue);
@@ -892,12 +1014,35 @@ namespace ComponentFactory.Krypton.Toolkit
             int blue = (int)(color1.B * percentB);
 
             // Limit check against individual component
-            if (red < 0) red = 0;
-            if (red > 255) red = 255;
-            if (green < 0) green = 0;
-            if (green > 255) green = 255;
-            if (blue < 0) blue = 0;
-            if (blue > 255) blue = 255;
+            if (red < 0)
+            {
+                red = 0;
+            }
+
+            if (red > 255)
+            {
+                red = 255;
+            }
+
+            if (green < 0)
+            {
+                green = 0;
+            }
+
+            if (green > 255)
+            {
+                green = 255;
+            }
+
+            if (blue < 0)
+            {
+                blue = 0;
+            }
+
+            if (blue > 255)
+            {
+                blue = 255;
+            }
 
             // Return the whitened color
             return Color.FromArgb(color1.A, red, green, blue);
@@ -938,12 +1083,35 @@ namespace ComponentFactory.Krypton.Toolkit
             int blue = (int)((color1.B * percent1) + (color2.B * percent2) + (color3.B * percent3));
 
             // Limit check against individual component
-            if (red < 0) red = 0;
-            if (red > 255) red = 255;
-            if (green < 0) green = 0;
-            if (green > 255) green = 255;
-            if (blue < 0) blue = 0;
-            if (blue > 255) blue = 255;
+            if (red < 0)
+            {
+                red = 0;
+            }
+
+            if (red > 255)
+            {
+                red = 255;
+            }
+
+            if (green < 0)
+            {
+                green = 0;
+            }
+
+            if (green > 255)
+            {
+                green = 255;
+            }
+
+            if (blue < 0)
+            {
+                blue = 0;
+            }
+
+            if (blue > 255)
+            {
+                blue = 255;
+            }
 
             // Return the merged color
             return Color.FromArgb(red, green, blue);
@@ -1004,13 +1172,19 @@ namespace ComponentFactory.Krypton.Toolkit
         {
             // Does the provided control have the focus?
             if (control.Focused && !(control is IContainedInputControl))
+            {
                 return control;
+            }
             else
             {
                 // Check each child hierarchy in turn
                 foreach (Control child in control.Controls)
+                {
                     if (child.ContainsFocus)
+                    {
                         return GetControlWithFocus(child);
+                    }
+                }
 
                 return null;
             }
@@ -1028,13 +1202,14 @@ namespace ComponentFactory.Krypton.Toolkit
 
             // If the control is already inside a control collection, then remove it
             if (c.Parent != null)
+            {
                 RemoveControlFromParent(c);
+            }
+            // Then must use the internal method for adding a new instance
 
             // If the control collection is one of our internal collections...
-            if (parent.Controls is KryptonControlCollection)
+            if (parent.Controls is KryptonControlCollection cc)
             {
-                // Then must use the internal method for adding a new instance
-                KryptonControlCollection cc = (KryptonControlCollection)parent.Controls;
                 cc.AddInternal(c);
             }
             else
@@ -1055,11 +1230,10 @@ namespace ComponentFactory.Krypton.Toolkit
             // If the control is inside a parent collection
             if (c.Parent != null)
             {
+                // Then must use the internal method for adding a new instance
                 // If the control collection is one of our internal collections...
-                if (c.Parent.Controls is KryptonControlCollection)
+                if (c.Parent.Controls is KryptonControlCollection cc)
                 {
-                    // Then must use the internal method for adding a new instance
-                    KryptonControlCollection cc = (KryptonControlCollection)c.Parent.Controls;
                     cc.RemoveInternal(c);
                 }
                 else
@@ -1077,13 +1251,15 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <returns>Border sizing.</returns>
         public static Padding GetWindowBorders(CreateParams cp)
         {
-            PI.RECT rect = new PI.RECT();
+            PI.RECT rect = new PI.RECT
+            {
 
-            // Start with a zero sized rectangle
-            rect.left = 0;
-            rect.right = 0;
-            rect.top = 0;
-            rect.bottom = 0;
+                // Start with a zero sized rectangle
+                left = 0,
+                right = 0,
+                top = 0,
+                bottom = 0
+            };
 
             // Adjust rectangle to add on the borders required
             PI.AdjustWindowRectEx(ref rect, cp.Style, false, cp.ExStyle);
@@ -1275,9 +1451,10 @@ namespace ComponentFactory.Krypton.Toolkit
                 retObj = host.CreateComponent(itemType, null);
 
                 // If the new object has an associated designer then use that now to initialize the instance
-                IComponentInitializer designer = host.GetDesigner((IComponent)retObj) as IComponentInitializer;
-                if (designer != null)
+                if (host.GetDesigner((IComponent)retObj) is IComponentInitializer designer)
+                {
                     designer.InitializeNewComponent(null);
+                }
             }
             else
             {
@@ -1295,21 +1472,25 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <param name="host">Designer host used if provided.</param>
         public static void DestroyInstance(object instance, IDesignerHost host)
         {
-            IComponent component = instance as IComponent;
-            if (component != null)
+            if (instance is IComponent component)
             {
                 // Use designer to remove component if possible
                 if (host != null)
+                {
                     host.DestroyComponent(component);
+                }
                 else
+                {
                     component.Dispose();
+                }
             }
             else
             {
                 // Fallback to calling any exposed dispose method
-                IDisposable disposable = instance as IDisposable;
-                if (disposable != null)
+                if (instance is IDisposable disposable)
+                {
                     disposable.Dispose();
+                }
             }
         }
 
@@ -1455,19 +1636,30 @@ namespace ComponentFactory.Krypton.Toolkit
         public static Point ClientMouseMessageToScreenPt(Message m)
         {
             // Extract the x and y mouse position from message
-            PI.POINTC clientPt = new PI.POINTC();
-            clientPt.x = PI.LOWORD((int)m.LParam);
-            clientPt.y = PI.HIWORD((int)m.LParam);
+            PI.POINTC clientPt = new PI.POINTC
+            {
+                x = PI.LOWORD((int)m.LParam),
+                y = PI.HIWORD((int)m.LParam)
+            };
 
             // Negative positions are in the range 32767 -> 65535, 
             // so convert to actual int values for the negative positions
-            if (clientPt.x >= 32767) clientPt.x = (clientPt.x - 65536);
-            if (clientPt.y >= 32767) clientPt.y = (clientPt.y - 65536);
+            if (clientPt.x >= 32767)
+            {
+                clientPt.x = (clientPt.x - 65536);
+            }
+
+            if (clientPt.y >= 32767)
+            {
+                clientPt.y = (clientPt.y - 65536);
+            }
 
             // Convert a 0,0 point from client to screen to find offsetting
-            PI.POINTC zeroPIPt = new PI.POINTC();
-            zeroPIPt.x = 0;
-            zeroPIPt.y = 0;
+            PI.POINTC zeroPIPt = new PI.POINTC
+            {
+                x = 0,
+                y = 0
+            };
             PI.MapWindowPoints(m.HWnd, IntPtr.Zero, zeroPIPt, 1);
 
             // Adjust the client coordinate by the offset to get to screen
@@ -1504,7 +1696,9 @@ namespace ComponentFactory.Krypton.Toolkit
                                               string def)
         {
             if (!string.IsNullOrEmpty(value) && (value != def))
+            {
                 xmlWriter.WriteAttributeString(name, value);
+            }
         }
 
         /// <summary>
@@ -1535,8 +1729,10 @@ namespace ComponentFactory.Krypton.Toolkit
                 string ret = xmlReader.GetAttribute(name);
                 
                 if (ret == null)
+                {
                     ret = def;
-                
+                }
+
                 return ret;
             }
             catch
@@ -1590,11 +1786,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Gets a reference to the currently active floating window.
         /// </summary>
-        public static Form ActiveFloatingWindow
-        {
-            get { return _activeFloatingWindow; }
-            set { _activeFloatingWindow = value; }
-        }
+        public static Form ActiveFloatingWindow { get; set; }
+
         #endregion
     }
 }

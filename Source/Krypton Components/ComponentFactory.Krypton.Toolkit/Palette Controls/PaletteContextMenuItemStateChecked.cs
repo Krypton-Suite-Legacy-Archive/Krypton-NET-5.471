@@ -8,14 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
-using System.Drawing;
-using System.Drawing.Text;
 using System.ComponentModel;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using System.Diagnostics;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -25,8 +18,8 @@ namespace ComponentFactory.Krypton.Toolkit
 	public class PaletteContextMenuItemStateChecked : Storage
 	{
 		#region Instance Fields
-        private PaletteTripleJustImage _paletteItemImage;
-        #endregion
+
+	    #endregion
 
 		#region Identity
         /// <summary>
@@ -53,7 +46,7 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// </summary>
         public PaletteContextMenuItemStateChecked(PaletteTripleJustImageRedirect redirectItemImage)
 		{
-            _paletteItemImage = new PaletteTripleJustImage(redirectItemImage);
+            ItemImage = new PaletteTripleJustImage(redirectItemImage);
         }
 		#endregion
 
@@ -69,7 +62,7 @@ namespace ComponentFactory.Krypton.Toolkit
             common.StateCommon.BackStyle = PaletteBackStyle.ContextMenuItemImage;
             common.StateCommon.BorderStyle = PaletteBorderStyle.ContextMenuItemImage;
             common.StateCommon.ContentStyle = PaletteContentStyle.ContextMenuItemImage;
-            _paletteItemImage.PopulateFromBase(state);
+            ItemImage.PopulateFromBase(state);
         }
         #endregion
 
@@ -78,14 +71,9 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// Gets a value indicating if all values are default.
 		/// </summary>
 		[Browsable(false)]
-		public override bool IsDefault
-		{
-			get 
-			{
-                return (_paletteItemImage.IsDefault);
-			}
-		}
-		#endregion
+		public override bool IsDefault => (ItemImage.IsDefault);
+
+	    #endregion
 
         #region ItemImage
         /// <summary>
@@ -95,14 +83,11 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining item image appearance.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public PaletteTripleJustImage ItemImage
-        {
-            get { return _paletteItemImage; }
-        }
+        public PaletteTripleJustImage ItemImage { get; }
 
-        private bool ShouldSerializeItemImage()
+	    private bool ShouldSerializeItemImage()
         {
-            return !_paletteItemImage.IsDefault;
+            return !ItemImage.IsDefault;
         }
         #endregion
     }

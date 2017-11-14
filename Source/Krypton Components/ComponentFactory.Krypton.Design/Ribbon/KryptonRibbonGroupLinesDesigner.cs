@@ -11,11 +11,9 @@
 using System;
 using System.Collections;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Windows.Forms;
-using System.Windows.Forms.Design;
 using System.Diagnostics;
 using ComponentFactory.Krypton.Toolkit;
 
@@ -104,7 +102,10 @@ namespace ComponentFactory.Krypton.Ribbon
             Debug.Assert(component != null);
 
             // Validate the parameter reference
-            if (component == null) throw new ArgumentNullException("component");
+            if (component == null)
+            {
+                throw new ArgumentNullException("component");
+            }
 
             // Let base class do standard stuff
             base.Initialize(component);
@@ -243,9 +244,7 @@ namespace ComponentFactory.Krypton.Ribbon
             bool moveLast = false;
             bool clearItems = false;
 
-            if ((_ribbonLines != null) &&
-                (_ribbonLines.Ribbon != null) &&
-                _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
+            if ((_ribbonLines?.Ribbon != null) && _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
             {
                 moveFirst = (_ribbonLines.RibbonGroup.Items.IndexOf(_ribbonLines) > 0);
                 movePrev = (_ribbonLines.RibbonGroup.Items.IndexOf(_ribbonLines) > 0);
@@ -264,15 +263,15 @@ namespace ComponentFactory.Krypton.Ribbon
         private void OnToggleHelpers(object sender, EventArgs e)
         {
             // Invert the current toggle helper mode
-            if ((_ribbonLines != null) && (_ribbonLines.Ribbon != null))
+            if (_ribbonLines?.Ribbon != null)
+            {
                 _ribbonLines.Ribbon.InDesignHelperMode = !_ribbonLines.Ribbon.InDesignHelperMode;
+            }
         }
 
         private void OnMoveFirst(object sender, EventArgs e)
         {
-            if ((_ribbonLines != null) &&
-                (_ribbonLines.Ribbon != null) &&
-                 _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
+            if ((_ribbonLines?.Ribbon != null) && _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
             {
                 // Use a transaction to support undo/redo actions
                 DesignerTransaction transaction = _designerHost.CreateTransaction("KryptonRibbonGroupLines MoveFirst");
@@ -295,17 +294,14 @@ namespace ComponentFactory.Krypton.Ribbon
                 finally
                 {
                     // If we managed to create the transaction, then do it
-                    if (transaction != null)
-                        transaction.Commit();
+                    transaction?.Commit();
                 }
             }
         }
 
         private void OnMovePrevious(object sender, EventArgs e)
         {
-            if ((_ribbonLines != null) &&
-                (_ribbonLines.Ribbon != null) &&
-                 _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
+            if ((_ribbonLines?.Ribbon != null) && _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
             {
                 // Use a transaction to support undo/redo actions
                 DesignerTransaction transaction = _designerHost.CreateTransaction("KryptonRibbonGroupLines MovePrevious");
@@ -330,17 +326,14 @@ namespace ComponentFactory.Krypton.Ribbon
                 finally
                 {
                     // If we managed to create the transaction, then do it
-                    if (transaction != null)
-                        transaction.Commit();
+                    transaction?.Commit();
                 }
             }
         }
 
         private void OnMoveNext(object sender, EventArgs e)
         {
-            if ((_ribbonLines != null) &&
-                (_ribbonLines.Ribbon != null) &&
-                 _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
+            if ((_ribbonLines?.Ribbon != null) && _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
             {
                 // Use a transaction to support undo/redo actions
                 DesignerTransaction transaction = _designerHost.CreateTransaction("KryptonRibbonGroupLines MoveNext");
@@ -365,17 +358,14 @@ namespace ComponentFactory.Krypton.Ribbon
                 finally
                 {
                     // If we managed to create the transaction, then do it
-                    if (transaction != null)
-                        transaction.Commit();
+                    transaction?.Commit();
                 }
             }
         }
 
         private void OnMoveLast(object sender, EventArgs e)
         {
-            if ((_ribbonLines != null) &&
-                (_ribbonLines.Ribbon != null) &&
-                 _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
+            if ((_ribbonLines?.Ribbon != null) && _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
             {
                 // Use a transaction to support undo/redo actions
                 DesignerTransaction transaction = _designerHost.CreateTransaction("KryptonRibbonGroupLines MoveLast");
@@ -398,17 +388,14 @@ namespace ComponentFactory.Krypton.Ribbon
                 finally
                 {
                     // If we managed to create the transaction, then do it
-                    if (transaction != null)
-                        transaction.Commit();
+                    transaction?.Commit();
                 }
             }
         }
 
         private void OnAddButton(object sender, EventArgs e)
         {
-            if ((_ribbonLines != null) &&
-                (_ribbonLines.Ribbon != null) &&
-                 _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
+            if ((_ribbonLines?.Ribbon != null) && _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
             {
                 // Use a transaction to support undo/redo actions
                 DesignerTransaction transaction = _designerHost.CreateTransaction("KryptonRibbonGroupLines AddButton");
@@ -429,17 +416,14 @@ namespace ComponentFactory.Krypton.Ribbon
                 finally
                 {
                     // If we managed to create the transaction, then do it
-                    if (transaction != null)
-                        transaction.Commit();
+                    transaction?.Commit();
                 }
             }
         }
 
         private void OnAddColorButton(object sender, EventArgs e)
         {
-            if ((_ribbonLines != null) &&
-                (_ribbonLines.Ribbon != null) &&
-                 _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
+            if ((_ribbonLines?.Ribbon != null) && _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
             {
                 // Use a transaction to support undo/redo actions
                 DesignerTransaction transaction = _designerHost.CreateTransaction("KryptonRibbonGroupLines AddColorButton");
@@ -460,17 +444,14 @@ namespace ComponentFactory.Krypton.Ribbon
                 finally
                 {
                     // If we managed to create the transaction, then do it
-                    if (transaction != null)
-                        transaction.Commit();
+                    transaction?.Commit();
                 }
             }
         }
 
         private void OnAddCheckBox(object sender, EventArgs e)
         {
-            if ((_ribbonLines != null) &&
-                (_ribbonLines.Ribbon != null) &&
-                 _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
+            if ((_ribbonLines?.Ribbon != null) && _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
             {
                 // Use a transaction to support undo/redo actions
                 DesignerTransaction transaction = _designerHost.CreateTransaction("KryptonRibbonGroupLines AddCheckBox");
@@ -491,17 +472,14 @@ namespace ComponentFactory.Krypton.Ribbon
                 finally
                 {
                     // If we managed to create the transaction, then do it
-                    if (transaction != null)
-                        transaction.Commit();
+                    transaction?.Commit();
                 }
             }
         }
 
         private void OnAddRadioButton(object sender, EventArgs e)
         {
-            if ((_ribbonLines != null) &&
-                (_ribbonLines.Ribbon != null) &&
-                 _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
+            if ((_ribbonLines?.Ribbon != null) && _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
             {
                 // Use a transaction to support undo/redo actions
                 DesignerTransaction transaction = _designerHost.CreateTransaction("KryptonRibbonGroupLines AddRadioButton");
@@ -522,17 +500,14 @@ namespace ComponentFactory.Krypton.Ribbon
                 finally
                 {
                     // If we managed to create the transaction, then do it
-                    if (transaction != null)
-                        transaction.Commit();
+                    transaction?.Commit();
                 }
             }
         }
 
         private void OnAddLabel(object sender, EventArgs e)
         {
-            if ((_ribbonLines != null) &&
-                (_ribbonLines.Ribbon != null) &&
-                 _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
+            if ((_ribbonLines?.Ribbon != null) && _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
             {
                 // Use a transaction to support undo/redo actions
                 DesignerTransaction transaction = _designerHost.CreateTransaction("KryptonRibbonGroupLines AddLabel");
@@ -553,17 +528,14 @@ namespace ComponentFactory.Krypton.Ribbon
                 finally
                 {
                     // If we managed to create the transaction, then do it
-                    if (transaction != null)
-                        transaction.Commit();
+                    transaction?.Commit();
                 }
             }
         }
 
         private void OnAddCustomControl(object sender, EventArgs e)
         {
-            if ((_ribbonLines != null) &&
-                (_ribbonLines.Ribbon != null) &&
-                 _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
+            if ((_ribbonLines?.Ribbon != null) && _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
             {
                 // Use a transaction to support undo/redo actions
                 DesignerTransaction transaction = _designerHost.CreateTransaction("KryptonRibbonGroupLines AddCustomControl");
@@ -584,17 +556,14 @@ namespace ComponentFactory.Krypton.Ribbon
                 finally
                 {
                     // If we managed to create the transaction, then do it
-                    if (transaction != null)
-                        transaction.Commit();
+                    transaction?.Commit();
                 }
             }
         }
 
         private void OnAddTextBox(object sender, EventArgs e)
         {
-            if ((_ribbonLines != null) &&
-                (_ribbonLines.Ribbon != null) &&
-                 _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
+            if ((_ribbonLines?.Ribbon != null) && _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
             {
                 // Use a transaction to support undo/redo actions
                 DesignerTransaction transaction = _designerHost.CreateTransaction("KryptonRibbonGroupLines AddTextBox");
@@ -615,17 +584,14 @@ namespace ComponentFactory.Krypton.Ribbon
                 finally
                 {
                     // If we managed to create the transaction, then do it
-                    if (transaction != null)
-                        transaction.Commit();
+                    transaction?.Commit();
                 }
             }
         }
 
         private void OnAddMaskedTextBox(object sender, EventArgs e)
         {
-            if ((_ribbonLines != null) &&
-                (_ribbonLines.Ribbon != null) &&
-                 _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
+            if ((_ribbonLines?.Ribbon != null) && _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
             {
                 // Use a transaction to support undo/redo actions
                 DesignerTransaction transaction = _designerHost.CreateTransaction("KryptonRibbonGroupLines AddMaskedTextBox");
@@ -646,17 +612,14 @@ namespace ComponentFactory.Krypton.Ribbon
                 finally
                 {
                     // If we managed to create the transaction, then do it
-                    if (transaction != null)
-                        transaction.Commit();
+                    transaction?.Commit();
                 }
             }
         }
 
         private void OnAddRichTextBox(object sender, EventArgs e)
         {
-            if ((_ribbonLines != null) &&
-                (_ribbonLines.Ribbon != null) &&
-                 _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
+            if ((_ribbonLines?.Ribbon != null) && _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
             {
                 // Use a transaction to support undo/redo actions
                 DesignerTransaction transaction = _designerHost.CreateTransaction("KryptonRibbonGroupLines AddRichTextBox");
@@ -677,17 +640,14 @@ namespace ComponentFactory.Krypton.Ribbon
                 finally
                 {
                     // If we managed to create the transaction, then do it
-                    if (transaction != null)
-                        transaction.Commit();
+                    transaction?.Commit();
                 }
             }
         }
 
         private void OnAddComboBox(object sender, EventArgs e)
         {
-            if ((_ribbonLines != null) &&
-                (_ribbonLines.Ribbon != null) &&
-                 _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
+            if ((_ribbonLines?.Ribbon != null) && _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
             {
                 // Use a transaction to support undo/redo actions
                 DesignerTransaction transaction = _designerHost.CreateTransaction("KryptonRibbonGroupLines AddComboBox");
@@ -708,17 +668,14 @@ namespace ComponentFactory.Krypton.Ribbon
                 finally
                 {
                     // If we managed to create the transaction, then do it
-                    if (transaction != null)
-                        transaction.Commit();
+                    transaction?.Commit();
                 }
             }
         }
 
         private void OnAddNumericUpDown(object sender, EventArgs e)
         {
-            if ((_ribbonLines != null) &&
-                (_ribbonLines.Ribbon != null) &&
-                 _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
+            if ((_ribbonLines?.Ribbon != null) && _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
             {
                 // Use a transaction to support undo/redo actions
                 DesignerTransaction transaction = _designerHost.CreateTransaction("KryptonRibbonGroupLines AddNumericUpDown");
@@ -739,17 +696,14 @@ namespace ComponentFactory.Krypton.Ribbon
                 finally
                 {
                     // If we managed to create the transaction, then do it
-                    if (transaction != null)
-                        transaction.Commit();
+                    transaction?.Commit();
                 }
             }
         }
 
         private void OnAddDomainUpDown(object sender, EventArgs e)
         {
-            if ((_ribbonLines != null) &&
-                (_ribbonLines.Ribbon != null) &&
-                 _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
+            if ((_ribbonLines?.Ribbon != null) && _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
             {
                 // Use a transaction to support undo/redo actions
                 DesignerTransaction transaction = _designerHost.CreateTransaction("KryptonRibbonGroupLines AddDomainUpDown");
@@ -770,17 +724,14 @@ namespace ComponentFactory.Krypton.Ribbon
                 finally
                 {
                     // If we managed to create the transaction, then do it
-                    if (transaction != null)
-                        transaction.Commit();
+                    transaction?.Commit();
                 }
             }
         }
 
         private void OnAddDateTimePicker(object sender, EventArgs e)
         {
-            if ((_ribbonLines != null) &&
-                (_ribbonLines.Ribbon != null) &&
-                 _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
+            if ((_ribbonLines?.Ribbon != null) && _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
             {
                 // Use a transaction to support undo/redo actions
                 DesignerTransaction transaction = _designerHost.CreateTransaction("KryptonRibbonGroupLines AddDateTimePicker");
@@ -801,17 +752,14 @@ namespace ComponentFactory.Krypton.Ribbon
                 finally
                 {
                     // If we managed to create the transaction, then do it
-                    if (transaction != null)
-                        transaction.Commit();
+                    transaction?.Commit();
                 }
             }
         }
 
         private void OnAddTrackBar(object sender, EventArgs e)
         {
-            if ((_ribbonLines != null) &&
-                (_ribbonLines.Ribbon != null) &&
-                 _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
+            if ((_ribbonLines?.Ribbon != null) && _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
             {
                 // Use a transaction to support undo/redo actions
                 DesignerTransaction transaction = _designerHost.CreateTransaction("KryptonRibbonGroupLines AddTrackBar");
@@ -832,17 +780,14 @@ namespace ComponentFactory.Krypton.Ribbon
                 finally
                 {
                     // If we managed to create the transaction, then do it
-                    if (transaction != null)
-                        transaction.Commit();
+                    transaction?.Commit();
                 }
             }
         }
 
         private void OnAddCluster(object sender, EventArgs e)
         {
-            if ((_ribbonLines != null) &&
-                (_ribbonLines.Ribbon != null) &&
-                 _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
+            if ((_ribbonLines?.Ribbon != null) && _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
             {
                 // Use a transaction to support undo/redo actions
                 DesignerTransaction transaction = _designerHost.CreateTransaction("KryptonRibbonGroupLines AddCluster");
@@ -875,17 +820,14 @@ namespace ComponentFactory.Krypton.Ribbon
                 finally
                 {
                     // If we managed to create the transaction, then do it
-                    if (transaction != null)
-                        transaction.Commit();
+                    transaction?.Commit();
                 }
             }
         }
 
         private void OnClearItems(object sender, EventArgs e)
         {
-            if ((_ribbonLines != null) &&
-                (_ribbonLines.Ribbon != null) &&
-                 _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
+            if ((_ribbonLines?.Ribbon != null) && _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
             {
                 // Use a transaction to support undo/redo actions
                 DesignerTransaction transaction = _designerHost.CreateTransaction("KryptonRibbonGroupLines ClearItems");
@@ -913,17 +855,14 @@ namespace ComponentFactory.Krypton.Ribbon
                 finally
                 {
                     // If we managed to create the transaction, then do it
-                    if (transaction != null)
-                        transaction.Commit();
+                    transaction?.Commit();
                 }
             }
         }
 
         private void OnDeleteLines(object sender, EventArgs e)
         {
-            if ((_ribbonLines != null) &&
-                (_ribbonLines.Ribbon != null) &&
-                 _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
+            if ((_ribbonLines?.Ribbon != null) && _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
             {
                 // Use a transaction to support undo/redo actions
                 DesignerTransaction transaction = _designerHost.CreateTransaction("KryptonRibbonGroupLines DeleteLines");
@@ -949,17 +888,14 @@ namespace ComponentFactory.Krypton.Ribbon
                 finally
                 {
                     // If we managed to create the transaction, then do it
-                    if (transaction != null)
-                        transaction.Commit();
+                    transaction?.Commit();
                 }
             }
         }
 
         private void OnVisible(object sender, EventArgs e)
         {
-            if ((_ribbonLines != null) &&
-                (_ribbonLines.Ribbon != null) &&
-                 _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
+            if ((_ribbonLines?.Ribbon != null) && _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
             {
                 _changeService.OnComponentChanged(_ribbonLines, null, _ribbonLines.Visible, !_ribbonLines.Visible);
                 _ribbonLines.Visible = !_ribbonLines.Visible;
@@ -968,9 +904,7 @@ namespace ComponentFactory.Krypton.Ribbon
 
         private void OnMaxLarge(object sender, EventArgs e)
         {
-            if ((_ribbonLines != null) &&
-                (_ribbonLines.Ribbon != null) &&
-                 _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
+            if ((_ribbonLines?.Ribbon != null) && _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
             {
                 _changeService.OnComponentChanged(_ribbonLines, null, _ribbonLines.MaximumSize, GroupItemSize.Large);
                 _ribbonLines.MaximumSize = GroupItemSize.Large;
@@ -979,9 +913,7 @@ namespace ComponentFactory.Krypton.Ribbon
 
         private void OnMaxMedium(object sender, EventArgs e)
         {
-            if ((_ribbonLines != null) &&
-                (_ribbonLines.Ribbon != null) &&
-                 _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
+            if ((_ribbonLines?.Ribbon != null) && _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
             {
                 _changeService.OnComponentChanged(_ribbonLines, null, _ribbonLines.MaximumSize, GroupItemSize.Medium);
                 _ribbonLines.MaximumSize = GroupItemSize.Medium;
@@ -990,9 +922,7 @@ namespace ComponentFactory.Krypton.Ribbon
 
         private void OnMaxSmall(object sender, EventArgs e)
         {
-            if ((_ribbonLines != null) &&
-                (_ribbonLines.Ribbon != null) &&
-                 _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
+            if ((_ribbonLines?.Ribbon != null) && _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
             {
                 _changeService.OnComponentChanged(_ribbonLines, null, _ribbonLines.MaximumSize, GroupItemSize.Small);
                 _ribbonLines.MaximumSize = GroupItemSize.Small;
@@ -1001,9 +931,7 @@ namespace ComponentFactory.Krypton.Ribbon
 
         private void OnMinLarge(object sender, EventArgs e)
         {
-            if ((_ribbonLines != null) &&
-                (_ribbonLines.Ribbon != null) &&
-                 _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
+            if ((_ribbonLines?.Ribbon != null) && _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
             {
                 _changeService.OnComponentChanged(_ribbonLines, null, _ribbonLines.MinimumSize, GroupItemSize.Large);
                 _ribbonLines.MinimumSize = GroupItemSize.Large;
@@ -1012,9 +940,7 @@ namespace ComponentFactory.Krypton.Ribbon
 
         private void OnMinMedium(object sender, EventArgs e)
         {
-            if ((_ribbonLines != null) &&
-                (_ribbonLines.Ribbon != null) &&
-                 _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
+            if ((_ribbonLines?.Ribbon != null) && _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
             {
                 _changeService.OnComponentChanged(_ribbonLines, null, _ribbonLines.MinimumSize, GroupItemSize.Medium);
                 _ribbonLines.MinimumSize = GroupItemSize.Medium;
@@ -1023,9 +949,7 @@ namespace ComponentFactory.Krypton.Ribbon
 
         private void OnMinSmall(object sender, EventArgs e)
         {
-            if ((_ribbonLines != null) &&
-                (_ribbonLines.Ribbon != null) &&
-                 _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
+            if ((_ribbonLines?.Ribbon != null) && _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
             {
                 _changeService.OnComponentChanged(_ribbonLines, null, _ribbonLines.MinimumSize, GroupItemSize.Small);
                 _ribbonLines.MinimumSize = GroupItemSize.Small;
@@ -1057,9 +981,7 @@ namespace ComponentFactory.Krypton.Ribbon
 
         private void OnContextMenu(object sender, MouseEventArgs e)
         {
-            if ((_ribbonLines != null) &&
-                (_ribbonLines.Ribbon != null) &&
-                 _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
+            if ((_ribbonLines?.Ribbon != null) && _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
             {
                 // Create the menu strip the first time around
                 if (_cms == null)
@@ -1170,9 +1092,11 @@ namespace ComponentFactory.Krypton.Ribbon
                     if (group != _ribbonLines.RibbonGroup)
                     {
                         // Create menu item for the group
-                        ToolStripMenuItem groupMenuItem = new ToolStripMenuItem();
-                        groupMenuItem.Text = group.TextLine1 + " " + group.TextLine2;
-                        groupMenuItem.Tag = group;
+                        ToolStripMenuItem groupMenuItem = new ToolStripMenuItem
+                        {
+                            Text = group.TextLine1 + " " + group.TextLine2,
+                            Tag = group
+                        };
 
                         // Hook into selection of the menu item
                         groupMenuItem.Click += new EventHandler(OnMoveToGroup);
@@ -1186,9 +1110,7 @@ namespace ComponentFactory.Krypton.Ribbon
 
         private void OnMoveToGroup(object sender, EventArgs e)
         {
-            if ((_ribbonLines != null) &&
-                (_ribbonLines.Ribbon != null) &&
-                 _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
+            if ((_ribbonLines?.Ribbon != null) && _ribbonLines.RibbonGroup.Items.Contains(_ribbonLines))
             {
                 // Cast to correct type
                 ToolStripMenuItem groupMenuItem = (ToolStripMenuItem)sender;
@@ -1223,8 +1145,7 @@ namespace ComponentFactory.Krypton.Ribbon
                 finally
                 {
                     // If we managed to create the transaction, then do it
-                    if (transaction != null)
-                        transaction.Commit();
+                    transaction?.Commit();
                 }
             }
         }

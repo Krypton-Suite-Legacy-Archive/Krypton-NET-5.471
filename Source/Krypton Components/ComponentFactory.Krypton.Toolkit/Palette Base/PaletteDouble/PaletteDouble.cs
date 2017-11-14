@@ -8,14 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
-using System.Drawing;
-using System.Drawing.Text;
 using System.ComponentModel;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using System.Diagnostics;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -80,11 +73,9 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// Gets a value indicating if all values are default.
 		/// </summary>
 		[Browsable(false)]
-		public override bool IsDefault
-		{
-			get { return (Back.IsDefault && Border.IsDefault); }
-		}
-		#endregion
+		public override bool IsDefault => (Back.IsDefault && Border.IsDefault);
+
+	    #endregion
 
         #region PopulateFromBase
         /// <summary>
@@ -117,12 +108,9 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
 		[Description("Overrides for defining background appearance.")]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public virtual PaletteBack Back
-		{
-			get { return _back; }
-		}
+        public virtual PaletteBack Back => _back;
 
-		private bool ShouldSerializeBack()
+	    private bool ShouldSerializeBack()
 		{
 			return !_back.IsDefault;
 		}
@@ -133,11 +121,9 @@ namespace ComponentFactory.Krypton.Toolkit
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Advanced)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public virtual IPaletteBack PaletteBack
-		{
-			get { return Back; }
-		}
-		#endregion
+        public virtual IPaletteBack PaletteBack => Back;
+
+	    #endregion
 
 		#region Border
 		/// <summary>
@@ -147,12 +133,9 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
 		[Description("Overrides for defining border appearance.")]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-		public virtual PaletteBorder Border
-		{
-			get { return _border; }
-		}
+		public virtual PaletteBorder Border => _border;
 
-		private bool ShouldSerializeBorder()
+	    private bool ShouldSerializeBorder()
 		{
 			return !_border.IsDefault;
 		}
@@ -163,11 +146,9 @@ namespace ComponentFactory.Krypton.Toolkit
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Advanced)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public virtual IPaletteBorder PaletteBorder
-		{
-			get { return Border; }
-		}
-		#endregion
+        public virtual IPaletteBorder PaletteBorder => Border;
+
+	    #endregion
 
 		#region Protected
 		/// <summary>

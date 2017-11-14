@@ -10,7 +10,6 @@
 
 using System;
 using System.Drawing;
-using System.Windows.Forms;
 using System.ComponentModel;
 using System.Diagnostics;
 
@@ -23,7 +22,7 @@ namespace ComponentFactory.Krypton.Toolkit
                                                 IPaletteButtonSpec
     {
         #region Instance Fields
-        private PaletteRedirect _redirector;
+
         private PaletteButtonStyle _style;
         private PaletteButtonOrientation _orientation;
         private PaletteRelativeEdgeAlign _edge;
@@ -46,7 +45,7 @@ namespace ComponentFactory.Krypton.Toolkit
             Debug.Assert(redirector != null);
 
             // Remember reference to redirector
-            _redirector = redirector;
+            Redirector = redirector;
 
             // Default the generic overridable values
             _style = PaletteButtonStyle.Inherit;
@@ -59,16 +58,10 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Gets a value indicating if all values are default.
         /// </summary>
-        public override bool IsDefault
-        {
-            get
-            {
-                return ((Style == PaletteButtonStyle.Inherit) &&
-                        (Orientation == PaletteButtonOrientation.Inherit) &&
-                        (Edge == PaletteRelativeEdgeAlign.Inherit));
+        public override bool IsDefault => ((Style == PaletteButtonStyle.Inherit) &&
+                                           (Orientation == PaletteButtonOrientation.Inherit) &&
+                                           (Edge == PaletteRelativeEdgeAlign.Inherit));
 
-            }
-        }
         #endregion
 
         #region Redirector
@@ -77,10 +70,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public PaletteRedirect Redirector
-        {
-            get { return _redirector; }
-        }
+        public PaletteRedirect Redirector { get; private set; }
+
         #endregion
 
         #region SetRedirector
@@ -90,7 +81,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <param name="redirect">Target redirector.</param>
         public void SetRedirector(PaletteRedirect redirect)
         {
-            _redirector = redirect;
+            Redirector = redirect;
         }
         #endregion
 
@@ -101,9 +92,9 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <param name="style">The style of the button spec instance.</param>
         public virtual void PopulateFromBase(PaletteButtonSpecStyle style)
         {
-            Style = _redirector.GetButtonSpecStyle(style);
-            Orientation = _redirector.GetButtonSpecOrientation(style);
-            Edge = _redirector.GetButtonSpecEdge(style);
+            Style = Redirector.GetButtonSpecStyle(style);
+            Orientation = Redirector.GetButtonSpecOrientation(style);
+            Edge = Redirector.GetButtonSpecEdge(style);
         }
         #endregion
 
@@ -118,7 +109,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue(typeof(PaletteButtonStyle), "Inherit")]
         public PaletteButtonStyle Style
         {
-            get { return _style; }
+            get => _style;
 
             set
             {
@@ -151,7 +142,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue(typeof(PaletteButtonOrientation), "Inherit")]
         public PaletteButtonOrientation Orientation
         {
-            get { return _orientation; }
+            get => _orientation;
 
             set
             {
@@ -184,7 +175,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue(typeof(PaletteRelativeEdgeAlign), "Inherit")]
         public PaletteRelativeEdgeAlign Edge
         {
-            get { return _edge; }
+            get => _edge;
 
             set
             {
@@ -213,7 +204,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <returns>Icon value.</returns>
         public virtual Icon GetButtonSpecIcon(PaletteButtonSpecStyle style)
         {
-            return _redirector.GetButtonSpecIcon(style);
+            return Redirector.GetButtonSpecIcon(style);
         }
 
         /// <summary>
@@ -225,7 +216,7 @@ namespace ComponentFactory.Krypton.Toolkit
         public virtual Image GetButtonSpecImage(PaletteButtonSpecStyle style,
                                                 PaletteState state)
         {
-            return _redirector.GetButtonSpecImage(style, state);
+            return Redirector.GetButtonSpecImage(style, state);
         }
 
         /// <summary>
@@ -235,7 +226,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <returns>Color value.</returns>
         public virtual Color GetButtonSpecImageTransparentColor(PaletteButtonSpecStyle style)
         {
-            return _redirector.GetButtonSpecImageTransparentColor(style);
+            return Redirector.GetButtonSpecImageTransparentColor(style);
         }
 
         /// <summary>
@@ -245,7 +236,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <returns>String value.</returns>
         public virtual string GetButtonSpecShortText(PaletteButtonSpecStyle style)
         {
-            return _redirector.GetButtonSpecShortText(style);
+            return Redirector.GetButtonSpecShortText(style);
         }
 
         /// <summary>
@@ -255,7 +246,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <returns>String value.</returns>
         public virtual string GetButtonSpecLongText(PaletteButtonSpecStyle style)
         {
-            return _redirector.GetButtonSpecLongText(style);
+            return Redirector.GetButtonSpecLongText(style);
         }
 
         /// <summary>
@@ -265,7 +256,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <returns>String value.</returns>
         public virtual string GetButtonSpecToolTipTitle(PaletteButtonSpecStyle style)
         {
-            return _redirector.GetButtonSpecToolTipTitle(style);
+            return Redirector.GetButtonSpecToolTipTitle(style);
         }
 
         /// <summary>
@@ -275,7 +266,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <returns>Color value.</returns>
         public virtual Color GetButtonSpecColorMap(PaletteButtonSpecStyle style)
         {
-            return _redirector.GetButtonSpecColorMap(style);
+            return Redirector.GetButtonSpecColorMap(style);
         }
 
         /// <summary>
@@ -286,9 +277,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public virtual PaletteButtonStyle GetButtonSpecStyle(PaletteButtonSpecStyle style)
         {
             if (Style != PaletteButtonStyle.Inherit)
+            {
                 return Style;
+            }
             else
-                return _redirector.GetButtonSpecStyle(style);
+            {
+                return Redirector.GetButtonSpecStyle(style);
+            }
         }
 
         /// <summary>
@@ -298,7 +293,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <returns>HeaderLocation value.</returns>
         public virtual HeaderLocation GetButtonSpecLocation(PaletteButtonSpecStyle style)
         {
-            return _redirector.GetButtonSpecLocation(style);
+            return Redirector.GetButtonSpecLocation(style);
         }
 
         /// <summary>
@@ -309,9 +304,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public virtual PaletteRelativeEdgeAlign GetButtonSpecEdge(PaletteButtonSpecStyle style)
         {
             if (Edge != PaletteRelativeEdgeAlign.Inherit)
+            {
                 return Edge;
+            }
             else
-                return _redirector.GetButtonSpecEdge(style);
+            {
+                return Redirector.GetButtonSpecEdge(style);
+            }
         }
 
         /// <summary>
@@ -322,9 +321,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public virtual PaletteButtonOrientation GetButtonSpecOrientation(PaletteButtonSpecStyle style)
         {
             if (Orientation != PaletteButtonOrientation.Inherit)
+            {
                 return Orientation;
+            }
             else
-                return _redirector.GetButtonSpecOrientation(style);
+            {
+                return Redirector.GetButtonSpecOrientation(style);
+            }
         }
         #endregion
 
@@ -336,8 +339,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <param name="e">An EventArgs containing event data.</param>
         protected virtual void OnButtonSpecChanged(object sender, EventArgs e)
         {
-            if (ButtonSpecChanged != null)
-                ButtonSpecChanged(this, e);
+            ButtonSpecChanged?.Invoke(this, e);
         }
         #endregion
     }

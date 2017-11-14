@@ -9,10 +9,8 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Diagnostics;
 using ComponentFactory.Krypton.Toolkit;
@@ -22,15 +20,15 @@ namespace ComponentFactory.Krypton.Ribbon
     internal class VisualPopupGroup : VisualPopup
     {
         #region Static Fields
-        private static readonly int BOTTOMRIGHT_GAP = 4;
+
+        private const int BOTTOMRIGHT_GAP = 4;
+
         #endregion
 
         #region Instance Fields
         private KryptonRibbon _ribbon;
         private KryptonRibbonGroup _ribbonGroup;
         private ViewDrawRibbonGroupsBorder _viewBackground;
-        private ViewDrawRibbonGroup _viewGroup;
-        private bool _restorePreviousFocus;
         private Button _hiddenFocusTarget;
         #endregion
 
@@ -54,19 +52,25 @@ namespace ComponentFactory.Krypton.Ribbon
             _ribbonGroup = ribbonGroup;
 
             // Create a view element for drawing the group
-            _viewGroup = new ViewDrawRibbonGroup(ribbon, ribbonGroup, NeedPaintDelegate);
-            _viewGroup.Collapsed = false;
+            ViewGroup = new ViewDrawRibbonGroup(ribbon, ribbonGroup, NeedPaintDelegate)
+            {
+                Collapsed = false
+            };
 
             // Create the background that will contain the actual group instance
-            _viewBackground = new ViewDrawRibbonGroupsBorder(ribbon, true, NeedPaintDelegate);
-            _viewBackground.Add(_viewGroup);
+            _viewBackground = new ViewDrawRibbonGroupsBorder(ribbon, true, NeedPaintDelegate)
+            {
+                ViewGroup
+            };
 
             // Attach the root to the view manager instance
-            ViewManager = new ViewRibbonPopupGroupManager(this, ribbon, _viewBackground, _viewGroup, NeedPaintDelegate);
+            ViewManager = new ViewRibbonPopupGroupManager(this, ribbon, _viewBackground, ViewGroup, NeedPaintDelegate);
 
             // Create and add a hidden button to act as the focus target
-            _hiddenFocusTarget = new Button();
-            _hiddenFocusTarget.TabStop = false;
+            _hiddenFocusTarget = new Button
+            {
+                TabStop = false
+            };
             _hiddenFocusTarget.Location = new Point(-_hiddenFocusTarget.Width, -_hiddenFocusTarget.Height);
             CommonHelper.AddControlToParent(this, _hiddenFocusTarget);
         }
@@ -83,18 +87,22 @@ namespace ComponentFactory.Krypton.Ribbon
                 ViewManager.MouseLeave(EventArgs.Empty);
 
                 // Do we need to restore the previous focus from the ribbon
-                if (_restorePreviousFocus)
+                if (RestorePreviousFocus)
+                {
                     _ribbon.RestorePreviousFocus();
+                }
 
                 // Mark the group as no longer showing as a popup
                 _ribbonGroup.ShowingAsPopup = false;
 
                 // Remove all child controls so they do not become disposed
                 for (int i = Controls.Count - 1; i >= 0; i--)
+                {
                     Controls.RemoveAt(0);
+                }
 
                 // If this group is being dismissed with key tips showing
-                if (_ribbon.InKeyboardMode &&_ribbon.KeyTipMode == KeyTipMode.PopupGroup)
+                if (_ribbon.InKeyboardMode &&(_ribbon.KeyTipMode == KeyTipMode.PopupGroup))
                 {
                     // Revert back to key tips for selected tab
                     KeyTipMode mode = (_ribbon.RealMinimizedMode ? KeyTipMode.PopupMinimized : KeyTipMode.SelectedGroups);
@@ -111,21 +119,16 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <summary>
         /// Gets the view for the popup group.
         /// </summary>
-        public ViewDrawRibbonGroup ViewGroup
-        {
-            get { return _viewGroup; }
-        }
+        public ViewDrawRibbonGroup ViewGroup { get; }
+
         #endregion
 
         #region RestorePreviousFocus
         /// <summary>
         /// Gets and sets a flag indicating if previous ribbon focus should be restored on dispose.
         /// </summary>
-        public bool RestorePreviousFocus
-        {
-            get { return _restorePreviousFocus; }
-            set { _restorePreviousFocus = value; }
-        }
+        public bool RestorePreviousFocus { get; set; }
+
         #endregion
 
         #region SetFirstFocusItem
@@ -135,7 +138,7 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <returns>ViewBase of item; otherwise false.</returns>
         public void SetFirstFocusItem()
         {
-            ViewPopupManager.FocusView = _viewGroup.GetFirstFocusItem();
+            ViewPopupManager.FocusView = ViewGroup.GetFirstFocusItem();
             PerformNeedPaint(false);
         }
         #endregion
@@ -147,7 +150,7 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <returns>ViewBase of item; otherwise false.</returns>
         public void SetLastFocusItem()
         {
-            ViewPopupManager.FocusView = _viewGroup.GetLastFocusItem();
+            ViewPopupManager.FocusView = ViewGroup.GetLastFocusItem();
             PerformNeedPaint(false);
         }
         #endregion
@@ -160,11 +163,13 @@ namespace ComponentFactory.Krypton.Ribbon
         {
             // Find the next item in sequence
             bool matched = false;
-            ViewBase view = _viewGroup.GetNextFocusItem(ViewPopupManager.FocusView, ref matched);
+            ViewBase view = ViewGroup.GetNextFocusItem(ViewPopupManager.FocusView, ref matched);
 
             // Rotate around to the first item
             if (view == null)
+            {
                 SetFirstFocusItem();
+            }
             else
             {
                 ViewPopupManager.FocusView = view;
@@ -181,11 +186,13 @@ namespace ComponentFactory.Krypton.Ribbon
         {
             // Find the previous item in sequence
             bool matched = false;
-            ViewBase view = _viewGroup.GetPreviousFocusItem(ViewPopupManager.FocusView, ref matched);
+            ViewBase view = ViewGroup.GetPreviousFocusItem(ViewPopupManager.FocusView, ref matched);
 
             // Rotate around to the last item
             if (view == null)
+            {
                 SetLastFocusItem();
+            }
             else
             {
                 ViewPopupManager.FocusView = view;
@@ -217,7 +224,9 @@ namespace ComponentFactory.Krypton.Ribbon
             {
                 // Find the size the group requests to be
                 using (ViewLayoutContext context = new ViewLayoutContext(this, Renderer))
-                    popupSize = _viewGroup.GetPreferredSize(context);
+                {
+                    popupSize = ViewGroup.GetPreferredSize(context);
+                }
 
                 // Override the height to enforce the correct group height
                 popupSize.Height = _ribbon.CalculatedValues.GroupHeight;
@@ -281,19 +290,27 @@ namespace ComponentFactory.Krypton.Ribbon
 
                     // Place it in the area with the most space
                     if (spareAbove > spareBelow)
+                    {
                         popupLocation.Y = workingArea.Top;
+                    }
                     else
+                    {
                         popupLocation.Y = parentScreenRect.Bottom;
+                    }
                 }
             }
 
             // Prevent the popup from being off the left side of the screen
             if (popupLocation.X < workingArea.Left)
+            {
                 popupLocation.X = workingArea.Left;
+            }
 
             // Preven the popup from being off the right size of the screen
             if ((popupLocation.X + popupSize.Width) > workingArea.Right)
+            {
                 popupLocation.X = workingArea.Right - popupSize.Width;
+            }
 
             return new Rectangle(popupLocation, popupSize);
         }
@@ -303,10 +320,7 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <summary>
         /// Gets access to the popup group specific view manager.
         /// </summary>
-        protected ViewRibbonPopupGroupManager ViewPopupManager
-        {
-            get { return ViewManager as ViewRibbonPopupGroupManager; }
-        }
+        protected ViewRibbonPopupGroupManager ViewPopupManager => ViewManager as ViewRibbonPopupGroupManager;
 
         /// <summary>
         /// Gets the creation parameters.
@@ -345,7 +359,9 @@ namespace ComponentFactory.Krypton.Ribbon
 
             // Update the region of the popup to be the border path
             using (GraphicsPath roundPath = CommonHelper.RoundedRectanglePath(ClientRectangle, borderRounding))
+            {
                 Region = new Region(roundPath);
+            }
         }
 
         /// <summary>
@@ -356,7 +372,9 @@ namespace ComponentFactory.Krypton.Ribbon
         {
             // If in keyboard mode then pass character onto the key tips
             if (_ribbon.InKeyboardMode && _ribbon.InKeyTipsMode)
+            {
                 _ribbon.AppendKeyTipPress(char.ToUpper(e.KeyChar));
+            }
 
             base.OnKeyPress(e);
         }

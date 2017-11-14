@@ -8,11 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Diagnostics;
 using ComponentFactory.Krypton.Toolkit;
@@ -66,10 +62,8 @@ namespace ComponentFactory.Krypton.Navigator
         /// <summary>
         /// Gets the rounding value to apply on the edges.
         /// </summary>
-        public int BorderWidth
-        {
-            get { return _drawCanvas.PaletteBorder.GetBorderWidth(_drawCanvas.State); }
-        }
+        public int BorderWidth => _drawCanvas.PaletteBorder.GetBorderWidth(_drawCanvas.State);
+
         #endregion
 
         #region Paint
@@ -84,7 +78,9 @@ namespace ComponentFactory.Krypton.Navigator
 
             // Only render visible children that are inside the clipping rectangle
             if (_layoutOverlap.Visible && _layoutOverlap.ClientRectangle.IntersectsWith(context.ClipRect))
+            {
                 _layoutOverlap.Render(context);
+            }
 
             _layoutTabs.DrawChecked = false;
         }

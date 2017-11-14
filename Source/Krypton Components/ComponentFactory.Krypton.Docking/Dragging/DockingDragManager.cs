@@ -25,7 +25,6 @@ namespace ComponentFactory.Krypton.Docking
     {
         #region Instance Fields
         private KryptonDockingManager _manager;
-        private KryptonFloatingWindow _window;
         private Point _offset;
         private Point _screenPt;
         private Timer _moveTimer;
@@ -45,8 +44,10 @@ namespace ComponentFactory.Krypton.Docking
             _offset = Point.Empty;
 
             // Use timer to ensure we do not update the display too quickly which then causes tearing
-            _moveTimer = new Timer();
-            _moveTimer.Interval = 10;
+            _moveTimer = new Timer
+            {
+                Interval = 10
+            };
             _moveTimer.Tick += new EventHandler(OnFloatingWindowMove);
         }
 
@@ -74,19 +75,15 @@ namespace ComponentFactory.Krypton.Docking
         /// <summary>
         /// Gets and sets the window that is moved in sync with the mouse movement.
         /// </summary>
-        public KryptonFloatingWindow FloatingWindow
-        {
-            get { return _window; }
-            set { _window = value; }
-        }
+        public KryptonFloatingWindow FloatingWindow { get; set; }
 
         /// <summary>
         /// Gets and sets the offset of the floating window from the screen cursor.
         /// </summary>
         public Point FloatingWindowOffset
         {
-            get { return _offset; }
-            set { _offset = value; }
+            get => _offset;
+            set => _offset = value;
         }
 
         /// <summary>
@@ -98,7 +95,9 @@ namespace ComponentFactory.Krypton.Docking
         public override bool DragStart(Point screenPt, PageDragEndData dragEndData)
         {
             if (FloatingWindow != null)
+            {
                 FloatingWindow.Capture = true;
+            }
 
             AddFilter();
             return base.DragStart(screenPt, dragEndData);
@@ -127,11 +126,14 @@ namespace ComponentFactory.Krypton.Docking
             if (FloatingWindow != null)
             {
                 if (_offset.X > (FloatingWindow.Width - 20))
+                {
                     _offset.X = FloatingWindow.Width - 20;
+                }
 
                 if (_offset.Y > (FloatingWindow.Height - 20))
+                {
                     _offset.Y = FloatingWindow.Height - 20;
-
+                }
 
                 FloatingWindow.SetBounds(_screenPt.X - FloatingWindowOffset.X,
                                          _screenPt.Y - FloatingWindowOffset.Y, 
@@ -278,7 +280,9 @@ namespace ComponentFactory.Krypton.Docking
                 FloatingWindow.FloatingMessages = this;
             }
             else
+            {
                 _monitorMouse = true;
+            }
 
             // We always monitor for keyboard events and sometimes mouse events
             if (!_addedFilter)
@@ -290,8 +294,10 @@ namespace ComponentFactory.Krypton.Docking
 
         private void RemoveFilter()
         {
-            if (_window != null)
-                _window.FloatingMessages = null;
+            if (FloatingWindow != null)
+            {
+                FloatingWindow.FloatingMessages = null;
+            }
 
             // Must remove filter to prevent memory leaks
             if (_addedFilter)

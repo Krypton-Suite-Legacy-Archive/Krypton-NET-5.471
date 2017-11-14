@@ -9,14 +9,10 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
-using System.Data;
 using System.Drawing;
 using System.Drawing.Design;
 using System.ComponentModel;
-using System.ComponentModel.Design;
 using System.Windows.Forms;
-using System.Diagnostics;
 using ComponentFactory.Krypton.Toolkit;
 
 namespace ComponentFactory.Krypton.Ribbon
@@ -40,17 +36,11 @@ namespace ComponentFactory.Krypton.Ribbon
         #region Instance Fields
         private object _tag;
         private Image _image;
-        private Image _toolTipImage;
-        private Color _toolTipImageTransparentColor;
-        private LabelStyle _toolTipStyle;
         private bool _visible;
         private bool _enabled;
         private string _text;
-        private string _toolTipTitle;
-        private string _toolTipBody;
-        private Keys _shortcutKeys;
         private KryptonCommand _command;
-        private KryptonRibbon _ribbon;
+
         #endregion
 
         #region Events
@@ -76,11 +66,11 @@ namespace ComponentFactory.Krypton.Ribbon
             _visible = true;
             _enabled = true;
             _text = "QAT Button";
-            _shortcutKeys = Keys.None;
-            _toolTipImageTransparentColor = Color.Empty;
-            _toolTipTitle = string.Empty;
-            _toolTipBody = string.Empty;
-            _toolTipStyle = LabelStyle.ToolTip;
+            ShortcutKeys = Keys.None;
+            ToolTipImageTransparentColor = Color.Empty;
+            ToolTipTitle = string.Empty;
+            ToolTipBody = string.Empty;
+            ToolTipStyle = LabelStyle.ToolTip;
         }
         #endregion
 
@@ -91,10 +81,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public KryptonRibbon Ribbon
-        {
-            get { return _ribbon; }
-        }
+        public KryptonRibbon Ribbon { get; private set; }
 
         /// <summary>
         /// Gets and sets the application button image.
@@ -106,7 +93,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [RefreshPropertiesAttribute(RefreshProperties.All)]
         public Image Image
         {
-            get { return _image; }
+            get => _image;
 
             set
             {
@@ -117,15 +104,19 @@ namespace ComponentFactory.Krypton.Ribbon
                         // The image must be 16x16 or less in order to be displayed on the
                         // quick access toolbar. So we reject anything bigger than 16x16.
                         if ((value.Width > 16) || (value.Height > 16))
+                        {
                             throw new ArgumentOutOfRangeException("Image must be 16x16 or smaller.");
+                        }
                     }
 
                     _image = value;
                     OnPropertyChanged("Image");
 
                     // Only need to update display if we are visible
-                    if (Visible && (_ribbon != null))
-                        _ribbon.PerformNeedPaint(false);
+                    if (Visible)
+                    {
+                        Ribbon?.PerformNeedPaint(false);
+                    }
                 }
             }
         }
@@ -144,7 +135,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [DefaultValue(true)]
         public bool Visible
         {
-            get { return _visible; }
+            get => _visible;
 
             set
             {
@@ -154,10 +145,10 @@ namespace ComponentFactory.Krypton.Ribbon
                     OnPropertyChanged("Visible");
 
                     // Must try and layout to show change
-                    if (_ribbon != null)
+                    if (Ribbon != null)
                     {
-                        _ribbon.PerformNeedPaint(true);
-                        _ribbon.UpdateQAT();
+                        Ribbon.PerformNeedPaint(true);
+                        Ribbon.UpdateQAT();
                     }
                 }
             }
@@ -188,7 +179,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [DefaultValue(true)]
         public bool Enabled
         {
-            get { return _enabled; }
+            get => _enabled;
 
             set
             {
@@ -198,8 +189,10 @@ namespace ComponentFactory.Krypton.Ribbon
                     OnPropertyChanged("Enabled");
 
                     // Must try and paint to show change
-                    if (Visible && (_ribbon != null))
-                        _ribbon.PerformNeedPaint(false);
+                    if (Visible)
+                    {
+                        Ribbon?.PerformNeedPaint(false);
+                    }
                 }
             }
         }
@@ -215,13 +208,15 @@ namespace ComponentFactory.Krypton.Ribbon
         [DefaultValue("QAT Button")]
         public string Text
         {
-            get { return _text; }
+            get => _text;
 
             set
             {
                 // We never allow an empty text value
                 if (string.IsNullOrEmpty(value))
+                {
                     value = "QAT Button";
+                }
 
                 if (value != _text)
                 {
@@ -237,11 +232,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [Localizable(true)]
         [Category("Behavior")]
         [Description("Shortcut key combination to fire click event of the quick access toolbar button.")]
-        public Keys ShortcutKeys
-        {
-            get { return _shortcutKeys; }
-            set { _shortcutKeys = value; }
-        }
+        public Keys ShortcutKeys { get; set; }
 
         private bool ShouldSerializeShortcutKeys()
         {
@@ -262,11 +253,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [Category("Appearance")]
         [Description("Tooltip style for the quick access toolbar button.")]
         [DefaultValue(typeof(LabelStyle), "ToolTip")]
-        public LabelStyle ToolTipStyle
-        {
-            get { return _toolTipStyle; }
-            set { _toolTipStyle = value; }
-        }
+        public LabelStyle ToolTipStyle { get; set; }
 
         /// <summary>
         /// Gets and sets the image for the item ToolTip.
@@ -276,11 +263,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [Description("Display image associated ToolTip.")]
         [DefaultValue(null)]
         [Localizable(true)]
-        public Image ToolTipImage
-        {
-            get { return _toolTipImage; }
-            set { _toolTipImage = value; }
-        }
+        public Image ToolTipImage { get; set; }
 
         /// <summary>
         /// Gets and sets the color to draw as transparent in the ToolTipImage.
@@ -290,11 +273,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [Description("Color to draw as transparent in the ToolTipImage.")]
         [KryptonDefaultColorAttribute()]
         [Localizable(true)]
-        public Color ToolTipImageTransparentColor
-        {
-            get { return _toolTipImageTransparentColor; }
-            set { _toolTipImageTransparentColor = value; }
-        }
+        public Color ToolTipImageTransparentColor { get; set; }
 
         /// <summary>
         /// Gets and sets the title text for the item ToolTip.
@@ -305,11 +284,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [Editor("System.ComponentModel.Design.MultilineStringEditor, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
         [DefaultValue("")]
         [Localizable(true)]
-        public string ToolTipTitle
-        {
-            get { return _toolTipTitle; }
-            set { _toolTipTitle = value; }
-        }
+        public string ToolTipTitle { get; set; }
 
         /// <summary>
         /// Gets and sets the body text for the item ToolTip.
@@ -320,11 +295,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [Editor("System.ComponentModel.Design.MultilineStringEditor, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
         [DefaultValue("")]
         [Localizable(true)]
-        public string ToolTipBody
-        {
-            get { return _toolTipBody; }
-            set { _toolTipBody = value; }
-        }
+        public string ToolTipBody { get; set; }
 
         /// <summary>
         /// Gets and sets the associated KryptonCommand.
@@ -334,24 +305,30 @@ namespace ComponentFactory.Krypton.Ribbon
         [DefaultValue(null)]
         public KryptonCommand KryptonCommand
         {
-            get { return _command; }
+            get => _command;
 
             set
             {
                 if (_command != value)
                 {
                     if (_command != null)
+                    {
                         _command.PropertyChanged -= new PropertyChangedEventHandler(OnCommandPropertyChanged);
+                    }
 
                     _command = value;
                     OnPropertyChanged("KryptonCommand");
 
                     if (_command != null)
+                    {
                         _command.PropertyChanged += new PropertyChangedEventHandler(OnCommandPropertyChanged);
+                    }
 
                     // Only need to update display if we are visible
-                    if (Visible && (_ribbon != null))
-                        _ribbon.PerformNeedPaint(false);
+                    if (Visible)
+                    {
+                        Ribbon?.PerformNeedPaint(false);
+                    }
                 }
             }
         }
@@ -365,7 +342,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [Bindable(true)]
         public object Tag
         {
-            get { return _tag; }
+            get => _tag;
 
             set
             {
@@ -396,7 +373,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         public void SetRibbon(KryptonRibbon ribbon)
         {
-            _ribbon = ribbon;
+            Ribbon = ribbon;
         }
 
         /// <summary>
@@ -407,9 +384,13 @@ namespace ComponentFactory.Krypton.Ribbon
         public Image GetImage()
         {
             if (KryptonCommand != null)
+            {
                 return KryptonCommand.ImageSmall;
+            }
             else
+            {
                 return Image;
+            }
         }
 
         /// <summary>
@@ -420,9 +401,13 @@ namespace ComponentFactory.Krypton.Ribbon
         public string GetText()
         {
             if (KryptonCommand != null)
+            {
                 return KryptonCommand.TextLine1;
+            }
             else
+            {
                 return Text;
+            }
         }
 
         /// <summary>
@@ -433,9 +418,13 @@ namespace ComponentFactory.Krypton.Ribbon
         public bool GetEnabled()
         {
             if (KryptonCommand != null)
+            {
                 return KryptonCommand.Enabled;
+            }
             else
+            {
                 return Enabled;
+            }
         }
 
         /// <summary>
@@ -551,8 +540,10 @@ namespace ComponentFactory.Krypton.Ribbon
             if (refresh)
             {
                 // Only need to update display if we are visible
-                if (Visible && (_ribbon != null))
-                    _ribbon.PerformNeedPaint(false);
+                if (Visible)
+                {
+                    Ribbon?.PerformNeedPaint(false);
+                }
             }
         }
         
@@ -564,15 +555,12 @@ namespace ComponentFactory.Krypton.Ribbon
         {
             // Perform processing that is common to any action that would dismiss
             // any popup controls such as the showing minimized group popup
-            if (Ribbon != null)
-                Ribbon.ActionOccured();
+            Ribbon?.ActionOccured();
 
-            if (Click != null)
-                Click(this, e);
+            Click?.Invoke(this, e);
 
             // Clicking the button should execute the associated command
-            if (KryptonCommand != null)
-                KryptonCommand.PerformExecute();
+            KryptonCommand?.PerformExecute();
         }
 
         /// <summary>
@@ -581,8 +569,7 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <param name="propertyName">Name of property that has changed.</param>
         protected virtual void OnPropertyChanged(string propertyName)
         {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
     }

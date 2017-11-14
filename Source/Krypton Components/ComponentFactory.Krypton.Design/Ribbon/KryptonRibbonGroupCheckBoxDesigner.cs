@@ -9,14 +9,11 @@
 // *****************************************************************************
 
 using System;
-using System.Collections;
-using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.ComponentModel;
 using System.ComponentModel.Design;
-using System.Windows.Forms;
-using System.Windows.Forms.Design;
 using System.Diagnostics;
+using System.Drawing;
+using System.Windows.Forms;
 using ComponentFactory.Krypton.Toolkit;
 
 namespace ComponentFactory.Krypton.Ribbon
@@ -67,7 +64,10 @@ namespace ComponentFactory.Krypton.Ribbon
             Debug.Assert(component != null);
 
             // Validate the parameter reference
-            if (component == null) throw new ArgumentNullException("component");
+            if (component == null)
+            {
+                throw new ArgumentNullException("component");
+            }
 
             // Let base class do standard stuff
             base.Initialize(component);
@@ -143,7 +143,7 @@ namespace ComponentFactory.Krypton.Ribbon
             bool moveNext = false;
             bool moveLast = false;
 
-            if ((_ribbonCheckBox != null) && (_ribbonCheckBox.Ribbon != null))
+            if (_ribbonCheckBox?.Ribbon != null)
             {
                 TypedRestrictCollection<KryptonRibbonGroupItem> items = ParentItems;
                 moveFirst = (items.IndexOf(_ribbonCheckBox) > 0);
@@ -161,13 +161,15 @@ namespace ComponentFactory.Krypton.Ribbon
         private void OnToggleHelpers(object sender, EventArgs e)
         {
             // Invert the current toggle helper mode
-            if ((_ribbonCheckBox != null) && (_ribbonCheckBox.Ribbon != null))
+            if (_ribbonCheckBox?.Ribbon != null)
+            {
                 _ribbonCheckBox.Ribbon.InDesignHelperMode = !_ribbonCheckBox.Ribbon.InDesignHelperMode;
+            }
         }
 
         private void OnMoveFirst(object sender, EventArgs e)
         {
-            if ((_ribbonCheckBox != null) && (_ribbonCheckBox.Ribbon != null))
+            if (_ribbonCheckBox?.Ribbon != null)
             {
                 // Get access to the parent collection of items
                 TypedRestrictCollection<KryptonRibbonGroupItem> items = ParentItems;
@@ -192,15 +194,14 @@ namespace ComponentFactory.Krypton.Ribbon
                 finally
                 {
                     // If we managed to create the transaction, then do it
-                    if (transaction != null)
-                        transaction.Commit();
+                    transaction?.Commit();
                 }
             }
         }
 
         private void OnMovePrevious(object sender, EventArgs e)
         {
-            if ((_ribbonCheckBox != null) && (_ribbonCheckBox.Ribbon != null))
+            if (_ribbonCheckBox?.Ribbon != null)
             {
                 // Get access to the parent collection of items
                 TypedRestrictCollection<KryptonRibbonGroupItem> items = ParentItems;
@@ -227,15 +228,14 @@ namespace ComponentFactory.Krypton.Ribbon
                 finally
                 {
                     // If we managed to create the transaction, then do it
-                    if (transaction != null)
-                        transaction.Commit();
+                    transaction?.Commit();
                 }
             }
         }
 
         private void OnMoveNext(object sender, EventArgs e)
         {
-            if ((_ribbonCheckBox != null) && (_ribbonCheckBox.Ribbon != null))
+            if (_ribbonCheckBox?.Ribbon != null)
             {
                 // Get access to the parent collection of items
                 TypedRestrictCollection<KryptonRibbonGroupItem> items = ParentItems;
@@ -262,15 +262,14 @@ namespace ComponentFactory.Krypton.Ribbon
                 finally
                 {
                     // If we managed to create the transaction, then do it
-                    if (transaction != null)
-                        transaction.Commit();
+                    transaction?.Commit();
                 }
             }
         }
 
         private void OnMoveLast(object sender, EventArgs e)
         {
-            if ((_ribbonCheckBox != null) && (_ribbonCheckBox.Ribbon != null))
+            if (_ribbonCheckBox?.Ribbon != null)
             {
                 // Get access to the parent collection of items
                 TypedRestrictCollection<KryptonRibbonGroupItem> items = ParentItems;
@@ -295,15 +294,14 @@ namespace ComponentFactory.Krypton.Ribbon
                 finally
                 {
                     // If we managed to create the transaction, then do it
-                    if (transaction != null)
-                        transaction.Commit();
+                    transaction?.Commit();
                 }
             }
         }
 
         private void OnDeleteCheckBox(object sender, EventArgs e)
         {
-            if ((_ribbonCheckBox != null) && (_ribbonCheckBox.Ribbon != null))
+            if (_ribbonCheckBox?.Ribbon != null)
             {
                 // Get access to the parent collection of items
                 TypedRestrictCollection<KryptonRibbonGroupItem> items = ParentItems;
@@ -332,15 +330,14 @@ namespace ComponentFactory.Krypton.Ribbon
                 finally
                 {
                     // If we managed to create the transaction, then do it
-                    if (transaction != null)
-                        transaction.Commit();
+                    transaction?.Commit();
                 }
             }
         }
 
         private void OnVisible(object sender, EventArgs e)
         {
-            if ((_ribbonCheckBox != null) && (_ribbonCheckBox.Ribbon != null))
+            if (_ribbonCheckBox?.Ribbon != null)
             {
                 _changeService.OnComponentChanged(_ribbonCheckBox, null, _ribbonCheckBox.Visible, !_ribbonCheckBox.Visible);
                 _ribbonCheckBox.Visible = !_ribbonCheckBox.Visible;
@@ -349,7 +346,7 @@ namespace ComponentFactory.Krypton.Ribbon
 
         private void OnEnabled(object sender, EventArgs e)
         {
-            if ((_ribbonCheckBox != null) && (_ribbonCheckBox.Ribbon != null))
+            if (_ribbonCheckBox?.Ribbon != null)
             {
                 _changeService.OnComponentChanged(_ribbonCheckBox, null, _ribbonCheckBox.Enabled, !_ribbonCheckBox.Enabled);
                 _ribbonCheckBox.Enabled = !_ribbonCheckBox.Enabled;
@@ -358,7 +355,7 @@ namespace ComponentFactory.Krypton.Ribbon
 
         private void OnAutoCheck(object sender, EventArgs e)
         {
-            if ((_ribbonCheckBox != null) && (_ribbonCheckBox.Ribbon != null))
+            if (_ribbonCheckBox?.Ribbon != null)
             {
                 _changeService.OnComponentChanged(_ribbonCheckBox, null, _ribbonCheckBox.AutoCheck, !_ribbonCheckBox.AutoCheck);
                 _ribbonCheckBox.AutoCheck = !_ribbonCheckBox.AutoCheck;
@@ -367,7 +364,7 @@ namespace ComponentFactory.Krypton.Ribbon
 
         private void OnThreeState(object sender, EventArgs e)
         {
-            if ((_ribbonCheckBox != null) && (_ribbonCheckBox.Ribbon != null))
+            if (_ribbonCheckBox?.Ribbon != null)
             {
                 _changeService.OnComponentChanged(_ribbonCheckBox, null, _ribbonCheckBox.ThreeState, !_ribbonCheckBox.ThreeState);
                 _ribbonCheckBox.ThreeState = !_ribbonCheckBox.ThreeState;
@@ -376,7 +373,7 @@ namespace ComponentFactory.Krypton.Ribbon
 
         private void OnChecked(object sender, EventArgs e)
         {
-            if ((_ribbonCheckBox != null) && (_ribbonCheckBox.Ribbon != null))
+            if (_ribbonCheckBox?.Ribbon != null)
             {
                 _changeService.OnComponentChanged(_ribbonCheckBox, null, _ribbonCheckBox.Checked, !_ribbonCheckBox.Checked);
                 _ribbonCheckBox.Checked = !_ribbonCheckBox.Checked;
@@ -390,7 +387,7 @@ namespace ComponentFactory.Krypton.Ribbon
 
         private void OnContextMenu(object sender, MouseEventArgs e)
         {
-            if ((_ribbonCheckBox != null) && (_ribbonCheckBox.Ribbon != null))
+            if (_ribbonCheckBox?.Ribbon != null)
             {
                 // Create the menu strip the first time around
                 if (_cms == null)
@@ -441,21 +438,16 @@ namespace ComponentFactory.Krypton.Ribbon
         {
             get
             {
-                if (_ribbonCheckBox.RibbonContainer is KryptonRibbonGroupTriple)
+                switch (_ribbonCheckBox.RibbonContainer)
                 {
-                    KryptonRibbonGroupTriple triple = (KryptonRibbonGroupTriple)_ribbonCheckBox.RibbonContainer;
-                    return triple.Items;
-                }
-                else if (_ribbonCheckBox.RibbonContainer is KryptonRibbonGroupLines)
-                {
-                    KryptonRibbonGroupLines lines = (KryptonRibbonGroupLines)_ribbonCheckBox.RibbonContainer;
-                    return lines.Items;
-                }
-                else
-                {
-                    // Should never happen!
-                    Debug.Assert(false);
-                    return null;
+                    case KryptonRibbonGroupTriple triple:
+                        return triple.Items;
+                    case KryptonRibbonGroupLines lines:
+                        return lines.Items;
+                    default:
+                        // Should never happen!
+                        Debug.Assert(false);
+                        return null;
                 }
             }
         }

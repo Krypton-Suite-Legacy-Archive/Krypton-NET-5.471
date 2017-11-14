@@ -8,13 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
-using System.Drawing;
-using System.Drawing.Text;
 using System.ComponentModel;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Diagnostics;
 
 namespace ComponentFactory.Krypton.Toolkit
@@ -27,8 +21,8 @@ namespace ComponentFactory.Krypton.Toolkit
 	{
 		#region Instance Fields
         private PaletteRedirect _redirect;
-        private PaletteTripleRedirect _itemRedirect;
-		#endregion
+
+	    #endregion
 
 		#region Identity
 		/// <summary>
@@ -50,7 +44,7 @@ namespace ComponentFactory.Krypton.Toolkit
             _redirect = redirect;
 
             // Create the item redirector
-            _itemRedirect = new PaletteTripleRedirect(redirect,
+            Item = new PaletteTripleRedirect(redirect,
                                                       PaletteBackStyle.ButtonListItem,
                                                       PaletteBorderStyle.ButtonListItem,
                                                       PaletteContentStyle.ButtonListItem,
@@ -63,14 +57,9 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// Gets a value indicating if all values are default.
 		/// </summary>
 		[Browsable(false)]
-		public override bool IsDefault
-		{
-			get
-			{
-                return (base.IsDefault && _itemRedirect.IsDefault);
-			}
-		}
-		#endregion
+		public override bool IsDefault => (base.IsDefault && Item.IsDefault);
+
+	    #endregion
 
         #region Item
         /// <summary>
@@ -80,14 +69,11 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining item appearance.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public PaletteTripleRedirect Item
-        {
-            get { return _itemRedirect; }
-        }
+        public PaletteTripleRedirect Item { get; }
 
-        private bool ShouldSerializeItem()
+	    private bool ShouldSerializeItem()
         {
-            return !_itemRedirect.IsDefault;
+            return !Item.IsDefault;
         }
         #endregion
     }

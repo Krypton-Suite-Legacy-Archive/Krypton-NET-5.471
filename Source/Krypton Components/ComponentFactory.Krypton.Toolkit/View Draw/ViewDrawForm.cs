@@ -8,13 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
-using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Collections.Generic;
 using System.Windows.Forms;
-using System.Diagnostics;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -25,7 +19,7 @@ namespace ComponentFactory.Krypton.Toolkit
     {
         #region Instance Fields
         private StatusStrip _renderStrip;
-        private StatusStrip _statusStrip;
+
         #endregion
 
         #region Identity
@@ -75,11 +69,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Gets and sets the status strip to render.
         /// </summary>
-        public StatusStrip StatusStrip
-        {
-            get { return _statusStrip; }
-            set { _statusStrip = value; }
-        }
+        public StatusStrip StatusStrip { get; set; }
+
         #endregion
 
         #region Paint
@@ -90,48 +81,44 @@ namespace ComponentFactory.Krypton.Toolkit
 		public override void RenderAfter(RenderContext context)
 		{
             // Do we have a status strip to try and merge?
-            if (_statusStrip != null)
-            {
-                // Is the status strip using the global renderer?
-                if (_statusStrip.RenderMode == ToolStripRenderMode.ManagerRenderMode)
-                {
-                    // Cast to correct type
-                    KryptonForm form = context.Control as KryptonForm;
+		    // Is the status strip using the global renderer?
+		    if (StatusStrip?.RenderMode == ToolStripRenderMode.ManagerRenderMode)
+		    {
+		        // Cast to correct type
 
-                    if (form != null)
-                    {
-                        // Find the size of the borders around the form
-                        Padding borders = form.RealWindowBorders;
+		        if (context.Control is KryptonForm form)
+		        {
+		            // Find the size of the borders around the form
+		            Padding borders = form.RealWindowBorders;
 
-                        // Grab the global renderer to use for painting
-                        ToolStripRenderer renderer = ToolStripManager.Renderer;
+		            // Grab the global renderer to use for painting
+		            ToolStripRenderer renderer = ToolStripManager.Renderer;
 
-                        // Size the render strip to the apparent size when merged into borders
-                        _renderStrip.Width = form.Width;
-                        _renderStrip.Height = _statusStrip.Height + borders.Bottom;
+		            // Size the render strip to the apparent size when merged into borders
+		            _renderStrip.Width = form.Width;
+		            _renderStrip.Height = StatusStrip.Height + borders.Bottom;
 
-                        // Find vertical start of the status strip
-                        int y = _statusStrip.Top + borders.Top;
+		            // Find vertical start of the status strip
+		            int y = StatusStrip.Top + borders.Top;
 
-                        try
-                        {
-                            // We need to transform downwards from drawing at 0,0 to actual required position
-                            context.Graphics.TranslateTransform(0, y);
+		            try
+		            {
+		                // We need to transform downwards from drawing at 0,0 to actual required position
+		                context.Graphics.TranslateTransform(0, y);
 
-                            // Use the tool strip renderer to draw the correct status strip border/background
-                            renderer.DrawToolStripBorder(new ToolStripRenderEventArgs(context.Graphics, _renderStrip));
-                            renderer.DrawToolStripBackground(new ToolStripRenderEventArgs(context.Graphics, _renderStrip));
-                        }
-                        finally
-                        {
-                            // Make sure that even a crash in the renderer does not prevent the transform reversal
-                            context.Graphics.TranslateTransform(0, -y);
-                        }
-                    }
-                }
-            }
+		                // Use the tool strip renderer to draw the correct status strip border/background
+		                renderer.DrawToolStripBorder(new ToolStripRenderEventArgs(context.Graphics, _renderStrip));
+		                renderer.DrawToolStripBackground(new ToolStripRenderEventArgs(context.Graphics, _renderStrip));
+		            }
+		            finally
+		            {
+		                // Make sure that even a crash in the renderer does not prevent the transform reversal
+		                context.Graphics.TranslateTransform(0, -y);
+		            }
+		        }
+		    }
 
-            // Finally we let the border be drawn
+		    // Finally we let the border be drawn
             base.RenderAfter(context);
 		}
 		#endregion

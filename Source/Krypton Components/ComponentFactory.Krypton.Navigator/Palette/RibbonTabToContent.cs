@@ -8,11 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Diagnostics;
 using ComponentFactory.Krypton.Toolkit;
@@ -23,8 +19,7 @@ namespace ComponentFactory.Krypton.Navigator
     {
         #region Instance Fields
         private IPaletteRibbonGeneral _ribbonGeneral;
-        private IPaletteRibbonText _ribbonTabText;
-        private IPaletteContent _content;
+
         #endregion
 
         #region Identity
@@ -43,8 +38,8 @@ namespace ComponentFactory.Krypton.Navigator
             Debug.Assert(content != null);
 
             _ribbonGeneral = ribbonGeneral;
-            _ribbonTabText = ribbonTabText;
-            _content = content;
+            PaletteRibbonText = ribbonTabText;
+            PaletteContent = content;
         }
         #endregion
 
@@ -52,22 +47,16 @@ namespace ComponentFactory.Krypton.Navigator
         /// <summary>
         /// Gets and sets the ribbon tab text palette to use.
         /// </summary>
-        public IPaletteRibbonText PaletteRibbonText
-        {
-            get { return _ribbonTabText; }
-            set { _ribbonTabText = value; }
-        }
+        public IPaletteRibbonText PaletteRibbonText { get; set; }
+
         #endregion
 
         #region PaletteContent
         /// <summary>
         /// Gets and sets the ribbon tab content palette to use.
         /// </summary>
-        public IPaletteContent PaletteContent
-        {
-            get { return _content; }
-            set { _content = value; }
-        }
+        public IPaletteContent PaletteContent { get; set; }
+
         #endregion
 
         #region IPaletteContent
@@ -78,7 +67,7 @@ namespace ComponentFactory.Krypton.Navigator
         /// <returns>InheritBool value.</returns>
         public InheritBool GetContentDraw(PaletteState state)
         {
-            return _content.GetContentDraw(state);
+            return PaletteContent.GetContentDraw(state);
         }
 
         /// <summary>
@@ -88,7 +77,7 @@ namespace ComponentFactory.Krypton.Navigator
         /// <returns>InheritBool value.</returns>
         public InheritBool GetContentDrawFocus(PaletteState state)
         {
-            return _content.GetContentDrawFocus(state);
+            return PaletteContent.GetContentDrawFocus(state);
         }
 
         /// <summary>
@@ -98,7 +87,7 @@ namespace ComponentFactory.Krypton.Navigator
         /// <returns>RelativeAlignment value.</returns>
         public PaletteRelativeAlign GetContentImageH(PaletteState state)
         {
-            return _content.GetContentImageH(state);
+            return PaletteContent.GetContentImageH(state);
         }
 
         /// <summary>
@@ -108,7 +97,7 @@ namespace ComponentFactory.Krypton.Navigator
         /// <returns>RelativeAlignment value.</returns>
         public PaletteRelativeAlign GetContentImageV(PaletteState state)
         {
-            return _content.GetContentImageV(state);
+            return PaletteContent.GetContentImageV(state);
         }
 
         /// <summary>
@@ -118,7 +107,7 @@ namespace ComponentFactory.Krypton.Navigator
         /// <returns>PaletteImageEffect value.</returns>
         public PaletteImageEffect GetContentImageEffect(PaletteState state)
         {
-            return _content.GetContentImageEffect(state);
+            return PaletteContent.GetContentImageEffect(state);
         }
 
         /// <summary>
@@ -128,7 +117,7 @@ namespace ComponentFactory.Krypton.Navigator
         /// <returns>Color value.</returns>
         public Color GetContentImageColorMap(PaletteState state)
         {
-            return _content.GetContentImageColorMap(state);
+            return PaletteContent.GetContentImageColorMap(state);
         }
 
         /// <summary>
@@ -138,7 +127,7 @@ namespace ComponentFactory.Krypton.Navigator
         /// <returns>Color value.</returns>
         public Color GetContentImageColorTo(PaletteState state)
         {
-            return _content.GetContentImageColorTo(state);
+            return PaletteContent.GetContentImageColorTo(state);
         }
 
         /// <summary>
@@ -178,7 +167,7 @@ namespace ComponentFactory.Krypton.Navigator
         /// <returns>PaletteTextPrefix value.</returns>
         public PaletteTextHotkeyPrefix GetContentShortTextPrefix(PaletteState state)
         {
-            return _content.GetContentShortTextPrefix(state);
+            return PaletteContent.GetContentShortTextPrefix(state);
         }
 
         /// <summary>
@@ -188,7 +177,7 @@ namespace ComponentFactory.Krypton.Navigator
         /// <returns>InheritBool value.</returns>
         public InheritBool GetContentShortTextMultiLine(PaletteState state)
         {
-            return _content.GetContentShortTextMultiLine(state);
+            return PaletteContent.GetContentShortTextMultiLine(state);
         }
 
         /// <summary>
@@ -198,7 +187,7 @@ namespace ComponentFactory.Krypton.Navigator
         /// <returns>PaletteTextTrim value.</returns>
         public virtual PaletteTextTrim GetContentShortTextTrim(PaletteState state)
         {
-            return _content.GetContentShortTextTrim(state);
+            return PaletteContent.GetContentShortTextTrim(state);
         }
 
         /// <summary>
@@ -208,7 +197,7 @@ namespace ComponentFactory.Krypton.Navigator
         /// <returns>RelativeAlignment value.</returns>
         public virtual PaletteRelativeAlign GetContentShortTextH(PaletteState state)
         {
-            return _content.GetContentShortTextH(state);
+            return PaletteContent.GetContentShortTextH(state);
         }
 
         /// <summary>
@@ -218,7 +207,7 @@ namespace ComponentFactory.Krypton.Navigator
         /// <returns>RelativeAlignment value.</returns>
         public PaletteRelativeAlign GetContentShortTextV(PaletteState state)
         {
-            return _content.GetContentShortTextV(state);
+            return PaletteContent.GetContentShortTextV(state);
         }
 
         /// <summary>
@@ -228,7 +217,7 @@ namespace ComponentFactory.Krypton.Navigator
         /// <returns>RelativeAlignment value.</returns>
         public PaletteRelativeAlign GetContentShortTextMultiLineH(PaletteState state)
         {
-            return _content.GetContentShortTextMultiLineH(state);
+            return PaletteContent.GetContentShortTextMultiLineH(state);
         }
 
         /// <summary>
@@ -238,7 +227,7 @@ namespace ComponentFactory.Krypton.Navigator
         /// <returns>Color value.</returns>
         public virtual Color GetContentShortTextColor1(PaletteState state)
         {
-            return _ribbonTabText.GetRibbonTextColor(state);
+            return PaletteRibbonText.GetRibbonTextColor(state);
         }
 
         /// <summary>
@@ -248,7 +237,7 @@ namespace ComponentFactory.Krypton.Navigator
         /// <returns>Color value.</returns>
         public virtual Color GetContentShortTextColor2(PaletteState state)
         {
-            return _ribbonTabText.GetRibbonTextColor(state);
+            return PaletteRibbonText.GetRibbonTextColor(state);
         }
 
         /// <summary>
@@ -348,7 +337,7 @@ namespace ComponentFactory.Krypton.Navigator
         /// <returns>InheritBool value.</returns>
         public InheritBool GetContentLongTextMultiLine(PaletteState state)
         {
-            return _content.GetContentLongTextMultiLine(state);
+            return PaletteContent.GetContentLongTextMultiLine(state);
         }
 
         /// <summary>
@@ -358,7 +347,7 @@ namespace ComponentFactory.Krypton.Navigator
         /// <returns>PaletteTextTrim value.</returns>
         public virtual PaletteTextTrim GetContentLongTextTrim(PaletteState state)
         {
-            return _content.GetContentLongTextTrim(state);
+            return PaletteContent.GetContentLongTextTrim(state);
         }
 
         /// <summary>
@@ -368,7 +357,7 @@ namespace ComponentFactory.Krypton.Navigator
         /// <returns>PaletteTextPrefix value.</returns>
         public PaletteTextHotkeyPrefix GetContentLongTextPrefix(PaletteState state)
         {
-            return _content.GetContentLongTextPrefix(state);
+            return PaletteContent.GetContentLongTextPrefix(state);
         }
 
         /// <summary>
@@ -378,7 +367,7 @@ namespace ComponentFactory.Krypton.Navigator
         /// <returns>RelativeAlignment value.</returns>
         public PaletteRelativeAlign GetContentLongTextH(PaletteState state)
         {
-            return _content.GetContentLongTextH(state);
+            return PaletteContent.GetContentLongTextH(state);
         }
 
         /// <summary>
@@ -388,7 +377,7 @@ namespace ComponentFactory.Krypton.Navigator
         /// <returns>RelativeAlignment value.</returns>
         public PaletteRelativeAlign GetContentLongTextV(PaletteState state)
         {
-            return _content.GetContentLongTextV(state);
+            return PaletteContent.GetContentLongTextV(state);
         }
 
         /// <summary>
@@ -398,7 +387,7 @@ namespace ComponentFactory.Krypton.Navigator
         /// <returns>RelativeAlignment value.</returns>
         public PaletteRelativeAlign GetContentLongTextMultiLineH(PaletteState state)
         {
-            return _content.GetContentLongTextMultiLineH(state);
+            return PaletteContent.GetContentLongTextMultiLineH(state);
         }
 
         /// <summary>
@@ -408,7 +397,7 @@ namespace ComponentFactory.Krypton.Navigator
         /// <returns>Color value.</returns>
         public virtual Color GetContentLongTextColor1(PaletteState state)
         {
-            return _ribbonTabText.GetRibbonTextColor(state);
+            return PaletteRibbonText.GetRibbonTextColor(state);
         }
 
         /// <summary>
@@ -418,7 +407,7 @@ namespace ComponentFactory.Krypton.Navigator
         /// <returns>Color value.</returns>
         public virtual Color GetContentLongTextColor2(PaletteState state)
         {
-            return _ribbonTabText.GetRibbonTextColor(state);
+            return PaletteRibbonText.GetRibbonTextColor(state);
         }
 
         /// <summary>
@@ -488,7 +477,7 @@ namespace ComponentFactory.Krypton.Navigator
         /// <returns>Padding value.</returns>
         public Padding GetContentPadding(PaletteState state)
         {
-            return _content.GetContentPadding(state);
+            return PaletteContent.GetContentPadding(state);
         }
 
         /// <summary>
@@ -498,7 +487,7 @@ namespace ComponentFactory.Krypton.Navigator
         /// <returns>Integer value.</returns>
         public int GetContentAdjacentGap(PaletteState state)
         {
-            return _content.GetContentAdjacentGap(state);
+            return PaletteContent.GetContentAdjacentGap(state);
         }
 
         /// <summary>

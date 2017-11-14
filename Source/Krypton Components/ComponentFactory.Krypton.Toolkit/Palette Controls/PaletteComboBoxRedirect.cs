@@ -8,13 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
-using System.Drawing;
-using System.Drawing.Text;
 using System.ComponentModel;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Diagnostics;
 
 namespace ComponentFactory.Krypton.Toolkit
@@ -26,9 +20,8 @@ namespace ComponentFactory.Krypton.Toolkit
 	{
 		#region Instance Fields
         private PaletteDoubleRedirect _dropBackRedirect;
-        private PaletteTripleRedirect _itemRedirect;
-        private PaletteInputControlTripleRedirect _comboBoxRedirect;
-		#endregion
+
+	    #endregion
 
 		#region Identity
 		/// <summary>
@@ -45,13 +38,13 @@ namespace ComponentFactory.Krypton.Toolkit
             NeedPaint = needPaint;
 
             // Create storage that maps onto the inherit instances
-            _itemRedirect = new PaletteTripleRedirect(redirect, 
+            Item = new PaletteTripleRedirect(redirect, 
                                                       PaletteBackStyle.ButtonListItem, 
                                                       PaletteBorderStyle.ButtonListItem, 
                                                       PaletteContentStyle.ButtonListItem, 
                                                       NeedPaint);
 
-            _comboBoxRedirect = new PaletteInputControlTripleRedirect(redirect, 
+            ComboBox = new PaletteInputControlTripleRedirect(redirect, 
                                                                       PaletteBackStyle.InputControlStandalone,
                                                                       PaletteBorderStyle.InputControlStandalone,
                                                                       PaletteContentStyle.InputControlStandalone, 
@@ -69,16 +62,11 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// Gets a value indicating if all values are default.
 		/// </summary>
 		[Browsable(false)]
-		public override bool IsDefault
-		{
-			get 
-			{
-				return (ComboBox.IsDefault &&
-						Item.IsDefault &&
-                        DropBack.IsDefault);
-			}
-		}
-		#endregion
+		public override bool IsDefault => (ComboBox.IsDefault &&
+		                                   Item.IsDefault &&
+		                                   DropBack.IsDefault);
+
+	    #endregion
 
         #region SetRedirector
         /// <summary>
@@ -87,8 +75,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <param name="redirect">Target redirector.</param>
         public virtual void SetRedirector(PaletteRedirect redirect)
         {
-            _itemRedirect.SetRedirector(redirect);
-            _comboBoxRedirect.SetRedirector(redirect);
+            Item.SetRedirector(redirect);
+            ComboBox.SetRedirector(redirect);
             _dropBackRedirect.SetRedirector(redirect);
         }
         #endregion
@@ -100,7 +88,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <param name="style">New input control style.</param>
         public void SetStyles(InputControlStyle style)
         {
-            _comboBoxRedirect.SetStyles(style);
+            ComboBox.SetStyles(style);
         }
 
         /// <summary>
@@ -109,7 +97,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <param name="style">New item style.</param>
         public void SetStyles(ButtonStyle style)
         {
-            _itemRedirect.SetStyles(style);
+            Item.SetStyles(style);
         }
 
         /// <summary>
@@ -129,8 +117,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <param name="state">Palette state to use when populating.</param>
         public void PopulateFromBase(PaletteState state)
         {
-            _comboBoxRedirect.PopulateFromBase(state);
-            _itemRedirect.PopulateFromBase(state);
+            ComboBox.PopulateFromBase(state);
+            Item.PopulateFromBase(state);
             _dropBackRedirect.PopulateFromBase(state);
         }
         #endregion
@@ -143,14 +131,11 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining combo box appearance.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public PaletteInputControlTripleRedirect ComboBox
-		{
-			get { return _comboBoxRedirect; }
-		}
+        public PaletteInputControlTripleRedirect ComboBox { get; }
 
-        private bool ShouldSerializeComboBox()
+	    private bool ShouldSerializeComboBox()
 		{
-            return !_comboBoxRedirect.IsDefault;
+            return !ComboBox.IsDefault;
 		}
 		#endregion
 
@@ -162,14 +147,11 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining item appearance.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public PaletteTripleRedirect Item
-        {
-            get { return _itemRedirect; }
-        }
+        public PaletteTripleRedirect Item { get; }
 
-        private bool ShouldSerializeItem()
+	    private bool ShouldSerializeItem()
         {
-            return !_itemRedirect.IsDefault;
+            return !Item.IsDefault;
         }
         #endregion
 
@@ -181,12 +163,9 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining dropdown background appearance.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public PaletteBack DropBack
-        {
-            get { return _dropBackRedirect.Back; }
-        }
+        public PaletteBack DropBack => _dropBackRedirect.Back;
 
-        private bool ShouldSerializeDropBack()
+	    private bool ShouldSerializeDropBack()
         {
             return !_dropBackRedirect.IsDefault;
         }

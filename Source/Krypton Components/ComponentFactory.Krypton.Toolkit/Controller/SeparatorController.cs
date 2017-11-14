@@ -9,7 +9,6 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Security;
@@ -87,9 +86,8 @@ namespace ComponentFactory.Krypton.Toolkit
         #endregion
 
         #region Instance Fields
-        private bool _drawIndicator;
+
         private bool _splitCursors;
-        private bool _moving;
         private Point _downPosition;
         private Point _movementPoint;
         private int _separatorIncrements;
@@ -119,7 +117,7 @@ namespace ComponentFactory.Krypton.Toolkit
 
             _source = source;
             _splitCursors = splitCursors;
-            _drawIndicator = drawIndicator;
+            DrawMoveIndicator = drawIndicator;
 		}
 
 		/// <summary>
@@ -135,11 +133,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Gets and sets the drawing of the movement indicator.
         /// </summary>
-        public bool DrawMoveIndicator
-        {
-            get { return _drawIndicator; }
-            set { _drawIndicator = value; }
-        }
+        public bool DrawMoveIndicator { get; set; }
+
         #endregion
 
         #region Mouse Notifications
@@ -155,13 +150,17 @@ namespace ComponentFactory.Krypton.Toolkit
             {
                 // Cursor depends on orientation direction
                 if (_source.SeparatorOrientation == Orientation.Vertical)
+                {
                     _source.SeparatorControl.Cursor = (_splitCursors ? _cursorVSplit : _cursorVMove);
+                }
                 else
+                {
                     _source.SeparatorControl.Cursor = (_splitCursors ? _cursorHSplit : _cursorHMove);
+                }
             }
 
             // If we are currently capturing input
-            if (_moving)
+            if (IsMoving)
             {
                 // Update the split indicator to new position
                 Point splitPt = RecalcClient(pt);
@@ -169,7 +168,9 @@ namespace ComponentFactory.Krypton.Toolkit
 
                 // Callback to the source to show movement
                 if (_source.SeparatorMoving(pt, splitPt))
+                {
                     AbortMoving();
+                }
             }
 
             // Let base class do standard processing
@@ -189,7 +190,7 @@ namespace ComponentFactory.Krypton.Toolkit
             bool ret = base.MouseDown(c, pt, button);
 
             // If a change in capturing state has occured
-            if (ret != _moving)
+            if (ret != IsMoving)
             {
                 // If we are now capturing input
                 if (ret)
@@ -198,7 +199,7 @@ namespace ComponentFactory.Krypton.Toolkit
                     _downPosition = pt;
 
                     // Remember new capture state
-                    _moving = true;
+                    IsMoving = true;
 
                     // Cache information from the separator
                     _separatorBox = _source.SeparatorMoveBox;
@@ -218,7 +219,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 else
                 {
                     // We must have lost capture
-                    _moving = false;
+                    IsMoving = false;
 
                     // Remove the message filter, as long as it is registered 
                     // it will prevent the class from being garbage collected.
@@ -245,10 +246,10 @@ namespace ComponentFactory.Krypton.Toolkit
             base.MouseUp(c, pt, button);
 
             // If the mouse up has caused a change in capture
-            if (Captured != _moving)
+            if (Captured != IsMoving)
             {
                 // We must have lost capture
-                _moving = false;
+                IsMoving = false;
 
                 // Remove the message filter, as long as it is registered 
                 // it will prevent the class from being garbage collected.
@@ -268,8 +269,10 @@ namespace ComponentFactory.Krypton.Toolkit
         public override void MouseLeave(Control c, ViewBase next)
 		{
             // If leaving when currently moving, then abort the movement
-            if (_moving)
+            if (IsMoving)
+            {
                 AbortMoving();
+            }
 
             // Reset the cursor back to the default
             _source.SeparatorControl.Cursor = Cursors.Default;
@@ -301,17 +304,22 @@ namespace ComponentFactory.Krypton.Toolkit
             Debug.Assert(e != null);
 
             // Validate reference parameter
-            if (e == null) throw new ArgumentNullException("e");
+            if (e == null)
+            {
+                throw new ArgumentNullException("e");
+            }
 
             // If the user pressed the escape key
             if (e.KeyCode == Keys.Escape)
             {
                 // If we are capturing mouse input
-                if (_moving)
+                if (IsMoving)
+                {
                     AbortMoving();
+                }
             }
 
-            return _moving;
+            return IsMoving;
         }
         #endregion
 
@@ -323,8 +331,10 @@ namespace ComponentFactory.Krypton.Toolkit
         public override void LostFocus(Control c)
         {
             // If we are capturing mouse input
-            if (_moving)
+            if (IsMoving)
+            {
                 AbortMoving();
+            }
         }
         #endregion
 
@@ -332,10 +342,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Gets a value indicating if the separator is moving.
         /// </summary>
-        public bool IsMoving
-        {
-            get { return _moving; }
-        }
+        public bool IsMoving { get; private set; }
 
         /// <summary>
         /// Request that the separator abort moving.
@@ -343,15 +350,17 @@ namespace ComponentFactory.Krypton.Toolkit
         public void AbortMoving()
         {
             // If currently trying to move the splitter
-            if (_moving)
+            if (IsMoving)
             {
                 // Exit the capturing state
-                _moving = false;
+                IsMoving = false;
                 Captured = false;
 
                 // Remove the capturing of mouse input messages
                 if (_source.SeparatorControl.Capture)
+                {
                     _source.SeparatorControl.Capture = false;
+                }
 
                 // Remove the message filter, as long as it is registered 
                 // it will prevent the class from being garbage collected.
@@ -444,19 +453,27 @@ namespace ComponentFactory.Krypton.Toolkit
             // Enforce the movement box limits
             if (_separatorOrientation == Orientation.Vertical)
             {
-                if (Target.ClientLocation.X + xDelta < _separatorBox.Left)
+                if ((Target.ClientLocation.X + xDelta) < _separatorBox.Left)
+                {
                     xDelta = _separatorBox.Left - Target.ClientLocation.X;
+                }
 
-                if (Target.ClientLocation.X + xDelta > _separatorBox.Right)
+                if ((Target.ClientLocation.X + xDelta) > _separatorBox.Right)
+                {
                     xDelta = _separatorBox.Right - Target.ClientLocation.X;
+                }
             }
             else
             {
-                if (Target.ClientLocation.Y + yDelta < _separatorBox.Top)
+                if ((Target.ClientLocation.Y + yDelta) < _separatorBox.Top)
+                {
                     yDelta = _separatorBox.Top - Target.ClientLocation.Y;
+                }
 
-                if (Target.ClientLocation.Y + yDelta > _separatorBox.Bottom)
+                if ((Target.ClientLocation.Y + yDelta) > _separatorBox.Bottom)
+                {
                     yDelta = _separatorBox.Bottom - Target.ClientLocation.Y;
+                }
             }
 
             // Enforce the increments on the deltas
@@ -470,7 +487,7 @@ namespace ComponentFactory.Krypton.Toolkit
 
         private void DrawSplitIndicator(Point newPoint)
         {
-            if (_drawIndicator)
+            if (DrawMoveIndicator)
             {
                 if (_movementPoint == _nullPoint)
                 {
@@ -541,9 +558,13 @@ namespace ComponentFactory.Krypton.Toolkit
         private Rectangle SplitRectangleFromPoint(Point pt)
         {
             if (_separatorOrientation == Orientation.Vertical)
+            {
                 return SplitRectangleFromPoint(pt, Target.ClientWidth);
+            }
             else
+            {
                 return SplitRectangleFromPoint(pt, Target.ClientHeight);
+            }
         }
 
         private Rectangle SplitRectangleFromPoint(Point pt, int length)
@@ -552,9 +573,13 @@ namespace ComponentFactory.Krypton.Toolkit
 
             // Find the splitter rectangle based on the orientation
             if (_separatorOrientation == Orientation.Vertical)
+            {
                 splitRectangle = new Rectangle(pt.X, _separatorBox.Y, length, Target.ClientHeight);
+            }
             else
+            {
                 splitRectangle = new Rectangle(_separatorBox.X, pt.Y, Target.ClientWidth, length);
+            }
 
             return _source.SeparatorControl.RectangleToScreen(splitRectangle);
         }
@@ -628,11 +653,15 @@ namespace ComponentFactory.Krypton.Toolkit
         {
             // We are only interested in filtering when moving the separator
             if (!_controller.IsMoving)
+            {
                 return false;
+            }
 
             // We allow all non-keyboard messages
             if ((m.Msg < 0x100) || (m.Msg > 0x108))
+            {
                 return false;
+            }
 
             // If the user presses the escape key, windows keys or any system key
             if (((m.Msg == 0x100) && (((int)m.WParam.ToInt64()) == 0x1B)) ||

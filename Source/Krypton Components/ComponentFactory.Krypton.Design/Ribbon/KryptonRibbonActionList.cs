@@ -8,12 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Drawing;
-using System.ComponentModel;
 using System.ComponentModel.Design;
-using System.Windows.Forms;
-using System.Windows.Forms.Design;
 using ComponentFactory.Krypton.Toolkit;
 
 namespace ComponentFactory.Krypton.Ribbon
@@ -47,8 +42,8 @@ namespace ComponentFactory.Krypton.Ribbon
         /// </summary>
         public bool InDesignHelperMode
         {
-            get { return _ribbon.InDesignHelperMode; }
-            set { _ribbon.InDesignHelperMode = value; }
+            get => _ribbon.InDesignHelperMode;
+            set => _ribbon.InDesignHelperMode = value;
         }
 
         /// <summary>
@@ -56,7 +51,7 @@ namespace ComponentFactory.Krypton.Ribbon
         /// </summary>
         public PaletteMode PaletteMode
         {
-            get { return _ribbon.PaletteMode; }
+            get => _ribbon.PaletteMode;
 
             set
             {

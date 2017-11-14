@@ -8,12 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Drawing;
-using System.ComponentModel;
 using System.ComponentModel.Design;
-using System.Windows.Forms;
-using System.Windows.Forms.Design;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -46,8 +41,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public PaletteMode PaletteMode
         {
-            get { return _comboBox.PaletteMode; }
-            
+            get => _comboBox.PaletteMode;
+
             set 
             {
                 if (_comboBox.PaletteMode != value)
@@ -63,7 +58,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public InputControlStyle InputControlStyle
         {
-            get { return _comboBox.InputControlStyle; }
+            get => _comboBox.InputControlStyle;
 
             set
             {

@@ -8,10 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
 using System.Drawing;
-using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace ComponentFactory.Krypton.Toolkit
@@ -23,11 +20,9 @@ namespace ComponentFactory.Krypton.Toolkit
     {
         #region Instance Fields
         private IPaletteBorder _inherit;
-        private PaletteDrawBorders _maxBorderEdges;
         private PaletteDrawBorders _forceBorderEdges;
-        private PaletteGraphicsHint _forceGraphicsHint;
         private bool _forceBorders;
-        private bool _borderIgnoreNormal;
+
         #endregion
 
         #region Identity
@@ -41,9 +36,9 @@ namespace ComponentFactory.Krypton.Toolkit
             _inherit = inherit;
 
             // Default values
-            _maxBorderEdges = PaletteDrawBorders.All;
-            _forceGraphicsHint = PaletteGraphicsHint.Inherit;
-            _borderIgnoreNormal = false;
+            MaxBorderEdges = PaletteDrawBorders.All;
+            ForceGraphicsHint = PaletteGraphicsHint.Inherit;
+            BorderIgnoreNormal = false;
         }
         #endregion
 
@@ -74,33 +69,24 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Gets and sets the maximum edges allowed.
         /// </summary>
-        public PaletteDrawBorders MaxBorderEdges
-        {
-            get { return _maxBorderEdges; }
-            set { _maxBorderEdges = value; }
-        }
+        public PaletteDrawBorders MaxBorderEdges { get; set; }
+
         #endregion
 
         #region BorderIgnoreNormal
         /// <summary>
         /// Gets and sets the ignoring of normal borders.
         /// </summary>
-        public bool BorderIgnoreNormal
-        {
-            get { return _borderIgnoreNormal; }
-            set { _borderIgnoreNormal = value; }
-        }
+        public bool BorderIgnoreNormal { get; set; }
+
         #endregion
 
         #region ForceGraphicsHint
         /// <summary>
         /// Gets and sets the forced value for the graphics hint.
         /// </summary>
-        public PaletteGraphicsHint ForceGraphicsHint
-        {
-            get { return _forceGraphicsHint; }
-            set { _forceGraphicsHint = value; }
-        }
+        public PaletteGraphicsHint ForceGraphicsHint { get; set; }
+
         #endregion
 
         #region IPaletteBorder
@@ -122,19 +108,23 @@ namespace ComponentFactory.Krypton.Toolkit
         public override PaletteDrawBorders GetBorderDrawBorders(PaletteState state)
         {
             if (_forceBorders)
+            {
                 return _forceBorderEdges;
+            }
             else
             {
                 // If no border edges are allowed then provide none
-                if ((_maxBorderEdges == PaletteDrawBorders.None) || (_borderIgnoreNormal && (state == PaletteState.Normal)))
+                if ((MaxBorderEdges == PaletteDrawBorders.None) || (BorderIgnoreNormal && (state == PaletteState.Normal)))
+                {
                     return PaletteDrawBorders.None;
+                }
                 else
                 {
                     // Get the requested set of edges
                     PaletteDrawBorders inheritEdges = _inherit.GetBorderDrawBorders(state);
 
                     // Limit the edges to those allowed
-                    return (inheritEdges & _maxBorderEdges);
+                    return (inheritEdges & MaxBorderEdges);
                 }
             }
         }
@@ -146,10 +136,14 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// <returns>PaletteGraphicsHint value.</returns>
         public override PaletteGraphicsHint GetBorderGraphicsHint(PaletteState state)
         {
-            if (_forceGraphicsHint != PaletteGraphicsHint.Inherit)
-                return _forceGraphicsHint;
+            if (ForceGraphicsHint != PaletteGraphicsHint.Inherit)
+            {
+                return ForceGraphicsHint;
+            }
             else
+            {
                 return _inherit.GetBorderGraphicsHint(state);
+            }
         }
 
 		/// <summary>

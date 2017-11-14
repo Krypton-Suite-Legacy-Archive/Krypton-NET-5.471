@@ -9,17 +9,10 @@
 // *****************************************************************************
 
 using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.ComponentModel;
-using System.ComponentModel.Design;
 using System.Drawing;
 using System.Drawing.Design;
-using System.Data;
-using System.Text;
 using System.Windows.Forms;
-using System.Reflection;
 using ComponentFactory.Krypton.Toolkit;
 
 namespace ComponentFactory.Krypton.Navigator
@@ -55,13 +48,8 @@ namespace ComponentFactory.Krypton.Navigator
         private PaletteNavigatorRedirect _stateCommon;
         private PaletteNavigator _stateDisabled;
         private PaletteNavigator _stateNormal;
-        private PaletteNavigatorOtherEx _stateTracking;
-        private PaletteNavigatorOtherEx _statePressed;
-        private PaletteNavigatorOther _stateSelected;
-        private PaletteNavigatorOtherRedirect _stateFocus;
         private NeedPaintHandler _needDisabledPaint;
         private NeedPaintHandler _needNormalPaint;
-        private PageButtonSpecCollection _buttonSpecs;
         private BoolFlags31 _flags;
         private string _textTitle;
         private string _textDescription;
@@ -237,11 +225,11 @@ namespace ComponentFactory.Krypton.Navigator
 
             _stateDisabled = new PaletteNavigator(_stateCommon, _needDisabledPaint);
             _stateNormal = new PaletteNavigator(_stateCommon, _needNormalPaint);
-            _stateTracking = new PaletteNavigatorOtherEx(_stateCommon, _needNormalPaint);
-            _statePressed = new PaletteNavigatorOtherEx(_stateCommon, _needNormalPaint);
-            _stateSelected = new PaletteNavigatorOther(_stateCommon, _needNormalPaint);
+            StateTracking = new PaletteNavigatorOtherEx(_stateCommon, _needNormalPaint);
+            StatePressed = new PaletteNavigatorOtherEx(_stateCommon, _needNormalPaint);
+            StateSelected = new PaletteNavigatorOther(_stateCommon, _needNormalPaint);
             
-            _stateFocus = new PaletteNavigatorOtherRedirect(_redirectNavigatorCheckButton,
+            OverrideFocus = new PaletteNavigatorOtherRedirect(_redirectNavigatorCheckButton,
                                                             _redirectNavigatorOverflowButton,
                                                             _redirectNavigatorMiniButton, 
                                                             _redirectNavigatorTab, 
@@ -251,7 +239,7 @@ namespace ComponentFactory.Krypton.Navigator
             _drawPanel = new ViewDrawPanel(_stateNormal.Page);
 
             // Create page specific button spec storage
-            _buttonSpecs = new PageButtonSpecCollection(this);
+            ButtonSpecs = new PageButtonSpecCollection(this);
 
             // Create the view manager instance
             ViewManager = new ViewManager(this, _drawPanel);
@@ -300,10 +288,7 @@ namespace ComponentFactory.Krypton.Navigator
         [Category("Visuals")]
         [Description("Collection of button specifications.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public virtual PageButtonSpecCollection ButtonSpecs
-        {
-            get { return _buttonSpecs; }
-        }
+        public virtual PageButtonSpecCollection ButtonSpecs { get; }
 
         /// <summary>
         /// Gets access to the common page appearance entries.
@@ -365,7 +350,7 @@ namespace ComponentFactory.Krypton.Navigator
         public virtual PaletteNavigatorOtherEx StateTracking
         {
             [System.Diagnostics.DebuggerStepThrough]
-            get { return _stateTracking; }
+            get;
         }
 
         private bool ShouldSerializeStateTracking()
@@ -382,7 +367,7 @@ namespace ComponentFactory.Krypton.Navigator
         public virtual PaletteNavigatorOtherEx StatePressed
         {
             [System.Diagnostics.DebuggerStepThrough]
-            get { return _statePressed; }
+            get;
         }
 
         private bool ShouldSerializeStatePressed()
@@ -399,7 +384,7 @@ namespace ComponentFactory.Krypton.Navigator
         public virtual PaletteNavigatorOther StateSelected
         {
             [System.Diagnostics.DebuggerStepThrough]
-            get { return _stateSelected; }
+            get;
         }
 
         private bool ShouldSerializeStateSelected()
@@ -416,7 +401,7 @@ namespace ComponentFactory.Krypton.Navigator
         public virtual PaletteNavigatorOtherRedirect OverrideFocus
         {
             [System.Diagnostics.DebuggerStepThrough]
-            get { return _stateFocus; }
+            get;
         }
 
         private bool ShouldSerializeOverrideFocus()
@@ -609,8 +594,8 @@ namespace ComponentFactory.Krypton.Navigator
         [DefaultValue(null)]
         public virtual Image ToolTipImage
         {
-            get { return _toolTipImage; }
-            
+            get => _toolTipImage;
+
             set 
             {
                 if (_toolTipImage != value)
@@ -643,7 +628,7 @@ namespace ComponentFactory.Krypton.Navigator
         [KryptonDefaultColorAttribute()]
         public virtual Color ToolTipImageTransparentColor
         {
-            get { return _toolTipImageTransparentColor; }
+            get => _toolTipImageTransparentColor;
 
             set
             {
@@ -678,8 +663,8 @@ namespace ComponentFactory.Krypton.Navigator
         [DefaultValue("")]
         public virtual string ToolTipTitle
         {
-            get { return _toolTipTitle; }
-            
+            get => _toolTipTitle;
+
             set 
             {
                 if (_toolTipTitle != value)
@@ -713,7 +698,7 @@ namespace ComponentFactory.Krypton.Navigator
         [DefaultValue("")]
         public virtual string ToolTipBody
         {
-            get { return _toolTipBody; }
+            get => _toolTipBody;
 
             set 
             {
@@ -746,8 +731,8 @@ namespace ComponentFactory.Krypton.Navigator
         [DefaultValue(typeof(LabelStyle), "ToolTip")]
         public virtual LabelStyle ToolTipStyle
         {
-            get { return _toolTipStyle; }
-            
+            get => _toolTipStyle;
+
             set 
             {
                 if (_toolTipStyle != value)
@@ -779,19 +764,23 @@ namespace ComponentFactory.Krypton.Navigator
         [DefaultValue(null)]
         public virtual KryptonContextMenu KryptonContextMenu
         {
-            get { return _kcm; }
-            
+            get => _kcm;
+
             set 
             {
                 if (_kcm != value)
                 {
                     if (_kcm != null)
+                    {
                         _kcm.Disposed += new EventHandler(OnKryptonContextMenuDisposed);
+                    }
 
                     _kcm = value;
 
                     if (_kcm != null)
+                    {
                         _kcm.Disposed -= new EventHandler(OnKryptonContextMenuDisposed);
+                    }
                 }
             }
         }
@@ -835,7 +824,7 @@ namespace ComponentFactory.Krypton.Navigator
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         public virtual Size AutoHiddenSlideSize
         {
-            get { return _autoHiddenSlideSize; }
+            get => _autoHiddenSlideSize;
 
             set
             {
@@ -926,8 +915,8 @@ namespace ComponentFactory.Krypton.Navigator
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public override Color BackColor
 		{
-			get { return base.BackColor; }
-			set { base.BackColor = value; }
+			get => base.BackColor;
+		    set => base.BackColor = value;
 		}
 
 		/// <summary>
@@ -938,8 +927,8 @@ namespace ComponentFactory.Krypton.Navigator
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public override AnchorStyles Anchor
 		{
-			get { return base.Anchor; }
-			set { base.Anchor = value; }
+			get => base.Anchor;
+		    set => base.Anchor = value;
 		}
 
 		/// <summary>
@@ -950,8 +939,8 @@ namespace ComponentFactory.Krypton.Navigator
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public override bool AutoSize
 		{
-			get { return base.AutoSize; }
-			set { base.AutoSize = value; }
+			get => base.AutoSize;
+		    set => base.AutoSize = value;
 		}
 
         /// <summary>
@@ -962,8 +951,8 @@ namespace ComponentFactory.Krypton.Navigator
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public new Size Size
         {
-            get { return base.Size; }
-            set { base.Size = value; }
+            get => base.Size;
+            set => base.Size = value;
         }
         
         /// <summary>
@@ -974,9 +963,9 @@ namespace ComponentFactory.Krypton.Navigator
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public override AutoSizeMode AutoSizeMode
 		{
-			get { return base.AutoSizeMode; }
-			set { base.AutoSizeMode = value; }
-		}
+			get => base.AutoSizeMode;
+            set => base.AutoSizeMode = value;
+        }
 
 		/// <summary>
 		/// Gets or sets which edge of the parent container a control is docked to.
@@ -986,8 +975,8 @@ namespace ComponentFactory.Krypton.Navigator
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public override DockStyle Dock
 		{
-			get { return base.Dock; }
-			set { base.Dock = value; }
+			get => base.Dock;
+		    set => base.Dock = value;
 		}
 
 		/// <summary>
@@ -999,8 +988,8 @@ namespace ComponentFactory.Krypton.Navigator
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public new Point Location
 		{
-			get { return base.Location; }
-			set { base.Location = value; }
+			get => base.Location;
+		    set => base.Location = value;
 		}
 
 		/// <summary>
@@ -1011,8 +1000,8 @@ namespace ComponentFactory.Krypton.Navigator
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public new int TabIndex
 		{
-			get { return base.TabIndex; }
-			set { base.TabIndex = value; }
+			get => base.TabIndex;
+		    set => base.TabIndex = value;
 		}
 
 		/// <summary>
@@ -1023,8 +1012,8 @@ namespace ComponentFactory.Krypton.Navigator
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public new bool TabStop
 		{
-			get { return base.TabStop; }
-			set { base.TabStop = value; }
+			get => base.TabStop;
+		    set => base.TabStop = value;
 		}
 
         /// <summary>
@@ -1104,7 +1093,9 @@ namespace ComponentFactory.Krypton.Navigator
 
             // We do not want to return a null
             if (ret == null)
+            {
                 ret = string.Empty;
+            }
 
             return ret;
         }
@@ -1198,8 +1189,8 @@ namespace ComponentFactory.Krypton.Navigator
         [DefaultValue(0)]
         public virtual int Flags
         {
-            get { return _flags.Flags; }
-            
+            get => _flags.Flags;
+
             set
             {
                 if (_flags.Flags != value)
@@ -1220,7 +1211,9 @@ namespace ComponentFactory.Krypton.Navigator
             int changed = _flags.SetFlags((int)flags);
 
             if (changed != 0)
+            {
                 OnFlagsChanged((KryptonPageFlags)changed);
+            }
         }
 
         /// <summary>
@@ -1232,7 +1225,9 @@ namespace ComponentFactory.Krypton.Navigator
             int changed = _flags.ClearFlags((int)flags);
 
             if (changed != 0)
+            {
                 OnFlagsChanged((KryptonPageFlags)changed);
+            }
         }
 
         /// <summary>
@@ -1252,8 +1247,8 @@ namespace ComponentFactory.Krypton.Navigator
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         public virtual bool LastVisibleSet
         {
-            get { return _setVisible; }
-            
+            get => _setVisible;
+
             set 
             {
                 if (value != _setVisible)
@@ -1306,9 +1301,13 @@ namespace ComponentFactory.Krypton.Navigator
 
                     // If keyboard activated, the menu position is centered
                     if (((int)((long)m.LParam)) == -1)
+                    {
                         mousePt = new Point(Width / 2, Height / 2);
+                    }
                     else
+                    {
                         mousePt = PointToClient(mousePt);
+                    }
 
                     // If the mouse posiiton is within our client area
                     if (ClientRectangle.Contains(mousePt))
@@ -1354,9 +1353,8 @@ namespace ComponentFactory.Krypton.Navigator
 		/// <param name="e">An EventArgs containing the event data.</param>
 		protected override void OnDockChanged(EventArgs e)
 		{
-			if (DockChanged != null)
-				DockChanged(this, e);
-		}
+            DockChanged?.Invoke(this, e);
+        }
 
 		/// <summary>
 		/// Raises the LocationChanged event.
@@ -1364,9 +1362,8 @@ namespace ComponentFactory.Krypton.Navigator
 		/// <param name="e">An EventArgs containing the event data.</param>
 		protected override void OnLocationChanged(EventArgs e)
 		{
-			if (LocationChanged != null)
-				LocationChanged(this, e);
-		}
+            LocationChanged?.Invoke(this, e);
+        }
 
 		/// <summary>
 		/// Raises the TabIndexChanged event.
@@ -1374,9 +1371,8 @@ namespace ComponentFactory.Krypton.Navigator
 		/// <param name="e">An EventArgs containing the event data.</param>
 		protected override void OnTabIndexChanged(EventArgs e)
 		{
-			if (TabIndexChanged != null)
-				TabIndexChanged(this, e);
-		}
+            TabIndexChanged?.Invoke(this, e);
+        }
 
 		/// <summary>
 		/// Raises the TabStopChanged event.
@@ -1384,9 +1380,8 @@ namespace ComponentFactory.Krypton.Navigator
 		/// <param name="e">An EventArgs containing the event data.</param>
 		protected override void OnTabStopChanged(EventArgs e)
 		{
-			if (TabStopChanged != null)
-				TabStopChanged(this, e);
-		}
+            TabStopChanged?.Invoke(this, e);
+        }
 
         /// <summary>
         /// Raises the AppearancePropertyChanged event.
@@ -1394,8 +1389,7 @@ namespace ComponentFactory.Krypton.Navigator
         /// <param name="propertyName">Name of the appearance property that has changed.</param>
         protected virtual void OnAppearancePropertyChanged(string propertyName)
         {
-            if (AppearancePropertyChanged != null)
-                AppearancePropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            AppearancePropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         /// <summary>
@@ -1404,8 +1398,7 @@ namespace ComponentFactory.Krypton.Navigator
         /// <param name="changed">Set of flags that have changed.</param>
         protected virtual void OnFlagsChanged(KryptonPageFlags changed)
         {
-            if (FlagsChanged != null)
-                FlagsChanged(this, new KryptonPageFlagsEventArgs(changed));
+            FlagsChanged?.Invoke(this, new KryptonPageFlagsEventArgs(changed));
         }
 
         /// <summary>
@@ -1414,8 +1407,7 @@ namespace ComponentFactory.Krypton.Navigator
         /// <param name="e">An EventArgs containing the event data.</param>
         protected virtual void OnAutoHiddenSlideSizeChanged(EventArgs e)
         {
-            if (AutoHiddenSlideSizeChanged != null)
-                AutoHiddenSlideSizeChanged(this, e);
+            AutoHiddenSlideSizeChanged?.Invoke(this, e);
         }
 
         /// <summary>
@@ -1424,8 +1416,7 @@ namespace ComponentFactory.Krypton.Navigator
         /// <param name="e">An EventArgs containing the event data.</param>
         protected virtual void OnLoad(EventArgs e)
         {
-            if (Load != null)
-                Load(this, e);
+            Load?.Invoke(this, e);
         }
 
         /// <summary>

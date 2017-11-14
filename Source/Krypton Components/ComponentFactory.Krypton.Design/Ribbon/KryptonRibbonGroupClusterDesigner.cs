@@ -11,11 +11,9 @@
 using System;
 using System.Collections;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Windows.Forms;
-using System.Windows.Forms.Design;
 using System.Diagnostics;
 using ComponentFactory.Krypton.Toolkit;
 
@@ -69,7 +67,10 @@ namespace ComponentFactory.Krypton.Ribbon
             Debug.Assert(component != null);
 
             // Validate the parameter reference
-            if (component == null) throw new ArgumentNullException("component");
+            if (component == null)
+            {
+                throw new ArgumentNullException("component");
+            }
 
             // Let base class do standard stuff
             base.Initialize(component);
@@ -167,7 +168,7 @@ namespace ComponentFactory.Krypton.Ribbon
             bool moveLast = false;
             bool clearItems = false;
 
-            if ((_ribbonCluster != null) && (_ribbonCluster.Ribbon != null))
+            if (_ribbonCluster?.Ribbon != null)
             {
                 // Cast container to the correct type
                 KryptonRibbonGroupLines lines = (KryptonRibbonGroupLines)_ribbonCluster.RibbonContainer;
@@ -189,13 +190,15 @@ namespace ComponentFactory.Krypton.Ribbon
         private void OnToggleHelpers(object sender, EventArgs e)
         {
             // Invert the current toggle helper mode
-            if ((_ribbonCluster != null) && (_ribbonCluster.Ribbon != null))
+            if (_ribbonCluster?.Ribbon != null)
+            {
                 _ribbonCluster.Ribbon.InDesignHelperMode = !_ribbonCluster.Ribbon.InDesignHelperMode;
+            }
         }
 
         private void OnMoveFirst(object sender, EventArgs e)
         {
-            if ((_ribbonCluster != null) && (_ribbonCluster.Ribbon != null))
+            if (_ribbonCluster?.Ribbon != null)
             {
                 // Cast container to the correct type
                 KryptonRibbonGroupLines lines = (KryptonRibbonGroupLines)_ribbonCluster.RibbonContainer;
@@ -220,15 +223,14 @@ namespace ComponentFactory.Krypton.Ribbon
                 finally
                 {
                     // If we managed to create the transaction, then do it
-                    if (transaction != null)
-                        transaction.Commit();
+                    transaction?.Commit();
                 }
             }
         }
 
         private void OnMovePrevious(object sender, EventArgs e)
         {
-            if ((_ribbonCluster != null) && (_ribbonCluster.Ribbon != null))
+            if (_ribbonCluster?.Ribbon != null)
             {
                 // Cast container to the correct type
                 KryptonRibbonGroupLines lines = (KryptonRibbonGroupLines)_ribbonCluster.RibbonContainer;
@@ -255,15 +257,14 @@ namespace ComponentFactory.Krypton.Ribbon
                 finally
                 {
                     // If we managed to create the transaction, then do it
-                    if (transaction != null)
-                        transaction.Commit();
+                    transaction?.Commit();
                 }
             }
         }
 
         private void OnMoveNext(object sender, EventArgs e)
         {
-            if ((_ribbonCluster != null) && (_ribbonCluster.Ribbon != null))
+            if (_ribbonCluster?.Ribbon != null)
             {
                 // Cast container to the correct type
                 KryptonRibbonGroupLines lines = (KryptonRibbonGroupLines)_ribbonCluster.RibbonContainer;
@@ -290,15 +291,14 @@ namespace ComponentFactory.Krypton.Ribbon
                 finally
                 {
                     // If we managed to create the transaction, then do it
-                    if (transaction != null)
-                        transaction.Commit();
+                    transaction?.Commit();
                 }
             }
         }
 
         private void OnMoveLast(object sender, EventArgs e)
         {
-            if ((_ribbonCluster != null) && (_ribbonCluster.Ribbon != null))
+            if (_ribbonCluster?.Ribbon != null)
             {
                 // Cast container to the correct type
                 KryptonRibbonGroupLines lines = (KryptonRibbonGroupLines)_ribbonCluster.RibbonContainer;
@@ -323,15 +323,14 @@ namespace ComponentFactory.Krypton.Ribbon
                 finally
                 {
                     // If we managed to create the transaction, then do it
-                    if (transaction != null)
-                        transaction.Commit();
+                    transaction?.Commit();
                 }
             }
         }
 
         private void OnAddButton(object sender, EventArgs e)
         {
-            if ((_ribbonCluster != null) && (_ribbonCluster.Ribbon != null))
+            if (_ribbonCluster?.Ribbon != null)
             {
                 // Use a transaction to support undo/redo actions
                 DesignerTransaction transaction = _designerHost.CreateTransaction("KryptonRibbonGroupCluster AddButton");
@@ -352,15 +351,14 @@ namespace ComponentFactory.Krypton.Ribbon
                 finally
                 {
                     // If we managed to create the transaction, then do it
-                    if (transaction != null)
-                        transaction.Commit();
+                    transaction?.Commit();
                 }
             }
         }
 
         private void OnAddColorButton(object sender, EventArgs e)
         {
-            if ((_ribbonCluster != null) && (_ribbonCluster.Ribbon != null))
+            if (_ribbonCluster?.Ribbon != null)
             {
                 // Use a transaction to support undo/redo actions
                 DesignerTransaction transaction = _designerHost.CreateTransaction("KryptonRibbonGroupCluster AddColorButton");
@@ -381,15 +379,14 @@ namespace ComponentFactory.Krypton.Ribbon
                 finally
                 {
                     // If we managed to create the transaction, then do it
-                    if (transaction != null)
-                        transaction.Commit();
+                    transaction?.Commit();
                 }
             }
         }
 
         private void OnClearItems(object sender, EventArgs e)
         {
-            if ((_ribbonCluster != null) && (_ribbonCluster.Ribbon != null))
+            if (_ribbonCluster?.Ribbon != null)
             {
                 // Use a transaction to support undo/redo actions
                 DesignerTransaction transaction = _designerHost.CreateTransaction("KryptonRibbonGroupCluster ClearItems");
@@ -417,15 +414,14 @@ namespace ComponentFactory.Krypton.Ribbon
                 finally
                 {
                     // If we managed to create the transaction, then do it
-                    if (transaction != null)
-                        transaction.Commit();
+                    transaction?.Commit();
                 }
             }
         }
 
         private void OnDeleteCluster(object sender, EventArgs e)
         {
-            if ((_ribbonCluster != null) && (_ribbonCluster.Ribbon != null))
+            if (_ribbonCluster?.Ribbon != null)
             {
                 // Cast container to the correct type
                 KryptonRibbonGroupLines lines = (KryptonRibbonGroupLines)_ribbonCluster.RibbonContainer;
@@ -454,15 +450,14 @@ namespace ComponentFactory.Krypton.Ribbon
                 finally
                 {
                     // If we managed to create the transaction, then do it
-                    if (transaction != null)
-                        transaction.Commit();
+                    transaction?.Commit();
                 }
             }
         }
 
         private void OnVisible(object sender, EventArgs e)
         {
-            if ((_ribbonCluster != null) && (_ribbonCluster.Ribbon != null))
+            if (_ribbonCluster?.Ribbon != null)
             {
                 _changeService.OnComponentChanged(_ribbonCluster, null, _ribbonCluster.Visible, !_ribbonCluster.Visible);
                 _ribbonCluster.Visible = !_ribbonCluster.Visible;
@@ -485,9 +480,8 @@ namespace ComponentFactory.Krypton.Ribbon
                 // We need to remove all items from the cluster
                 for (int j = _ribbonCluster.Items.Count - 1; j >= 0; j--)
                 {
-                    IRibbonGroupItem item = _ribbonCluster.Items[j] as IRibbonGroupItem;
 
-                    if (item != null)
+                    if (_ribbonCluster.Items[j] is IRibbonGroupItem item)
                     {
                         _ribbonCluster.Items.Remove(item);
                         host.DestroyComponent(item as Component);
@@ -504,7 +498,7 @@ namespace ComponentFactory.Krypton.Ribbon
 
         private void OnContextMenu(object sender, MouseEventArgs e)
         {
-            if ((_ribbonCluster != null) && (_ribbonCluster.Ribbon != null))
+            if (_ribbonCluster?.Ribbon != null)
             {
                 // Create the menu strip the first time around
                 if (_cms == null)

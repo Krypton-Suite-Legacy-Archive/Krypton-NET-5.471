@@ -9,10 +9,7 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Diagnostics;
 
@@ -24,12 +21,7 @@ namespace ComponentFactory.Krypton.Toolkit
     public class ViewLayoutScrollViewport : ViewLayoutDocker
     {
         #region Instance Fields
-        private ViewLayoutControl _viewControl;
-        private ViewLayoutViewport _viewport;
-        private ViewDrawScrollBar _scrollbarV;
-        private ViewDrawScrollBar _scrollbarH;
-        private ViewDrawBorderEdge _borderEdgeV;
-        private ViewDrawBorderEdge _borderEdgeH;
+
         private NeedPaintHandler _needPaintDelegate;
         private bool _viewportVertical;
         #endregion
@@ -82,44 +74,48 @@ namespace ComponentFactory.Krypton.Toolkit
             Orientation = orientation;
 
             // Create the child viewport
-            _viewport = new ViewLayoutViewport(paletteMetrics, metricPadding,
+            Viewport = new ViewLayoutViewport(paletteMetrics, metricPadding,
                                                metricOvers, ViewportOrientation(_viewportVertical),
-                                               alignment, animateChange);
+                                               alignment, animateChange)
+            {
 
-            // Default to same alignment for both directions
-            _viewport.CounterAlignment = alignment;
+                // Default to same alignment for both directions
+                CounterAlignment = alignment,
 
-            // We always want the viewport to fill any remainder space
-            _viewport.FillSpace = true;
+                // We always want the viewport to fill any remainder space
+                FillSpace = true
+            };
 
             // Put the provided element inside the viewport
-            _viewport.Add(viewportFiller);
+            Viewport.Add(viewportFiller);
 
             // Hook into animation step events
-            _viewport.AnimateStep += new EventHandler(OnAnimateStep);
+            Viewport.AnimateStep += new EventHandler(OnAnimateStep);
 
             // To prevent the contents of the viewport from being able to draw outside
             // the viewport (such as having child controls) we use a ViewLayoutControl
             // that uses a child control to restrict the drawing region.
-            _viewControl = new ViewLayoutControl(rootControl, _viewport);
-            _viewControl.InDesignMode = rootControl.InDesignMode;
+            ViewControl = new ViewLayoutControl(rootControl, Viewport)
+            {
+                InDesignMode = rootControl.InDesignMode
+            };
 
             // Create the scrollbar and matching border edge
-            _scrollbarV = new ViewDrawScrollBar(true);
-            _scrollbarH = new ViewDrawScrollBar(false);
-            _borderEdgeV = new ViewDrawBorderEdge(paletteBorderEdge, System.Windows.Forms.Orientation.Vertical);
-            _borderEdgeH = new ViewDrawBorderEdge(paletteBorderEdge, System.Windows.Forms.Orientation.Horizontal);
+            ScrollbarV = new ViewDrawScrollBar(true);
+            ScrollbarH = new ViewDrawScrollBar(false);
+            BorderEdgeV = new ViewDrawBorderEdge(paletteBorderEdge, System.Windows.Forms.Orientation.Vertical);
+            BorderEdgeH = new ViewDrawBorderEdge(paletteBorderEdge, System.Windows.Forms.Orientation.Horizontal);
 
             // Hook into scroll position changes
-            _scrollbarV.ScrollChanged += new EventHandler(OnScrollVChanged);
-            _scrollbarH.ScrollChanged += new EventHandler(OnScrollHChanged);
+            ScrollbarV.ScrollChanged += new EventHandler(OnScrollVChanged);
+            ScrollbarH.ScrollChanged += new EventHandler(OnScrollHChanged);
 
             // Add with appropriate docking style
-            Add(_viewControl, ViewDockStyle.Fill);
-            Add(_borderEdgeV, ViewDockStyle.Right);
-            Add(_borderEdgeH, ViewDockStyle.Bottom);
-            Add(_scrollbarV, ViewDockStyle.Right);
-            Add(_scrollbarH, ViewDockStyle.Bottom);
+            Add(ViewControl, ViewDockStyle.Fill);
+            Add(BorderEdgeV, ViewDockStyle.Right);
+            Add(BorderEdgeH, ViewDockStyle.Bottom);
+            Add(ScrollbarV, ViewDockStyle.Right);
+            Add(ScrollbarH, ViewDockStyle.Bottom);
         }
 
         /// <summary>
@@ -197,7 +193,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 }
             }
 
-            get { return _viewportVertical; }
+            get => _viewportVertical;
         }
         #endregion
 
@@ -219,8 +215,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public bool AnimateChange
         {
-            get { return Viewport.AnimateChange; }
-            set { Viewport.AnimateChange = value; }
+            get => Viewport.AnimateChange;
+            set => Viewport.AnimateChange = value;
         }
         #endregion
 
@@ -232,9 +228,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public void BringIntoView(Rectangle rect)
         {
             if (VerticalViewport)
+            {
                 rect.Width = Viewport.ClientWidth;
+            }
             else
+            {
                 rect.Height = Viewport.ClientHeight;
+            }
 
             // Ask the actual viewport to perform the action
             Viewport.BringIntoView(rect);
@@ -333,15 +333,19 @@ namespace ComponentFactory.Krypton.Toolkit
 
             // Do we need to update the vertical scrolling values?
             if (canScrollV)
+            {
                 ScrollbarV.SetScrollValues(0, Viewport.ScrollExtent.Height - 1,
                                            1, Viewport.ClientSize.Height,
                                            Viewport.ScrollOffset.Y);
+            }
 
             // Do we need to update the horizontal scrolling values?
             if (canScrollH)
+            {
                 ScrollbarH.SetScrollValues(0, Viewport.ScrollExtent.Width - 1,
                                            1, Viewport.ClientSize.Width,
                                            Viewport.ScrollOffset.X);
+            }
         }
 		#endregion
 
@@ -352,7 +356,7 @@ namespace ComponentFactory.Krypton.Toolkit
         public ViewLayoutControl ViewControl
         {
             [System.Diagnostics.DebuggerStepThrough]
-            get { return _viewControl; }
+            get;
         }
 
         /// <summary>
@@ -361,7 +365,7 @@ namespace ComponentFactory.Krypton.Toolkit
         public ViewLayoutViewport Viewport
         {
             [System.Diagnostics.DebuggerStepThrough]
-            get { return _viewport; }
+            get;
         }
 
         /// <summary>
@@ -370,7 +374,7 @@ namespace ComponentFactory.Krypton.Toolkit
         public ViewDrawScrollBar ScrollbarV
         {
             [System.Diagnostics.DebuggerStepThrough]
-            get { return _scrollbarV; }
+            get;
         }
 
         /// <summary>
@@ -379,7 +383,7 @@ namespace ComponentFactory.Krypton.Toolkit
         public ViewDrawScrollBar ScrollbarH
         {
             [System.Diagnostics.DebuggerStepThrough]
-            get { return _scrollbarH; }
+            get;
         }
 
         /// <summary>
@@ -388,7 +392,7 @@ namespace ComponentFactory.Krypton.Toolkit
         public ViewDrawBorderEdge BorderEdgeV
         {
             [System.Diagnostics.DebuggerStepThrough]
-            get { return _borderEdgeV; }
+            get;
         }
 
         /// <summary>
@@ -397,8 +401,9 @@ namespace ComponentFactory.Krypton.Toolkit
         public ViewDrawBorderEdge BorderEdgeH
         {
             [System.Diagnostics.DebuggerStepThrough]
-            get { return _borderEdgeH; }
+            get;
         }
+
         #endregion
 
         #region Protected
@@ -418,8 +423,7 @@ namespace ComponentFactory.Krypton.Toolkit
         protected void NeedPaint(bool needLayout)
         {
             // Request a layout be performed immediately
-            if (_needPaintDelegate != null)
-                _needPaintDelegate(this, new NeedLayoutEventArgs(needLayout));
+            _needPaintDelegate?.Invoke(this, new NeedLayoutEventArgs(needLayout));
         }
         #endregion
 
@@ -427,9 +431,13 @@ namespace ComponentFactory.Krypton.Toolkit
         private VisualOrientation ViewportOrientation(bool vertical)
         {
             if (vertical)
+            {
                 return VisualOrientation.Left;
+            }
             else
+            {
                 return VisualOrientation.Top;
+            }
         }
 
         private void OnScrollVChanged(object sender, EventArgs e)
@@ -466,8 +474,7 @@ namespace ComponentFactory.Krypton.Toolkit
 
         private void OnAnimateStep(object sender, EventArgs e)
         {
-            if (AnimateStep != null)
-                AnimateStep(sender, e);
+            AnimateStep?.Invoke(sender, e);
         }
         #endregion
     }

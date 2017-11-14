@@ -8,8 +8,6 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Diagnostics;
@@ -17,41 +15,40 @@ using ComponentFactory.Krypton.Toolkit;
 
 namespace ComponentFactory.Krypton.Ribbon
 {
-	/// <summary>
-	/// Process mouse events for a collapsed group.
-	/// </summary>
+    /// <summary>
+    /// Process mouse events for a collapsed group.
+    /// </summary>
     internal class CollapsedGroupController : GlobalId,
                                               IMouseController,
                                               ISourceController,
                                               IKeyController,
                                               IRibbonKeyTipTarget
-	{
-		#region Instance Fields
+    {
+        #region Instance Fields
         private KryptonRibbon _ribbon;
-        private bool _hasFocus;
         private bool _mouseOver;
         private NeedPaintHandler _needPaint;
         private ViewLayoutDocker _target;
-		#endregion
+        #endregion
 
-		#region Events
-		/// <summary>
-		/// Occurs when the mouse is used to left click the target.
-		/// </summary>
-		public event MouseEventHandler Click;
-		#endregion
+        #region Events
+        /// <summary>
+        /// Occurs when the mouse is used to left click the target.
+        /// </summary>
+        public event MouseEventHandler Click;
+        #endregion
 
-		#region Identity
-		/// <summary>
+        #region Identity
+        /// <summary>
         /// Initialize a new instance of the LeftDownController class.
-		/// </summary>
+        /// </summary>
         /// <param name="ribbon">Reference to owning control instance.</param>
         /// <param name="target">View element that owns this controller.</param>
         /// <param name="needPaint">Paint delegate for notifying visual changes.</param>
         public CollapsedGroupController(KryptonRibbon ribbon,
                                         ViewLayoutDocker target,
                                         NeedPaintHandler needPaint)
-		{
+        {
             Debug.Assert(ribbon != null);
             Debug.Assert(target != null);
             Debug.Assert(needPaint != null);
@@ -60,16 +57,14 @@ namespace ComponentFactory.Krypton.Ribbon
             _target = target;
             _needPaint = needPaint;
         }
-		#endregion
+        #endregion
 
         #region HasFocus
         /// <summary>
         /// Gets a value indicating if the controller has focus.
         /// </summary>
-        public bool HasFocus
-        {
-            get { return _hasFocus; }
-        }
+        public bool HasFocus { get; private set; }
+
         #endregion
 
         #region Mouse Notifications
@@ -78,29 +73,29 @@ namespace ComponentFactory.Krypton.Ribbon
 		/// </summary>
         /// <param name="c">Reference to the source control instance.</param>
         public virtual void MouseEnter(Control c)
-		{
+        {
             // Mouse is over the target
             _mouseOver = true;
-		}
+        }
 
-		/// <summary>
-		/// Mouse has moved inside the view.
-		/// </summary>
+        /// <summary>
+        /// Mouse has moved inside the view.
+        /// </summary>
         /// <param name="c">Reference to the source control instance.</param>
         /// <param name="pt">Mouse position relative to control.</param>
         public virtual void MouseMove(Control c, Point pt)
-		{
-		}
+        {
+        }
 
-		/// <summary>
-		/// Mouse button has been pressed in the view.
-		/// </summary>
+        /// <summary>
+        /// Mouse button has been pressed in the view.
+        /// </summary>
         /// <param name="c">Reference to the source control instance.</param>
         /// <param name="pt">Mouse position relative to control.</param>
-		/// <param name="button">Mouse button pressed down.</param>
-		/// <returns>True if capturing input; otherwise false.</returns>
+        /// <param name="button">Mouse button pressed down.</param>
+        /// <returns>True if capturing input; otherwise false.</returns>
         public virtual bool MouseDown(Control c, Point pt, MouseButtons button)
-		{
+        {
             if (_mouseOver && (button == MouseButtons.Left))
             {
                 // Generate the click on the down and not the usual mouse up
@@ -108,30 +103,30 @@ namespace ComponentFactory.Krypton.Ribbon
             }
 
             return false;
-		}
+        }
 
-		/// <summary>
-		/// Mouse button has been released in the view.
-		/// </summary>
+        /// <summary>
+        /// Mouse button has been released in the view.
+        /// </summary>
         /// <param name="c">Reference to the source control instance.</param>
         /// <param name="pt">Mouse position relative to control.</param>
-		/// <param name="button">Mouse button released.</param>
+        /// <param name="button">Mouse button released.</param>
         public virtual void MouseUp(Control c, Point pt, MouseButtons button)
-		{
-		}
+        {
+        }
 
-		/// <summary>
-		/// Mouse has left the view.
-		/// </summary>
+        /// <summary>
+        /// Mouse has left the view.
+        /// </summary>
         /// <param name="c">Reference to the source control instance.</param>
         /// <param name="next">Reference to view that is next to have the mouse.</param>
         public virtual void MouseLeave(Control c, ViewBase next)
-		{
+        {
             // Mouse is no longer over the target
             _mouseOver = false;
 
-		}
-        
+        }
+
         /// <summary>
         /// Left mouse button double click.
         /// </summary>
@@ -143,10 +138,8 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <summary>
         /// Should the left mouse down be ignored when present on a visual form border area.
         /// </summary>
-        public virtual bool IgnoreVisualFormLeftButtonDown
-        {
-            get { return false; }
-        }
+        public virtual bool IgnoreVisualFormLeftButtonDown => false;
+
         #endregion
 
         #region Key Notifications
@@ -160,12 +153,18 @@ namespace ComponentFactory.Krypton.Ribbon
             // Get the root control that owns the provided control
             c = _ribbon.GetControllerControl(c);
 
-            if (c is KryptonRibbon)
-                KeyDownRibbon(c as KryptonRibbon, e);
-            else if (c is VisualPopupGroup)
-                KeyDownPopupGroup(c as VisualPopupGroup, e);
-            else if (c is VisualPopupMinimized)
-                KeyDownPopupMinimized(c as VisualPopupMinimized, e);
+            switch (c)
+            {
+                case KryptonRibbon ribbon:
+                    KeyDownRibbon(ribbon, e);
+                    break;
+                case VisualPopupGroup popGroup:
+                    KeyDownPopupGroup(popGroup, e);
+                    break;
+                case VisualPopupMinimized minimized:
+                    KeyDownPopupMinimized(minimized, e);
+                    break;
+            }
         }
 
         /// <summary>
@@ -196,7 +195,7 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <param name="c">Reference to the source control instance.</param>
         public virtual void GotFocus(Control c)
         {
-            _hasFocus = true;
+            HasFocus = true;
             OnNeedPaint(false, _target.ClientRectangle);
         }
 
@@ -206,7 +205,7 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <param name="c">Reference to the source control instance.</param>
         public virtual void LostFocus(Control c)
         {
-            _hasFocus = false;
+            HasFocus = false;
             OnNeedPaint(false, _target.ClientRectangle);
         }
         #endregion
@@ -226,7 +225,7 @@ namespace ComponentFactory.Krypton.Ribbon
             {
                 // Cast to correct type
                 VisualPopupGroup popupGroup = (VisualPopupGroup)VisualPopupManager.Singleton.CurrentPopup;
-                
+
                 // Grab the list of key tips from the popup group
                 _ribbon.KeyTipMode = KeyTipMode.PopupGroup;
                 KeyTipInfoList keyTipList = new KeyTipInfoList();
@@ -238,7 +237,7 @@ namespace ComponentFactory.Krypton.Ribbon
         }
         #endregion
 
-		#region Protected
+        #region Protected
         /// <summary>
         /// Raises the NeedPaint event.
         /// </summary>
@@ -247,20 +246,18 @@ namespace ComponentFactory.Krypton.Ribbon
         protected virtual void OnNeedPaint(bool needLayout,
                                            Rectangle invalidRect)
         {
-            if (_needPaint != null)
-                _needPaint(this, new NeedLayoutEventArgs(needLayout, invalidRect));
+            _needPaint?.Invoke(this, new NeedLayoutEventArgs(needLayout, invalidRect));
         }
-        
+
         /// <summary>
-		/// Raises the Click event.
-		/// </summary>
-		/// <param name="e">A MouseEventArgs containing the event data.</param>
-		protected virtual void OnClick(MouseEventArgs e)
-		{
-			if (Click != null)
-				Click(this, e);
-		}
-		#endregion
+        /// Raises the Click event.
+        /// </summary>
+        /// <param name="e">A MouseEventArgs containing the event data.</param>
+        protected virtual void OnClick(MouseEventArgs e)
+        {
+            Click?.Invoke(this, e);
+        }
+        #endregion
 
         #region Implementation
         private void KeyDownRibbon(KryptonRibbon ribbon, KeyEventArgs e)
@@ -276,7 +273,9 @@ namespace ComponentFactory.Krypton.Ribbon
 
                     // Got to the actual tab header
                     if (newView == null)
+                    {
                         newView = ribbon.TabsArea.LayoutTabs.GetViewForRibbonTab(ribbon.SelectedTab);
+                    }
                     break;
                 case Keys.Tab:
                 case Keys.Right:
@@ -285,20 +284,28 @@ namespace ComponentFactory.Krypton.Ribbon
 
                     // Move across to any far defined buttons
                     if (newView == null)
+                    {
                         newView = ribbon.TabsArea.ButtonSpecManager.GetFirstVisibleViewButton(PaletteRelativeEdgeAlign.Far);
+                    }
 
                     // Move across to any inherit defined buttons
                     if (newView == null)
+                    {
                         newView = ribbon.TabsArea.ButtonSpecManager.GetFirstVisibleViewButton(PaletteRelativeEdgeAlign.Inherit);
+                    }
 
                     // Rotate around to application button
                     if (newView == null)
                     {
                         if (ribbon.TabsArea.LayoutAppButton.Visible)
+                        {
                             newView = ribbon.TabsArea.LayoutAppButton.AppButton;
+                        }
                         else if (ribbon.TabsArea.LayoutAppTab.Visible)
+                        {
                             newView = ribbon.TabsArea.LayoutAppTab.AppTab;
-                    }                        
+                        }
+                    }
                     break;
                 case Keys.Space:
                 case Keys.Enter:
@@ -319,8 +326,10 @@ namespace ComponentFactory.Krypton.Ribbon
             if ((newView != null) && (newView != _target))
             {
                 // If the new view is a tab then select that tab unless in minimized mode
-                if ((newView is ViewDrawRibbonTab) && !ribbon.RealMinimizedMode)
-                    ribbon.SelectedTab = ((ViewDrawRibbonTab)newView).RibbonTab;
+                if (!ribbon.RealMinimizedMode && (newView is ViewDrawRibbonTab tab))
+                {
+                    ribbon.SelectedTab = tab.RibbonTab;
+                }
 
                 // Finally we switch focus to new view
                 ribbon.FocusView = newView;

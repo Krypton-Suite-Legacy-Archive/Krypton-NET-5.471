@@ -8,13 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
-using System.Drawing;
-using System.Drawing.Text;
 using System.ComponentModel;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Diagnostics;
 
 namespace ComponentFactory.Krypton.Toolkit
@@ -184,12 +178,9 @@ namespace ComponentFactory.Krypton.Toolkit
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Advanced)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-		public IPaletteBack PaletteBack
-		{
-			get { return _back; }
-		}
+		public IPaletteBack PaletteBack => _back;
 
-		/// <summary>
+	    /// <summary>
 		/// Gets and sets the back palette style.
 		/// </summary>
 		[Browsable(false)]
@@ -197,8 +188,8 @@ namespace ComponentFactory.Krypton.Toolkit
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public PaletteBackStyle BackStyle
 		{
-            get { return _back.BackStyle; }
-            set { _back.BackStyle = value; }
+            get => _back.BackStyle;
+		    set => _back.BackStyle = value;
 		}
 		#endregion
 
@@ -209,12 +200,9 @@ namespace ComponentFactory.Krypton.Toolkit
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Advanced)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-		public IPaletteBorder PaletteBorder
-		{
-			get { return _border; }
-		}
+		public IPaletteBorder PaletteBorder => _border;
 
-		/// <summary>
+	    /// <summary>
 		/// Gets and sets the border palette style.
 		/// </summary>
 		[Browsable(false)]
@@ -222,8 +210,8 @@ namespace ComponentFactory.Krypton.Toolkit
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public PaletteBorderStyle BorderStyle
 		{
-            get { return _border.BorderStyle; }
-            set { _border.BorderStyle = value; }
+            get => _border.BorderStyle;
+		    set => _border.BorderStyle = value;
 		}
 		#endregion
 
@@ -234,12 +222,9 @@ namespace ComponentFactory.Krypton.Toolkit
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Advanced)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-		public IPaletteContent PaletteContent
-		{
-			get { return _content; }
-		}
+		public IPaletteContent PaletteContent => _content;
 
-		/// <summary>
+	    /// <summary>
 		/// Gets and sets the content palette style.
 		/// </summary>
 		[Browsable(false)]
@@ -247,8 +232,8 @@ namespace ComponentFactory.Krypton.Toolkit
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public PaletteContentStyle ContentStyle
 		{
-            get { return _content.ContentStyle; }
-            set { _content.ContentStyle = value; }
+            get => _content.ContentStyle;
+		    set => _content.ContentStyle = value;
 		}
 		#endregion
 	}

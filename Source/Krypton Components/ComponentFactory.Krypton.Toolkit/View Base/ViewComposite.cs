@@ -22,8 +22,8 @@ namespace ComponentFactory.Krypton.Toolkit
 	{
 		#region Instance Fields
 		private List<ViewBase> _views;
-        private bool _reverseRenderOrder;
-		#endregion
+
+	    #endregion
 
 		#region Identity
 		/// <summary>
@@ -69,12 +69,9 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Gets and sets the use of reverse order when rendering.
         /// </summary>
-        public bool ReverseRenderOrder
-        {
-            get { return _reverseRenderOrder; }
-            set { _reverseRenderOrder = value; }
-        }
-        #endregion
+        public bool ReverseRenderOrder { get; set; }
+
+	    #endregion
 
         #region Eval
         /// <summary>
@@ -94,7 +91,9 @@ namespace ComponentFactory.Krypton.Toolkit
                 {
                     // Any child that returns 'true' completes the process
                     if (child.EvalTransparentPaint(context))
+                    {
                         return true;
+                    }
                 }
             }
 
@@ -125,11 +124,15 @@ namespace ComponentFactory.Krypton.Toolkit
 
 					// As a composite we need to be big enough to encompass the largest child
 					if (childPreferred.Width > preferredSize.Width)
-						preferredSize.Width = childPreferred.Width;
+                    {
+                        preferredSize.Width = childPreferred.Width;
+                    }
 
-					if (childPreferred.Height > preferredSize.Height)
-						preferredSize.Height = childPreferred.Height;
-				}
+                    if (childPreferred.Height > preferredSize.Height)
+                    {
+                        preferredSize.Height = childPreferred.Height;
+                    }
+                }
 			}
 
 			return preferredSize;
@@ -148,8 +151,10 @@ namespace ComponentFactory.Krypton.Toolkit
 			{
 				// Only layout visible children
 				if (child.Visible)
-					child.Layout(context);
-			}
+                {
+                    child.Layout(context);
+                }
+            }
 		}
 		#endregion
 
@@ -167,17 +172,23 @@ namespace ComponentFactory.Krypton.Toolkit
 
             IEnumerable<ViewBase> ordering;
             if (ReverseRenderOrder)
+            {
                 ordering = this.Reverse();
+            }
             else
+            {
                 ordering = this;
+            }
 
-			// Ask each child to render in turn
+            // Ask each child to render in turn
             foreach (ViewBase child in ordering)
 			{
                 // Only render visible children that are inside the clipping rectangle
                 if (child.Visible && child.ClientRectangle.IntersectsWith(context.ClipRect))
+                {
                     child.Render(context);
-			}
+                }
+            }
 
 			// Perform rendering after that of children
 			RenderAfter(context);
@@ -193,7 +204,9 @@ namespace ComponentFactory.Krypton.Toolkit
 		{
 			// We do not allow null references in the collection
 			if (item == null)
-				throw new ArgumentNullException("Cannot add a null view into a composite view.");
+            {
+                throw new ArgumentNullException("Cannot add a null view into a composite view.");
+            }
 
             if (_views != null)
             {
@@ -214,7 +227,9 @@ namespace ComponentFactory.Krypton.Toolkit
             {
                 // Remove back references
                 foreach (ViewBase child in _views)
+                {
                     child.Parent = null;
+                }
 
                 // Let type safe collection perform operation
                 _views.Clear();
@@ -230,10 +245,14 @@ namespace ComponentFactory.Krypton.Toolkit
 		{
             // Let type safe collection perform operation
             if (_views != null)
+            {
                 return _views.Contains(item);
+            }
             else
+            {
                 return false;
-		}
+            }
+        }
 
         /// <summary>
         /// Determines whether any part of the view hierarchy is the specified view.
@@ -244,12 +263,18 @@ namespace ComponentFactory.Krypton.Toolkit
         {
             // Check against ourself
             if (this == item)
+            {
                 return true;
+            }
 
             // Check against all children
             foreach (ViewBase child in this)
+            {
                 if (child.ContainsRecurse(item))
+                {
                     return true;
+                }
+            }
 
             return false;
         }
@@ -261,9 +286,8 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// <param name="arrayIndex">Starting array index.</param>
 		public override void CopyTo(ViewBase[] array, int arrayIndex)
 		{
-			// Let type safe collection perform operation
-            if (_views != null)
-                _views.CopyTo(array, arrayIndex);
+		    // Let type safe collection perform operation
+		    _views?.CopyTo(array, arrayIndex);
 		}
 
 		/// <summary>
@@ -278,7 +302,9 @@ namespace ComponentFactory.Krypton.Toolkit
 
             // Remove back reference only when remove completed with success
             if (ret)
+            {
                 item.Parent = null;
+            }
 
             return ret;
 		}
@@ -291,9 +317,13 @@ namespace ComponentFactory.Krypton.Toolkit
 			get 
             {
                 if (_views != null)
+                {
                     return _views.Count;
+                }
                 else
+                {
                     return 0;
+                }
             }
 		}
 
@@ -306,10 +336,14 @@ namespace ComponentFactory.Krypton.Toolkit
 		{
 			// Let type safe collection perform operation
             if (_views != null)
+            {
                 return _views.IndexOf(item);
+            }
             else
+            {
                 return -1;
-		}
+            }
+        }
 
 		/// <summary>
 		/// Inserts a view to the collection at the specified index.
@@ -320,7 +354,9 @@ namespace ComponentFactory.Krypton.Toolkit
 		{
 			// We do not allow null references in the collection
 			if (item == null)
-				throw new ArgumentNullException("Cannot insert a null view inside a composite view.");
+            {
+                throw new ArgumentNullException("Cannot insert a null view inside a composite view.");
+            }
 
             if (_views != null)
             {
@@ -358,19 +394,15 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// <returns>ViewBase at specified index.</returns>
 		public override ViewBase this[int index] 
 		{ 
-			get 
-            {
-                if (_views != null)
-                    return _views[index];
-                else
-                    return null;
-            }
+			get => _views?[index];
 
-			set
+		    set
 			{
 				// We do not allow null references in the collection
 				if (value == null)
-					throw new ArgumentNullException("Cannot set a null view into a composite view.");
+                {
+                    throw new ArgumentNullException("Cannot set a null view into a composite view.");
+                }
 
                 if (_views != null)
                 {
@@ -397,10 +429,14 @@ namespace ComponentFactory.Krypton.Toolkit
 		{
             // Use the boilerplate enumerator exposed from the IList<T>
             if (_views != null)
+            {
                 return _views.GetEnumerator();
+            }
             else
+            {
                 return new List<ViewBase>().GetEnumerator();
-		}
+            }
+        }
 
 		/// <summary>
 		/// Deep enumerate forward over children of the element.
@@ -415,7 +451,9 @@ namespace ComponentFactory.Krypton.Toolkit
                 {
                     // Recurse inside the child view
                     foreach (ViewBase child in view.Recurse())
+                    {
                         yield return child;
+                    }
 
                     // Traverse the view itself
                     yield return view;
@@ -433,7 +471,9 @@ namespace ComponentFactory.Krypton.Toolkit
             {
                 // Return the child views in reverse order
                 for (int i = _views.Count - 1; i >= 0; i--)
+                {
                     yield return _views[i];
+                }
             }
 		}
 
@@ -453,8 +493,10 @@ namespace ComponentFactory.Krypton.Toolkit
 
 				    // Recurse inside the child view
 				    foreach (ViewBase child in _views[i].Recurse())
-					    yield return child;
-			    }
+                    {
+                        yield return child;
+                    }
+                }
             }
         }
 		#endregion
@@ -465,7 +507,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public override PaletteState FixedState
         {
-            get { return base.FixedState; }
+            get => base.FixedState;
 
             set
             {
@@ -474,7 +516,9 @@ namespace ComponentFactory.Krypton.Toolkit
 
                 // Propogate to all contained elements
                 foreach (ViewBase child in this)
+                {
                     child.FixedState = value;
+                }
             }
         }
 
@@ -488,7 +532,9 @@ namespace ComponentFactory.Krypton.Toolkit
 
             // Propogate to all contained elements
             foreach (ViewBase child in this)
+            {
                 child.ClearFixedState();
+            }
         }
         #endregion
 
@@ -526,8 +572,10 @@ namespace ComponentFactory.Krypton.Toolkit
 
 				// If none of the children, match then we do
 				if (ret == null)
-					ret = this;
-			}
+                {
+                    ret = this;
+                }
+            }
 
 			return ret;
 		}

@@ -8,11 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Diagnostics;
 
@@ -26,7 +22,7 @@ namespace ComponentFactory.Krypton.Toolkit
         #region Instance Fields
         private PaletteBorderEdge _palette;
         private PaletteBackInheritForced _borderForced;
-        private Orientation _orientation;
+
         #endregion
 
         #region Identity
@@ -46,8 +42,10 @@ namespace ComponentFactory.Krypton.Toolkit
             Orientation = orientation;
 
             // Create the forced border and override the graphics hint
-            _borderForced = new PaletteBackInheritForced(palette);
-            _borderForced.ForceGraphicsHint = PaletteGraphicsHint.None;
+            _borderForced = new PaletteBackInheritForced(palette)
+            {
+                ForceGraphicsHint = PaletteGraphicsHint.None
+            };
             base.SetPalettes(_borderForced);
         }
         
@@ -66,11 +64,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Gets and sets the orientation.
         /// </summary>
-        public Orientation Orientation
-        {
-            get { return _orientation; }
-            set { _orientation = value; }
-        }
+        public Orientation Orientation { get; set; }
+
         #endregion
 
         #region SetPalettes
@@ -105,9 +100,13 @@ namespace ComponentFactory.Krypton.Toolkit
 
             // Apply the border width in appropriate orientation
             if (Orientation == Orientation.Horizontal)
+            {
                 preferredSize.Height = _palette.GetBorderWidth(State);
+            }
             else
+            {
                 preferredSize.Width = _palette.GetBorderWidth(State);
+            }
 
             return preferredSize;
         }

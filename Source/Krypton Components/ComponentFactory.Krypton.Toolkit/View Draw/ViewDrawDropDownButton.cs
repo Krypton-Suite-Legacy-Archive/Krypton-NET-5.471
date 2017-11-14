@@ -9,11 +9,7 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Diagnostics;
 
 namespace ComponentFactory.Krypton.Toolkit
@@ -24,8 +20,7 @@ namespace ComponentFactory.Krypton.Toolkit
     public class ViewDrawDropDownButton : ViewLeaf
     {
         #region Instance Fields
-        private IPalette _palette;
-        private VisualOrientation _orientation;
+
         #endregion
 
         #region Identity
@@ -34,7 +29,7 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// </summary>
         public ViewDrawDropDownButton()
 		{
-            _orientation = VisualOrientation.Top;
+            Orientation = VisualOrientation.Top;
 		}
 
 		/// <summary>
@@ -52,22 +47,16 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Gets and sets the palette to use.
         /// </summary>
-        public IPalette Palette
-        {
-            get { return _palette; }
-            set { _palette = value; }
-        }
+        public IPalette Palette { get; set; }
+
         #endregion
 
         #region Orientation
         /// <summary>
         /// Gets and sets the orientation of the drop down button.
         /// </summary>
-        public VisualOrientation Orientation
-        {
-            get { return _orientation; }
-            set { _orientation = value; }
-        }
+        public VisualOrientation Orientation { get; set; }
+
         #endregion
 
         #region Layout
@@ -80,7 +69,7 @@ namespace ComponentFactory.Krypton.Toolkit
             Debug.Assert(context != null);
 
             // Ask the renderer for the required size of the drop down button
-            return context.Renderer.RenderGlyph.GetDropDownButtonPreferredSize(context, _palette, State, Orientation);
+            return context.Renderer.RenderGlyph.GetDropDownButtonPreferredSize(context, Palette, State, Orientation);
         }
 
         /// <summary>
@@ -92,7 +81,10 @@ namespace ComponentFactory.Krypton.Toolkit
             Debug.Assert(context != null);
 
             // Validate incoming reference
-            if (context == null) throw new ArgumentNullException("context");
+            if (context == null)
+            {
+                throw new ArgumentNullException("context");
+            }
 
             // We take on all the available display area
             ClientRectangle = context.DisplayRectangle;
@@ -108,7 +100,7 @@ namespace ComponentFactory.Krypton.Toolkit
         {
             context.Renderer.RenderGlyph.DrawDropDownButton(context, 
                                                             ClientRectangle, 
-                                                            _palette, 
+                                                            Palette, 
                                                             State,
                                                             Orientation);
         }

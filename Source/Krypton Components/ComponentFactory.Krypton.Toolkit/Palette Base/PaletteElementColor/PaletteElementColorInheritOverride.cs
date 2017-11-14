@@ -8,12 +8,8 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
 using System.Drawing;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.ComponentModel;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -23,10 +19,8 @@ namespace ComponentFactory.Krypton.Toolkit
     public class PaletteElementColorInheritOverride : PaletteElementColorInherit
 	{
 		#region Instance Fields
-        private bool _apply;
-        private bool _override;
-        private PaletteState _state;
-        private IPaletteElementColor _primary;
+
+	    private IPaletteElementColor _primary;
         private IPaletteElementColor _backup;
         #endregion
 
@@ -47,9 +41,9 @@ namespace ComponentFactory.Krypton.Toolkit
             _backup = backup;
 
             // Default other state
-            _apply = true;
-            _override = true;
-            _state = PaletteState.Normal;
+            Apply = true;
+            Override = true;
+            OverrideState = PaletteState.Normal;
 		}
 		#endregion
 
@@ -72,34 +66,25 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// <summary>
 		/// Gets and sets a value indicating if override should be applied.
 		/// </summary>
-		public bool Apply
-		{
-			get { return _apply; }
-			set { _apply = value; }
-		}
-		#endregion
+		public bool Apply { get; set; }
+
+	    #endregion
 
         #region Override
         /// <summary>
         /// Gets and sets a value indicating if override state should be applied.
         /// </summary>
-        public bool Override
-        {
-            get { return _override; }
-            set { _override = value; }
-        }
-        #endregion
+        public bool Override { get; set; }
+
+	    #endregion
 
         #region OverrideState
         /// <summary>
 		/// Gets and sets the override palette state to use.
 		/// </summary>
-		public PaletteState OverrideState
-		{
-			get { return _state; }
-			set { _state = value; }
-		}
-		#endregion    
+		public PaletteState OverrideState { get; set; }
+
+	    #endregion    
 
         #region IPaletteElementColor
         /// <summary>
@@ -109,17 +94,21 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <returns>Color value.</returns>
         public override Color GetElementColor1(PaletteState state)
         {
-            if (_apply)
+            if (Apply)
             {
-                Color ret = _primary.GetElementColor1(_override ? _state : state);
+                Color ret = _primary.GetElementColor1(Override ? OverrideState : state);
 
                 if (ret == Color.Empty)
+                {
                     ret = _backup.GetElementColor1(state);
+                }
 
                 return ret;
             }
             else
+            {
                 return _backup.GetElementColor1(state);
+            }
         }
 
         /// <summary>
@@ -129,17 +118,21 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <returns>Color value.</returns>
         public override Color GetElementColor2(PaletteState state)
         {
-            if (_apply)
+            if (Apply)
             {
-                Color ret = _primary.GetElementColor2(_override ? _state : state);
+                Color ret = _primary.GetElementColor2(Override ? OverrideState : state);
 
                 if (ret == Color.Empty)
+                {
                     ret = _backup.GetElementColor2(state);
+                }
 
                 return ret;
             }
             else
+            {
                 return _backup.GetElementColor2(state);
+            }
         }
 
         /// <summary>
@@ -149,17 +142,21 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <returns>Color value.</returns>
         public override Color GetElementColor3(PaletteState state)
         {
-            if (_apply)
+            if (Apply)
             {
-                Color ret = _primary.GetElementColor3(_override ? _state : state);
+                Color ret = _primary.GetElementColor3(Override ? OverrideState : state);
 
                 if (ret == Color.Empty)
+                {
                     ret = _backup.GetElementColor3(state);
+                }
 
                 return ret;
             }
             else
+            {
                 return _backup.GetElementColor3(state);
+            }
         }
 
         /// <summary>
@@ -169,17 +166,21 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <returns>Color value.</returns>
         public override Color GetElementColor4(PaletteState state)
         {
-            if (_apply)
+            if (Apply)
             {
-                Color ret = _primary.GetElementColor4(_override ? _state : state);
+                Color ret = _primary.GetElementColor4(Override ? OverrideState : state);
 
                 if (ret == Color.Empty)
+                {
                     ret = _backup.GetElementColor4(state);
+                }
 
                 return ret;
             }
             else
+            {
                 return _backup.GetElementColor4(state);
+            }
         }
 
         /// <summary>
@@ -189,17 +190,21 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <returns>Color value.</returns>
         public override Color GetElementColor5(PaletteState state)
         {
-            if (_apply)
+            if (Apply)
             {
-                Color ret = _primary.GetElementColor5(_override ? _state : state);
+                Color ret = _primary.GetElementColor5(Override ? OverrideState : state);
 
                 if (ret == Color.Empty)
+                {
                     ret = _backup.GetElementColor5(state);
+                }
 
                 return ret;
             }
             else
+            {
                 return _backup.GetElementColor5(state);
+            }
         }
         #endregion
     }

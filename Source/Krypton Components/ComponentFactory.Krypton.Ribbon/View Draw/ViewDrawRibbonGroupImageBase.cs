@@ -8,13 +8,8 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Drawing.Drawing2D;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Diagnostics;
 using ComponentFactory.Krypton.Toolkit;
 
@@ -27,7 +22,7 @@ namespace ComponentFactory.Krypton.Ribbon
                                               
     {
         #region Instance Fields
-        private KryptonRibbon _ribbon;
+
         #endregion
 
         #region Identity
@@ -38,7 +33,7 @@ namespace ComponentFactory.Krypton.Ribbon
         public ViewDrawRibbonGroupImageBase(KryptonRibbon ribbon)
         {
             Debug.Assert(ribbon != null);
-            _ribbon = ribbon;
+            Ribbon = ribbon;
         }        
 
 		/// <summary>
@@ -83,7 +78,9 @@ namespace ComponentFactory.Krypton.Ribbon
             if (DrawImage != null)
             {
                 if (Enabled)
+                {
                     context.Graphics.DrawImage(DrawImage, ClientRectangle);
+                }
                 else
                 {
                     // Have to rescale the image when drawing, so need to use own
@@ -106,10 +103,7 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <summary>
         /// Gets access to the owning ribbon control.
         /// </summary>
-        protected KryptonRibbon Ribbon
-        {
-            get { return _ribbon; }
-        }
+        protected KryptonRibbon Ribbon { get; }
 
         /// <summary>
         /// Gets the size to draw the image.

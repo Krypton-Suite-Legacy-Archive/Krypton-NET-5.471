@@ -10,7 +10,6 @@
 
 using System;
 using System.Drawing;
-using System.Diagnostics;
 using System.Windows.Forms;
 using System.IO;
 using ComponentFactory.Krypton.Toolkit;
@@ -39,15 +38,12 @@ namespace ComponentFactory.Krypton.Navigator
         private IRenderer _dragRenderer;
         private PaletteMode _paletteMode;
         private PaletteRedirect _redirector;
-        private PaletteDragDrop _stateCommon;
-        private DragTargetProviderCollection _targetProviders;
         private PageDragEndData _pageDragEndData;
         private DragFeedback _dragFeedback;
         private DragTargetList _dragTargets;
         private DragTarget _currentTarget;
         private bool _documentCursor;
-        private bool _dragging;
-        private bool _disposed;
+
         #endregion
 
         #region Identity
@@ -57,11 +53,15 @@ namespace ComponentFactory.Krypton.Navigator
         static DragManager()
 	    {
             using (MemoryStream ms = new MemoryStream(Properties.Resources.DocumentValid))
+            {
                 _validCursor = new Cursor(ms);
+            }
 
-            using (MemoryStream ms = new MemoryStream(Properties.Resources.DocumentInvalid))
-                _invalidCursor = new Cursor(ms);
-        }
+	        using (MemoryStream ms = new MemoryStream(Properties.Resources.DocumentInvalid))
+	        {
+	            _invalidCursor = new Cursor(ms);
+	        }
+	    }
 
         /// <summary>
         /// Initialize a new instance of the DragManager class.
@@ -69,9 +69,9 @@ namespace ComponentFactory.Krypton.Navigator
         public DragManager()
         {
             _redirector = new PaletteRedirect();
-            _stateCommon = new PaletteDragDrop(null, null);
+            StateCommon = new PaletteDragDrop(null, null);
             _paletteMode = PaletteMode.Global;
-            _targetProviders = new DragTargetProviderCollection();
+            DragTargetProviders = new DragTargetProviderCollection();
             _dragTargets = new DragTargetList();
             _documentCursor = false;
         }
@@ -119,34 +119,29 @@ namespace ComponentFactory.Krypton.Navigator
             ClearTargets();
 
 			// Mark as disposed
-			_disposed = true;
+			IsDisposed = true;
 		}
 
 		/// <summary>
 		/// Gets a value indicating if the view has been disposed.
 		/// </summary>
-		public bool IsDisposed
-		{
-			get { return _disposed; }
-		}
+		public bool IsDisposed { get; private set; }
+
         #endregion
 
         #region Public
         /// <summary>
         /// Gets access to the common navigator appearance entries.
         /// </summary>
-        public PaletteDragDrop StateCommon
-        {
-            get { return _stateCommon; }
-        }
+        public PaletteDragDrop StateCommon { get; }
 
         /// <summary>
         /// Gets or sets the palette to be applied.
         /// </summary>
         public PaletteMode PaletteMode
         {
-            get { return _paletteMode; }
-            
+            get => _paletteMode;
+
             set 
             {
                 if (_paletteMode != value)
@@ -170,17 +165,21 @@ namespace ComponentFactory.Krypton.Navigator
         /// </summary>
         public IPalette Palette
         {
-            get { return _localPalette; }
-         
+            get => _localPalette;
+
             set 
             {
                 if (_localPalette != value)
                 {
                     _localPalette = value;
                     if (_localPalette == null)
+                    {
                         _paletteMode = PaletteMode.Global;
+                    }
                     else
+                    {
                         _paletteMode = PaletteMode.Custom;
+                    }
                 }
             }
         }
@@ -188,32 +187,30 @@ namespace ComponentFactory.Krypton.Navigator
         /// <summary>
         /// Gets access to the collection of target providers.
         /// </summary>
-        public DragTargetProviderCollection DragTargetProviders
-        {
-            get { return _targetProviders; }
-        }
+        public DragTargetProviderCollection DragTargetProviders { get; }
 
         /// <summary>
         /// Gets a value indicating if dragging is currently occuring.
         /// </summary>
-        public bool IsDragging
-        {
-            get { return _dragging; }
-        }
+        public bool IsDragging { get; private set; }
 
         /// <summary>
         /// Gets and sets a value indicating if document cursors should be used during dragging.
         /// </summary>
         public bool DocumentCursor
         {
-            get { return _documentCursor; }
-            
+            get => _documentCursor;
+
             set 
             {
                 if (IsDragging)
+                {
                     throw new InvalidOperationException("Cannot update DocumentCursor property during dragging operation.");
+                }
                 else
+                {
                     _documentCursor = value;
+                }
             }
         }
 
@@ -226,24 +223,32 @@ namespace ComponentFactory.Krypton.Navigator
         public virtual bool DragStart(Point screenPt, PageDragEndData dragEndData)
         {
             if (IsDisposed)
+            {
                 throw new InvalidOperationException("Cannot DragStart when instance have been disposed.");
+            }
 
             if (IsDragging)
+            {
                 throw new InvalidOperationException("Cannot DragStart when already performing dragging operation.");
+            }
 
             if (dragEndData == null)
+            {
                 throw new ArgumentNullException("Cannot provide an empty DragEndData.");
+            }
 
             // Generate drag targets from the set of target provides
             ClearTargets();
             foreach (IDragTargetProvider provider in DragTargetProviders)
+            {
                 _dragTargets.AddRange(provider, dragEndData);
+            }
 
             // We only drag if we have at least one page and one target
-            _dragging = ((_dragTargets.Count > 0) && (dragEndData.Pages.Count > 0));
+            IsDragging = ((_dragTargets.Count > 0) && (dragEndData.Pages.Count > 0));
 
             // Do we really need to start dragging?
-            if (_dragging)
+            if (IsDragging)
             {
                 // We cache the palette/renderer at start of drag and use the same ones for the
                 // whole duration of the drag as changing drawing info during drag would be hard!
@@ -254,12 +259,14 @@ namespace ComponentFactory.Krypton.Navigator
 
                 // Create correct drag feedback class and start it up
                 ResolveDragFeedback();
-                _dragFeedback.Start(_stateCommon, _dragRenderer, _pageDragEndData, _dragTargets);
+                _dragFeedback.Start(StateCommon, _dragRenderer, _pageDragEndData, _dragTargets);
             }
             else
+            {
                 ClearTargets();
+            }
 
-            return _dragging;
+            return IsDragging;
         }
 
         /// <summary>
@@ -269,10 +276,14 @@ namespace ComponentFactory.Krypton.Navigator
         public virtual void DragMove(Point screenPt)
         {
             if (IsDisposed)
+            {
                 throw new InvalidOperationException("Cannot DragMove when instance have been disposed.");
+            }
 
             if (!IsDragging)
+            {
                 throw new InvalidOperationException("Cannot DragMove when DragStart has not been called.");
+            }
 
             // Different feedback objects implement visual feeback differently and so only the feedback
             // instance knows the correct target to use for the given screen point and drag data.
@@ -290,10 +301,14 @@ namespace ComponentFactory.Krypton.Navigator
         public virtual bool DragEnd(Point screenPt)
         {
             if (IsDisposed)
+            {
                 throw new InvalidOperationException("Cannot DragEnd when instance have been disposed.");
+            }
 
             if (!IsDragging)
+            {
                 throw new InvalidOperationException("Cannot DragEnd when DragStart has not been called.");
+            }
 
             // Different feedback objects implement visual feeback differently and so only the feedback
             // instance knows the correct target to use for the given screen point and drag data.
@@ -305,7 +320,9 @@ namespace ComponentFactory.Krypton.Navigator
             // Inform target it needs to perform the drop action
             bool ret = false;
             if (_currentTarget != null)
+            {
                 ret = _currentTarget.PerformDrop(screenPt, _pageDragEndData);
+            }
 
             ClearTargets();
             RestoreCursor();
@@ -320,10 +337,14 @@ namespace ComponentFactory.Krypton.Navigator
         public virtual void DragQuit()
         {
             if (IsDisposed)
+            {
                 throw new InvalidOperationException("Cannot DragQuit when instance have been disposed.");
+            }
 
             if (!IsDragging)
+            {
                 throw new InvalidOperationException("Cannot DragQuit when DragStart has not been called.");
+            }
 
             // Remove visual feedback
             _dragFeedback.Quit();
@@ -397,9 +418,13 @@ namespace ComponentFactory.Krypton.Navigator
                 if (_pageDragEndData.Navigator != null)
                 {
                     if (_currentTarget == null)
+                    {
                         _pageDragEndData.Navigator.Cursor = _invalidCursor;
+                    }
                     else
+                    {
                         _pageDragEndData.Navigator.Cursor = _validCursor;
+                    }
                 }
             }
         }
@@ -412,7 +437,9 @@ namespace ComponentFactory.Krypton.Navigator
             if (IsDragging)
             {
                 if (_pageDragEndData.Navigator != null)
+                {
                     _pageDragEndData.Navigator.Cursor = null;
+                }
             }
         }
         #endregion
@@ -435,7 +462,7 @@ namespace ComponentFactory.Krypton.Navigator
             _redirector.Target = _dragPalette;
 
             // Inherit the state common values from resolved palette
-            _stateCommon.SetInherit(_dragPalette);
+            StateCommon.SetInherit(_dragPalette);
 
             // Get the renderer associated with the palette
             _dragRenderer = _dragPalette.GetRenderer();
@@ -446,11 +473,13 @@ namespace ComponentFactory.Krypton.Navigator
             ClearDragFeedback();
 
             // Start with the provided value
-            PaletteDragFeedback dragFeedback = _stateCommon.GetDragDropFeedback();
+            PaletteDragFeedback dragFeedback = StateCommon.GetDragDropFeedback();
 
             // Should never be 'inherit'
             if (dragFeedback == PaletteDragFeedback.Inherit)
+            {
                 dragFeedback = PaletteDragFeedback.Rounded;
+            }
 
             // Check if the rounded style is possible
             if (dragFeedback == PaletteDragFeedback.Rounded)
@@ -458,7 +487,9 @@ namespace ComponentFactory.Krypton.Navigator
                 // Rounded feedback uses a per-pixel alpha blending and so we need to be on a machine that supports
                 // more than 256 colors and also allows the layered windows feature. If not then revert to sqaures
                 if ((OSFeature.Feature.GetVersionPresent(OSFeature.LayeredWindows) == null) || (CommonHelper.ColorDepth() <= 8))
+                {
                     dragFeedback = PaletteDragFeedback.Square;
+                }
             }
 
             switch (dragFeedback)
@@ -488,7 +519,9 @@ namespace ComponentFactory.Krypton.Navigator
             {
                 // Dispose the targets to ensure references are removed to prevent memory leaks
                 foreach (DragTarget target in _dragTargets)
+                {
                     target.Dispose();
+                }
 
                 _dragTargets.Clear();
             }
@@ -501,7 +534,7 @@ namespace ComponentFactory.Krypton.Navigator
             _dragPalette = null;
             _dragRenderer = null;
             _pageDragEndData = null;
-            _dragging = false;
+            IsDragging = false;
         }
         #endregion
     }

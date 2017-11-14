@@ -8,12 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
 using System.Drawing;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.ComponentModel;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -24,8 +19,8 @@ namespace ComponentFactory.Krypton.Toolkit
 	{
 		#region Instance Fields
 		private PaletteRedirect _redirect;
-		private PaletteBackStyle _style;
-		#endregion
+
+	    #endregion
 
 		#region Identity
 		/// <summary>
@@ -46,7 +41,7 @@ namespace ComponentFactory.Krypton.Toolkit
 										  PaletteBackStyle style)
 		{
 			_redirect = redirect;
-			_style = style;
+			Style = style;
         }
 		#endregion
 
@@ -76,12 +71,9 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
 		/// Gets and sets the style to use when inheriting.
 		/// </summary>
-		public PaletteBackStyle Style
-		{
-			get { return _style; }
-            set { _style = value; }
-		}
-		#endregion
+		public PaletteBackStyle Style { get; set; }
+
+	    #endregion
 
 		#region IPaletteBack
 		/// <summary>

@@ -9,20 +9,9 @@
 // *****************************************************************************
 
 using System;
-using System.Data;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Text;
-using System.Drawing.Imaging;
-using System.Drawing.Drawing2D;
-using System.Drawing.Design;
 using System.Windows.Forms;
 using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Diagnostics;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using Microsoft.Win32;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -47,14 +36,6 @@ namespace ComponentFactory.Krypton.Toolkit
         private Image _image;
         private Color _imageTransparentColor;
         private PaletteContentInheritRedirect _stateCommonRedirect;
-        private PaletteContent _stateCommon;
-        private PaletteContent _stateDisabled;
-        private PaletteContent _stateNormal;
-        private PaletteContent _stateFocus;
-        private PaletteContentInheritOverride _overrideNormal;
-        private PaletteContentInheritOverride _overrideDisabled;
-        private PaletteRedirectRadioButton _stateRadioButtonImages;
-        private RadioButtonImages _images;
         private LabelStyle _style;
         #endregion
 
@@ -99,21 +80,21 @@ namespace ComponentFactory.Krypton.Toolkit
             _checked = false;
             _autoCheck = true;
             _style = LabelStyle.NormalControl;
-            _images = new RadioButtonImages();
+            Images = new RadioButtonImages();
 
             // Create the redirectors
             _stateCommonRedirect = new PaletteContentInheritRedirect(PaletteContentStyle.LabelNormalControl);
-            _stateRadioButtonImages = new PaletteRedirectRadioButton(_images);
+            StateRadioButtonImages = new PaletteRedirectRadioButton(Images);
 
             // Create the states
-            _stateCommon = new PaletteContent(_stateCommonRedirect);
-            _stateDisabled = new PaletteContent(_stateCommon);
-            _stateNormal = new PaletteContent(_stateCommon);
-            _stateFocus = new PaletteContent(_stateCommonRedirect);
+            StateCommon = new PaletteContent(_stateCommonRedirect);
+            StateDisabled = new PaletteContent(StateCommon);
+            StateNormal = new PaletteContent(StateCommon);
+            OverrideFocus = new PaletteContent(_stateCommonRedirect);
 
             // Override the normal/disabled values with the focus, when the control has focus
-            _overrideNormal = new PaletteContentInheritOverride(_stateFocus, _stateNormal, PaletteState.FocusOverride, false);
-            _overrideDisabled = new PaletteContentInheritOverride(_stateFocus, _stateDisabled, PaletteState.FocusOverride, false);
+            OverrideNormal = new PaletteContentInheritOverride(OverrideFocus, StateNormal, PaletteState.FocusOverride, false);
+            OverrideDisabled = new PaletteContentInheritOverride(OverrideFocus, StateDisabled, PaletteState.FocusOverride, false);
         }
 
         /// <summary>
@@ -132,20 +113,14 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int ItemChildCount 
-        {
-            get { return 0; }
-        }
+        public override int ItemChildCount => 0;
 
         /// <summary>
         /// Returns the indexed child menu item.
         /// </summary>
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override KryptonContextMenuItemBase this[int index]
-        {
-            get { return null; }
-        }
+        public override KryptonContextMenuItemBase this[int index] => null;
 
         /// <summary>
         /// Test for the provided shortcut and perform relevant action if a match is found.
@@ -184,8 +159,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue(false)]
         public bool AutoClose
         {
-            get { return _autoClose; }
-            
+            get => _autoClose;
+
             set 
             {
                 if (_autoClose != value)
@@ -206,8 +181,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [Localizable(true)]
         public string Text
         {
-            get { return _text; }
-            
+            get => _text;
+
             set 
             {
                 if (_text != value)
@@ -228,8 +203,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [Localizable(true)]
         public string ExtraText
         {
-            get { return _extraText; }
-            
+            get => _extraText;
+
             set 
             {
                 if (_extraText != value)
@@ -250,8 +225,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [Localizable(true)]
         public Image Image
         {
-            get { return _image; }
-            
+            get => _image;
+
             set 
             {
                 if (_image != value)
@@ -271,8 +246,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [Localizable(true)]
         public Color ImageTransparentColor
         {
-            get { return _imageTransparentColor; }
-            
+            get => _imageTransparentColor;
+
             set 
             {
                 if (_imageTransparentColor != value)
@@ -297,7 +272,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue(typeof(LabelStyle), "NormalControl")]
         public LabelStyle LabelStyle
         {
-            get { return _style; }
+            get => _style;
 
             set
             {
@@ -317,14 +292,11 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Image value overrides.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public RadioButtonImages Images
-        {
-            get { return _images; }
-        }
+        public RadioButtonImages Images { get; }
 
         private bool ShouldSerializeImages()
         {
-            return !_images.IsDefault;
+            return !Images.IsDefault;
         }
 
         /// <summary>
@@ -337,8 +309,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [Bindable(true)]
         public bool Enabled
         {
-            get { return _enabled; }
-            
+            get => _enabled;
+
             set 
             {
                 if (_enabled != value)
@@ -359,7 +331,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [Bindable(true)]
         public bool Checked
         {
-            get { return _checked; }
+            get => _checked;
 
             set
             {
@@ -381,8 +353,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue(true)]
         public bool AutoCheck
         {
-            get { return _autoCheck; }
-            
+            get => _autoCheck;
+
             set 
             {
                 if (_autoCheck != value)
@@ -400,14 +372,11 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining common radio button appearance that other states can override.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public PaletteContent StateCommon
-        {
-            get { return _stateCommon; }
-        }
+        public PaletteContent StateCommon { get; }
 
         private bool ShouldSerializeStateCommon()
         {
-            return !_stateCommon.IsDefault;
+            return !StateCommon.IsDefault;
         }
 
         /// <summary>
@@ -417,14 +386,11 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining disabled radio button appearance.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public PaletteContent StateDisabled
-        {
-            get { return _stateDisabled; }
-        }
+        public PaletteContent StateDisabled { get; }
 
         private bool ShouldSerializeStateDisabled()
         {
-            return !_stateDisabled.IsDefault;
+            return !StateDisabled.IsDefault;
         }
 
         /// <summary>
@@ -434,14 +400,11 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining normal radio button appearance.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public PaletteContent StateNormal
-        {
-            get { return _stateNormal; }
-        }
+        public PaletteContent StateNormal { get; }
 
         private bool ShouldSerializeStateNormal()
         {
-            return !_stateNormal.IsDefault;
+            return !StateNormal.IsDefault;
         }
 
         /// <summary>
@@ -451,14 +414,11 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining radio button appearance when it has focus.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public PaletteContent OverrideFocus
-        {
-            get { return _stateFocus; }
-        }
+        public PaletteContent OverrideFocus { get; }
 
         private bool ShouldSerializeOverrideFocus()
         {
-            return !_stateFocus.IsDefault;
+            return !OverrideFocus.IsDefault;
         }
 
         /// <summary>
@@ -477,8 +437,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <param name="e">An EventArgs that contains the event data.</param>
         protected virtual void OnClick(EventArgs e)
         {
-            if (Click != null)
-                Click(this, e);
+            Click?.Invoke(this, e);
         }
 
         /// <summary>
@@ -487,31 +446,21 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <param name="e">An EventArgs containing the event data.</param>
         protected virtual void OnCheckedChanged(EventArgs e)
         {
-            if (CheckedChanged != null)
-                CheckedChanged(this, e);
+            CheckedChanged?.Invoke(this, e);
         }
         #endregion
 
         #region Internal
-        internal PaletteContentInheritOverride OverrideNormal
-        {
-            get { return _overrideNormal; }
-        }
+        internal PaletteContentInheritOverride OverrideNormal { get; }
 
-        internal PaletteContentInheritOverride OverrideDisabled
-        {
-            get { return _overrideDisabled; }
-        }
+        internal PaletteContentInheritOverride OverrideDisabled { get; }
 
-        internal PaletteRedirectRadioButton StateRadioButtonImages
-        {
-            get { return _stateRadioButtonImages; }
-        }
+        internal PaletteRedirectRadioButton StateRadioButtonImages { get; }
 
         internal void SetPaletteRedirect(PaletteRedirect redirector)
         {
             _stateCommonRedirect.SetRedirector(redirector);
-            _stateRadioButtonImages.Target = redirector;
+            StateRadioButtonImages.Target = redirector;
         }
         #endregion
 

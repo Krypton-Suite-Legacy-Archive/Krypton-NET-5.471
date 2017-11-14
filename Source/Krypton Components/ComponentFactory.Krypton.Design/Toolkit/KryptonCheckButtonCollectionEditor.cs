@@ -9,13 +9,10 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
-using System.Drawing;
 using System.Drawing.Design;
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
 using System.ComponentModel;
-using System.Collections;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -28,10 +25,14 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <returns>A UITypeEditorEditStyle enumeration value that indicates the style of editor.</returns>
         public override UITypeEditorEditStyle GetEditStyle(ITypeDescriptorContext context)
         {
-            if ((context != null) && (context.Instance != null))
+            if (context?.Instance != null)
+            {
                 return UITypeEditorEditStyle.Modal;
+            }
             else
+            {
                 return base.GetEditStyle(context);
+            }
         }
 
         /// <summary>
@@ -43,7 +44,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <returns></returns>
         public override object EditValue(ITypeDescriptorContext context, IServiceProvider provider, object value)
         {
-            if ((context != null) && (context.Instance != null) && (provider != null))
+            if ((context?.Instance != null) && (provider != null))
             {
                 // Must use the editor service for showing dialogs
                 IWindowsFormsEditorService editorService = (IWindowsFormsEditorService)provider.GetService(typeof(IWindowsFormsEditorService));

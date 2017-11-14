@@ -8,14 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
-using System.Drawing;
-using System.Drawing.Text;
 using System.ComponentModel;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using System.Diagnostics;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -90,10 +83,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [KryptonPersist]
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override PaletteContentText LongText
-        {
-            get { return base.LongText; }
-        }
+        public override PaletteContentText LongText => base.LongText;
+
         #endregion
 
         #region AdjacentGap
@@ -105,8 +96,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int AdjacentGap
         {
-            get { return base.AdjacentGap; }
-            set { base.AdjacentGap = value; }
+            get => base.AdjacentGap;
+            set => base.AdjacentGap = value;
         }
         #endregion
     }

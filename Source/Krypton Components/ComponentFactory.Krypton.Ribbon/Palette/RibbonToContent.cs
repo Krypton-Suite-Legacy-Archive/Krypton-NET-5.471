@@ -8,11 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Diagnostics;
 using ComponentFactory.Krypton.Toolkit;
@@ -22,7 +18,7 @@ namespace ComponentFactory.Krypton.Ribbon
     internal class RibbonToContent : IPaletteContent
     {
         #region Instance Fields
-        private PaletteRibbonGeneral _ribbonGeneral;
+
         #endregion
 
         #region Identity
@@ -33,7 +29,7 @@ namespace ComponentFactory.Krypton.Ribbon
         public RibbonToContent(PaletteRibbonGeneral ribbonGeneral)
         {
             Debug.Assert(ribbonGeneral != null);
-            _ribbonGeneral = ribbonGeneral;
+            RibbonGeneral = ribbonGeneral;
         }
         #endregion
 
@@ -41,10 +37,8 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <summary>
         /// Gets access to the ribbon general instance.
         /// </summary>
-        public PaletteRibbonGeneral RibbonGeneral
-        {
-            get { return _ribbonGeneral; }
-        }
+        public PaletteRibbonGeneral RibbonGeneral { get; }
+
         #endregion
 
         #region IPaletteContent
@@ -125,7 +119,7 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <returns>Font value.</returns>
         public virtual Font GetContentShortTextFont(PaletteState state)
         {
-            return _ribbonGeneral.GetRibbonTextFont(state);
+            return RibbonGeneral.GetRibbonTextFont(state);
         }
 
         /// <summary>
@@ -135,7 +129,7 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <returns>Font value.</returns>
         public Font GetContentShortTextNewFont(PaletteState state)
         {
-            return _ribbonGeneral.GetRibbonTextFont(state);
+            return RibbonGeneral.GetRibbonTextFont(state);
         }
 
         /// <summary>
@@ -145,7 +139,7 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <returns>PaletteTextHint value.</returns>
         public virtual PaletteTextHint GetContentShortTextHint(PaletteState state)
         {
-            return _ribbonGeneral.GetRibbonTextHint(state);
+            return RibbonGeneral.GetRibbonTextHint(state);
         }
 
         /// <summary>
@@ -295,7 +289,7 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <returns>Font value.</returns>
         public virtual Font GetContentLongTextFont(PaletteState state)
         {
-            return _ribbonGeneral.GetRibbonTextFont(state);
+            return RibbonGeneral.GetRibbonTextFont(state);
         }
 
         /// <summary>
@@ -305,7 +299,7 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <returns>Font value.</returns>
         public virtual Font GetContentLongTextNewFont(PaletteState state)
         {
-            return _ribbonGeneral.GetRibbonTextFont(state);
+            return RibbonGeneral.GetRibbonTextFont(state);
         }
 
         /// <summary>
@@ -315,7 +309,7 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <returns>PaletteTextHint value.</returns>
         public virtual PaletteTextHint GetContentLongTextHint(PaletteState state)
         {
-            return _ribbonGeneral.GetRibbonTextHint(state);
+            return RibbonGeneral.GetRibbonTextHint(state);
         }
 
         /// <summary>

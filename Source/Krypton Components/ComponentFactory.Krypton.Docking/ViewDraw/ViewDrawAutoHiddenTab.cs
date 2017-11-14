@@ -8,22 +8,9 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
-using System.Data;
 using System.Drawing;
-using System.Drawing.Design;
-using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Reflection;
-using Microsoft.Win32;
 using ComponentFactory.Krypton.Toolkit;
 using ComponentFactory.Krypton.Navigator;
-using ComponentFactory.Krypton.Workspace;
 
 namespace ComponentFactory.Krypton.Docking
 {
@@ -34,7 +21,7 @@ namespace ComponentFactory.Krypton.Docking
                                            IContentValues
     {
         #region Instance Fields
-        private KryptonPage _page;
+
         private VisualOrientation _orientation;
         #endregion
 
@@ -52,7 +39,7 @@ namespace ComponentFactory.Krypton.Docking
                    page.StatePressed.CheckButton,
                    null, null, orientation, false)
         {
-            _page = page;
+            Page = page;
             _orientation = orientation;
         }
         #endregion
@@ -61,10 +48,8 @@ namespace ComponentFactory.Krypton.Docking
         /// <summary>
         /// Gets access to the page associated with the view.
         /// </summary>
-        public KryptonPage Page
-        {
-            get { return _page; }
-        }
+        public KryptonPage Page { get; }
+
         #endregion
 
         #region Public IContentValues
@@ -75,7 +60,7 @@ namespace ComponentFactory.Krypton.Docking
         /// <returns>Image value.</returns>
         public Image GetImage(PaletteState state)
         {
-            return _page.ImageSmall;
+            return Page.ImageSmall;
         }
 
         /// <summary>
@@ -94,7 +79,7 @@ namespace ComponentFactory.Krypton.Docking
         /// <returns>String value.</returns>
         public string GetShortText()
         {
-            return _page.Text;
+            return Page.Text;
         }
 
         /// <summary>

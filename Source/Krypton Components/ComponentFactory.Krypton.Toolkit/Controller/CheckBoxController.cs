@@ -9,7 +9,6 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Diagnostics;
@@ -25,8 +24,7 @@ namespace ComponentFactory.Krypton.Toolkit
 	{
 		#region Instance Fields
 		private bool _captured;
-        private bool _enabled;
-        private ViewDrawCheckBox _target;
+	    private ViewDrawCheckBox _target;
         private ViewBase _top;
         private NeedPaintHandler _needPaint;
         #endregion
@@ -124,7 +122,9 @@ namespace ComponentFactory.Krypton.Toolkit
 
                 // Take the focus if allowed
                 if (c.CanFocus)
+                {
                     c.Focus();
+                }
             }
 
 			return _captured;
@@ -154,7 +154,9 @@ namespace ComponentFactory.Krypton.Toolkit
                         {
                             // Can only click if enabled
                             if (_target.Enabled)
+                            {
                                 OnClick(EventArgs.Empty);
+                            }
                         }
                     }
 
@@ -199,11 +201,9 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Should the left mouse down be ignored when present on a visual form border area.
         /// </summary>
-        public virtual bool IgnoreVisualFormLeftButtonDown
-        {
-            get { return false; }
-        }
-        #endregion
+        public virtual bool IgnoreVisualFormLeftButtonDown => false;
+
+	    #endregion
 
         #region Key Notifications
         /// <summary>
@@ -217,8 +217,15 @@ namespace ComponentFactory.Krypton.Toolkit
             Debug.Assert(e != null);
 
             // Validate incoming references
-            if (c == null) throw new ArgumentNullException("c");
-            if (e == null) throw new ArgumentNullException("e");
+            if (c == null)
+            {
+                throw new ArgumentNullException("c");
+            }
+
+            if (e == null)
+            {
+                throw new ArgumentNullException("e");
+            }
 
             if (e.KeyCode == Keys.Space)
             {
@@ -253,8 +260,15 @@ namespace ComponentFactory.Krypton.Toolkit
             Debug.Assert(e != null);
 
             // Validate incoming references
-            if (c == null) throw new ArgumentNullException("c");
-            if (e == null) throw new ArgumentNullException("e");
+            if (c == null)
+            {
+                throw new ArgumentNullException("c");
+            }
+
+            if (e == null)
+            {
+                throw new ArgumentNullException("e");
+            }
 
             // If the user pressed the escape key
             if ((e.KeyCode == Keys.Escape) || (e.KeyCode == Keys.Space))
@@ -276,7 +290,9 @@ namespace ComponentFactory.Krypton.Toolkit
                     {
                         // Can only click if enabled
                         if (_target.Enabled)
+                        {
                             OnClick(EventArgs.Empty);
+                        }
                     }
 
                     PerformNeedPaint();
@@ -291,20 +307,16 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Gets and sets the enabled state of the controller.
         /// </summary>
-        public bool Enabled
-        {
-            get { return _enabled; }
-            set { _enabled = value; }
-        }
+        public bool Enabled { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// Gets and sets the need paint delegate for notifying paint requests.
         /// </summary>
         public NeedPaintHandler NeedPaint
         {
-            get { return _needPaint; }
+            get => _needPaint;
 
-            set
+	        set
             {
                 // Warn if multiple sources want to hook their single delegate
                 Debug.Assert(((_needPaint == null) && (value != null)) ||
@@ -317,13 +329,10 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Gets access to the associated target of the controller.
         /// </summary>
-        public ViewBase Target
-        {
-            get { return _target; }
-        }
+        public ViewBase Target => _target;
 
 
-		/// <summary>
+	    /// <summary>
 		/// Fires the NeedPaint event.
 		/// </summary>
 		public void PerformNeedPaint()
@@ -348,8 +357,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <param name="e">An EventArgs containing the event data.</param>
         protected virtual void OnClick(EventArgs e)
         {
-            if (Click != null)
-                Click(_target, e);
+            Click?.Invoke(_target, e);
         }
 
 		/// <summary>
@@ -358,9 +366,8 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// <param name="needLayout">Does the palette change require a layout.</param>
 		protected virtual void OnNeedPaint(bool needLayout)
 		{
-            if (_needPaint != null)
-                _needPaint(this, new NeedLayoutEventArgs(needLayout));
-		}
+            _needPaint?.Invoke(this, new NeedLayoutEventArgs(needLayout));
+        }
 		#endregion
 	}
 }

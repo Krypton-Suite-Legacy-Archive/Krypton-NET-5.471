@@ -9,11 +9,7 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Diagnostics;
 using ComponentFactory.Krypton.Toolkit;
 using System.Runtime.InteropServices;
@@ -26,11 +22,13 @@ namespace ComponentFactory.Krypton.Ribbon
     internal class ViewDrawRibbonCompoRightBorder : ViewLeaf
     {
         #region Static Fields
-        private static readonly int SPACING_GAP = 10;
+
+        private const int SPACING_GAP = 10;
+
         #endregion
 
         #region Instance Fields
-        private VisualForm _ownerForm;
+
         private int _width;
         #endregion
 
@@ -57,11 +55,8 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <summary>
         /// Gets and sets the owner form to use when compositing.
         /// </summary>
-        public VisualForm CompOwnerForm
-        {
-            get { return _ownerForm; }
-            set { _ownerForm = value; }
-        }
+        public VisualForm CompOwnerForm { get; set; }
+
         #endregion
 
         #region Layout
@@ -74,10 +69,10 @@ namespace ComponentFactory.Krypton.Ribbon
             Size preferredSize = Size.Empty;
 
             // We need an owning form to perform calculations
-            if (_ownerForm != null)
+            if (CompOwnerForm != null)
             {
                 // We only have size if custom chrome is being used with composition
-                if (_ownerForm.ApplyCustomChrome && _ownerForm.ApplyComposition)
+                if (CompOwnerForm.ApplyCustomChrome && CompOwnerForm.ApplyComposition)
                 {
                     try
                     {
@@ -86,7 +81,7 @@ namespace ComponentFactory.Krypton.Ribbon
                         tbi.cbSize = (uint)Marshal.SizeOf(tbi);
 
                         // Ask the window for the title bar information
-                        PI.SendMessage(_ownerForm.Handle, PI.WM_GETTITLEBARINFOEX, IntPtr.Zero, ref tbi);
+                        PI.SendMessage(CompOwnerForm.Handle, PI.WM_GETTITLEBARINFOEX, IntPtr.Zero, ref tbi);
 
                         // Find width of the button rectangle
                         int closeWidth = tbi.rcCloseButton.right - tbi.rcCloseButton.left;
@@ -94,22 +89,30 @@ namespace ComponentFactory.Krypton.Ribbon
                         int minWidth = tbi.rcMinButton.right - tbi.rcMinButton.left;
                         int maxWidth = tbi.rcMaxButton.right - tbi.rcMaxButton.left;
 
-                        int clientWidth = _ownerForm.ClientSize.Width;
-                        int clientScreenRight = _ownerForm.RectangleToScreen(_ownerForm.ClientRectangle).Right;
+                        int clientWidth = CompOwnerForm.ClientSize.Width;
+                        int clientScreenRight = CompOwnerForm.RectangleToScreen(CompOwnerForm.ClientRectangle).Right;
                         int leftMost = clientScreenRight;
 
                         // Find the left most button edge (start with right side of client area)
                         if ((closeWidth > 0) && (closeWidth < clientWidth))
+                        {
                             leftMost = Math.Min(leftMost, tbi.rcCloseButton.left);
+                        }
 
                         if ((helpWidth > 0) && (helpWidth < clientWidth))
+                        {
                             leftMost = Math.Min(leftMost, tbi.rcHelpButton.left);
+                        }
 
                         if ((minWidth > 0) && (minWidth < clientWidth))
+                        {
                             leftMost = Math.Min(leftMost, tbi.rcMinButton.left);
+                        }
 
                         if ((maxWidth > 0) && (maxWidth < clientWidth))
+                        {
                             leftMost = Math.Min(leftMost, tbi.rcMaxButton.left);
+                        }
 
                         // Our width is the distance between the left most button edge and the right
                         // side of the client area (this space the buttons are taking up). Plus a small

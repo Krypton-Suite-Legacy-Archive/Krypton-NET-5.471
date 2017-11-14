@@ -8,9 +8,6 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Drawing;
-using System.Windows.Forms;
 using System.ComponentModel;
 using System.Diagnostics;
 
@@ -22,12 +19,7 @@ namespace ComponentFactory.Krypton.Toolkit
     public class KryptonPaletteImages : Storage
     {
         #region Instance Fields
-        private KryptonPaletteImagesCheckBox _imagesCheckBox;
-        private KryptonPaletteImagesContextMenu _imagesContextMenu;
-        private KryptonPaletteImagesDropDownButton _imagesDropDownButton;
-        private KryptonPaletteImagesGalleryButtons _imagesGalleryButtons;
-        private KryptonPaletteImagesRadioButton _imagesRadioButton;
-        private KryptonPaletteImagesTreeView _imagesTreeView;
+
         #endregion
 
         #region Identity
@@ -42,12 +34,12 @@ namespace ComponentFactory.Krypton.Toolkit
             Debug.Assert(redirector != null);
 
             // Create the different image sets
-            _imagesCheckBox = new KryptonPaletteImagesCheckBox(redirector, needPaint);
-            _imagesContextMenu = new KryptonPaletteImagesContextMenu(redirector, needPaint);
-            _imagesDropDownButton = new KryptonPaletteImagesDropDownButton(redirector, needPaint);
-            _imagesGalleryButtons = new KryptonPaletteImagesGalleryButtons(redirector, needPaint);
-            _imagesRadioButton = new KryptonPaletteImagesRadioButton(redirector, needPaint);
-            _imagesTreeView = new KryptonPaletteImagesTreeView(redirector, needPaint);
+            CheckBox = new KryptonPaletteImagesCheckBox(redirector, needPaint);
+            ContextMenu = new KryptonPaletteImagesContextMenu(redirector, needPaint);
+            DropDownButton = new KryptonPaletteImagesDropDownButton(redirector, needPaint);
+            GalleryButtons = new KryptonPaletteImagesGalleryButtons(redirector, needPaint);
+            RadioButton = new KryptonPaletteImagesRadioButton(redirector, needPaint);
+            TreeView = new KryptonPaletteImagesTreeView(redirector, needPaint);
         }
         #endregion
 
@@ -55,18 +47,13 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Gets a value indicating if all values are default.
         /// </summary>
-        public override bool IsDefault
-        {
-            get
-            {
-                return _imagesCheckBox.IsDefault &&
-                       _imagesContextMenu.IsDefault &&
-                       _imagesDropDownButton.IsDefault &&
-                       _imagesGalleryButtons.IsDefault &&
-                       _imagesRadioButton.IsDefault &&
-                       _imagesTreeView.IsDefault;
-            }
-        }
+        public override bool IsDefault => CheckBox.IsDefault &&
+                                          ContextMenu.IsDefault &&
+                                          DropDownButton.IsDefault &&
+                                          GalleryButtons.IsDefault &&
+                                          RadioButton.IsDefault &&
+                                          TreeView.IsDefault;
+
         #endregion
 
         #region PopulateFromBase
@@ -76,12 +63,12 @@ namespace ComponentFactory.Krypton.Toolkit
         public void PopulateFromBase()
         {
             // Populate only the designated styles
-            _imagesCheckBox.PopulateFromBase();
-            _imagesContextMenu.PopulateFromBase();
-            _imagesDropDownButton.PopulateFromBase();
-            _imagesGalleryButtons.PopulateFromBase();
-            _imagesRadioButton.PopulateFromBase();
-            _imagesTreeView.PopulateFromBase();
+            CheckBox.PopulateFromBase();
+            ContextMenu.PopulateFromBase();
+            DropDownButton.PopulateFromBase();
+            GalleryButtons.PopulateFromBase();
+            RadioButton.PopulateFromBase();
+            TreeView.PopulateFromBase();
         }
         #endregion
 
@@ -93,14 +80,11 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining check box images.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public KryptonPaletteImagesCheckBox CheckBox
-        {
-            get { return _imagesCheckBox; }
-        }
+        public KryptonPaletteImagesCheckBox CheckBox { get; }
 
         private bool ShouldSerializeCheckBox()
         {
-            return !_imagesCheckBox.IsDefault;
+            return !CheckBox.IsDefault;
         }
         #endregion
 
@@ -112,14 +96,11 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining context menu images.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public KryptonPaletteImagesContextMenu ContextMenu
-        {
-            get { return _imagesContextMenu; }
-        }
+        public KryptonPaletteImagesContextMenu ContextMenu { get; }
 
         private bool ShouldSerializeContextMenu()
         {
-            return !_imagesContextMenu.IsDefault;
+            return !ContextMenu.IsDefault;
         }
         #endregion
 
@@ -131,14 +112,11 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining drop down button images.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public KryptonPaletteImagesDropDownButton DropDownButton
-        {
-            get { return _imagesDropDownButton; }
-        }
+        public KryptonPaletteImagesDropDownButton DropDownButton { get; }
 
         private bool ShouldSerializeDropDownButton()
         {
-            return !_imagesDropDownButton.IsDefault;
+            return !DropDownButton.IsDefault;
         }
         #endregion
 
@@ -150,14 +128,11 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining gallery button images.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public KryptonPaletteImagesGalleryButtons GalleryButtons
-        {
-            get { return _imagesGalleryButtons; }
-        }
+        public KryptonPaletteImagesGalleryButtons GalleryButtons { get; }
 
         private bool ShouldSerializeGalleryButtons()
         {
-            return !_imagesGalleryButtons.IsDefault;
+            return !GalleryButtons.IsDefault;
         }
         #endregion
 
@@ -169,14 +144,11 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining radio button images.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public KryptonPaletteImagesRadioButton RadioButton
-        {
-            get { return _imagesRadioButton; }
-        }
+        public KryptonPaletteImagesRadioButton RadioButton { get; }
 
         private bool ShouldSerializeRadioButton()
         {
-            return !_imagesRadioButton.IsDefault;
+            return !RadioButton.IsDefault;
         }
         #endregion
 
@@ -188,14 +160,11 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining tree view images.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public KryptonPaletteImagesTreeView TreeView
-        {
-            get { return _imagesTreeView; }
-        }
+        public KryptonPaletteImagesTreeView TreeView { get; }
 
         private bool ShouldSerializeTreeView()
         {
-            return !_imagesTreeView.IsDefault;
+            return !TreeView.IsDefault;
         }
         #endregion
     }

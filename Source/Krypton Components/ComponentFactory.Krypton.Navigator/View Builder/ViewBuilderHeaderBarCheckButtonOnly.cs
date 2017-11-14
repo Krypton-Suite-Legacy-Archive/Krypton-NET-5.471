@@ -8,12 +8,6 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Drawing;
-using System.ComponentModel;
-using System.Windows.Forms;
-using System.Collections.Generic;
-using System.Diagnostics;
 using ComponentFactory.Krypton.Toolkit;
 
 namespace ComponentFactory.Krypton.Navigator
@@ -31,10 +25,7 @@ namespace ComponentFactory.Krypton.Navigator
         /// <summary>
         /// Gets a value indicating if the mode is a tab strip style mode.
         /// </summary>
-        public override bool IsTabStripMode
-        {
-            get { return true; }
-        }
+        public override bool IsTabStripMode => true;
 
         /// <summary>
         /// User has used the keyboard to select the currently selected page.
@@ -80,12 +71,16 @@ namespace ComponentFactory.Krypton.Navigator
                                                         PaletteMetricInt.CheckButtonGap,
                                                         Navigator.Header.HeaderPositionBar,
                                                         Navigator.Bar.ItemAlignment,
-                                                        Navigator.Bar.BarAnimation);
-            _layoutBarViewport.Add(_layoutBar);
+                                                        Navigator.Bar.BarAnimation)
+            {
+                _layoutBar
+            };
 
             // Create the button bar area docker
-            _layoutBarDocker = new ViewLayoutDocker();
-            _layoutBarDocker.Add(_layoutBarViewport, ViewDockStyle.Fill);
+            _layoutBarDocker = new ViewLayoutDocker
+            {
+                { _layoutBarViewport, ViewDockStyle.Fill }
+            };
 
             // Place the bar inside a header style area
             _viewHeadingBar = new ViewDrawDocker(Navigator.StateNormal.HeaderGroup.HeaderBar.Back,
@@ -93,18 +88,23 @@ namespace ComponentFactory.Krypton.Navigator
                                                  Navigator.StateNormal.HeaderGroup.HeaderBar,
                                                  PaletteMetricBool.None,
                                                  PaletteMetricPadding.HeaderGroupPaddingSecondary,
-                                                 VisualOrientation.Top);
-
-            _viewHeadingBar.Add(_layoutBarDocker, ViewDockStyle.Fill);
+                                                 VisualOrientation.Top)
+            {
+                { _layoutBarDocker, ViewDockStyle.Fill }
+            };
 
             // Create the docker used to layout contents of main panel and fill with group
-            _layoutPanelDocker = new ViewLayoutDocker();
-            _layoutPanelDocker.Add(new ViewLayoutPageHide(Navigator), ViewDockStyle.Fill);
-            _layoutPanelDocker.Add(_viewHeadingBar, ViewDockStyle.Top);
+            _layoutPanelDocker = new ViewLayoutDocker
+            {
+                { new ViewLayoutPageHide(Navigator), ViewDockStyle.Fill },
+                { _viewHeadingBar, ViewDockStyle.Top }
+            };
 
             // Create the top level panel and put a layout docker inside it
-            _drawPanel = new ViewDrawPanel(Navigator.StateNormal.Back);
-            _drawPanel.Add(_layoutPanelDocker);
+            _drawPanel = new ViewDrawPanel(Navigator.StateNormal.Back)
+            {
+                _layoutPanelDocker
+            };
             _newRoot = _drawPanel;
 
             // Must call the base class to perform common actions

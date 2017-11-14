@@ -9,10 +9,6 @@
 // *****************************************************************************
 
 using System;
-using System.Drawing;
-using System.Diagnostics;
-using ComponentFactory.Krypton.Toolkit;
-using ComponentFactory.Krypton.Workspace;
 
 namespace ComponentFactory.Krypton.Docking
 {
@@ -22,9 +18,8 @@ namespace ComponentFactory.Krypton.Docking
 	public class FloatspaceEventArgs : EventArgs
 	{
 		#region Instance Fields
-        private KryptonFloatspace _floatspace;
-        private KryptonDockingFloatspace _element;
-		#endregion
+
+	    #endregion
 
 		#region Identity
 		/// <summary>
@@ -35,8 +30,8 @@ namespace ComponentFactory.Krypton.Docking
         public FloatspaceEventArgs(KryptonFloatspace floatspace,
                                    KryptonDockingFloatspace element)
 		{
-            _floatspace = floatspace;
-            _element = element;
+            FloatspaceControl = floatspace;
+            FloatspaceElement = element;
 		}
         #endregion
 
@@ -44,18 +39,13 @@ namespace ComponentFactory.Krypton.Docking
         /// <summary>
         /// Gets a reference to the KryptonFloatspace control..
         /// </summary>
-        public KryptonFloatspace FloatspaceControl
-        {
-            get { return _floatspace; }
-        }
+        public KryptonFloatspace FloatspaceControl { get; }
 
-        /// <summary>
+	    /// <summary>
         /// Gets a reference to the KryptonDockingFloatspace that is managing the space control.
         /// </summary>
-        public KryptonDockingFloatspace FloatspaceElement
-        {
-            get { return _element; }
-        }
-        #endregion
+        public KryptonDockingFloatspace FloatspaceElement { get; }
+
+	    #endregion
 	}
 }

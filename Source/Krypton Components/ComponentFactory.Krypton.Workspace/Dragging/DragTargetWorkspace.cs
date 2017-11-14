@@ -8,13 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
 using System.Drawing;
-using System.Diagnostics;
-using System.Windows.Forms;
-using System.Collections.Generic;
-using System.ComponentModel;
-using ComponentFactory.Krypton.Toolkit;
 using ComponentFactory.Krypton.Navigator;
 
 namespace ComponentFactory.Krypton.Workspace
@@ -25,7 +19,7 @@ namespace ComponentFactory.Krypton.Workspace
     public abstract class DragTargetWorkspace : DragTarget
     {
         #region Instance Fields
-        private KryptonWorkspace _workspace;
+
         #endregion
 
         #region Identity
@@ -46,7 +40,7 @@ namespace ComponentFactory.Krypton.Workspace
                                    KryptonPageFlags allowFlags)
             : base(screenRect, hotRect, drawRect, hint, allowFlags)
         {
-            _workspace = workspace;
+            Workspace = workspace;
         }
 
         /// <summary>
@@ -56,7 +50,9 @@ namespace ComponentFactory.Krypton.Workspace
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-                _workspace = null;
+            {
+                Workspace = null;
+            }
 
             base.Dispose(disposing);
         }
@@ -66,10 +62,8 @@ namespace ComponentFactory.Krypton.Workspace
         /// <summary>
         /// Gets the target workspace control.
         /// </summary>
-        public KryptonWorkspace Workspace
-        {
-            get { return _workspace; }
-        }
+        public KryptonWorkspace Workspace { get; private set; }
+
         #endregion
 
         #region Protected

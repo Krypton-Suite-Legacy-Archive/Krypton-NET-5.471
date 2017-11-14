@@ -9,14 +9,10 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
-using System.Data;
 using System.Drawing;
 using System.Drawing.Design;
 using System.ComponentModel;
 using System.Windows.Forms;
-using System.Collections;
-using System.Diagnostics;
 using ComponentFactory.Krypton.Toolkit;
 
 namespace ComponentFactory.Krypton.Ribbon
@@ -33,12 +29,11 @@ namespace ComponentFactory.Krypton.Ribbon
     public class KryptonRibbonGroupTriple : KryptonRibbonGroupContainer
     {
         #region Instance Fields
-        private KryptonRibbonGroupTripleCollection _ribbonTripleItems;
+
         private GroupItemSize _itemSizeMax;
         private GroupItemSize _itemSizeMin;
         private GroupItemSize _itemSizeCurrent;
         private RibbonItemAlignment _itemAlignment;
-        private ViewBase _tripleView;
         private bool _visible;
         #endregion
 
@@ -170,11 +165,11 @@ namespace ComponentFactory.Krypton.Ribbon
             _itemAlignment = RibbonItemAlignment.Near;
 
             // Create collection for holding triple items
-            _ribbonTripleItems = new KryptonRibbonGroupTripleCollection();
-            _ribbonTripleItems.Clearing += new EventHandler(OnRibbonGroupTripleClearing);
-            _ribbonTripleItems.Cleared += new EventHandler(OnRibbonGroupTripleCleared);
-            _ribbonTripleItems.Inserted += new TypedHandler<KryptonRibbonGroupItem>(OnRibbonGroupTripleInserted);
-            _ribbonTripleItems.Removed += new TypedHandler<KryptonRibbonGroupItem>(OnRibbonGroupTripleRemoved);
+            Items = new KryptonRibbonGroupTripleCollection();
+            Items.Clearing += new EventHandler(OnRibbonGroupTripleClearing);
+            Items.Cleared += new EventHandler(OnRibbonGroupTripleCleared);
+            Items.Inserted += new TypedHandler<KryptonRibbonGroupItem>(OnRibbonGroupTripleInserted);
+            Items.Removed += new TypedHandler<KryptonRibbonGroupItem>(OnRibbonGroupTripleRemoved);
         }
 
         /// <summary>
@@ -187,7 +182,9 @@ namespace ComponentFactory.Krypton.Ribbon
             {
                 // Dispose of per-item resources
                 foreach (KryptonRibbonGroupItem item in Items)
+                {
                     item.Dispose();
+                }
             }
 
             base.Dispose(disposing);
@@ -203,16 +200,18 @@ namespace ComponentFactory.Krypton.Ribbon
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public override KryptonRibbon Ribbon
         {
-            get { return base.Ribbon; }
-            
+            get => base.Ribbon;
+
             set 
             { 
                 base.Ribbon = value;
 
                 // Forward the reference to all children (just in case the children
                 // are added before the this object is added to the owner)
-                foreach (KryptonRibbonGroupItem item in _ribbonTripleItems)
+                foreach (KryptonRibbonGroupItem item in Items)
+                {
                     item.Ribbon = value;
+                }
             }
         }
 
@@ -224,7 +223,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public override KryptonRibbonTab RibbonTab
         {
-            get { return base.RibbonTab; }
+            get => base.RibbonTab;
 
             set 
             { 
@@ -232,8 +231,10 @@ namespace ComponentFactory.Krypton.Ribbon
 
                 // Forward the reference to all children (just in case the children
                 // are added before the this object is added to the owner)
-                foreach (KryptonRibbonGroupItem item in _ribbonTripleItems)
+                foreach (KryptonRibbonGroupItem item in Items)
+                {
                     item.RibbonTab = value;
+                }
             }
         }
 
@@ -245,8 +246,8 @@ namespace ComponentFactory.Krypton.Ribbon
         [DefaultValue(typeof(RibbonItemAlignment), "Near")]
         public RibbonItemAlignment ItemAlignment
         {
-            get { return _itemAlignment; }
-            
+            get => _itemAlignment;
+
             set             
             {
                 if (_itemAlignment != value)
@@ -269,7 +270,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public override bool Visible
         {
-            get { return _visible; }
+            get => _visible;
 
             set
             {
@@ -309,8 +310,8 @@ namespace ComponentFactory.Krypton.Ribbon
         [RefreshProperties(RefreshProperties.All)]
         public GroupItemSize MaximumSize
         {
-            get { return ItemSizeMaximum; }
-            set { ItemSizeMaximum = value; }
+            get => ItemSizeMaximum;
+            set => ItemSizeMaximum = value;
         }
 
         /// <summary>
@@ -325,8 +326,8 @@ namespace ComponentFactory.Krypton.Ribbon
         [RefreshProperties(RefreshProperties.All)]
         public GroupItemSize MinimumSize
         {
-            get { return ItemSizeMinimum; }
-            set { ItemSizeMinimum = value; }
+            get => ItemSizeMinimum;
+            set => ItemSizeMinimum = value;
         }
 
         /// <summary>
@@ -337,7 +338,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public override GroupItemSize ItemSizeMaximum
         {
-            get { return _itemSizeMax; }
+            get => _itemSizeMax;
 
             set
             {
@@ -350,17 +351,23 @@ namespace ComponentFactory.Krypton.Ribbon
                     {
                         case GroupItemSize.Medium:
                             if (_itemSizeMin == GroupItemSize.Large)
+                            {
                                 _itemSizeMin = GroupItemSize.Medium;
+                            }
                             break;
                         case GroupItemSize.Small:
                             if (_itemSizeMin != GroupItemSize.Small)
+                            {
                                 _itemSizeMin = GroupItemSize.Small;
+                            }
                             break;
                     }
 
                     // Update all contained elements to reflect the same sizing
                     foreach (IRibbonGroupItem item in Items)
+                    {
                         item.ItemSizeMaximum = value;
+                    }
 
                     OnPropertyChanged("ItemSizeMaximum");
                 }
@@ -375,7 +382,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public override GroupItemSize ItemSizeMinimum
         {
-            get { return _itemSizeMin; }
+            get => _itemSizeMin;
 
             set 
             {
@@ -388,17 +395,23 @@ namespace ComponentFactory.Krypton.Ribbon
                     {
                         case GroupItemSize.Large:
                             if (_itemSizeMax != GroupItemSize.Large)
+                            {
                                 _itemSizeMax = GroupItemSize.Large;
+                            }
                             break;
                         case GroupItemSize.Medium:
                             if (_itemSizeMax == GroupItemSize.Small)
+                            {
                                 _itemSizeMax = GroupItemSize.Medium;
+                            }
                             break;
                     }
 
                     // Update all contained elements to reflect the same sizing
                     foreach (IRibbonGroupItem item in Items)
+                    {
                         item.ItemSizeMinimum = value;
+                    }
 
                     OnPropertyChanged("ItemSizeMinimum");
                 }
@@ -413,7 +426,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public override GroupItemSize ItemSizeCurrent
         {
-            get { return _itemSizeCurrent; }
+            get => _itemSizeCurrent;
 
             set
             {
@@ -423,7 +436,9 @@ namespace ComponentFactory.Krypton.Ribbon
 
                     // Update all contained elements to reflect the same sizing
                     foreach (IRibbonGroupItem item in Items)
+                    {
                         item.ItemSizeCurrent = value;
+                    }
 
                     OnPropertyChanged("ItemSizeCurrent");
                 }
@@ -451,10 +466,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [MergableProperty(false)]
         [Editor("ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTripleCollectionEditor, ComponentFactory.Krypton.Design, Version=4.7.1.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e", typeof(UITypeEditor))]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public KryptonRibbonGroupTripleCollection Items
-        {
-            get { return _ribbonTripleItems; }
-        }
+        public KryptonRibbonGroupTripleCollection Items { get; }
 
         /// <summary>
         /// Gets an array of all the contained components.
@@ -463,7 +475,7 @@ namespace ComponentFactory.Krypton.Ribbon
         public override Component[] GetChildComponents()
         {
             Component[] array = new Component[Items.Count];
-            _ribbonTripleItems.CopyTo(array, 0);
+            Items.CopyTo(array, 0);
             return array;
         }
 
@@ -473,11 +485,8 @@ namespace ComponentFactory.Krypton.Ribbon
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Browsable(false)]
-        public ViewBase TripleView
-        {
-            get { return _tripleView; }
-            set { _tripleView = value; }
-        }
+        public ViewBase TripleView { get; set; }
+
         #endregion
 
         #region Protected
@@ -487,108 +496,96 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <param name="propertyName">Name of property that has changed.</param>
         protected virtual void OnPropertyChanged(string propertyName)
         {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
 
         #region Internal
         internal void OnDesignTimeAddButton()
         {
-            if (DesignTimeAddButton != null)
-                DesignTimeAddButton(this, EventArgs.Empty);
+            DesignTimeAddButton?.Invoke(this, EventArgs.Empty);
         }
 
         internal void OnDesignTimeAddColorButton()
         {
-            if (DesignTimeAddColorButton != null)
-                DesignTimeAddColorButton(this, EventArgs.Empty);
+            DesignTimeAddColorButton?.Invoke(this, EventArgs.Empty);
         }
 
         internal void OnDesignTimeAddCheckBox()
         {
-            if (DesignTimeAddCheckBox != null)
-                DesignTimeAddCheckBox(this, EventArgs.Empty);
+            DesignTimeAddCheckBox?.Invoke(this, EventArgs.Empty);
         }
 
         internal void OnDesignTimeAddRadioButton()
         {
-            if (DesignTimeAddRadioButton != null)
-                DesignTimeAddRadioButton(this, EventArgs.Empty);
+            DesignTimeAddRadioButton?.Invoke(this, EventArgs.Empty);
         }
 
         internal void OnDesignTimeAddLabel()
         {
-            if (DesignTimeAddLabel != null)
-                DesignTimeAddLabel(this, EventArgs.Empty);
+            DesignTimeAddLabel?.Invoke(this, EventArgs.Empty);
         }
 
         internal void OnDesignTimeAddCustomControl()
         {
-            if (DesignTimeAddCustomControl != null)
-                DesignTimeAddCustomControl(this, EventArgs.Empty);
+            DesignTimeAddCustomControl?.Invoke(this, EventArgs.Empty);
         }
 
         internal void OnDesignTimeAddTextBox()
         {
-            if (DesignTimeAddTextBox != null)
-                DesignTimeAddTextBox(this, EventArgs.Empty);
+            DesignTimeAddTextBox?.Invoke(this, EventArgs.Empty);
         }
 
         internal void OnDesignTimeAddMaskedTextBox()
         {
-            if (DesignTimeAddMaskedTextBox != null)
-                DesignTimeAddMaskedTextBox(this, EventArgs.Empty);
+            DesignTimeAddMaskedTextBox?.Invoke(this, EventArgs.Empty);
         }
 
         internal void OnDesignTimeAddRichTextBox()
         {
-            if (DesignTimeAddRichTextBox != null)
-                DesignTimeAddRichTextBox(this, EventArgs.Empty);
+            DesignTimeAddRichTextBox?.Invoke(this, EventArgs.Empty);
         }
 
         internal void OnDesignTimeAddComboBox()
         {
-            if (DesignTimeAddComboBox != null)
-                DesignTimeAddComboBox(this, EventArgs.Empty);
+            DesignTimeAddComboBox?.Invoke(this, EventArgs.Empty);
         }
 
         internal void OnDesignTimeAddNumericUpDown()
         {
-            if (DesignTimeAddNumericUpDown != null)
-                DesignTimeAddNumericUpDown(this, EventArgs.Empty);
+            DesignTimeAddNumericUpDown?.Invoke(this, EventArgs.Empty);
         }
 
         internal void OnDesignTimeAddDomainUpDown()
         {
-            if (DesignTimeAddDomainUpDown != null)
-                DesignTimeAddDomainUpDown(this, EventArgs.Empty);
+            DesignTimeAddDomainUpDown?.Invoke(this, EventArgs.Empty);
         }
 
         internal void OnDesignTimeAddDateTimePicker()
         {
-            if (DesignTimeAddDateTimePicker != null)
-                DesignTimeAddDateTimePicker(this, EventArgs.Empty);
+            DesignTimeAddDateTimePicker?.Invoke(this, EventArgs.Empty);
         }
 
         internal void OnDesignTimeAddTrackBar()
         {
-            if (DesignTimeAddTrackBar != null)
-                DesignTimeAddTrackBar(this, EventArgs.Empty);
+            DesignTimeAddTrackBar?.Invoke(this, EventArgs.Empty);
         }
 
         internal void OnDesignTimeContextMenu(MouseEventArgs e)
         {
-            if (DesignTimeContextMenu != null)
-                DesignTimeContextMenu(this, e);
+            DesignTimeContextMenu?.Invoke(this, e);
         }
 
         internal override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             // Ask the containers to check for command key processing
             foreach (KryptonRibbonGroupItem item in Items)
+            {
                 if (item.ProcessCmdKey(ref msg, keyData))
+                {
                     return true;
+                }
+            }
 
             return false;
         }
@@ -598,7 +595,7 @@ namespace ComponentFactory.Krypton.Ribbon
         private void OnRibbonGroupTripleClearing(object sender, EventArgs e)
         {
             // Remove the back references
-            foreach (IRibbonGroupItem item in _ribbonTripleItems)
+            foreach (IRibbonGroupItem item in Items)
             {
                 item.Ribbon = null;
                 item.RibbonTab = null;
@@ -610,7 +607,9 @@ namespace ComponentFactory.Krypton.Ribbon
         {
             // Only need to update display if this tab is selected
             if ((Ribbon != null) && (RibbonTab != null) && (Ribbon.SelectedTab == RibbonTab))
+            {
                 Ribbon.PerformNeedPaint(true);
+            }
         }
 
         private void OnRibbonGroupTripleInserted(object sender, TypedCollectionEventArgs<KryptonRibbonGroupItem> e)
@@ -627,7 +626,9 @@ namespace ComponentFactory.Krypton.Ribbon
 
             // Only need to update display if this tab is selected and the group is visible
             if ((Ribbon != null) && (RibbonTab != null) && (Ribbon.SelectedTab == RibbonTab))
+            {
                 Ribbon.PerformNeedPaint(true);
+            }
         }
 
         private void OnRibbonGroupTripleRemoved(object sender, TypedCollectionEventArgs<KryptonRibbonGroupItem> e)
@@ -639,7 +640,9 @@ namespace ComponentFactory.Krypton.Ribbon
 
             // Only need to update display if this tab is selected and the group was visible
             if ((Ribbon != null) && (RibbonTab != null) && (Ribbon.SelectedTab == RibbonTab))
+            {
                 Ribbon.PerformNeedPaint(true);
+            }
         }
         #endregion
     }

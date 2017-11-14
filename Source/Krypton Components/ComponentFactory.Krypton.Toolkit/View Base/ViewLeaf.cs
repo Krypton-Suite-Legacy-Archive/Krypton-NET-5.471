@@ -136,16 +136,9 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// <summary>
 		/// Gets the number of views in collection.
 		/// </summary>
-		public override int Count 
-		{
-			get
-			{
-				// Always empty
-				return 0;
-			}
-		}
+		public override int Count => 0;
 
-		/// <summary>
+	    /// <summary>
 		/// Determines the index of the specified view in the collection.
 		/// </summary>
 		/// <param name="item">ViewBase reference.</param>
@@ -184,17 +177,9 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// <returns>ViewBase at specified index.</returns>
 		public override ViewBase this[int index] 
 		{ 
-			get
-			{
-				// Argument must be out of range because we never have any views
-				throw new ArgumentOutOfRangeException("index");
-			}
+			get => throw new ArgumentOutOfRangeException("index");
 
-			set
-			{
-				// Argument must be out of range because we never have any views
-				throw new ArgumentOutOfRangeException("index");
-			}
+		    set => throw new ArgumentOutOfRangeException("index");
 		}
 
 		/// <summary>
@@ -247,10 +232,14 @@ namespace ComponentFactory.Krypton.Toolkit
 		public override ViewBase ViewFromPoint(Point pt)
 		{
 			if (ClientRectangle.Contains(pt))
-				return this;
-			else
-				return null;
-		}
+            {
+                return this;
+            }
+            else
+            {
+                return null;
+            }
+        }
 		#endregion
 	}
 }

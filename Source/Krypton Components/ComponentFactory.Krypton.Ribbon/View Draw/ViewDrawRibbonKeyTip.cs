@@ -8,13 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using System.Diagnostics;
 using ComponentFactory.Krypton.Toolkit;
 
 namespace ComponentFactory.Krypton.Ribbon
@@ -26,7 +20,7 @@ namespace ComponentFactory.Krypton.Ribbon
                                           IContentValues
     {
         #region Instance Fields
-        private KeyTipInfo _keyTipInfo;
+
         private ViewDrawContent _drawContent;
         #endregion
 
@@ -44,7 +38,7 @@ namespace ComponentFactory.Krypton.Ribbon
                                     IPaletteContent paletteContent)
             : base(paletteBack, paletteBorder)
         {
-            _keyTipInfo = keyTipInfo;
+            KeyTipInfo = keyTipInfo;
 
             // Create view for the key tip text
             _drawContent = new ViewDrawContent(paletteContent, this, VisualOrientation.Top);
@@ -58,10 +52,8 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <summary>
         /// Gets the associated key tip info.
         /// </summary>
-        public KeyTipInfo KeyTipInfo
-        {
-            get { return _keyTipInfo; }
-        }
+        public KeyTipInfo KeyTipInfo { get; }
+
         #endregion
 
         #region IContent
@@ -91,7 +83,7 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <returns>String value.</returns>
         public string GetShortText()
         {
-            return _keyTipInfo.KeyString;
+            return KeyTipInfo.KeyString;
         }
 
         /// <summary>

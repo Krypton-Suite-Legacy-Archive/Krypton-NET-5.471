@@ -8,12 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
-using System.Drawing;
 using System.ComponentModel;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Diagnostics;
 
 namespace ComponentFactory.Krypton.Toolkit
@@ -53,10 +48,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// Gets a value indicating if all values are default.
         /// </summary>
         [Browsable(false)]
-        public override bool IsDefault
-        {
-            get { return (_borderWidth == -1) && base.IsDefault; }
-        }
+        public override bool IsDefault => (_borderWidth == -1) && base.IsDefault;
+
         #endregion
 
         #region Width
@@ -70,7 +63,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [RefreshPropertiesAttribute(RefreshProperties.All)]
         public int Width
         {
-            get { return _borderWidth; }
+            get => _borderWidth;
 
             set
             {
@@ -90,9 +83,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public int GetBorderWidth(PaletteState state)
         {
             if (Width != -1)
+            {
                 return Width;
+            }
             else
+            {
                 return _inherit.GetBorderWidth(state);
+            }
         }
         #endregion
     }

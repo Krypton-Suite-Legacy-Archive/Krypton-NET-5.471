@@ -9,16 +9,11 @@
 // *****************************************************************************
 
 using System;
-using System.IO;
 using System.Xml;
-using System.Drawing;
 using System.Collections;
 using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Text;
-using System.Diagnostics;
 using System.ComponentModel;
-using ComponentFactory.Krypton.Toolkit;
 using ComponentFactory.Krypton.Navigator;
 using ComponentFactory.Krypton.Workspace;
 
@@ -31,7 +26,7 @@ namespace ComponentFactory.Krypton.Docking
                                            IDockingElement
     {
         #region Instance Fields
-        private string _name;
+
         private IDockingElement _parent;
         #endregion
 
@@ -43,7 +38,7 @@ namespace ComponentFactory.Krypton.Docking
         public DockingElement(string name)
         {
             // Do not allow null, use empty string instead
-            _name = name ?? string.Empty;
+            Name = name ?? string.Empty;
         }
         #endregion
 
@@ -52,10 +47,7 @@ namespace ComponentFactory.Krypton.Docking
         /// Gets and sets the name of the docking element.
         /// </summary>
         [Browsable(false)]
-        public string Name 
-        {
-            get { return _name; }
-        }
+        public string Name { get; }
 
         /// <summary>
         /// Gets a comma separated list of names leading to this element.
@@ -72,7 +64,9 @@ namespace ComponentFactory.Krypton.Docking
                 {
                     // Need to comma separate element names
                     if (path.Length > 0)
+                    {
                         path.Insert(0, ',');
+                    }
 
                     // Prepend the elements name
                     path.Insert(0, element.Name);
@@ -94,11 +88,15 @@ namespace ComponentFactory.Krypton.Docking
         {
             // Cannot resolve a null reference
             if (path == null)
+            {
                 throw new ArgumentNullException("path");
+            }
 
             // Path names cannot be zero length
             if (path.Length == 0)
+            {
                 throw new ArgumentException("path");
+            }
 
             // Extract the first name in the path
             int comma = path.IndexOf(',');
@@ -109,7 +107,9 @@ namespace ComponentFactory.Krypton.Docking
             {
                 // If there are no other names then we are the target
                 if (firstName.Length == path.Length)
+                {
                     return this;
+                }
                 else
                 {
                     // Extract the remainder of the path
@@ -120,7 +120,9 @@ namespace ComponentFactory.Krypton.Docking
                     {
                         IDockingElement ret = child.ResolvePath(remainder);
                         if (ret != null)
+                        {
                             return ret;
+                        }
                     }
                 }
             }
@@ -135,13 +137,15 @@ namespace ComponentFactory.Krypton.Docking
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public virtual IDockingElement Parent 
         {
-            get { return _parent; }
-            
+            get => _parent;
+
             set 
             {
                 // We do not allow the same name to occur twice in a collection (so check new parent collection)
-                if ((value != null) && (value[Name] != null))
+                if (value?[Name] != null)
+                {
                     throw new ArgumentNullException("Parent provided already has our Name in its collection.");
+                }
 
                 _parent = value; 
             }
@@ -157,7 +161,9 @@ namespace ComponentFactory.Krypton.Docking
             // Propogate the action request to all the child elements
             // (use reverse order so if element removes itself we still have a valid loop)
             for(int i = Count - 1; i >= 0; i--)
+            {
                 this[i].PropogateAction(action, uniqueNames);
+            }
         }
 
         /// <summary>
@@ -170,7 +176,9 @@ namespace ComponentFactory.Krypton.Docking
             // Propogate the action request to all the child elements
             // (use reverse order so if element removes itself we still have a valid loop)
             for (int i = Count - 1; i >= 0; i--)
+            {
                 this[i].PropogateAction(action, pages);
+            }
         }
 
         /// <summary>
@@ -183,7 +191,9 @@ namespace ComponentFactory.Krypton.Docking
             // Propogate the action request to all the child elements
             // (use reverse order so if element removes itself we still have a valid loop)
             for (int i = Count - 1; i >= 0; i--)
+            {
                 this[i].PropogateAction(action, value);
+            }
         }
 
         /// <summary>
@@ -200,7 +210,9 @@ namespace ComponentFactory.Krypton.Docking
                 // If the child knows the exact answer then return it now
                 bool? ret = this[i].PropogateBoolState(state, uniqueName);
                 if (ret.HasValue)
+                {
                     return ret;
+                }
             }
 
             return null;
@@ -215,7 +227,9 @@ namespace ComponentFactory.Krypton.Docking
         {
             // Propogate the request to all the child elements
             for (int i = Count - 1; i >= 0; i--)
+            {
                 this[i].PropogateIntState(state, ref value);
+            }
         }
 
         /// <summary>
@@ -232,7 +246,9 @@ namespace ComponentFactory.Krypton.Docking
                 // If the child knows the answer then return it now
                 KryptonPage page = this[i].PropogatePageState(state, uniqueName);
                 if (page != null)
+                {
                     return page;
+                }
             }
 
             return null;
@@ -248,7 +264,9 @@ namespace ComponentFactory.Krypton.Docking
             // Propogate the action request to all the child elements
             // (use reverse order so if element removes itself we still have a valid loop)
             for (int i = Count - 1; i >= 0; i--)
+            {
                 this[i].PropogatePageList(state, pages);
+            }
         }
 
         /// <summary>
@@ -261,7 +279,9 @@ namespace ComponentFactory.Krypton.Docking
             // Propogate the action request to all the child elements
             // (use reverse order so if element removes itself we still have a valid loop)
             for (int i = Count - 1; i >= 0; i--)
+            {
                 this[i].PropogateCellList(state, cells);
+            }
         }
 
         /// <summary>
@@ -276,7 +296,9 @@ namespace ComponentFactory.Krypton.Docking
         {
             // Propogate the request to all child elements
             foreach (IDockingElement child in this)
+            {
                 child.PropogateDragTargets(floatingWindow, dragData, targets);
+            }
         }
 
         /// <summary>
@@ -294,7 +316,9 @@ namespace ComponentFactory.Krypton.Docking
             {
                 location = this[i].FindPageLocation(uniqueName);
                 if (location != DockingLocation.None)
+                {
                     break;
+                }
             }
 
             return location;
@@ -315,7 +339,9 @@ namespace ComponentFactory.Krypton.Docking
             {
                 dockingElement = this[i].FindPageElement(uniqueName);
                 if (dockingElement != null)
+                {
                     break;
+                }
             }
 
             return dockingElement;
@@ -337,7 +363,9 @@ namespace ComponentFactory.Krypton.Docking
             {
                 dockingElement = this[i].FindStorePageElement(location, uniqueName);
                 if (dockingElement != null)
+                {
                     break;
+                }
             }
 
             return dockingElement;
@@ -358,7 +386,9 @@ namespace ComponentFactory.Krypton.Docking
             {
                 floatingElement = this[i].FindDockingFloating(uniqueName);
                 if (floatingElement != null)
+                {
                     break;
+                }
             }
 
             return floatingElement;
@@ -379,7 +409,9 @@ namespace ComponentFactory.Krypton.Docking
             {
                 edgeDockedElement = this[i].FindDockingEdgeDocked(uniqueName);
                 if (edgeDockedElement != null)
+                {
                     break;
+                }
             }
 
             return edgeDockedElement;
@@ -400,7 +432,9 @@ namespace ComponentFactory.Krypton.Docking
             {
                 edgeAutoHiddenElement = this[i].FindDockingEdgeAutoHidden(uniqueName);
                 if (edgeAutoHiddenElement != null)
+                {
                     break;
+                }
             }
 
             return edgeAutoHiddenElement;
@@ -421,7 +455,9 @@ namespace ComponentFactory.Krypton.Docking
             {
                 workspaceElement = this[i].FindDockingWorkspace(uniqueName);
                 if (workspaceElement != null)
+                {
                     break;
+                }
             }
 
             return workspaceElement;
@@ -442,7 +478,9 @@ namespace ComponentFactory.Krypton.Docking
             {
                 navigatorElement = this[i].FindDockingNavigator(uniqueName);
                 if (navigatorElement != null)
+                {
                     break;
+                }
             }
 
             return navigatorElement;
@@ -461,7 +499,9 @@ namespace ComponentFactory.Krypton.Docking
 
             // Output an element per child
             foreach (IDockingElement child in this)
+            {
                 child.SaveElementToXml(xmlWriter);
+            }
 
             // Terminate the workspace element
             xmlWriter.WriteFullEndElement();
@@ -476,7 +516,9 @@ namespace ComponentFactory.Krypton.Docking
         {
             // Is it the expected xml element name?
             if (xmlReader.Name != XmlElementName)
+            {
                 throw new ArgumentException("Element name '" + XmlElementName + "' was expected but found '" + xmlReader.Name + "' instead.");
+            }
 
             // Grab the element attributes
             string elementName = xmlReader.GetAttribute("N");
@@ -484,7 +526,9 @@ namespace ComponentFactory.Krypton.Docking
 
             // Check the name matches up
             if (elementName != Name)
+            {
                 throw new ArgumentException("Attribute 'N' value '" + Name + "' was expected but found '" + elementName + "' instead.");
+            }
 
             // Let derived class perform element specific persistence
             LoadDockingElement(xmlReader, pages);
@@ -497,7 +541,9 @@ namespace ComponentFactory.Krypton.Docking
                 {
                     // Read to the next element
                     if (!xmlReader.Read())
+                    {
                         throw new ArgumentException("An element was expected but could not be read in.");
+                    }
 
                     // Find a child docking element with the matching name
                     IDockingElement child = this[xmlReader.GetAttribute("N")];
@@ -509,7 +555,9 @@ namespace ComponentFactory.Krypton.Docking
 
             // Read past this element to the end element
             if (!xmlReader.Read())
+            {
                 throw new ArgumentException("An element was expected but could not be read in.");
+            }
         }
 
         /// <summary>
@@ -522,8 +570,12 @@ namespace ComponentFactory.Krypton.Docking
 
             // We always allow store pages but check that others are not already present in the docking hierarchy
             foreach (KryptonPage page in pages)
+            {
                 if (!(page is KryptonStorePage) && DockingManager.ContainsPage(page))
+                {
                     throw new ArgumentOutOfRangeException("Cannot perform operation with a page that is already present inside docking hierarchy");
+                }
+            }
         }
 
         /// <summary>
@@ -532,17 +584,16 @@ namespace ComponentFactory.Krypton.Docking
         public void DemandDockingManager()
         {
             if (!HasDockManager)
+            {
                 throw new ApplicationException("Cannot perform this operation when there is no access to a KryptonDockingManager.");
+            }
         }
 
         /// <summary>
         /// Returns a value indicating if this docking element has access to a parent docking manager.
         /// </summary>
         [Browsable(false)]
-        public bool HasDockManager
-        {
-            get { return (DockingManager != null); }
-        }
+        public bool HasDockManager => (DockingManager != null);
 
         /// <summary>
         /// Finds the KryptonDockingManager instance that owns this part of the docking hieararchy.
@@ -558,7 +609,9 @@ namespace ComponentFactory.Krypton.Docking
                 {
                     // If we find a match then we are done
                     if (parent is KryptonDockingManager)
+                    {
                         return parent as KryptonDockingManager;
+                    }
 
                     // Keep going up the parent chain
                     parent = parent.Parent;
@@ -582,7 +635,9 @@ namespace ComponentFactory.Krypton.Docking
             {
                 // If we find a match then we are done
                 if (parent.GetType() == findType)
+                {
                     return parent as IDockingElement;
+                }
 
                 // Keep going up the parent chain
                 parent = parent.Parent;
@@ -596,30 +651,21 @@ namespace ComponentFactory.Krypton.Docking
         /// Gets the number of child docking elements.
         /// </summary>
         [Browsable(false)]
-        public virtual int Count 
-        { 
-            get { return 0; }
-        }
+        public virtual int Count => 0;
 
         /// <summary>
         /// Gets the docking element at the specified index.
         /// </summary>
         /// <param name="index">Index.</param>
         /// <returns>Docking element at specified index.</returns>
-        public virtual IDockingElement this[int index] 
-        { 
-            get { return null; }
-        }
+        public virtual IDockingElement this[int index] => null;
 
         /// <summary>
         /// Gets the docking element with the specified name.
         /// </summary>
         /// <param name="name">Name of element.</param>
         /// <returns>Docking element with specified name.</returns>
-        public virtual IDockingElement this[string name]
-        {
-            get { return null; }
-        }
+        public virtual IDockingElement this[string name] => null;
 
         /// <summary>
         /// Shallow enumerate over child docking elements.
@@ -666,7 +712,9 @@ namespace ComponentFactory.Krypton.Docking
                                                        IDockingElement child)
         {
             if (child != null)
+            {
                 child.LoadElementFromXml(xmlReader, pages);
+            }
             else
             {
                 string nodeName = xmlReader.Name;
@@ -675,12 +723,15 @@ namespace ComponentFactory.Krypton.Docking
                 {
                     // Read past this element
                     if (!xmlReader.Read())
+                    {
                         throw new ArgumentException("An element was expected but could not be read in.");
+                    }
 
                     // Finished when we hit the end element matching the incoming one
                     if ((xmlReader.NodeType == XmlNodeType.EndElement) && (xmlReader.Name == nodeName))
+                    {
                         break;
-
+                    }
                 } while (true);
             }
         }

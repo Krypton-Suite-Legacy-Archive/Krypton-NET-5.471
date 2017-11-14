@@ -8,10 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
 using System.Drawing;
-using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace ComponentFactory.Krypton.Toolkit
@@ -22,10 +19,8 @@ namespace ComponentFactory.Krypton.Toolkit
     public class PaletteBackInheritOverride : PaletteBackInherit
 	{
 		#region Instance Fields
-		private bool _apply;
-        private bool _override;
-		private PaletteState _state;
-		private IPaletteBack _primary;
+
+	    private IPaletteBack _primary;
 		private IPaletteBack _backup;
 		#endregion
 
@@ -46,9 +41,9 @@ namespace ComponentFactory.Krypton.Toolkit
 			_backup = backup;
 
 			// Default other state
-            _apply = true;
-            _override = true;
-			_state = PaletteState.Normal;
+            Apply = true;
+            Override = true;
+			OverrideState = PaletteState.Normal;
 		}
 		#endregion
 
@@ -71,34 +66,25 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// <summary>
 		/// Gets and sets a value indicating if override should be applied.
 		/// </summary>
-		public bool Apply
-		{
-			get { return _apply; }
-			set { _apply = value; }
-		}
-		#endregion
+		public bool Apply { get; set; }
+
+	    #endregion
 
         #region Override
         /// <summary>
         /// Gets and sets a value indicating if override state should be applied.
         /// </summary>
-        public bool Override
-        {
-            get { return _override; }
-            set { _override = value; }
-        }
-        #endregion
+        public bool Override { get; set; }
+
+	    #endregion
 
         #region OverrideState
         /// <summary>
 		/// Gets and sets the override palette state to use.
 		/// </summary>
-		public PaletteState OverrideState
-		{
-			get { return _state; }
-			set { _state = value; }
-		}
-		#endregion
+		public PaletteState OverrideState { get; set; }
+
+	    #endregion
 
 		#region IPaletteBack
 		/// <summary>
@@ -108,18 +94,22 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// <returns>InheritBool value.</returns>
 		public override InheritBool GetBackDraw(PaletteState state)
 		{
-			if (_apply)
+			if (Apply)
 			{
-				InheritBool ret = _primary.GetBackDraw(_override ? _state : state);
+				InheritBool ret = _primary.GetBackDraw(Override ? OverrideState : state);
 
 				if (ret == InheritBool.Inherit)
-					ret = _backup.GetBackDraw(state);
+                {
+                    ret = _backup.GetBackDraw(state);
+                }
 
-				return ret;
+                return ret;
 			}
 			else
-				return _backup.GetBackDraw(state);
-		}
+            {
+                return _backup.GetBackDraw(state);
+            }
+        }
 
 		/// <summary>
 		/// Gets the graphics drawing hint.
@@ -128,18 +118,22 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// <returns>PaletteGraphicsHint value.</returns>
 		public override PaletteGraphicsHint GetBackGraphicsHint(PaletteState state)
 		{
-			if (_apply)
+			if (Apply)
 			{
-                PaletteGraphicsHint ret = _primary.GetBackGraphicsHint(_override ? _state : state);
+                PaletteGraphicsHint ret = _primary.GetBackGraphicsHint(Override ? OverrideState : state);
 
 				if (ret == PaletteGraphicsHint.Inherit)
-					ret = _backup.GetBackGraphicsHint(state);
+                {
+                    ret = _backup.GetBackGraphicsHint(state);
+                }
 
-				return ret;
+                return ret;
 			}
 			else
-				return _backup.GetBackGraphicsHint(state);
-		}
+            {
+                return _backup.GetBackGraphicsHint(state);
+            }
+        }
 
 		/// <summary>
 		/// Gets the first background color.
@@ -148,18 +142,22 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// <returns>Color value.</returns>
 		public override Color GetBackColor1(PaletteState state)
 		{
-			if (_apply)
+			if (Apply)
 			{
-                Color ret = _primary.GetBackColor1(_override ? _state : state);
+                Color ret = _primary.GetBackColor1(Override ? OverrideState : state);
 
 				if (ret == Color.Empty)
-					ret = _backup.GetBackColor1(state);
+                {
+                    ret = _backup.GetBackColor1(state);
+                }
 
-				return ret;
+                return ret;
 			}
 			else
-				return _backup.GetBackColor1(state);
-		}
+            {
+                return _backup.GetBackColor1(state);
+            }
+        }
 
 		/// <summary>
 		/// Gets the second back color.
@@ -168,18 +166,22 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// <returns>Color value.</returns>
 		public override Color GetBackColor2(PaletteState state)
 		{
-			if (_apply)
+			if (Apply)
 			{
-                Color ret = _primary.GetBackColor2(_override ? _state : state);
+                Color ret = _primary.GetBackColor2(Override ? OverrideState : state);
 
 				if (ret == Color.Empty)
-					ret = _backup.GetBackColor2(state);
+                {
+                    ret = _backup.GetBackColor2(state);
+                }
 
-				return ret;
+                return ret;
 			}
 			else
-				return _backup.GetBackColor2(state);
-		}
+            {
+                return _backup.GetBackColor2(state);
+            }
+        }
 
 		/// <summary>
 		/// Gets the color drawing style.
@@ -188,18 +190,22 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// <returns>Color drawing style.</returns>
 		public override PaletteColorStyle GetBackColorStyle(PaletteState state)
 		{
-			if (_apply)
+			if (Apply)
 			{
-                PaletteColorStyle ret = _primary.GetBackColorStyle(_override ? _state : state);
+                PaletteColorStyle ret = _primary.GetBackColorStyle(Override ? OverrideState : state);
 
 				if (ret == PaletteColorStyle.Inherit)
-					ret = _backup.GetBackColorStyle(state);
+                {
+                    ret = _backup.GetBackColorStyle(state);
+                }
 
-				return ret;
+                return ret;
 			}
 			else
-				return _backup.GetBackColorStyle(state);
-		}
+            {
+                return _backup.GetBackColorStyle(state);
+            }
+        }
 
 		/// <summary>
 		/// Gets the color alignment style.
@@ -208,18 +214,22 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// <returns>Color alignment style.</returns>
 		public override PaletteRectangleAlign GetBackColorAlign(PaletteState state)
 		{
-			if (_apply)
+			if (Apply)
 			{
-                PaletteRectangleAlign ret = _primary.GetBackColorAlign(_override ? _state : state);
+                PaletteRectangleAlign ret = _primary.GetBackColorAlign(Override ? OverrideState : state);
 
 				if (ret == PaletteRectangleAlign.Inherit)
-					ret = _backup.GetBackColorAlign(state);
+                {
+                    ret = _backup.GetBackColorAlign(state);
+                }
 
-				return ret;
+                return ret;
 			}
 			else
-				return _backup.GetBackColorAlign(state);
-		}
+            {
+                return _backup.GetBackColorAlign(state);
+            }
+        }
 
 		/// <summary>
 		/// Gets the color background angle.
@@ -228,18 +238,22 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// <returns>Angle used for color drawing.</returns>
 		public override float GetBackColorAngle(PaletteState state)
 		{
-			if (_apply)
+			if (Apply)
 			{
-                float ret = _primary.GetBackColorAngle(_override ? _state : state);
+                float ret = _primary.GetBackColorAngle(Override ? OverrideState : state);
 
 				if (ret == -1)
-					ret = _backup.GetBackColorAngle(state);
+                {
+                    ret = _backup.GetBackColorAngle(state);
+                }
 
-				return ret;
+                return ret;
 			}
 			else
-				return _backup.GetBackColorAngle(state);
-		}
+            {
+                return _backup.GetBackColorAngle(state);
+            }
+        }
 
 		/// <summary>
 		/// Gets a background image.
@@ -248,18 +262,22 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// <returns>Image instance.</returns>
 		public override Image GetBackImage(PaletteState state)
 		{
-			if (_apply)
+			if (Apply)
 			{
-                Image ret = _primary.GetBackImage(_override ? _state : state);
+                Image ret = _primary.GetBackImage(Override ? OverrideState : state);
 
 				if (ret == null)
-					ret = _backup.GetBackImage(state);
+                {
+                    ret = _backup.GetBackImage(state);
+                }
 
-				return ret;
+                return ret;
 			}
 			else
-				return _backup.GetBackImage(state);
-		}
+            {
+                return _backup.GetBackImage(state);
+            }
+        }
 
 		/// <summary>
 		/// Gets the background image style.
@@ -268,18 +286,22 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// <returns>Image style value.</returns>
 		public override PaletteImageStyle GetBackImageStyle(PaletteState state)
 		{
-			if (_apply)
+			if (Apply)
 			{
-                PaletteImageStyle ret = _primary.GetBackImageStyle(_override ? _state : state);
+                PaletteImageStyle ret = _primary.GetBackImageStyle(Override ? OverrideState : state);
 
 				if (ret == PaletteImageStyle.Inherit)
-					ret = _backup.GetBackImageStyle(state);
+                {
+                    ret = _backup.GetBackImageStyle(state);
+                }
 
-				return ret;
+                return ret;
 			}
 			else
-				return _backup.GetBackImageStyle(state);
-		}
+            {
+                return _backup.GetBackImageStyle(state);
+            }
+        }
 
 		/// <summary>
 		/// Gets the image alignment style.
@@ -288,18 +310,22 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// <returns>Image alignment style.</returns>
 		public override PaletteRectangleAlign GetBackImageAlign(PaletteState state)
 		{
-			if (_apply)
+			if (Apply)
 			{
-                PaletteRectangleAlign ret = _primary.GetBackImageAlign(_override ? _state : state);
+                PaletteRectangleAlign ret = _primary.GetBackImageAlign(Override ? OverrideState : state);
 
 				if (ret == PaletteRectangleAlign.Inherit)
-					ret = _backup.GetBackImageAlign(state);
+                {
+                    ret = _backup.GetBackImageAlign(state);
+                }
 
-				return ret;
+                return ret;
 			}
 			else
-				return _backup.GetBackImageAlign(state);
-		}
+            {
+                return _backup.GetBackImageAlign(state);
+            }
+        }
          #endregion
 	}
 }

@@ -8,11 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.ComponentModel;
 using System.ComponentModel.Design;
-using System.Windows.Forms;
-using System.Windows.Forms.Design;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -45,8 +41,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public PaletteBackStyle GroupBackStyle
         {
-            get { return _group.GroupBackStyle; }
-            
+            get => _group.GroupBackStyle;
+
             set
             {
                 if (_group.GroupBackStyle != value)
@@ -62,8 +58,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public PaletteBorderStyle GroupBorderStyle
         {
-            get { return _group.GroupBorderStyle; }
-            
+            get => _group.GroupBorderStyle;
+
             set 
             {
                 if (_group.GroupBorderStyle != value)
@@ -79,8 +75,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public PaletteMode PaletteMode
         {
-            get { return _group.PaletteMode; }
-            
+            get => _group.PaletteMode;
+
             set 
             {
                 if (_group.PaletteMode != value)

@@ -12,7 +12,6 @@ using System;
 using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Windows.Forms;
-using System.Windows.Forms.Design;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -45,9 +44,13 @@ namespace ComponentFactory.Krypton.Toolkit
                 {
                     // Decide on the next action to take given the current setting
                     if ((Orientation)orientationProp.GetValue(_trackBar) == Orientation.Vertical)
+                    {
                         _action = "Horizontal orientation";
+                    }
                     else
+                    {
                         _action = "Vertical orientation";
+                    }
                 }
             }
 
@@ -62,8 +65,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public PaletteMode PaletteMode
         {
-            get { return _trackBar.PaletteMode; }
-            
+            get => _trackBar.PaletteMode;
+
             set 
             {
                 if (_trackBar.PaletteMode != value)
@@ -79,7 +82,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public TickStyle TickStyle
         {
-            get { return _trackBar.TickStyle; }
+            get => _trackBar.TickStyle;
 
             set
             {
@@ -96,7 +99,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public PaletteTrackBarSize TrackBarSize
         {
-            get { return _trackBar.TrackBarSize; }
+            get => _trackBar.TrackBarSize;
 
             set
             {
@@ -113,7 +116,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public int Minimum
         {
-            get { return _trackBar.Minimum; }
+            get => _trackBar.Minimum;
 
             set
             {
@@ -130,7 +133,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public int Maximum
         {
-            get { return _trackBar.Maximum; }
+            get => _trackBar.Maximum;
 
             set
             {
@@ -147,7 +150,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public int SmallChange
         {
-            get { return _trackBar.SmallChange; }
+            get => _trackBar.SmallChange;
 
             set
             {
@@ -164,7 +167,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public int LargeChange
         {
-            get { return _trackBar.LargeChange; }
+            get => _trackBar.LargeChange;
 
             set
             {
@@ -212,36 +215,37 @@ namespace ComponentFactory.Krypton.Toolkit
         private void OnOrientationClick(object sender, EventArgs e)
         {
             // Cast to the correct type
-            DesignerVerb verb = sender as DesignerVerb;
-            
+
             // Double check the source is the expected type
-            if (verb != null)
+            if (sender is DesignerVerb verb)
             {
                 // Decide on the new orientation required
                 Orientation orientation = verb.Text.Equals("Horizontal orientation") ? Orientation.Horizontal : Orientation.Vertical;
 
                 // Decide on the next action to take given the new setting
                 if (orientation == Orientation.Vertical)
+                {
                     _action = "Horizontal orientation";
+                }
                 else
+                {
                     _action = "Vertical orientation";
+                }
 
                 // Get access to the actual Orientation propertry
                 PropertyDescriptor orientationProp = TypeDescriptor.GetProperties(_trackBar)["Orientation"];
 
                 // If we succeeded in getting the property
-                if (orientationProp != null)
-                {
-                    // Update the actual property with the new value
-                    orientationProp.SetValue(_trackBar, orientation);
-                }
+                // Update the actual property with the new value
+                orientationProp?.SetValue(_trackBar, orientation);
 
                 // Get the user interface service associated with actions
-                DesignerActionUIService service = GetService(typeof(DesignerActionUIService)) as DesignerActionUIService;
 
                 // If we managed to get it then request it update to reflect new action setting
-                if (service != null)
+                if (GetService(typeof(DesignerActionUIService)) is DesignerActionUIService service)
+                {
                     service.Refresh(_trackBar);
+                }
             }
         }
         #endregion

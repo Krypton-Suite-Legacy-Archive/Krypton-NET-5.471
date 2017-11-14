@@ -68,12 +68,9 @@ namespace ComponentFactory.Krypton.Navigator
         /// <summary>
         /// Gets a value indicating if the mode is a tab strip style mode.
         /// </summary>
-        public override bool IsTabStripMode 
-        {
-            get { return false; }
-        }
+        public override bool IsTabStripMode => false;
 
-        /// <summary>
+	    /// <summary>
         /// Gets the KryptonPage associated with the provided view element.
         /// </summary>
         /// <param name="element">Element to search against.</param>
@@ -83,8 +80,12 @@ namespace ComponentFactory.Krypton.Navigator
             if (_pageLookup != null)
             {
                 foreach (KeyValuePair<KryptonPage, ViewDrawNavCheckButtonBase> pair in _pageLookup)
+                {
                     if (pair.Value == element)
+                    {
                         return pair.Key;
+                    }
+                }
             }
 
             return null;
@@ -104,7 +105,9 @@ namespace ComponentFactory.Krypton.Navigator
                 {
                     ButtonSpec bs = pair.Value.ButtonSpecFromView(element);
                     if (bs != null)
+                    {
                         return bs;
+                    }
                 }
             }
 
@@ -246,15 +249,21 @@ namespace ComponentFactory.Krypton.Navigator
                 {
                     // Then use the states defined in the navigator itself
                     if (Navigator.Enabled)
+                    {
                         buttonEdge = Navigator.StateNormal.BorderEdge;
+                    }
                     else
+                    {
                         buttonEdge = Navigator.StateDisabled.BorderEdge;
+                    }
                 }
                 else
                 {
                     // Use states defined in the selected page
                     if (Navigator.SelectedPage.Enabled)
+                    {
                         buttonEdge = Navigator.SelectedPage.StateNormal.BorderEdge;
+                    }
                     else
                     {
                         buttonEdge = Navigator.SelectedPage.StateDisabled.BorderEdge;
@@ -304,12 +313,9 @@ namespace ComponentFactory.Krypton.Navigator
         /// <summary>
         /// Gets a value indicating if the view can accept the focus.
         /// </summary>
-        public override bool CanFocus
-        {
-            get { return true; }
-        }
+        public override bool CanFocus => true;
 
-        /// <summary>
+	    /// <summary>
         /// Occurs when the navigator takes the focus.
         /// </summary>
         public override void GotFocus()
@@ -322,7 +328,9 @@ namespace ComponentFactory.Krypton.Navigator
 
             // If there is a selected page
             if (Navigator.SelectedPage != null)
+            {
                 BringPageIntoView(Navigator.SelectedPage);
+            }
         }
 
         /// <summary>
@@ -352,7 +360,9 @@ namespace ComponentFactory.Krypton.Navigator
                 {
                     // If pressing on a check button then we take the focus
                     if (element is ViewDrawNavCheckButtonStack)
+                    {
                         return true;
+                    }
 
                     // Move up a level
                     element = element.Parent;
@@ -393,9 +403,13 @@ namespace ComponentFactory.Krypton.Navigator
                             {
                                 bool changed;
                                 if (!shift)
+                                {
                                     changed = SelectNextPage(Navigator.SelectedPage, true, true);
+                                }
                                 else
+                                {
                                     changed = SelectPreviousPage(Navigator.SelectedPage, true, true);
+                                }
                             }
                         }
                         return true;
@@ -418,7 +432,9 @@ namespace ComponentFactory.Krypton.Navigator
                         {
                             // Can only use Up arrow when on a vertical stack
                             if (Navigator.Stack.StackOrientation == Orientation.Vertical)
+                            {
                                 SelectPreviousPage(Navigator.SelectedPage, false, false);
+                            }
                             return true;
                         }
                         break;
@@ -427,7 +443,9 @@ namespace ComponentFactory.Krypton.Navigator
                         {
                             // Can only use Down arrow when on a vertical stack
                             if (Navigator.Stack.StackOrientation == Orientation.Vertical)
+                            {
                                 SelectNextPage(Navigator.SelectedPage, false, false);
+                            }
                             return true;
                         }
                         break;
@@ -439,9 +457,13 @@ namespace ComponentFactory.Krypton.Navigator
                             {
                                 // Reverse the direction if working RightToLeft
                                 if (Navigator.RightToLeft != RightToLeft.Yes)
+                                {
                                     SelectNextPage(Navigator.SelectedPage, false, false);
+                                }
                                 else
+                                {
                                     SelectPreviousPage(Navigator.SelectedPage, false, false);
+                                }
                             }
                             return true;
                         }
@@ -454,9 +476,13 @@ namespace ComponentFactory.Krypton.Navigator
                             {
                                 // Reverse the direction if working RightToLeft
                                 if (Navigator.RightToLeft != RightToLeft.Yes)
+                                {
                                     SelectPreviousPage(Navigator.SelectedPage, false, false);
+                                }
                                 else
+                                {
                                     SelectNextPage(Navigator.SelectedPage, false, false);
+                                }
                             }
                             return true;
                         }
@@ -464,7 +490,9 @@ namespace ComponentFactory.Krypton.Navigator
                     case Keys.Space:
                     case Keys.Enter:
                         if (_hasFocus)
+                        {
                             KeyPressedPageView();
+                        }
                         break;
                 }
             }
@@ -491,9 +519,15 @@ namespace ComponentFactory.Krypton.Navigator
 
                 // Check if any of the stack check buttons want the point
                 foreach (ViewBase item in _viewLayout)
+                {
                     if (item is ViewDrawNavCheckButtonStack)
+                    {
                         if (item.ClientRectangle.Contains(pt))
+                        {
                             return true;
+                        }
+                    }
+                }
             }
 
             return false;
@@ -620,8 +654,10 @@ namespace ComponentFactory.Krypton.Navigator
                 checkButton.Orientation = checkButtonOrient;
 
                 // Create the border edge for use next to the check button
-                ViewDrawBorderEdge buttonEdge = new ViewDrawBorderEdge(buttonEdgePalette, buttonEdgeOrient);
-                buttonEdge.Visible = page.LastVisibleSet;
+                ViewDrawBorderEdge buttonEdge = new ViewDrawBorderEdge(buttonEdgePalette, buttonEdgeOrient)
+                {
+                    Visible = page.LastVisibleSet
+                };
 
                 // Add to lookup dictionary
                 _pageLookup.Add(page, checkButton);
@@ -644,7 +680,9 @@ namespace ComponentFactory.Krypton.Navigator
                 // All entries after the selected page are docked at the bottom/right unless
                 // we have been set to stack near or far, in which case we do not change.
                 if (checkButton.Checked && (alignment == RelativePositionAlign.Center))
+                {
                     dockTopLeft = false;
+                }
             }
 
             // Need to monitor changes in the page collection to reflect in layout bar
@@ -705,9 +743,12 @@ namespace ComponentFactory.Krypton.Navigator
 
             // Update each individual button with the new style for remapping page level button specs
             if (_pageLookup != null)
+            {
                 foreach (KeyValuePair<KryptonPage, ViewDrawNavCheckButtonBase> pair in _pageLookup)
-                    if (pair.Value.ButtonSpecManager != null)
-                        pair.Value.ButtonSpecManager.SetRemapTarget(Navigator.Stack.CheckButtonStyle);
+                {
+                    pair.Value.ButtonSpecManager?.SetRemapTarget(Navigator.Stack.CheckButtonStyle);
+                }
+            }
         }
 
         private void UpdateSelectedPageFocus()
@@ -778,8 +819,10 @@ namespace ComponentFactory.Krypton.Navigator
                                                                            Navigator.StateDisabled.BorderEdge);
 
                 // Create the border edge for use next to the check button
-                ViewDrawBorderEdge buttonEdge = new ViewDrawBorderEdge(buttonEdgePalette, Navigator.Stack.StackOrientation);
-                buttonEdge.Visible = e.Item.LastVisibleSet;
+                ViewDrawBorderEdge buttonEdge = new ViewDrawBorderEdge(buttonEdgePalette, Navigator.Stack.StackOrientation)
+                {
+                    Visible = e.Item.LastVisibleSet
+                };
 
                 // Add to lookup dictionary
                 _pageLookup.Add(e.Item, checkButton);
@@ -890,7 +933,9 @@ namespace ComponentFactory.Krypton.Navigator
                     // All entries after the selected page are docked at the bottom/right unless
                     // we have been set to stack near or far, in which case we do not change.
                     if (checkButton.Checked && (alignment == RelativePositionAlign.Center))
+                    {
                         dockTopLeft = false;
+                    }
                 }
             }
         }
@@ -901,9 +946,13 @@ namespace ComponentFactory.Krypton.Navigator
             {
                 case ButtonOrientation.Auto:
                     if (Navigator.Stack.StackOrientation == Orientation.Vertical)
+                    {
                         return VisualOrientation.Top;
+                    }
                     else
+                    {
                         return VisualOrientation.Left;
+                    }
                 case ButtonOrientation.FixedTop:
                     return VisualOrientation.Top;
                 case ButtonOrientation.FixedBottom:
@@ -1005,9 +1054,13 @@ namespace ComponentFactory.Krypton.Navigator
                         else
                         {
                             if (stackOrient == Orientation.Vertical)
+                            {
                                 childRect.Height = Math.Min(childRect.Height, reorderView.ClientHeight);
+                            }
                             else
+                            {
                                 childRect.Width = Math.Min(childRect.Width, reorderView.ClientWidth);
+                            }
 
                             // Ensure that when we are placed in the 'before' position the mouse is still over
                             // ourself as the moved button. Otherwise we just end up toggling back and forth.
@@ -1076,7 +1129,9 @@ namespace ComponentFactory.Krypton.Navigator
                 // All entries after the selected page are docked at the bottom/right unless
                 // we have been set to stack near or far, in which case we do not change.
                 if (checkButton.Checked && (alignment == RelativePositionAlign.Center))
+                {
                     dockTopLeft = false;
+                }
             }
         }
         #endregion

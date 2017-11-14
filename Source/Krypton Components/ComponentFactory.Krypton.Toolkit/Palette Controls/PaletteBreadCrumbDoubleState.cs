@@ -8,15 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
-using System.Drawing;
-using System.Drawing.Design;
-using System.Windows.Forms;
 using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -26,7 +18,7 @@ namespace ComponentFactory.Krypton.Toolkit
     public class PaletteBreadCrumbDoubleState : PaletteDouble
     {
         #region Instance Fields
-        private PaletteTriple _paletteCrumb;
+
         #endregion
 
         #region Identity
@@ -39,7 +31,7 @@ namespace ComponentFactory.Krypton.Toolkit
                                             NeedPaintHandler needPaint) 
             : base(redirect, needPaint)
 		{
-            _paletteCrumb = new PaletteTriple(redirect.BreadCrumb, needPaint);
+            BreadCrumb = new PaletteTriple(redirect.BreadCrumb, needPaint);
         }
         #endregion
 
@@ -48,14 +40,9 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// Gets a value indicating if all values are default.
 		/// </summary>
 		[Browsable(false)]
-		public override bool IsDefault
-		{
-            get
-            {
-                return (base.IsDefault && _paletteCrumb.IsDefault);
-            }
-		}
-		#endregion
+		public override bool IsDefault => (base.IsDefault && BreadCrumb.IsDefault);
+
+        #endregion
 
         #region BreadCrumb
         /// <summary>
@@ -64,14 +51,11 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining bread crumb appearance entries.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public PaletteTriple BreadCrumb
-        {
-            get { return _paletteCrumb; }
-        }
+        public PaletteTriple BreadCrumb { get; }
 
         private bool ShouldSerializeBreadCrumb()
         {
-            return !_paletteCrumb.IsDefault;
+            return !BreadCrumb.IsDefault;
         }
         #endregion
     }

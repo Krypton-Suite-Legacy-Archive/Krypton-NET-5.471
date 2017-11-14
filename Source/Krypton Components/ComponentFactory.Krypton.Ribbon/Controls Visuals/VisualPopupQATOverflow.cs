@@ -9,10 +9,8 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Diagnostics;
 using ComponentFactory.Krypton.Toolkit;
@@ -24,7 +22,7 @@ namespace ComponentFactory.Krypton.Ribbon
         #region Instance Fields
         private KryptonRibbon _ribbon;
         private ViewDrawRibbonQATOverflow _viewQAT;
-        private ViewLayoutRibbonQATContents _viewQATContents;
+
         #endregion
 
         #region Identity
@@ -48,13 +46,13 @@ namespace ComponentFactory.Krypton.Ribbon
             _viewQAT = new ViewDrawRibbonQATOverflow(ribbon, NeedPaintDelegate);
 
             // Create and add the element used to synch and draw the actual contents
-            _viewQATContents = new ViewLayoutRibbonQATFromOverflow(this, ribbon, 
+            ViewQATContents = new ViewLayoutRibbonQATFromOverflow(this, ribbon, 
                                                                    NeedPaintDelegate, 
                                                                    true, contents);
-            _viewQAT.Add(_viewQATContents);
+            _viewQAT.Add(ViewQATContents);
 
             // Attach the root to the view manager instance
-            ViewManager = new ViewRibbonQATOverflowManager(ribbon, this, _viewQATContents, _viewQAT);
+            ViewManager = new ViewRibbonQATOverflowManager(ribbon, this, ViewQATContents, _viewQAT);
         }
 
         /// <summary>
@@ -70,10 +68,12 @@ namespace ComponentFactory.Krypton.Ribbon
 
                 // Remove all child controls so they do not become disposed
                 for (int i = Controls.Count - 1; i >= 0; i--)
+                {
                     Controls.RemoveAt(0);
+                }
 
                 // If this group is being dismissed with key tips showing
-                if (_ribbon.InKeyboardMode && _ribbon.KeyTipMode == KeyTipMode.PopupQATOverflow)
+                if (_ribbon.InKeyboardMode && (_ribbon.KeyTipMode == KeyTipMode.PopupQATOverflow))
                 {
                     // Revert back to key tips for selected tab
                     _ribbon.KeyTipMode = KeyTipMode.Root;
@@ -88,20 +88,16 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <summary>
         /// Gets the qat overflow manager.
         /// </summary>
-        public ViewRibbonQATOverflowManager ViewOverflowManager
-        {
-            get { return ViewManager as ViewRibbonQATOverflowManager; }
-        }
+        public ViewRibbonQATOverflowManager ViewOverflowManager => ViewManager as ViewRibbonQATOverflowManager;
+
         #endregion
 
         #region ViewQATContents
         /// <summary>
         /// Gets access to the quick access toolbar contents view.
         /// </summary>
-        public ViewLayoutRibbonQATContents ViewQATContents
-        {
-            get { return _viewQATContents; }
-        }
+        public ViewLayoutRibbonQATContents ViewQATContents { get; }
+
         #endregion
 
         #region SetFirstFocusItem
@@ -111,7 +107,7 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <returns>ViewBase of item; otherwise false.</returns>
         public void SetFirstFocusItem()
         {
-            ViewOverflowManager.FocusView = _viewQATContents.GetFirstQATView();
+            ViewOverflowManager.FocusView = ViewQATContents.GetFirstQATView();
             PerformNeedPaint(false);
         }
         #endregion
@@ -123,7 +119,7 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <returns>ViewBase of item; otherwise false.</returns>
         public void SetLastFocusItem()
         {
-            ViewOverflowManager.FocusView = _viewQATContents.GetLastQATView();
+            ViewOverflowManager.FocusView = ViewQATContents.GetLastQATView();
             PerformNeedPaint(false);
         }
         #endregion
@@ -135,11 +131,13 @@ namespace ComponentFactory.Krypton.Ribbon
         public void SetNextFocusItem()
         {
             // Find the next item in sequence
-            ViewBase view = _viewQATContents.GetNextQATView(ViewOverflowManager.FocusView);
+            ViewBase view = ViewQATContents.GetNextQATView(ViewOverflowManager.FocusView);
 
             // Rotate around to the first item
             if (view == null)
+            {
                 SetFirstFocusItem();
+            }
             else
             {
                 ViewOverflowManager.FocusView = view;
@@ -155,11 +153,13 @@ namespace ComponentFactory.Krypton.Ribbon
         public void SetPreviousFocusItem()
         {
             // Find the previous item in sequence
-            ViewBase view = _viewQATContents.GetPreviousQATView(ViewOverflowManager.FocusView);
+            ViewBase view = ViewQATContents.GetPreviousQATView(ViewOverflowManager.FocusView);
 
             // Rotate around to the last item
             if (view == null)
+            {
                 SetLastFocusItem();
+            }
             else
             {
                 ViewOverflowManager.FocusView = view;
@@ -181,7 +181,9 @@ namespace ComponentFactory.Krypton.Ribbon
 
             // Find the size the quick access toolbar requests to be
             using (ViewLayoutContext context = new ViewLayoutContext(this, Renderer))
+            {
                 popupSize = _viewQAT.GetPreferredSize(context);
+            }
 
             DismissedDelegate = finishDelegate;
 
@@ -227,7 +229,9 @@ namespace ComponentFactory.Krypton.Ribbon
 
             // Update the region of the popup to be the border path
             using (GraphicsPath roundPath = CommonHelper.RoundedRectanglePath(ClientRectangle, borderRounding))
+            {
                 Region = new Region(roundPath);
+            }
         }
 
         /// <summary>
@@ -238,7 +242,9 @@ namespace ComponentFactory.Krypton.Ribbon
         {
             // If in keyboard mode then pass character onto the key tips
             if (_ribbon.InKeyboardMode && _ribbon.InKeyTipsMode)
+            {
                 _ribbon.AppendKeyTipPress(char.ToUpper(e.KeyChar));
+            }
 
             base.OnKeyPress(e);
         }

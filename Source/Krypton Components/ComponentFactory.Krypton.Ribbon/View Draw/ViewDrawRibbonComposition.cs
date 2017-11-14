@@ -9,10 +9,8 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Diagnostics;
 using ComponentFactory.Krypton.Toolkit;
@@ -26,14 +24,15 @@ namespace ComponentFactory.Krypton.Ribbon
                                                IKryptonComposition
     {
         #region Static Fields
-        private static readonly int CONSTANT_COMPOSITION_HEIGHT = 30;
+
+        private const int CONSTANT_COMPOSITION_HEIGHT = 30;
+
         #endregion
 
         #region Instance Fields
         private KryptonRibbon _ribbon;
         private VisualForm _ownerForm;
         private NeedPaintHandler _needPaint;
-        private ViewDrawRibbonCompoRightBorder _compRightBorder;
         private Blend _compBlend;
         #endregion
 
@@ -52,9 +51,11 @@ namespace ComponentFactory.Krypton.Ribbon
             _ribbon = ribbon;
             _needPaint = needPaint;
 
-            _compBlend = new Blend();
-            _compBlend.Positions = new float[] { 0.0f, 0.25f, 1.0f };
-            _compBlend.Factors = new float[] { 0.0f, 0.0f, 0.40f };
+            _compBlend = new Blend
+            {
+                Positions = new float[] { 0.0f, 0.25f, 1.0f },
+                Factors = new float[] { 0.0f, 0.0f, 0.40f }
+            };
         }
 
 		/// <summary>
@@ -77,9 +78,13 @@ namespace ComponentFactory.Krypton.Ribbon
             get 
             {
                 if ((_ribbon.RibbonShape == PaletteRibbonShape.Office2010) && _ribbon.MainPanel.Visible)
+                {
                     return _ribbon.TabsArea.ClientHeight + CONSTANT_COMPOSITION_HEIGHT;
+                }
                 else
+                {
                     return CONSTANT_COMPOSITION_HEIGHT;
+                }
             }
         }
         #endregion
@@ -88,21 +93,16 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <summary>
         /// Gets and sets the associated right border for composition layout.
         /// </summary>
-        public ViewDrawRibbonCompoRightBorder CompRightBorder
-        {
-            get { return _compRightBorder; }
-            set { _compRightBorder = value; }
-        }
+        public ViewDrawRibbonCompoRightBorder CompRightBorder { get; set; }
+
         #endregion
 
         #region CompHandle
         /// <summary>
         /// Gets the handle of the composition element control.
         /// </summary>
-        public IntPtr CompHandle 
-        {
-            get { return _ribbon.Handle; }
-        }
+        public IntPtr CompHandle => _ribbon.Handle;
+
         #endregion
 
         #region CompVisible
@@ -111,8 +111,8 @@ namespace ComponentFactory.Krypton.Ribbon
         /// </summary>
         public bool CompVisible
         {
-            get { return Visible; }
-            set { Visible = value; }
+            get => Visible;
+            set => Visible = value;
         }
         #endregion
 
@@ -122,12 +122,12 @@ namespace ComponentFactory.Krypton.Ribbon
         /// </summary>
         public VisualForm CompOwnerForm
         {
-            get { return _ownerForm; }
-            
+            get => _ownerForm;
+
             set 
             { 
                 _ownerForm = value;
-                _compRightBorder.CompOwnerForm = value;
+                CompRightBorder.CompOwnerForm = value;
             }
         }
         #endregion

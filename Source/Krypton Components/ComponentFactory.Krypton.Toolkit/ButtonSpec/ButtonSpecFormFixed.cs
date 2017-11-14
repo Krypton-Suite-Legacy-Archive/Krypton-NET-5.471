@@ -8,14 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
-using System.Drawing;
-using System.Drawing.Design;
-using System.Windows.Forms;
 using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace ComponentFactory.Krypton.Toolkit
@@ -27,7 +20,7 @@ namespace ComponentFactory.Krypton.Toolkit
     public abstract class ButtonSpecFormFixed : ButtonSpec
     {
         #region Instance Fields
-        private KryptonForm _form;
+
         #endregion
 
         #region Identity
@@ -42,7 +35,7 @@ namespace ComponentFactory.Krypton.Toolkit
             Debug.Assert(form != null);
 
             // Remember back reference to owning navigator.
-            _form = form;
+            KryptonForm = form;
 
             // Fix the type
             ProtectedType = fixedStyle;
@@ -53,20 +46,16 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Can a component be associated with the view.
         /// </summary>
-        public override bool AllowComponent
-        {
-            get { return false; }
-        }
+        public override bool AllowComponent => false;
+
         #endregion
 
         #region KryptonForm
         /// <summary>
         /// Gets access to the owning krypton form.
         /// </summary>
-        protected KryptonForm KryptonForm
-        {
-            get { return _form; }
-        }
+        protected KryptonForm KryptonForm { get; }
+
         #endregion
 
         #region ButtonSpecType
@@ -75,8 +64,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public virtual PaletteButtonSpecStyle ButtonSpecType
         {
-            get { return ProtectedType; }
-            set { ProtectedType = value; }
+            get => ProtectedType;
+            set => ProtectedType = value;
         }
         #endregion
     }

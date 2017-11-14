@@ -8,10 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
 using System.Drawing;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -62,37 +59,56 @@ namespace ComponentFactory.Krypton.Toolkit
 				if (Luminance > 0)
 				{
 					if (Saturation == 0)
-						red = green = blue = Luminance;
-					else
+                    {
+                        red = green = blue = Luminance;
+                    }
+                    else
 					{
 						double temp2;
 
 						if (Luminance <= 0.5)
-							temp2 = Luminance * (1.0 + Saturation);
-						else
-							temp2 = Luminance + Saturation - (Luminance * Saturation);
+                        {
+                            temp2 = Luminance * (1.0 + Saturation);
+                        }
+                        else
+                        {
+                            temp2 = (Luminance + Saturation) - (Luminance * Saturation);
+                        }
 
-						double temp1 = 2.0 * Luminance - temp2;
+                        double temp1 = (2.0 * Luminance) - temp2;
 
-						double[] t3 = new double[] { Hue + 1.0 / 3.0, Hue, Hue - 1.0 / 3.0 };
-						double[] clr = new double[] { 0, 0, 0 };
+						double[] t3 = { Hue + (1.0 / 3.0), Hue, Hue - (1.0 / 3.0) };
+						double[] clr = { 0, 0, 0 };
 
 						for (int i = 0; i < 3; i++)
 						{
 							if (t3[i] < 0)
-								t3[i] += 1.0;
-							if (t3[i] > 1)
-								t3[i] -= 1.0;
+                            {
+                                t3[i] += 1.0;
+                            }
 
-							if (6.0 * t3[i] < 1.0)
-								clr[i] = temp1 + (temp2 - temp1) * t3[i] * 6.0;
-							else if (2.0 * t3[i] < 1.0)
-								clr[i] = temp2;
-							else if (3.0 * t3[i] < 2.0)
-								clr[i] = (temp1 + (temp2 - temp1) * ((2.0 / 3.0) - t3[i]) * 6.0);
-							else
-								clr[i] = temp1;
-						}
+                            if (t3[i] > 1)
+                            {
+                                t3[i] -= 1.0;
+                            }
+
+                            if ((6.0 * t3[i]) < 1.0)
+                            {
+                                clr[i] = temp1 + ((temp2 - temp1) * t3[i] * 6.0);
+                            }
+                            else if ((2.0 * t3[i]) < 1.0)
+                            {
+                                clr[i] = temp2;
+                            }
+                            else if ((3.0 * t3[i]) < 2.0)
+                            {
+                                clr[i] = (temp1 + ((temp2 - temp1) * ((2.0 / 3.0) - t3[i]) * 6.0));
+                            }
+                            else
+                            {
+                                clr[i] = temp1;
+                            }
+                        }
 
 						red = clr[0];
 						green = clr[1];
@@ -113,19 +129,23 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// </summary>
 		public double Hue
 		{
-			get { return _hue; }
-			
-			set
+			get => _hue;
+
+		    set
 			{
 				// Store new value
 				_hue = value;
 
 				// Limit check inside range of 0 -> 1
 				if (_hue > 1)
-					_hue = 1;
-				else if (_hue < 0)
-					_hue = 0;
-			}
+                {
+                    _hue = 1;
+                }
+                else if (_hue < 0)
+                {
+                    _hue = 0;
+                }
+            }
 		}
 		#endregion
 
@@ -135,19 +155,23 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// </summary>
 		public double Saturation
 		{
-			get { return _saturation; }
+			get => _saturation;
 
-			set
+		    set
 			{
 				// Store new value
 				_saturation = value;
 
 				// Limit check inside range of 0 -> 1
 				if (_saturation > 1)
-					_saturation = 1;
-				else if (_saturation < 0)
-					_saturation = 0;
-			}
+                {
+                    _saturation = 1;
+                }
+                else if (_saturation < 0)
+                {
+                    _saturation = 0;
+                }
+            }
 		}
 		#endregion
 
@@ -157,19 +181,23 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// </summary>
 		public double Luminance
 		{
-			get { return _luminance; }
+			get => _luminance;
 
-			set
+		    set
 			{
 				// Store new value
 				_luminance = value;
 
 				// Limit check inside range of 0 -> 1
 				if (_luminance > 1)
-					_luminance = 1;
-				else if (_luminance < 0)
-					_luminance = 0;
-			}
+                {
+                    _luminance = 1;
+                }
+                else if (_luminance < 0)
+                {
+                    _luminance = 0;
+                }
+            }
 		}
 		#endregion
 	}

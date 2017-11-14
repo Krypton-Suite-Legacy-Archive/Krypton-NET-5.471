@@ -79,12 +79,9 @@ namespace ComponentFactory.Krypton.Navigator
         /// <summary>
         /// Gets a value indicating if the mode is a tab strip style mode.
         /// </summary>
-        public override bool IsTabStripMode
-        {
-            get { return false; }
-        }
+        public override bool IsTabStripMode => false;
 
-        /// <summary>
+	    /// <summary>
         /// Gets the KryptonPage associated with the provided view element.
         /// </summary>
         /// <param name="element">Element to search against.</param>
@@ -137,11 +134,8 @@ namespace ComponentFactory.Krypton.Navigator
         public override void PageVisibleStateChanged(KryptonPage page)
         {
             // If is possible the header group has not been created yet
-            if (_headerGroup != null)
-            {
-                // Ensure buttons are recreated to reflect different previous/next visibility
-                _headerGroup.UpdateButtons();
-            }
+            // Ensure buttons are recreated to reflect different previous/next visibility
+            _headerGroup?.UpdateButtons();
 
             // Let base class do standard work
             base.PageVisibleStateChanged(page);
@@ -323,9 +317,13 @@ namespace ComponentFactory.Krypton.Navigator
                             {
                                 bool changed;
                                 if (!shift)
+                                {
                                     changed = SelectNextPage(Navigator.SelectedPage, true, true);
+                                }
                                 else
+                                {
                                     changed = SelectPreviousPage(Navigator.SelectedPage, true, true);
+                                }
                             }
                         }
                         return true;

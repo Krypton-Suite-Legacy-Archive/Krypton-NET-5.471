@@ -9,13 +9,9 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
-using System.Data;
 using System.Drawing;
 using System.Drawing.Design;
 using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 
@@ -38,8 +34,7 @@ namespace ComponentFactory.Krypton.Toolkit
 	{
 		#region Instance Fields
 		private LabelStyle _style;
-		private LabelValues _labelValues;
-        private VisualOrientation _orientation;
+	    private VisualOrientation _orientation;
         private RadioButtonController _controller;
         private ViewLayoutDocker _layoutDocker;
         private ViewLayoutCenter _layoutCenter;
@@ -47,13 +42,8 @@ namespace ComponentFactory.Krypton.Toolkit
         private ViewDrawContent _drawContent;
 		private PaletteContentInheritRedirect _paletteCommonRedirect;
         private PaletteRedirectRadioButton _paletteRadioButtonImages;
-        private PaletteContent _stateCommon;
-        private PaletteContent _stateDisabled;
-		private PaletteContent _stateNormal;
-        private PaletteContent _stateFocus;
-        private PaletteContentInheritOverride _overrideNormal;
-        private RadioButtonImages _images;
-        private VisualOrientation _checkPosition;
+	    private PaletteContentInheritOverride _overrideNormal;
+	    private VisualOrientation _checkPosition;
         private bool _checked;
         private bool _useMnemonic;
         private bool _autoCheck;
@@ -111,40 +101,48 @@ namespace ComponentFactory.Krypton.Toolkit
             _autoCheck = true;
 
 			// Create content storage
-            _labelValues = new LabelValues(NeedPaintDelegate);
-            _labelValues.TextChanged += new EventHandler(OnRadioButtonTextChanged);
-            _images = new RadioButtonImages(NeedPaintDelegate);
+            Values = new LabelValues(NeedPaintDelegate);
+            Values.TextChanged += new EventHandler(OnRadioButtonTextChanged);
+            Images = new RadioButtonImages(NeedPaintDelegate);
 
 			// Create palette redirector
             _paletteCommonRedirect = new PaletteContentInheritRedirect(Redirector, PaletteContentStyle.LabelNormalControl);
-            _paletteRadioButtonImages = new PaletteRedirectRadioButton(Redirector, _images);
+            _paletteRadioButtonImages = new PaletteRedirectRadioButton(Redirector, Images);
 
 			// Create the palette provider
-            _stateCommon = new PaletteContent(_paletteCommonRedirect, NeedPaintDelegate);
-            _stateDisabled = new PaletteContent(_stateCommon, NeedPaintDelegate);
-            _stateNormal = new PaletteContent(_stateCommon, NeedPaintDelegate);
-            _stateFocus = new PaletteContent(_paletteCommonRedirect, NeedPaintDelegate);
+            StateCommon = new PaletteContent(_paletteCommonRedirect, NeedPaintDelegate);
+            StateDisabled = new PaletteContent(StateCommon, NeedPaintDelegate);
+            StateNormal = new PaletteContent(StateCommon, NeedPaintDelegate);
+            OverrideFocus = new PaletteContent(_paletteCommonRedirect, NeedPaintDelegate);
 
             // Override the normal values with the focus, when the control has focus
-            _overrideNormal = new PaletteContentInheritOverride(_stateFocus, _stateNormal, PaletteState.FocusOverride, false);
+            _overrideNormal = new PaletteContentInheritOverride(OverrideFocus, StateNormal, PaletteState.FocusOverride, false);
 
-			// Our view contains background and border with content inside
-            _drawContent = new ViewDrawContent(_overrideNormal, _labelValues, VisualOrientation.Top);
-            _drawContent.UseMnemonic = _useMnemonic;
+            // Our view contains background and border with content inside
+            _drawContent = new ViewDrawContent(_overrideNormal, Values, VisualOrientation.Top)
+            {
+                UseMnemonic = _useMnemonic,
 
-            // Only draw a focus rectangle when focus cues are needed in the top level form
-            _drawContent.TestForFocusCues = true;
+                // Only draw a focus rectangle when focus cues are needed in the top level form
+                TestForFocusCues = true
+            };
 
             // Create the check box image drawer and place inside element so it is always centered
-            _drawRadioButton = new ViewDrawRadioButton(_paletteRadioButtonImages);
-            _drawRadioButton.CheckState = _checked;
-            _layoutCenter = new ViewLayoutCenter();
-            _layoutCenter.Add(_drawRadioButton);
+            _drawRadioButton = new ViewDrawRadioButton(_paletteRadioButtonImages)
+            {
+                CheckState = _checked
+            };
+            _layoutCenter = new ViewLayoutCenter
+            {
+                _drawRadioButton
+            };
 
             // Place check box on the left and the label in the remainder
-            _layoutDocker = new ViewLayoutDocker();
-            _layoutDocker.Add(_layoutCenter, ViewDockStyle.Left);
-            _layoutDocker.Add(_drawContent, ViewDockStyle.Fill);
+            _layoutDocker = new ViewLayoutDocker
+            {
+                { _layoutCenter, ViewDockStyle.Left },
+                { _drawContent, ViewDockStyle.Fill }
+            };
 
             // Need a controller for handling mouse input
             _controller = new RadioButtonController(_drawRadioButton, _layoutDocker, NeedPaintDelegate);
@@ -177,8 +175,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue(true)]
         public override bool AutoSize
         {
-            get { return base.AutoSize; }
-            set { base.AutoSize = value; }
+            get => base.AutoSize;
+            set => base.AutoSize = value;
         }
 
         /// <summary>
@@ -191,8 +189,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue(typeof(AutoSizeMode), "GrowAndShrink")]
         public new AutoSizeMode AutoSizeMode
         {
-            get { return base.AutoSizeMode; }
-            set { base.AutoSizeMode = value; }
+            get => base.AutoSizeMode;
+            set => base.AutoSizeMode = value;
         }
 
         /// <summary>
@@ -204,8 +202,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public new Padding Padding
         {
-            get { return base.Padding; }
-            set { base.Padding = value; }
+            get => base.Padding;
+            set => base.Padding = value;
         }
         
         /// <summary>
@@ -214,18 +212,10 @@ namespace ComponentFactory.Krypton.Toolkit
 		[Editor("System.ComponentModel.Design.MultilineStringEditor, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
 		public override string Text
 		{
-			get
-			{
-				// Map onto the text property from the label values
-				return _labelValues.Text;
-			}
-				
-			set
-			{
-				// Map onto the text property from the label values
-				_labelValues.Text = value;
-			}
-		}
+			get => Values.Text;
+
+            set => Values.Text = value;
+        }
 
 		private bool ShouldSerializeText()
 		{
@@ -239,7 +229,7 @@ namespace ComponentFactory.Krypton.Toolkit
 		public override void ResetText()
 		{
 			// Map onto the text property from the label values
-			_labelValues.ResetText();
+			Values.ResetText();
 		}
 
         /// <summary>
@@ -250,9 +240,9 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue(typeof(VisualOrientation), "Top")]
         public virtual VisualOrientation Orientation
 		{
-			get { return _orientation; }
+			get => _orientation;
 
-			set
+            set
 			{
                 if (_orientation != value)
 				{
@@ -278,7 +268,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [Localizable(true)]
         public virtual VisualOrientation CheckPosition
         {
-            get { return _checkPosition; }
+            get => _checkPosition;
 
             set
             {
@@ -301,9 +291,9 @@ namespace ComponentFactory.Krypton.Toolkit
 		[Description("Label style.")]
 		public LabelStyle LabelStyle
 		{
-			get { return _style; }
+			get => _style;
 
-			set
+            set
 			{
 				if (_style != value)
 				{
@@ -330,14 +320,11 @@ namespace ComponentFactory.Krypton.Toolkit
 		[Category("Visuals")]
 		[Description("Label values")]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-		public LabelValues Values
-		{
-			get { return _labelValues; }
-		}
+		public LabelValues Values { get; }
 
-		private bool ShouldSerializeValues()
+	    private bool ShouldSerializeValues()
 		{
-			return !_labelValues.IsDefault;
+			return !Values.IsDefault;
 		}
 
         /// <summary>
@@ -346,14 +333,11 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Image value overrides.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public RadioButtonImages Images
-        {
-            get { return _images; }
-        }
+        public RadioButtonImages Images { get; }
 
-        private bool ShouldSerializeImages()
+	    private bool ShouldSerializeImages()
         {
-            return !_images.IsDefault;
+            return !Images.IsDefault;
         }
 
         /// <summary>
@@ -362,14 +346,11 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining common label appearance that other states can override.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public PaletteContent StateCommon
-        {
-            get { return _stateCommon; }
-        }
+        public PaletteContent StateCommon { get; }
 
-        private bool ShouldSerializeStateCommon()
+	    private bool ShouldSerializeStateCommon()
         {
-            return !_stateCommon.IsDefault;
+            return !StateCommon.IsDefault;
         }
 
 		/// <summary>
@@ -378,14 +359,11 @@ namespace ComponentFactory.Krypton.Toolkit
 		[Category("Visuals")]
 		[Description("Overrides for defining disabled label appearance.")]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-		public PaletteContent StateDisabled
-		{
-			get { return _stateDisabled; }
-		}
+		public PaletteContent StateDisabled { get; }
 
-		private bool ShouldSerializeStateDisabled()
+	    private bool ShouldSerializeStateDisabled()
 		{
-			return !_stateDisabled.IsDefault;
+			return !StateDisabled.IsDefault;
 		}
 
 		/// <summary>
@@ -394,14 +372,11 @@ namespace ComponentFactory.Krypton.Toolkit
 		[Category("Visuals")]
 		[Description("Overrides for defining normal label appearance.")]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-		public PaletteContent StateNormal
-		{
-			get { return _stateNormal; }
-		}
+		public PaletteContent StateNormal { get; }
 
-		private bool ShouldSerializeStateNormal()
+	    private bool ShouldSerializeStateNormal()
 		{
-			return !_stateNormal.IsDefault;
+			return !StateNormal.IsDefault;
 		}
 
         /// <summary>
@@ -410,14 +385,11 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining label appearance when it has focus.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public PaletteContent OverrideFocus
-        {
-            get { return _stateFocus; }
-        }
+        public PaletteContent OverrideFocus { get; }
 
-        private bool ShouldSerializeOverrideFocus()
+	    private bool ShouldSerializeOverrideFocus()
         {
-            return !_stateFocus.IsDefault;
+            return !OverrideFocus.IsDefault;
         }
 
         /// <summary>
@@ -428,7 +400,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue(true)]
         public bool UseMnemonic
         {
-            get { return _useMnemonic; }
+            get => _useMnemonic;
 
             set
             {
@@ -450,7 +422,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [Bindable(true)]
         public bool Checked
         {
-            get { return _checked; }
+            get => _checked;
 
             set
             {
@@ -460,7 +432,9 @@ namespace ComponentFactory.Krypton.Toolkit
                     _drawRadioButton.CheckState = _checked;
 
                     if (_checked)
+                    {
                         AutoUpdateOthers();
+                    }
 
                     OnCheckedChanged(EventArgs.Empty);
                     PerformNeedPaint(true);
@@ -476,8 +450,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue(true)]
         public bool AutoCheck
         {
-            get { return _autoCheck; }
-            
+            get => _autoCheck;
+
             set 
             {
                 if (_autoCheck != value)
@@ -485,7 +459,9 @@ namespace ComponentFactory.Krypton.Toolkit
                     _autoCheck = value;
 
                     if (_checked)
+                    {
                         AutoUpdateOthers();
+                    }
                 }
             }
         }
@@ -539,8 +515,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <param name="e">An EventArgs containing the event data.</param>
         protected override void OnDoubleClick(EventArgs e)
         {
-            if (DoubleClick != null)
-                DoubleClick(this, e);
+            DoubleClick?.Invoke(this, e);
         }
 
         /// <summary>
@@ -549,8 +524,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <param name="e">An EventArgs containing the event data.</param>
         protected virtual void OnMouseDoubleClick(EventArgs e)
         {
-            if (MouseDoubleClick != null)
-                MouseDoubleClick(this, e);
+            MouseDoubleClick?.Invoke(this, e);
         }
 
         /// <summary>
@@ -559,8 +533,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <param name="e">An EventArgs containing the event data.</param>
         protected virtual void OnMouseImeModeChanged(EventArgs e)
         {
-            if (ImeModeChanged != null)
-                ImeModeChanged(this, e);
+            ImeModeChanged?.Invoke(this, e);
         }
 
         /// <summary>
@@ -569,8 +542,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <param name="e">An EventArgs containing the event data.</param>
         protected virtual void OnCheckedChanged(EventArgs e)
         {
-            if (CheckedChanged != null)
-                CheckedChanged(this, e);
+            CheckedChanged?.Invoke(this, e);
         }
 
         /// <summary>
@@ -618,7 +590,9 @@ namespace ComponentFactory.Krypton.Toolkit
         protected override void OnClick(EventArgs e)
         {
             if (AutoCheck && !Checked)
+            {
                 Checked = true;
+            }
 
             base.OnClick(e);
         }
@@ -647,7 +621,9 @@ namespace ComponentFactory.Krypton.Toolkit
                 {
                     // If we don't have the focus, then take it
                     if (!ContainsFocus)
+                    {
                         Focus();
+                    }
 
                     // Generating a click event will automatically transition the state
                     OnClick(EventArgs.Empty);
@@ -667,9 +643,13 @@ namespace ComponentFactory.Krypton.Toolkit
 		{
 			// Push correct palettes into the view
 			if (Enabled)
-				_drawContent.SetPalette(_overrideNormal);
-			else
-				_drawContent.SetPalette(_stateDisabled);
+            {
+                _drawContent.SetPalette(_overrideNormal);
+            }
+            else
+            {
+                _drawContent.SetPalette(StateDisabled);
+            }
 
             _drawContent.Enabled = Enabled;
             _drawRadioButton.Enabled = Enabled;
@@ -695,12 +675,9 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// <summary>
 		/// Gets the default size of the control.
 		/// </summary>
-		protected override Size DefaultSize
-		{
-			get { return new Size(90, 25); }
-		}
+		protected override Size DefaultSize => new Size(90, 25);
 
-        /// <summary>
+	    /// <summary>
         /// Work out if this control needs to paint transparent areas.
         /// </summary>
         /// <returns>True if paint required; otherwise false.</returns>
@@ -764,15 +741,25 @@ namespace ComponentFactory.Krypton.Toolkit
                         default:
                         case VisualOrientation.Top:
                             if (RightToLeft == RightToLeft.Yes)
+                            {
                                 dockStyle = ViewDockStyle.Right;
+                            }
                             else
+                            {
                                 dockStyle = ViewDockStyle.Left;
+                            }
+
                             break;
                         case VisualOrientation.Bottom:
                             if (RightToLeft == RightToLeft.Yes)
+                            {
                                 dockStyle = ViewDockStyle.Left;
+                            }
                             else
+                            {
                                 dockStyle = ViewDockStyle.Right;
+                            }
+
                             break;
                         case VisualOrientation.Left:
                             dockStyle = ViewDockStyle.Bottom;
@@ -788,15 +775,25 @@ namespace ComponentFactory.Krypton.Toolkit
                         default:
                         case VisualOrientation.Top:
                             if (RightToLeft == RightToLeft.Yes)
+                            {
                                 dockStyle = ViewDockStyle.Left;
+                            }
                             else
+                            {
                                 dockStyle = ViewDockStyle.Right;
+                            }
+
                             break;
                         case VisualOrientation.Bottom:
                             if (RightToLeft == RightToLeft.Yes)
+                            {
                                 dockStyle = ViewDockStyle.Right;
+                            }
                             else
+                            {
                                 dockStyle = ViewDockStyle.Left;
+                            }
+
                             break;
                         case VisualOrientation.Left:
                             dockStyle = ViewDockStyle.Top;

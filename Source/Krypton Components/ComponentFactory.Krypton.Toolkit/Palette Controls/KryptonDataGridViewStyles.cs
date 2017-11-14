@@ -8,9 +8,6 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Drawing;
-using System.Windows.Forms;
 using System.ComponentModel;
 using System.Diagnostics;
 
@@ -51,10 +48,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Gets a value indicating if all values are default.
         /// </summary>
-        public override bool IsDefault
-        {
-            get { return (_gridStyle == DataGridViewStyle.List); }
-        }
+        public override bool IsDefault => (_gridStyle == DataGridViewStyle.List);
+
         #endregion
 
         #region Style
@@ -66,7 +61,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [RefreshProperties(RefreshProperties.All)]
         public DataGridViewStyle Style
         {
-            get { return _gridStyle; }
+            get => _gridStyle;
 
             set
             {
@@ -122,7 +117,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [RefreshProperties(RefreshProperties.All)]
         public GridStyle StyleColumn
         {
-            get { return _columnStyle; }
+            get => _columnStyle;
 
             set
             {
@@ -134,22 +129,31 @@ namespace ComponentFactory.Krypton.Toolkit
                     switch (_columnStyle)
                     {
                         case GridStyle.List:
-                            if ((_rowStyle == GridStyle.List) && 
+                            if ((_rowStyle == GridStyle.List) &&
                                 (_dataCellStyle == GridStyle.List) &&
                                 (_backgroundStyle == PaletteBackStyle.GridBackgroundList))
+                            {
                                 _gridStyle = DataGridViewStyle.List;
+                            }
+
                             break;
                         case GridStyle.Sheet:
                             if ((_rowStyle == GridStyle.Sheet) &&
                                 (_dataCellStyle == GridStyle.Sheet) &&
                                 (_backgroundStyle == PaletteBackStyle.GridBackgroundSheet))
+                            {
                                 _gridStyle = DataGridViewStyle.Sheet;
+                            }
+
                             break;
                         case GridStyle.Custom1:
                             if ((_rowStyle == GridStyle.Custom1) &&
                                 (_dataCellStyle == GridStyle.Custom1) &&
                                 (_backgroundStyle == PaletteBackStyle.GridBackgroundCustom1))
+                            {
                                 _gridStyle = DataGridViewStyle.Custom1;
+                            }
+
                             break;
                     }
 
@@ -179,7 +183,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [RefreshProperties(RefreshProperties.All)]
         public GridStyle StyleRow
         {
-            get { return _rowStyle; }
+            get => _rowStyle;
 
             set
             {
@@ -194,19 +198,28 @@ namespace ComponentFactory.Krypton.Toolkit
                             if ((_columnStyle == GridStyle.List) &&
                                 (_dataCellStyle == GridStyle.List) &&
                                 (_backgroundStyle == PaletteBackStyle.GridBackgroundList))
+                            {
                                 _gridStyle = DataGridViewStyle.List;
+                            }
+
                             break;
                         case GridStyle.Sheet:
                             if ((_columnStyle == GridStyle.Sheet) &&
                                 (_dataCellStyle == GridStyle.Sheet) &&
                                 (_backgroundStyle == PaletteBackStyle.GridBackgroundSheet))
+                            {
                                 _gridStyle = DataGridViewStyle.Sheet;
+                            }
+
                             break;
                         case GridStyle.Custom1:
                             if ((_columnStyle == GridStyle.Custom1) &&
                                 (_dataCellStyle == GridStyle.Custom1) &&
                                 (_backgroundStyle == PaletteBackStyle.GridBackgroundCustom1))
+                            {
                                 _gridStyle = DataGridViewStyle.Custom1;
+                            }
+
                             break;
                     }
 
@@ -236,7 +249,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [RefreshProperties(RefreshProperties.All)]
         public GridStyle StyleDataCells
         {
-            get { return _dataCellStyle; }
+            get => _dataCellStyle;
 
             set
             {
@@ -251,19 +264,28 @@ namespace ComponentFactory.Krypton.Toolkit
                             if ((_columnStyle == GridStyle.List) &&
                                 (_rowStyle == GridStyle.List) &&
                                 (_backgroundStyle == PaletteBackStyle.GridBackgroundList))
+                            {
                                 _gridStyle = DataGridViewStyle.List;
+                            }
+
                             break;
                         case GridStyle.Sheet:
                             if ((_columnStyle == GridStyle.Sheet) &&
                                 (_rowStyle == GridStyle.Sheet) &&
                                 (_backgroundStyle == PaletteBackStyle.GridBackgroundSheet))
+                            {
                                 _gridStyle = DataGridViewStyle.Sheet;
+                            }
+
                             break;
                         case GridStyle.Custom1:
                             if ((_columnStyle == GridStyle.Custom1) &&
                                 (_rowStyle == GridStyle.Custom1) &&
                                 (_backgroundStyle == PaletteBackStyle.GridBackgroundCustom1))
+                            {
                                 _gridStyle = DataGridViewStyle.Custom1;
+                            }
+
                             break;
                     }
 
@@ -293,7 +315,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [RefreshProperties(RefreshProperties.All)]
         public PaletteBackStyle StyleBackground
         {
-            get { return _backgroundStyle; }
+            get => _backgroundStyle;
 
             set
             {
@@ -302,26 +324,17 @@ namespace ComponentFactory.Krypton.Toolkit
                     _backgroundStyle = value;
                     _gridStyle = DataGridViewStyle.Mixed;
 
-                    if ((_backgroundStyle == PaletteBackStyle.GridBackgroundList) &&
-                        (_columnStyle == GridStyle.List) &&
-                        (_rowStyle == GridStyle.List) &&
-                        (_dataCellStyle == GridStyle.List))
-                        _gridStyle = DataGridViewStyle.List;
-                    else
+                    switch (_backgroundStyle)
                     {
-                        if ((_backgroundStyle == PaletteBackStyle.GridBackgroundSheet) &&
-                        (_columnStyle == GridStyle.Sheet) &&
-                            (_rowStyle == GridStyle.Sheet) &&
-                            (_dataCellStyle == GridStyle.Sheet))
+                        case PaletteBackStyle.GridBackgroundList when (_columnStyle == GridStyle.List) && (_rowStyle == GridStyle.List) && (_dataCellStyle == GridStyle.List):
+                            _gridStyle = DataGridViewStyle.List;
+                            break;
+                        case PaletteBackStyle.GridBackgroundSheet when (_columnStyle == GridStyle.Sheet) && (_rowStyle == GridStyle.Sheet) && (_dataCellStyle == GridStyle.Sheet):
                             _gridStyle = DataGridViewStyle.Sheet;
-                        else
-                        {
-                            if ((_backgroundStyle == PaletteBackStyle.GridBackgroundCustom1) &&
-                                (_columnStyle == GridStyle.Custom1) &&
-                                (_rowStyle == GridStyle.Custom1) &&
-                                (_dataCellStyle == GridStyle.Custom1))
-                                _gridStyle = DataGridViewStyle.Custom1;
-                        }
+                            break;
+                        case PaletteBackStyle.GridBackgroundCustom1 when (_columnStyle == GridStyle.Custom1) && (_rowStyle == GridStyle.Custom1) && (_dataCellStyle == GridStyle.Custom1):
+                            _gridStyle = DataGridViewStyle.Custom1;
+                            break;
                     }
 
                     _dataGridView.SyncStyles();

@@ -9,10 +9,7 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
 using System.Diagnostics;
@@ -34,7 +31,6 @@ namespace ComponentFactory.Krypton.Ribbon
 
         #region Instance Fields
         private KryptonRibbon _ribbon;
-        private KryptonRibbonGroupCheckBox _ribbonCheckBox;
         private ViewLayoutRibbonCheckBox _viewLarge;
         private ViewDrawRibbonGroupCheckBoxImage _viewLargeImage;
         private ViewDrawRibbonGroupCheckBoxText _viewLargeText1;
@@ -69,16 +65,16 @@ namespace ComponentFactory.Krypton.Ribbon
 
             // Remember incoming references
             _ribbon = ribbon;
-            _ribbonCheckBox = ribbonCheckBox;
+            GroupCheckBox = ribbonCheckBox;
             _needPaint = needPaint;
-            _currentSize = _ribbonCheckBox.ItemSizeCurrent;
+            _currentSize = GroupCheckBox.ItemSizeCurrent;
 
             // Create delegate used to process end of click action
             _finishDelegateLarge = new EventHandler(ActionFinishedLarge);
             _finishDelegateMediumSmall = new EventHandler(ActionFinishedMediumSmall);
 
             // Associate this view with the source component (required for design time selection)
-            Component = _ribbonCheckBox;
+            Component = GroupCheckBox;
 
             // Create the different views for different sizes of the check box
             CreateLargeCheckBoxView();
@@ -90,7 +86,7 @@ namespace ComponentFactory.Krypton.Ribbon
             UpdateItemSizeState();
 
             // Hook into changes in the ribbon check box definition
-            _ribbonCheckBox.PropertyChanged += new PropertyChangedEventHandler(OnCheckBoxPropertyChanged);
+            GroupCheckBox.PropertyChanged += new PropertyChangedEventHandler(OnCheckBoxPropertyChanged);
         }
 
 		/// <summary>
@@ -111,14 +107,14 @@ namespace ComponentFactory.Krypton.Ribbon
         {
             if (disposing)
             {
-                if (_ribbonCheckBox != null)
+                if (GroupCheckBox != null)
                 {
                     // Must unhook to prevent memory leaks
-                    _ribbonCheckBox.PropertyChanged -= new PropertyChangedEventHandler(OnCheckBoxPropertyChanged);
+                    GroupCheckBox.PropertyChanged -= new PropertyChangedEventHandler(OnCheckBoxPropertyChanged);
 
                     // Remove association with definition
-                    _ribbonCheckBox.CheckBoxView = null;
-                    _ribbonCheckBox = null;
+                    GroupCheckBox.CheckBoxView = null;
+                    GroupCheckBox = null;
                 }
             }
 
@@ -130,10 +126,8 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <summary>
         /// Gets access to the connected check box definition.
         /// </summary>
-        public KryptonRibbonGroupCheckBox GroupCheckBox
-        {
-            get { return _ribbonCheckBox; }
-        }
+        public KryptonRibbonGroupCheckBox GroupCheckBox { get; private set; }
+
         #endregion
 
         #region GetFirstFocusItem
@@ -144,15 +138,21 @@ namespace ComponentFactory.Krypton.Ribbon
         public ViewBase GetFirstFocusItem()
         {
             // Only take focus if we are visible and enabled
-            if (_ribbonCheckBox.Visible && _ribbonCheckBox.Enabled)
+            if (GroupCheckBox.Visible && GroupCheckBox.Enabled)
             {
-                if (_viewLarge == _ribbonCheckBox.CheckBoxView)
+                if (_viewLarge == GroupCheckBox.CheckBoxView)
+                {
                     return _viewLarge;
+                }
                 else
+                {
                     return _viewMediumSmall;
+                }
             }
             else
+            {
                 return null;
+            }
         }
         #endregion
 
@@ -164,15 +164,21 @@ namespace ComponentFactory.Krypton.Ribbon
         public ViewBase GetLastFocusItem()
         {
             // Only take focus if we are visible and enabled
-            if (_ribbonCheckBox.Visible && _ribbonCheckBox.Enabled)
+            if (GroupCheckBox.Visible && GroupCheckBox.Enabled)
             {
-                if (_viewLarge == _ribbonCheckBox.CheckBoxView)
+                if (_viewLarge == GroupCheckBox.CheckBoxView)
+                {
                     return _viewLarge;
+                }
                 else
+                {
                     return _viewMediumSmall;
+                }
             }
             else
+            {
                 return null;
+            }
         }
         #endregion
 
@@ -237,7 +243,7 @@ namespace ComponentFactory.Krypton.Ribbon
                         break;
                 }
 
-                keyTipList.Add(new KeyTipInfo(_ribbonCheckBox.Enabled, _ribbonCheckBox.KeyTip, 
+                keyTipList.Add(new KeyTipInfo(GroupCheckBox.Enabled, GroupCheckBox.KeyTip, 
                                               screenPt, this[0].ClientRectangle, controller));
             }
         }
@@ -271,9 +277,13 @@ namespace ComponentFactory.Krypton.Ribbon
             Size preferredSize = base.GetPreferredSize(context);
 
             if (_currentSize == GroupItemSize.Large)
+            {
                 preferredSize.Height = _ribbon.CalculatedValues.GroupTripleHeight;
+            }
             else
+            {
                 preferredSize.Height = _ribbon.CalculatedValues.GroupLineHeight;
+            }
 
             return preferredSize;
         }
@@ -321,7 +331,9 @@ namespace ComponentFactory.Krypton.Ribbon
                 _needPaint(this, new NeedLayoutEventArgs(needLayout));
 
                 if (needLayout)
+                {
                     _ribbon.PerformLayout();
+                }
             }
         }
         #endregion
@@ -333,17 +345,19 @@ namespace ComponentFactory.Krypton.Ribbon
             _viewLarge = new ViewLayoutRibbonCheckBox();
 
             // Add the large button at the top
-            _viewLargeImage = new ViewDrawRibbonGroupCheckBoxImage(_ribbon, _ribbonCheckBox, true);
-            ViewLayoutRibbonCenterPadding largeImagePadding = new ViewLayoutRibbonCenterPadding(_largeImagePadding);
-            largeImagePadding.Add(_viewLargeImage);
+            _viewLargeImage = new ViewDrawRibbonGroupCheckBoxImage(_ribbon, GroupCheckBox, true);
+            ViewLayoutRibbonCenterPadding largeImagePadding = new ViewLayoutRibbonCenterPadding(_largeImagePadding)
+            {
+                _viewLargeImage
+            };
             _viewLarge.Add(largeImagePadding, ViewDockStyle.Top);
 
             // Add the first line of text
-            _viewLargeText1 = new ViewDrawRibbonGroupCheckBoxText(_ribbon, _ribbonCheckBox, true);
+            _viewLargeText1 = new ViewDrawRibbonGroupCheckBoxText(_ribbon, GroupCheckBox, true);
             _viewLarge.Add(_viewLargeText1, ViewDockStyle.Bottom);
 
             // Add the second line of text
-            _viewLargeText2 = new ViewDrawRibbonGroupCheckBoxText(_ribbon, _ribbonCheckBox, false);
+            _viewLargeText2 = new ViewDrawRibbonGroupCheckBoxText(_ribbon, GroupCheckBox, false);
             _viewLarge.Add(_viewLargeText2, ViewDockStyle.Bottom);
 
             // Add a 1 pixel separator at bottom of button before the text
@@ -368,17 +382,21 @@ namespace ComponentFactory.Krypton.Ribbon
             _viewMediumSmall = new ViewLayoutRibbonCheckBox();
 
             // Create the image and drop down content
-            _viewMediumSmallImage = new ViewDrawRibbonGroupCheckBoxImage(_ribbon, _ribbonCheckBox, false);
-            _viewMediumSmallText1 = new ViewDrawRibbonGroupCheckBoxText(_ribbon, _ribbonCheckBox, true);
-            _viewMediumSmallText2 = new ViewDrawRibbonGroupCheckBoxText(_ribbon, _ribbonCheckBox, false);
-            ViewLayoutRibbonCenterPadding imagePadding = new ViewLayoutRibbonCenterPadding(_smallImagePadding);
-            imagePadding.Add(_viewMediumSmallImage);
+            _viewMediumSmallImage = new ViewDrawRibbonGroupCheckBoxImage(_ribbon, GroupCheckBox, false);
+            _viewMediumSmallText1 = new ViewDrawRibbonGroupCheckBoxText(_ribbon, GroupCheckBox, true);
+            _viewMediumSmallText2 = new ViewDrawRibbonGroupCheckBoxText(_ribbon, GroupCheckBox, false);
+            ViewLayoutRibbonCenterPadding imagePadding = new ViewLayoutRibbonCenterPadding(_smallImagePadding)
+            {
+                _viewMediumSmallImage
+            };
 
             // Layout the content in the center of a row
-            _viewMediumSmallCenter = new ViewLayoutRibbonRowCenter();
-            _viewMediumSmallCenter.Add(imagePadding);
-            _viewMediumSmallCenter.Add(_viewMediumSmallText1);
-            _viewMediumSmallCenter.Add(_viewMediumSmallText2);
+            _viewMediumSmallCenter = new ViewLayoutRibbonRowCenter
+            {
+                imagePadding,
+                _viewMediumSmallText1,
+                _viewMediumSmallText2
+            };
 
             // Use content as only fill item
             _viewMediumSmall.Add(_viewMediumSmallCenter, ViewDockStyle.Fill);
@@ -405,15 +423,17 @@ namespace ComponentFactory.Krypton.Ribbon
             Add(view);
 
             // Provide back reference to the check box definition
-            _ribbonCheckBox.CheckBoxView = view;
+            GroupCheckBox.CheckBoxView = view;
         }
 
         private void UpdateEnabledState()
         {
             // Get the correct enabled state from the button definition
-            bool buttonEnabled = _ribbonCheckBox.Enabled;
-            if (_ribbonCheckBox.KryptonCommand != null)
-                buttonEnabled = _ribbonCheckBox.KryptonCommand.Enabled;
+            bool buttonEnabled = GroupCheckBox.Enabled;
+            if (GroupCheckBox.KryptonCommand != null)
+            {
+                buttonEnabled = GroupCheckBox.KryptonCommand.Enabled;
+            }
 
             // Take into account the ribbon state and mode
             bool enabled = _ribbon.InDesignHelperMode || (buttonEnabled && _ribbon.Enabled);
@@ -434,10 +454,14 @@ namespace ComponentFactory.Krypton.Ribbon
         private void UpdateCheckState()
         {
             CheckState newCheckState = CheckState.Unchecked;
-            if (_ribbonCheckBox.KryptonCommand != null)
-                newCheckState = _ribbonCheckBox.KryptonCommand.CheckState;
+            if (GroupCheckBox.KryptonCommand != null)
+            {
+                newCheckState = GroupCheckBox.KryptonCommand.CheckState;
+            }
             else
-                newCheckState = _ribbonCheckBox.CheckState;
+            {
+                newCheckState = GroupCheckBox.CheckState;
+            }
 
             _viewLargeImage.CheckState = newCheckState;
             _viewMediumSmallImage.CheckState = newCheckState;
@@ -445,7 +469,7 @@ namespace ComponentFactory.Krypton.Ribbon
 
         private void UpdateItemSizeState()
         {
-            UpdateItemSizeState(_ribbonCheckBox.ItemSizeCurrent);
+            UpdateItemSizeState(GroupCheckBox.ItemSizeCurrent);
         }
 
         private void UpdateItemSizeState(GroupItemSize size)
@@ -482,8 +506,7 @@ namespace ComponentFactory.Krypton.Ribbon
         private void ActionFinishedLarge(object sender, EventArgs e)
         {
             // Remove any popups that result from an action occuring
-            if (_ribbon != null)
-                _ribbon.ActionOccured();
+            _ribbon?.ActionOccured();
 
             // Remove the fixed pressed appearance
             _viewLargeController.RemoveFixed();
@@ -492,8 +515,7 @@ namespace ComponentFactory.Krypton.Ribbon
         private void ActionFinishedMediumSmall(object sender, EventArgs e)
         {
             // Remove any popups that result from an action occuring
-            if (_ribbon != null)
-                _ribbon.ActionOccured();
+            _ribbon?.ActionOccured();
 
             // Remove the fixed pressed appearance
             _viewMediumSmallController.RemoveFixed();
@@ -548,8 +570,8 @@ namespace ComponentFactory.Krypton.Ribbon
             if (updateLayout)
             {
                 // If we are on the currently selected tab then...
-                if ((_ribbonCheckBox.RibbonTab != null) &&
-                    (_ribbon.SelectedTab == _ribbonCheckBox.RibbonTab))
+                if ((GroupCheckBox.RibbonTab != null) &&
+                    (_ribbon.SelectedTab == GroupCheckBox.RibbonTab))
                 {
                     // ...layout so the visible change is made
                     OnNeedPaint(true);
@@ -559,11 +581,11 @@ namespace ComponentFactory.Krypton.Ribbon
             if (updatePaint)
             {
                 // If this check box is actually defined as visible...
-                if (_ribbonCheckBox.Visible || _ribbon.InDesignMode)
+                if (GroupCheckBox.Visible || _ribbon.InDesignMode)
                 {
                     // ...and on the currently selected tab then...
-                    if ((_ribbonCheckBox.RibbonTab != null) &&
-                        (_ribbon.SelectedTab == _ribbonCheckBox.RibbonTab))
+                    if ((GroupCheckBox.RibbonTab != null) &&
+                        (_ribbon.SelectedTab == GroupCheckBox.RibbonTab))
                     {
                         // ...repaint it right now
                         OnNeedPaint(false, ClientRectangle);
@@ -600,7 +622,7 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <returns></returns>
         public string GetShortText()
         {
-            return _ribbonCheckBox.TextLine1;
+            return GroupCheckBox.TextLine1;
         }
 
         /// <summary>
@@ -609,7 +631,7 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <returns></returns>
         public string GetLongText()
         {
-            return _ribbonCheckBox.TextLine2;
+            return GroupCheckBox.TextLine2;
         }
         #endregion
     }

@@ -8,7 +8,6 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
 using System.ComponentModel;
 
 namespace ComponentFactory.Krypton.Navigator
@@ -19,8 +18,8 @@ namespace ComponentFactory.Krypton.Navigator
 	public class CtrlTabCancelEventArgs : CancelEventArgs
 	{
 		#region Instance Fields
-        private bool _forward;
-		#endregion
+
+	    #endregion
 
 		#region Identity
 		/// <summary>
@@ -29,7 +28,7 @@ namespace ComponentFactory.Krypton.Navigator
         /// <param name="forward">Tabbing in forward or backwards direction.</param>
         public CtrlTabCancelEventArgs(bool forward)
 		{
-            _forward = forward;
+            Forward = forward;
 		}
 		#endregion
 
@@ -37,10 +36,8 @@ namespace ComponentFactory.Krypton.Navigator
 		/// <summary>
 		/// Gets a value indicating if control tabbing forward.
 		/// </summary>
-		public bool Forward
-		{
-            get { return _forward; }
-		}
-		#endregion
+		public bool Forward { get; }
+
+	    #endregion
     }
 }

@@ -8,14 +8,8 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Design;
-using System.Windows.Forms;
 using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Collections.Generic;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -58,16 +52,11 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// Gets a value indicating if all values are default.
 		/// </summary>
 		[Browsable(false)]
-		public override bool IsDefault
-		{
-			get
-			{
-                return (_checked == null) &&
-                       (_indeterminate == null) &&
-                       (_subMenu == null);
-            }
-		}
-		#endregion
+		public override bool IsDefault => (_checked == null) &&
+		                                  (_indeterminate == null) &&
+		                                  (_subMenu == null);
+
+        #endregion
 
         #region PopulateFromBase
         /// <summary>
@@ -104,7 +93,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [RefreshPropertiesAttribute(RefreshProperties.All)]
         public Image Checked
         {
-            get { return _checked; }
+            get => _checked;
 
             set
             {
@@ -136,7 +125,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [RefreshPropertiesAttribute(RefreshProperties.All)]
         public Image Indeterminate
         {
-            get { return _indeterminate; }
+            get => _indeterminate;
 
             set
             {
@@ -168,7 +157,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [RefreshPropertiesAttribute(RefreshProperties.All)]
         public Image SubMenu
         {
-            get { return _subMenu; }
+            get => _subMenu;
 
             set
             {

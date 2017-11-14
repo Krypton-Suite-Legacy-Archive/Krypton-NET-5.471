@@ -10,7 +10,6 @@
 
 using System;
 using System.Drawing;
-using System.Diagnostics;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -20,8 +19,8 @@ namespace ComponentFactory.Krypton.Toolkit
 	public class ColorEventArgs : EventArgs
 	{
 		#region Instance Fields
-        private Color _color;
-		#endregion
+
+	    #endregion
 
 		#region Identity
 		/// <summary>
@@ -30,7 +29,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <param name="color">Color associated with the event.</param>
         public ColorEventArgs(Color color)
 		{
-            _color = color;
+            Color = color;
 		}
 		#endregion
 
@@ -38,10 +37,8 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// <summary>
 		/// Gets the color.
 		/// </summary>
-        public Color Color
-		{
-            get { return _color; }
-		}
-		#endregion
+        public Color Color { get; }
+
+	    #endregion
 	}
 }

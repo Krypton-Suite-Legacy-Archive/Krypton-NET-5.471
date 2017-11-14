@@ -9,10 +9,7 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Diagnostics;
 
@@ -25,10 +22,8 @@ namespace ComponentFactory.Krypton.Toolkit
     {
         #region Instance Fields
         private IPalette _palette;
-        private CheckState _checkState;
         private bool _tracking;
-        private bool _pressed;
-        private bool _forceTracking;
+
         #endregion
 
         #region Identity
@@ -57,11 +52,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Gets and sets the check state of the check box.
         /// </summary>
-        public CheckState CheckState
-        {
-            get { return _checkState; }
-            set { _checkState = value; }
-        }
+        public CheckState CheckState { get; set; }
+
         #endregion
 
         #region Tracking
@@ -70,8 +62,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public bool Tracking
         {
-            get { return (_forceTracking || _tracking); }
-            set { _tracking = value; }
+            get => (ForcedTracking || _tracking);
+            set => _tracking = value;
         }
         #endregion
 
@@ -79,22 +71,16 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Gets and sets the forced tracking state of the checkbox.
         /// </summary>
-        public bool ForcedTracking
-        {
-            get { return _forceTracking; }
-            set { _forceTracking = value; }
-        }
+        public bool ForcedTracking { get; set; }
+
         #endregion
 
         #region Pressed
         /// <summary>
         /// Gets and sets the pressed state of the check box.
         /// </summary>
-        public bool Pressed
-        {
-            get { return _pressed; }
-            set { _pressed = value; }
-        }
+        public bool Pressed { get; set; }
+
         #endregion
 
         #region Layout
@@ -108,8 +94,8 @@ namespace ComponentFactory.Krypton.Toolkit
 
             // Ask the renderer for the required size of the check box
             return context.Renderer.RenderGlyph.GetCheckBoxPreferredSize(context, _palette, 
-                                                                         Enabled, _checkState, 
-                                                                         Tracking, _pressed);
+                                                                         Enabled, CheckState, 
+                                                                         Tracking, Pressed);
         }
 
         /// <summary>
@@ -121,7 +107,10 @@ namespace ComponentFactory.Krypton.Toolkit
             Debug.Assert(context != null);
 
             // Validate incoming reference
-            if (context == null) throw new ArgumentNullException("context");
+            if (context == null)
+            {
+                throw new ArgumentNullException("context");
+            }
 
             // We take on all the available display area
             ClientRectangle = context.DisplayRectangle;
@@ -137,8 +126,8 @@ namespace ComponentFactory.Krypton.Toolkit
         {
             context.Renderer.RenderGlyph.DrawCheckBox(context, ClientRectangle, 
                                                       _palette, Enabled, 
-                                                      _checkState, Tracking, 
-                                                      _pressed);
+                                                      CheckState, Tracking, 
+                                                      Pressed);
         }
         #endregion
     }

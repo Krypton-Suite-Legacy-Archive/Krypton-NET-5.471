@@ -8,12 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
-using System.Drawing;
-using System.Drawing.Text;
 using System.ComponentModel;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Diagnostics;
 
@@ -60,15 +55,10 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// Gets a value indicating if all values are default.
 		/// </summary>
 		[Browsable(false)]
-		public override bool IsDefault
-		{
-            get
-            {
-                return (base.IsDefault &&
-                        HeaderPadding.Equals(CommonHelper.InheritPadding));
-            }
-		}
-		#endregion
+		public override bool IsDefault => (base.IsDefault &&
+		                                   HeaderPadding.Equals(CommonHelper.InheritPadding));
+
+	    #endregion
 
         #region HeaderPadding
         /// <summary>
@@ -80,9 +70,9 @@ namespace ComponentFactory.Krypton.Toolkit
 		[RefreshPropertiesAttribute(RefreshProperties.All)]
 		public Padding HeaderPadding
 		{
-			get { return _headerPadding; }
+			get => _headerPadding;
 
-			set
+            set
 			{
 				if (_headerPadding != value)
 				{
@@ -118,7 +108,9 @@ namespace ComponentFactory.Krypton.Toolkit
             {
                 // If the user has defined an actual value to use
                 if (!HeaderPadding.Equals(CommonHelper.InheritPadding))
+                {
                     return HeaderPadding;
+                }
             }
 
             // Let base class perform its own testing

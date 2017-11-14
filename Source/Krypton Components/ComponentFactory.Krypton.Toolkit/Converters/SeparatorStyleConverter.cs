@@ -8,9 +8,6 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.ComponentModel;
-
 namespace ComponentFactory.Krypton.Toolkit
 {
     /// <summary>
@@ -19,10 +16,7 @@ namespace ComponentFactory.Krypton.Toolkit
     internal class SeparatorStyleConverter : StringLookupConverter
     {
         #region Static Fields
-        private Pair[] _pairs = new Pair[] { new Pair(SeparatorStyle.LowProfile,            "Low Profile"),
-                                             new Pair(SeparatorStyle.HighProfile,           "High Profile"),  
-                                             new Pair(SeparatorStyle.HighInternalProfile,   "High Internal Profile"),  
-                                             new Pair(SeparatorStyle.Custom1,               "Custom1"),  };
+
         #endregion
 
         #region Identity
@@ -39,10 +33,12 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Gets an array of lookup pairs.
         /// </summary>
-        protected override Pair[] Pairs 
-        {
-            get { return _pairs; }
-        }
+        protected override Pair[] Pairs { get; } =
+        { new Pair(SeparatorStyle.LowProfile,            "Low Profile"),
+            new Pair(SeparatorStyle.HighProfile,           "High Profile"),  
+            new Pair(SeparatorStyle.HighInternalProfile,   "High Internal Profile"),  
+            new Pair(SeparatorStyle.Custom1,               "Custom1"),  };
+
         #endregion
     }
 }

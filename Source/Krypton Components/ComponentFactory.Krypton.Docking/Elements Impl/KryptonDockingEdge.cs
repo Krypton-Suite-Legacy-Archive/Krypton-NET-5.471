@@ -9,13 +9,8 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
-using System.Drawing;
 using System.Windows.Forms;
-using System.Collections.Generic;
 using System.ComponentModel;
-using ComponentFactory.Krypton.Toolkit;
-using ComponentFactory.Krypton.Navigator;
 
 namespace ComponentFactory.Krypton.Docking
 {
@@ -28,8 +23,7 @@ namespace ComponentFactory.Krypton.Docking
     public class KryptonDockingEdge : DockingElementClosedCollection
     {
         #region Instance Fields
-        private Control _control;
-        private DockingEdge _edge;
+
         #endregion
 
         #region Identity
@@ -42,11 +36,8 @@ namespace ComponentFactory.Krypton.Docking
         public KryptonDockingEdge(string name, Control control, DockingEdge edge)
             : base(name)
         {
-            if (control == null)
-                throw new ArgumentNullException("control");
-
-            _control = control;
-            _edge = edge;
+            Control = control ?? throw new ArgumentNullException("control");
+            Edge = edge;
 
             // Auto create elements for handling standard docked content and auto hidden content
             InternalAdd(new KryptonDockingEdgeAutoHidden("AutoHidden", control, edge));
@@ -58,28 +49,21 @@ namespace ComponentFactory.Krypton.Docking
         /// <summary>
         /// Gets the control this element is managing.
         /// </summary>
-        public Control Control
-        {
-            get { return _control; }
-        }
+        public Control Control { get; }
 
         /// <summary>
         /// Gets the docking edge this element is managing.
         /// </summary>
-        public DockingEdge Edge
-        {
-            get { return _edge; }
-        }      
+        public DockingEdge Edge { get; }
+
         #endregion
 
         #region Protected
         /// <summary>
         /// Gets the xml element name to use when saving.
         /// </summary>
-        protected override string XmlElementName
-        {
-            get { return "DE"; }
-        }
+        protected override string XmlElementName => "DE";
+
         #endregion
     }
 }

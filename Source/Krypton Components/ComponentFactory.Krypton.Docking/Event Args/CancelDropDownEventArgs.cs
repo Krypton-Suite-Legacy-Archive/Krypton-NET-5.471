@@ -8,9 +8,6 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Drawing;
-using System.Diagnostics;
 using System.ComponentModel;
 using ComponentFactory.Krypton.Toolkit;
 using ComponentFactory.Krypton.Navigator;
@@ -23,9 +20,8 @@ namespace ComponentFactory.Krypton.Docking
     public class CancelDropDownEventArgs : CancelEventArgs
 	{
 		#region Instance Fields
-        private KryptonContextMenu _contextMenu;
-        private KryptonPage _page;
-		#endregion
+
+	    #endregion
 
 		#region Identity
 		/// <summary>
@@ -36,8 +32,8 @@ namespace ComponentFactory.Krypton.Docking
         public CancelDropDownEventArgs(KryptonContextMenu contextMenu, KryptonPage page)
             : base(false)
 		{
-            _contextMenu = contextMenu;
-            _page = page;
+            KryptonContextMenu = contextMenu;
+            Page = page;
 		}
         #endregion
 
@@ -45,18 +41,13 @@ namespace ComponentFactory.Krypton.Docking
         /// <summary>
         /// Gets a reference to the context menu.
         /// </summary>
-        public KryptonContextMenu KryptonContextMenu
-        {
-            get { return _contextMenu; }
-        }
+        public KryptonContextMenu KryptonContextMenu { get; }
 
-        /// <summary>
+	    /// <summary>
         /// Gets a reference to the page.
         /// </summary>
-        public KryptonPage Page
-        {
-            get { return _page; }
-        }
-        #endregion
+        public KryptonPage Page { get; }
+
+	    #endregion
 	}
 }

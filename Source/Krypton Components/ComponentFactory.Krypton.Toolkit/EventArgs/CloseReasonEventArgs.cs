@@ -8,10 +8,8 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
 using System.ComponentModel;
 using System.Windows.Forms;
-using System.Diagnostics;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -21,8 +19,8 @@ namespace ComponentFactory.Krypton.Toolkit
 	public class CloseReasonEventArgs : CancelEventArgs
 	{
 		#region Instance Fields
-        private ToolStripDropDownCloseReason _closeReason;
-        #endregion
+
+	    #endregion
 
 		#region Identity
         /// <summary>
@@ -31,7 +29,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <param name="closeReason">Reason for the close action occuring.</param>
         public CloseReasonEventArgs(ToolStripDropDownCloseReason closeReason)
 		{
-            _closeReason = closeReason;
+            CloseReason = closeReason;
 		}
         #endregion
 
@@ -39,10 +37,8 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// <summary>
 		/// Gets access to the reason for the context menu closing.
 		/// </summary>
-        public ToolStripDropDownCloseReason CloseReason
-		{
-            get { return _closeReason; }
-		}
-        #endregion
+        public ToolStripDropDownCloseReason CloseReason { get; }
+
+	    #endregion
 	}
 }

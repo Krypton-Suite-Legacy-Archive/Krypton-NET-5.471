@@ -8,12 +8,8 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Text;
 using System.ComponentModel;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Diagnostics;
 
@@ -48,17 +44,10 @@ namespace ComponentFactory.Krypton.Toolkit
             /// <summary>
             /// Gets a value indicating if all values are default.
             /// </summary>
-            public bool IsDefault
-            {
-                get
-                {
-                    return (ContentDraw == InheritBool.Inherit) &&
-                           (ContentDrawFocus == InheritBool.Inherit) &&
-                           ContentPadding.Equals(CommonHelper.InheritPadding) &&
-                           (ContentAdjacentGap == -1);
-
-                }
-            }
+            public bool IsDefault => (ContentDraw == InheritBool.Inherit) &&
+                                     (ContentDrawFocus == InheritBool.Inherit) &&
+                                     ContentPadding.Equals(CommonHelper.InheritPadding) &&
+                                     (ContentAdjacentGap == -1);
         }
         #endregion
 
@@ -117,16 +106,11 @@ namespace ComponentFactory.Krypton.Toolkit
         /// Gets a value indicating if all values are default.
         /// </summary>
         [Browsable(false)]
-        public override bool IsDefault
-        {
-            get
-            {
-                return ((_image.IsDefault) &&
-                        (_shortText.IsDefault) &&
-                        (_longText.IsDefault) &&
-                        ((_storage == null) || _storage.IsDefault));
-            }
-        }
+        public override bool IsDefault => ((_image.IsDefault) &&
+                                           (_shortText.IsDefault) &&
+                                           (_longText.IsDefault) &&
+                                           ((_storage == null) || _storage.IsDefault));
+
         #endregion
 
         #region SetInherit
@@ -205,9 +189,13 @@ namespace ComponentFactory.Krypton.Toolkit
             get
             {
                 if (_storage == null)
+                {
                     return InheritBool.Inherit;
+                }
                 else
+                {
                     return _storage.ContentDraw;
+                }
             }
 
             set
@@ -225,8 +213,10 @@ namespace ComponentFactory.Krypton.Toolkit
                 {
                     if (value != InheritBool.Inherit)
                     {
-                        _storage = new InternalStorage();
-                        _storage.ContentDraw = value;
+                        _storage = new InternalStorage
+                        {
+                            ContentDraw = value
+                        };
                         OnPropertyChanged("Draw");
                         PerformNeedPaint();
                     }
@@ -242,9 +232,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public InheritBool GetContentDraw(PaletteState state)
         {
             if (Draw != InheritBool.Inherit)
+            {
                 return Draw;
+            }
             else
+            {
                 return _inherit.GetContentDraw(state);
+            }
         }
         #endregion
 
@@ -262,9 +256,13 @@ namespace ComponentFactory.Krypton.Toolkit
             get
             {
                 if (_storage == null)
+                {
                     return InheritBool.Inherit;
+                }
                 else
+                {
                     return _storage.ContentDrawFocus;
+                }
             }
 
             set
@@ -282,8 +280,10 @@ namespace ComponentFactory.Krypton.Toolkit
                 {
                     if (value != InheritBool.Inherit)
                     {
-                        _storage = new InternalStorage();
-                        _storage.ContentDrawFocus = value;
+                        _storage = new InternalStorage
+                        {
+                            ContentDrawFocus = value
+                        };
                         OnPropertyChanged("DrawFocus");
                         PerformNeedPaint();
                     }
@@ -299,9 +299,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public InheritBool GetContentDrawFocus(PaletteState state)
         {
             if (DrawFocus != InheritBool.Inherit)
+            {
                 return DrawFocus;
+            }
             else
+            {
                 return _inherit.GetContentDrawFocus(state);
+            }
         }
         #endregion
 
@@ -313,10 +317,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining image appearance.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public virtual PaletteContentImage Image
-        {
-            get { return _image; }
-        }
+        public virtual PaletteContentImage Image => _image;
 
         private bool ShouldSerializeImage()
         {
@@ -331,9 +332,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public PaletteRelativeAlign GetContentImageH(PaletteState state)
         {
             if (_image.ImageH != PaletteRelativeAlign.Inherit)
+            {
                 return _image.ImageH;
+            }
             else
+            {
                 return _inherit.GetContentImageH(state);
+            }
         }
 
         /// <summary>
@@ -344,9 +349,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public PaletteRelativeAlign GetContentImageV(PaletteState state)
         {
             if (_image.ImageV != PaletteRelativeAlign.Inherit)
+            {
                 return _image.ImageV;
+            }
             else
+            {
                 return _inherit.GetContentImageV(state);
+            }
         }
 
         /// <summary>
@@ -357,9 +366,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public PaletteImageEffect GetContentImageEffect(PaletteState state)
         {
             if (_image.Effect != PaletteImageEffect.Inherit)
+            {
                 return _image.Effect;
+            }
             else
+            {
                 return _inherit.GetContentImageEffect(state);
+            }
         }
 
         /// <summary>
@@ -370,9 +383,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public Color GetContentImageColorMap(PaletteState state)
         {
             if (_image.ImageColorMap != Color.Empty)
+            {
                 return _image.ImageColorMap;
+            }
             else
+            {
                 return _inherit.GetContentImageColorMap(state);
+            }
         }
 
         /// <summary>
@@ -383,9 +400,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public Color GetContentImageColorTo(PaletteState state)
         {
             if (_image.ImageColorTo != Color.Empty)
+            {
                 return _image.ImageColorTo;
+            }
             else
+            {
                 return _inherit.GetContentImageColorTo(state);
+            }
         }
         #endregion
 
@@ -397,10 +418,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining short text appearance.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public virtual PaletteContentText ShortText
-        {
-            get { return _shortText; }
-        }
+        public virtual PaletteContentText ShortText => _shortText;
 
         private bool ShouldSerializeShortText()
         {
@@ -415,9 +433,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public Font GetContentShortTextFont(PaletteState state)
         {
             if (_shortText.Font != null)
+            {
                 return _shortText.Font;
+            }
             else
+            {
                 return _inherit.GetContentShortTextFont(state);
+            }
         }
 
         /// <summary>
@@ -428,9 +450,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public Font GetContentShortTextNewFont(PaletteState state)
         {
             if (_shortText.Font != null)
+            {
                 return _shortText.Font;
+            }
             else
+            {
                 return _inherit.GetContentShortTextNewFont(state);
+            }
         }
 
         /// <summary>
@@ -441,9 +467,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public PaletteTextHint GetContentShortTextHint(PaletteState state)
         {
             if (_shortText.Hint != PaletteTextHint.Inherit)
+            {
                 return _shortText.Hint;
+            }
             else
+            {
                 return _inherit.GetContentShortTextHint(state);
+            }
         }
 
         /// <summary>
@@ -454,9 +484,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public PaletteTextHotkeyPrefix GetContentShortTextPrefix(PaletteState state)
         {
             if (_shortText.Prefix != PaletteTextHotkeyPrefix.Inherit)
+            {
                 return _shortText.Prefix;
+            }
             else
+            {
                 return _inherit.GetContentShortTextPrefix(state);
+            }
         }
 
         /// <summary>
@@ -467,9 +501,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public PaletteTextTrim GetContentShortTextTrim(PaletteState state)
         {
             if (_shortText.Trim != PaletteTextTrim.Inherit)
+            {
                 return _shortText.Trim;
+            }
             else
+            {
                 return _inherit.GetContentShortTextTrim(state);
+            }
         }
 
         /// <summary>
@@ -480,9 +518,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public PaletteRelativeAlign GetContentShortTextH(PaletteState state)
         {
             if (_shortText.TextH != PaletteRelativeAlign.Inherit)
+            {
                 return _shortText.TextH;
+            }
             else
+            {
                 return _inherit.GetContentShortTextH(state);
+            }
         }
 
         /// <summary>
@@ -493,9 +535,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public PaletteRelativeAlign GetContentShortTextV(PaletteState state)
         {
             if (_shortText.TextV != PaletteRelativeAlign.Inherit)
+            {
                 return _shortText.TextV;
+            }
             else
+            {
                 return _inherit.GetContentShortTextV(state);
+            }
         }
 
         /// <summary>
@@ -506,9 +552,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public PaletteRelativeAlign GetContentShortTextMultiLineH(PaletteState state)
         {
             if (_shortText.MultiLineH != PaletteRelativeAlign.Inherit)
+            {
                 return _shortText.MultiLineH;
+            }
             else
+            {
                 return _inherit.GetContentShortTextMultiLineH(state);
+            }
         }
 
         /// <summary>
@@ -519,9 +569,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public InheritBool GetContentShortTextMultiLine(PaletteState state)
         {
             if (_shortText.MultiLine != InheritBool.Inherit)
+            {
                 return _shortText.MultiLine;
+            }
             else
+            {
                 return _inherit.GetContentShortTextMultiLine(state);
+            }
         }
 
         /// <summary>
@@ -532,9 +586,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public Color GetContentShortTextColor1(PaletteState state)
         {
             if (ShortText.Color1 != Color.Empty)
+            {
                 return ShortText.Color1;
+            }
             else
+            {
                 return _inherit.GetContentShortTextColor1(state);
+            }
         }
 
         /// <summary>
@@ -545,9 +603,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public Color GetContentShortTextColor2(PaletteState state)
         {
             if (ShortText.Color2 != Color.Empty)
+            {
                 return ShortText.Color2;
+            }
             else
+            {
                 return _inherit.GetContentShortTextColor2(state);
+            }
         }
 
         /// <summary>
@@ -558,9 +620,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public PaletteColorStyle GetContentShortTextColorStyle(PaletteState state)
         {
             if (ShortText.ColorStyle != PaletteColorStyle.Inherit)
+            {
                 return ShortText.ColorStyle;
+            }
             else
+            {
                 return _inherit.GetContentShortTextColorStyle(state);
+            }
         }
 
         /// <summary>
@@ -571,9 +637,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public PaletteRectangleAlign GetContentShortTextColorAlign(PaletteState state)
         {
             if (ShortText.ColorAlign != PaletteRectangleAlign.Inherit)
+            {
                 return ShortText.ColorAlign;
+            }
             else
+            {
                 return _inherit.GetContentShortTextColorAlign(state);
+            }
         }
 
         /// <summary>
@@ -584,9 +654,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public float GetContentShortTextColorAngle(PaletteState state)
         {
             if (ShortText.ColorAngle != -1)
+            {
                 return ShortText.ColorAngle;
+            }
             else
+            {
                 return _inherit.GetContentShortTextColorAngle(state);
+            }
         }
 
         /// <summary>
@@ -597,9 +671,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public Image GetContentShortTextImage(PaletteState state)
         {
             if (ShortText.Image != null)
+            {
                 return ShortText.Image;
+            }
             else
+            {
                 return _inherit.GetContentShortTextImage(state);
+            }
         }
 
         /// <summary>
@@ -610,9 +688,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public PaletteImageStyle GetContentShortTextImageStyle(PaletteState state)
         {
             if (ShortText.ImageStyle != PaletteImageStyle.Inherit)
+            {
                 return ShortText.ImageStyle;
+            }
             else
+            {
                 return _inherit.GetContentShortTextImageStyle(state);
+            }
         }
 
         /// <summary>
@@ -623,9 +705,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public PaletteRectangleAlign GetContentShortTextImageAlign(PaletteState state)
         {
             if (ShortText.ImageAlign != PaletteRectangleAlign.Inherit)
+            {
                 return ShortText.ImageAlign;
+            }
             else
+            {
                 return _inherit.GetContentShortTextImageAlign(state);
+            }
         }
         #endregion
 
@@ -637,10 +723,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [Category("Visuals")]
         [Description("Overrides for defining long text appearance.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public virtual PaletteContentText LongText
-        {
-            get { return _longText; }
-        }
+        public virtual PaletteContentText LongText => _longText;
 
         private bool ShouldSerializeLongText()
         {
@@ -655,9 +738,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public Font GetContentLongTextFont(PaletteState state)
         {
             if (_longText.Font != null)
+            {
                 return _longText.Font;
+            }
             else
+            {
                 return _inherit.GetContentLongTextFont(state);
+            }
         }
 
         /// <summary>
@@ -668,9 +755,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public Font GetContentLongTextNewFont(PaletteState state)
         {
             if (_longText.Font != null)
+            {
                 return _longText.Font;
+            }
             else
+            {
                 return _inherit.GetContentLongTextNewFont(state);
+            }
         }
 
         /// <summary>
@@ -681,9 +772,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public PaletteTextHint GetContentLongTextHint(PaletteState state)
         {
             if (_longText.Hint != PaletteTextHint.Inherit)
+            {
                 return _longText.Hint;
+            }
             else
+            {
                 return _inherit.GetContentLongTextHint(state);
+            }
         }
 
         /// <summary>
@@ -694,9 +789,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public PaletteTextHotkeyPrefix GetContentLongTextPrefix(PaletteState state)
         {
             if (_longText.Prefix != PaletteTextHotkeyPrefix.Inherit)
+            {
                 return _longText.Prefix;
+            }
             else
+            {
                 return _inherit.GetContentLongTextPrefix(state);
+            }
         }
 
         /// <summary>
@@ -707,9 +806,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public PaletteTextTrim GetContentLongTextTrim(PaletteState state)
         {
             if (_longText.Trim != PaletteTextTrim.Inherit)
+            {
                 return _longText.Trim;
+            }
             else
+            {
                 return _inherit.GetContentLongTextTrim(state);
+            }
         }
 
         /// <summary>
@@ -720,9 +823,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public PaletteRelativeAlign GetContentLongTextH(PaletteState state)
         {
             if (_longText.TextH != PaletteRelativeAlign.Inherit)
+            {
                 return _longText.TextH;
+            }
             else
+            {
                 return _inherit.GetContentLongTextH(state);
+            }
         }
 
         /// <summary>
@@ -733,9 +840,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public PaletteRelativeAlign GetContentLongTextV(PaletteState state)
         {
             if (_longText.TextV != PaletteRelativeAlign.Inherit)
+            {
                 return _longText.TextV;
+            }
             else
+            {
                 return _inherit.GetContentLongTextV(state);
+            }
         }
 
         /// <summary>
@@ -746,9 +857,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public PaletteRelativeAlign GetContentLongTextMultiLineH(PaletteState state)
         {
             if (_longText.MultiLineH != PaletteRelativeAlign.Inherit)
+            {
                 return _longText.MultiLineH;
+            }
             else
+            {
                 return _inherit.GetContentLongTextMultiLineH(state);
+            }
         }
 
         /// <summary>
@@ -759,9 +874,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public InheritBool GetContentLongTextMultiLine(PaletteState state)
         {
             if (_longText.MultiLine != InheritBool.Inherit)
+            {
                 return _longText.MultiLine;
+            }
             else
+            {
                 return _inherit.GetContentLongTextMultiLine(state);
+            }
         }
 
         /// <summary>
@@ -772,9 +891,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public Color GetContentLongTextColor1(PaletteState state)
         {
             if (LongText.Color1 != Color.Empty)
+            {
                 return LongText.Color1;
+            }
             else
+            {
                 return _inherit.GetContentLongTextColor1(state);
+            }
         }
 
         /// <summary>
@@ -785,9 +908,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public Color GetContentLongTextColor2(PaletteState state)
         {
             if (LongText.Color2 != Color.Empty)
+            {
                 return LongText.Color2;
+            }
             else
+            {
                 return _inherit.GetContentLongTextColor2(state);
+            }
         }
 
         /// <summary>
@@ -798,9 +925,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public PaletteColorStyle GetContentLongTextColorStyle(PaletteState state)
         {
             if (LongText.ColorStyle != PaletteColorStyle.Inherit)
+            {
                 return LongText.ColorStyle;
+            }
             else
+            {
                 return _inherit.GetContentLongTextColorStyle(state);
+            }
         }
 
         /// <summary>
@@ -811,9 +942,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public PaletteRectangleAlign GetContentLongTextColorAlign(PaletteState state)
         {
             if (LongText.ColorAlign != PaletteRectangleAlign.Inherit)
+            {
                 return LongText.ColorAlign;
+            }
             else
+            {
                 return _inherit.GetContentLongTextColorAlign(state);
+            }
         }
 
         /// <summary>
@@ -824,9 +959,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public float GetContentLongTextColorAngle(PaletteState state)
         {
             if (LongText.ColorAngle != -1)
+            {
                 return LongText.ColorAngle;
+            }
             else
+            {
                 return _inherit.GetContentLongTextColorAngle(state);
+            }
         }
 
         /// <summary>
@@ -837,9 +976,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public Image GetContentLongTextImage(PaletteState state)
         {
             if (LongText.Image != null)
+            {
                 return LongText.Image;
+            }
             else
+            {
                 return _inherit.GetContentLongTextImage(state);
+            }
         }
 
         /// <summary>
@@ -850,9 +993,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public PaletteImageStyle GetContentLongTextImageStyle(PaletteState state)
         {
             if (LongText.ImageStyle != PaletteImageStyle.Inherit)
+            {
                 return LongText.ImageStyle;
+            }
             else
+            {
                 return _inherit.GetContentLongTextImageStyle(state);
+            }
         }
 
         /// <summary>
@@ -863,9 +1010,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public PaletteRectangleAlign GetContentLongTextImageAlign(PaletteState state)
         {
             if (LongText.ImageAlign != PaletteRectangleAlign.Inherit)
+            {
                 return LongText.ImageAlign;
+            }
             else
+            {
                 return _inherit.GetContentLongTextImageAlign(state);
+            }
         }
         #endregion
 
@@ -883,9 +1034,13 @@ namespace ComponentFactory.Krypton.Toolkit
             get
             {
                 if (_storage == null)
+                {
                     return CommonHelper.InheritPadding;
+                }
                 else
+                {
                     return _storage.ContentPadding;
+                }
             }
 
             set
@@ -903,8 +1058,10 @@ namespace ComponentFactory.Krypton.Toolkit
                 {
                     if (!value.Equals(CommonHelper.InheritPadding))
                     {
-                        _storage = new InternalStorage();
-                        _storage.ContentPadding = value;
+                        _storage = new InternalStorage
+                        {
+                            ContentPadding = value
+                        };
                         OnPropertyChanged("Padding");
                         PerformNeedPaint(true);
                     }
@@ -932,10 +1089,25 @@ namespace ComponentFactory.Krypton.Toolkit
             Padding paddingThis = Padding;
 
             // Override with specified values
-            if (paddingThis.Left != -1) paddingInherit.Left = paddingThis.Left;
-            if (paddingThis.Right != -1) paddingInherit.Right = paddingThis.Right;
-            if (paddingThis.Top != -1) paddingInherit.Top = paddingThis.Top;
-            if (paddingThis.Bottom != -1) paddingInherit.Bottom = paddingThis.Bottom;
+            if (paddingThis.Left != -1)
+            {
+                paddingInherit.Left = paddingThis.Left;
+            }
+
+            if (paddingThis.Right != -1)
+            {
+                paddingInherit.Right = paddingThis.Right;
+            }
+
+            if (paddingThis.Top != -1)
+            {
+                paddingInherit.Top = paddingThis.Top;
+            }
+
+            if (paddingThis.Bottom != -1)
+            {
+                paddingInherit.Bottom = paddingThis.Bottom;
+            }
 
             return paddingInherit;
         }
@@ -955,9 +1127,13 @@ namespace ComponentFactory.Krypton.Toolkit
             get
             {
                 if (_storage == null)
+                {
                     return -1;
+                }
                 else
+                {
                     return _storage.ContentAdjacentGap;
+                }
             }
 
             set
@@ -975,8 +1151,10 @@ namespace ComponentFactory.Krypton.Toolkit
                 {
                     if (value != -1)
                     {
-                        _storage = new InternalStorage();
-                        _storage.ContentAdjacentGap = value;
+                        _storage = new InternalStorage
+                        {
+                            ContentAdjacentGap = value
+                        };
                         OnPropertyChanged("AdjacentGap");
                         PerformNeedPaint(true);
                     }
@@ -1000,9 +1178,13 @@ namespace ComponentFactory.Krypton.Toolkit
         public int GetContentAdjacentGap(PaletteState state)
         {
             if (AdjacentGap != -1)
+            {
                 return AdjacentGap;
+            }
             else
+            {
                 return _inherit.GetContentAdjacentGap(state);
+            }
         }
         #endregion
 
@@ -1024,8 +1206,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <param name="property">Name of the property changed.</param>
         protected virtual void OnPropertyChanged(string property)
         {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(property));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
         }
         #endregion
     }

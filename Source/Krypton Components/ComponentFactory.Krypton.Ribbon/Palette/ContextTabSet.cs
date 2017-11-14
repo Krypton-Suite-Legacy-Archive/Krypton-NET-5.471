@@ -8,9 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
 using System.Drawing;
-using System.Collections.Generic;
 using System.Diagnostics;
 using ComponentFactory.Krypton.Toolkit;
 
@@ -22,9 +20,9 @@ namespace ComponentFactory.Krypton.Ribbon
     internal class ContextTabSet
     {
         #region Instance Fields
-        private ViewDrawRibbonTab _firstTab;
+
         private ViewDrawRibbonTab _lastTab;
-        private KryptonRibbonContext _context;
+
         #endregion
 
         #region Identity
@@ -39,9 +37,9 @@ namespace ComponentFactory.Krypton.Ribbon
             Debug.Assert(tab != null);
             Debug.Assert(context != null);
 
-            _firstTab = tab;
+            FirstTab = tab;
             _lastTab = tab;
-            _context = context;
+            Context = context;
         }
         #endregion
 
@@ -49,10 +47,7 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <summary>
         /// Gets access to the first tab.
         /// </summary>
-        public ViewDrawRibbonTab FirstTab
-        {
-            get { return _firstTab; }
-        }
+        public ViewDrawRibbonTab FirstTab { get; }
 
         /// <summary>
         /// Gets a value indicating if the tab is the first in set.
@@ -61,7 +56,7 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <returns>True if first; otherwise false.</returns>
         public bool IsFirstTab(ViewDrawRibbonTab tab)
         {
-            return (tab == _firstTab);
+            return (tab == FirstTab);
         }
 
         /// <summary>
@@ -81,7 +76,7 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <returns>True if first or last; otherwise false.</returns>
         public bool IsFirstOrLastTab(ViewDrawRibbonTab tab)
         {
-            return ((tab == _firstTab) || (tab == _lastTab));
+            return ((tab == FirstTab) || (tab == _lastTab));
         }
 
         /// <summary>
@@ -100,10 +95,12 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <returns>Screen position.</returns>
         public Point GetLeftScreenPosition()
         {
-            Point ret = new Point(_firstTab.ClientLocation.X - 1, _firstTab.ClientLocation.Y);
+            Point ret = new Point(FirstTab.ClientLocation.X - 1, FirstTab.ClientLocation.Y);
 
-            if (_firstTab.OwningControl != null)
-                ret = _firstTab.OwningControl.PointToScreen(ret);
+            if (FirstTab.OwningControl != null)
+            {
+                ret = FirstTab.OwningControl.PointToScreen(ret);
+            }
 
             return ret;
         }
@@ -117,7 +114,9 @@ namespace ComponentFactory.Krypton.Ribbon
             Point ret = new Point(_lastTab.ClientRectangle.Right + 1, _lastTab.ClientLocation.Y);
 
             if (_lastTab.OwningControl != null)
+            {
                 ret = _lastTab.OwningControl.PointToScreen(ret);
+            }
 
             return ret;
         }
@@ -125,34 +124,23 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <summary>
         /// Gets the context component.
         /// </summary>
-        public KryptonRibbonContext Context
-        {
-            get { return _context; }
-        }
+        public KryptonRibbonContext Context { get; }
 
         /// <summary>
         /// Gets the name of the context.
         /// </summary>
-        public string ContextName
-        {
-            get { return _context.ContextName; }
-        }
+        public string ContextName => Context.ContextName;
 
         /// <summary>
         /// Gets the name of the context.
         /// </summary>
-        public Color ContextColor
-        {
-            get { return _context.ContextColor; }
-        }
+        public Color ContextColor => Context.ContextColor;
 
         /// <summary>
         /// Gets the title of the context.
         /// </summary>
-        public string ContextTitle
-        {
-            get { return _context.ContextTitle; }
-        }
+        public string ContextTitle => Context.ContextTitle;
+
         #endregion
     }
 
@@ -173,8 +161,12 @@ namespace ComponentFactory.Krypton.Ribbon
             {
                 // Search for a context with the same name as that requested.
                 foreach (ContextTabSet context in this)
+                {
                     if (context.ContextName == name)
+                    {
                         return context;
+                    }
+                }
 
                 // Let base class perform standard processing
                 return base[name];

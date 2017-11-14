@@ -9,13 +9,9 @@
 // *****************************************************************************
 
 using System;
-using System.Text;
-using System.Data;
 using System.Drawing;
-using System.Drawing.Design;
 using System.ComponentModel;
 using System.Windows.Forms;
-using System.Diagnostics;
 using ComponentFactory.Krypton.Toolkit;
 
 namespace ComponentFactory.Krypton.Ribbon
@@ -38,8 +34,7 @@ namespace ComponentFactory.Krypton.Ribbon
         private string _contextName;
         private bool _visible;
         private KryptonRibbon _ribbon;
-        private KryptonRibbonGroupCollection _ribbonGroups;
-        private ViewBase _tabView;
+
         #endregion
 
         #region Events
@@ -78,11 +73,11 @@ namespace ComponentFactory.Krypton.Ribbon
             _visible = true;
 
             // Create the collection for defining groups
-            _ribbonGroups = new KryptonRibbonGroupCollection();
-            _ribbonGroups.Clearing += new EventHandler(OnRibbonGroupsClearing);
-            _ribbonGroups.Cleared += new EventHandler(OnRibbonGroupsCleared);
-            _ribbonGroups.Inserted += new TypedHandler<KryptonRibbonGroup>(OnRibbonGroupsInserted);
-            _ribbonGroups.Removed += new TypedHandler<KryptonRibbonGroup>(OnRibbonGroupsRemoved);
+            Groups = new KryptonRibbonGroupCollection();
+            Groups.Clearing += new EventHandler(OnRibbonGroupsClearing);
+            Groups.Cleared += new EventHandler(OnRibbonGroupsCleared);
+            Groups.Inserted += new TypedHandler<KryptonRibbonGroup>(OnRibbonGroupsInserted);
+            Groups.Removed += new TypedHandler<KryptonRibbonGroup>(OnRibbonGroupsRemoved);
         }
 
         /// <summary>
@@ -95,7 +90,9 @@ namespace ComponentFactory.Krypton.Ribbon
             {
                 // Dispose of per-group resources
                 foreach (KryptonRibbonGroup group in Groups)
-                    group.Dispose();
+                {
+                    @group.Dispose();
+                }
             }
 
             base.Dispose(disposing);
@@ -111,7 +108,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public KryptonRibbon Ribbon
         {
-            get { return _ribbon; }
+            get => _ribbon;
 
             internal set
             {
@@ -120,8 +117,10 @@ namespace ComponentFactory.Krypton.Ribbon
                 // Forward the reference to all children (just in case the children
                 // are added before the group is added to the tab, in which case the
                 // reference will not be set as yet)
-                foreach (KryptonRibbonGroup group in _ribbonGroups)
-                    group.Ribbon = value;
+                foreach (KryptonRibbonGroup group in Groups)
+                {
+                    @group.Ribbon = value;
+                }
             }
         }
 
@@ -135,13 +134,15 @@ namespace ComponentFactory.Krypton.Ribbon
         [DefaultValue("Tab")]
         public string Text
         {
-            get { return _text; }
-            
+            get => _text;
+
             set 
             {
                 // We never allow an empty text value
                 if (string.IsNullOrEmpty(value))
+                {
                     value = "Tab";
+                }
 
                 if (value != _text)
                 {
@@ -150,7 +151,9 @@ namespace ComponentFactory.Krypton.Ribbon
 
                     // Only need to update display if this tab is visible
                     if ((_ribbon != null) && Visible)
+                    {
                         _ribbon.PerformNeedPaint(true);
+                    }
                 }
             }
         }
@@ -165,12 +168,14 @@ namespace ComponentFactory.Krypton.Ribbon
         [DefaultValue("T")]
         public string KeyTip
         {
-            get { return _keyTip; }
-            
+            get => _keyTip;
+
             set 
             {
                 if (string.IsNullOrEmpty(value))
+                {
                     value = "T";
+                }
 
                 _keyTip = value.ToUpper();
             }
@@ -186,13 +191,15 @@ namespace ComponentFactory.Krypton.Ribbon
         [DefaultValue("")]
         public string ContextName
         {
-            get { return _contextName; }
+            get => _contextName;
 
             set
             {
                 // Always maintain a value reference
                 if (value == null)
+                {
                     value = string.Empty;
+                }
 
                 if (value != _contextName)
                 {
@@ -201,7 +208,9 @@ namespace ComponentFactory.Krypton.Ribbon
 
                     // Only need to update display if this tab is visible
                     if ((_ribbon != null) && Visible)
+                    {
                         _ribbon.PerformNeedPaint(true);
+                    }
                 }
             }
         }
@@ -228,7 +237,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [DefaultValue(true)]
         public bool Visible
         {
-            get { return _visible; }
+            get => _visible;
 
             set
             {
@@ -242,7 +251,9 @@ namespace ComponentFactory.Krypton.Ribbon
                     {
                         // If selected, find another tab to select
                         if (_ribbon.SelectedTab == this)
+                        {
                             _ribbon.ResetSelectedTab();
+                        }
 
                         _ribbon.PerformNeedPaint(true);
                     }
@@ -273,10 +284,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [Description("Collection of ribbon tab groups.")]
         [MergableProperty(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public KryptonRibbonGroupCollection Groups
-        {
-            get { return _ribbonGroups; }
-        }
+        public KryptonRibbonGroupCollection Groups { get; }
 
         /// <summary>
         /// Gets and sets user-defined data associated with the object.
@@ -287,7 +295,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [Bindable(true)]
         public object Tag
         {
-            get { return _tag; }
+            get => _tag;
 
             set
             {
@@ -315,11 +323,8 @@ namespace ComponentFactory.Krypton.Ribbon
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Browsable(false)]
-        public ViewBase TabView
-        {
-            get { return _tabView; }
-            set { _tabView = value; }
-        }
+        public ViewBase TabView { get; set; }
+
         #endregion
 
         #region Protected
@@ -329,30 +334,31 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <param name="propertyName">Name of property that has changed.</param>
         protected virtual void OnPropertyChanged(string propertyName)
         {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
 
         #region Internal
         internal void OnDesignTimeContextMenu(MouseEventArgs e)
         {
-            if (DesignTimeContextMenu != null)
-                DesignTimeContextMenu(this, e);
+            DesignTimeContextMenu?.Invoke(this, e);
         }
 
         internal void OnDesignTimeAddGroup()
         {
-            if (DesignTimeAddGroup != null)
-                DesignTimeAddGroup(this, EventArgs.Empty);
+            DesignTimeAddGroup?.Invoke(this, EventArgs.Empty);
         }
 
         internal bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             // Ask the groups to check for command key processing
             foreach (KryptonRibbonGroup group in Groups)
-                if (group.Visible && group.ProcessCmdKey(ref msg, keyData))
+            {
+                if (@group.Visible && @group.ProcessCmdKey(ref msg, keyData))
+                {
                     return true;
+                }
+            }
 
             return false;
         }
@@ -362,7 +368,7 @@ namespace ComponentFactory.Krypton.Ribbon
         private void OnRibbonGroupsClearing(object sender, EventArgs e)
         {
             // Remove the back references
-            foreach (KryptonRibbonGroup group in _ribbonGroups)
+            foreach (KryptonRibbonGroup group in Groups)
             {
                 group.Ribbon = null;
                 group.RibbonTab = null;
@@ -373,7 +379,9 @@ namespace ComponentFactory.Krypton.Ribbon
         {
             // Only need to update display if this tab is selected
             if ((_ribbon != null) && (_ribbon.SelectedTab == this))
+            {
                 _ribbon.PerformNeedPaint(true);
+            }
         }
 
         private void OnRibbonGroupsInserted(object sender, TypedCollectionEventArgs<KryptonRibbonGroup> e)
@@ -384,7 +392,9 @@ namespace ComponentFactory.Krypton.Ribbon
 
             // Only need to update display if this tab is selected and the group is visible
             if ((_ribbon != null) && (_ribbon.SelectedTab == this) && Visible)
+            {
                 _ribbon.PerformNeedPaint(true);
+            }
         }
 
         private void OnRibbonGroupsRemoved(object sender, TypedCollectionEventArgs<KryptonRibbonGroup> e)
@@ -395,7 +405,9 @@ namespace ComponentFactory.Krypton.Ribbon
 
             // Only need to update display if this tab is selected and the group was visible
             if ((_ribbon != null) && (_ribbon.SelectedTab == this) && Visible)
+            {
                 _ribbon.PerformNeedPaint(true);
+            }
         }
         #endregion
     }

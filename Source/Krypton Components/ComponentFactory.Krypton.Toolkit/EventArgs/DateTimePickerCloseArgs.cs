@@ -9,9 +9,6 @@
 // *****************************************************************************
 
 using System;
-using System.ComponentModel;
-using System.Windows.Forms;
-using System.Diagnostics;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -21,8 +18,8 @@ namespace ComponentFactory.Krypton.Toolkit
 	public class DateTimePickerCloseArgs : EventArgs
 	{
 		#region Instance Fields
-        private KryptonContextMenu _kcm;
-        #endregion
+
+	    #endregion
 
 		#region Identity
         /// <summary>
@@ -31,7 +28,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <param name="kcm">KryptonContextMenu that can be examined.</param>
         public DateTimePickerCloseArgs(KryptonContextMenu kcm)
         {
-            _kcm = kcm;
+            KryptonContextMenu = kcm;
         }
         #endregion
 
@@ -39,10 +36,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Gets access to the KryptonContextMenu instance.
         /// </summary>
-        public KryptonContextMenu KryptonContextMenu
-        {
-            get { return _kcm; }
-        }
-        #endregion
+        public KryptonContextMenu KryptonContextMenu { get; }
+
+	    #endregion
 	}
 }

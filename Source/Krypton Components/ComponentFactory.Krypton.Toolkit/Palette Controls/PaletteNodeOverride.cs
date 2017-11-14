@@ -36,8 +36,11 @@ namespace ComponentFactory.Krypton.Toolkit
             Debug.Assert(triple != null);
 
             // Validate incoming references
-            if (triple == null) throw new ArgumentNullException("triple");
-            
+            if (triple == null)
+            {
+                throw new ArgumentNullException("triple");
+            }
+
             // Create the triple override instances
             _overrideBack = new PaletteBackInheritNode(triple.PaletteBack);
             _overrideBorder = new PaletteBorderInheritOverride(triple.PaletteBorder, triple.PaletteBorder);
@@ -63,26 +66,18 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
 		/// Gets the background palette.
 		/// </summary>
-		public IPaletteBack PaletteBack
-		{
-			get { return _overrideBack; }
-		}
+		public IPaletteBack PaletteBack => _overrideBack;
 
-		/// <summary>
+	    /// <summary>
 		/// Gets the border palette.
 		/// </summary>
-		public IPaletteBorder PaletteBorder
-		{
-			get { return _overrideBorder; }
-		}
+		public IPaletteBorder PaletteBorder => _overrideBorder;
 
-		/// <summary>
+	    /// <summary>
 		/// Gets the border palette.
 		/// </summary>
-		public IPaletteContent PaletteContent
-		{
-			get { return _overrideContent; }
-		}
-		#endregion    
+		public IPaletteContent PaletteContent => _overrideContent;
+
+	    #endregion    
     }
 }

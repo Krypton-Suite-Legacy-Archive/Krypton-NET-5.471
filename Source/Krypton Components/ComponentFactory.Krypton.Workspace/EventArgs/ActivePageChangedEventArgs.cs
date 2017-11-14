@@ -9,8 +9,6 @@
 // *****************************************************************************
 
 using System;
-using System.Drawing;
-using System.Diagnostics;
 using ComponentFactory.Krypton.Navigator;
 
 namespace ComponentFactory.Krypton.Workspace
@@ -21,9 +19,8 @@ namespace ComponentFactory.Krypton.Workspace
 	public class ActivePageChangedEventArgs : EventArgs
 	{
 		#region Instance Fields
-        private KryptonPage _oldPage;
-        private KryptonPage _newPage;
-		#endregion
+
+	    #endregion
 
 		#region Identity
 		/// <summary>
@@ -34,8 +31,8 @@ namespace ComponentFactory.Krypton.Workspace
         public ActivePageChangedEventArgs(KryptonPage oldPage,
                                           KryptonPage newPage)
 		{
-            _oldPage = oldPage;
-            _newPage = newPage;
+            OldPage = oldPage;
+            NewPage = newPage;
         }
 		#endregion
 
@@ -43,18 +40,13 @@ namespace ComponentFactory.Krypton.Workspace
 		/// <summary>
         /// Gets the old page reference.
 		/// </summary>
-        public KryptonPage OldPage
-		{
-            get { return _oldPage; }
-		}
+        public KryptonPage OldPage { get; }
 
-        /// <summary>
+	    /// <summary>
         /// Gets the new page reference.
         /// </summary>
-        public KryptonPage NewPage
-        {
-            get { return _newPage; }
-        }
-        #endregion
+        public KryptonPage NewPage { get; }
+
+	    #endregion
 	}
 }

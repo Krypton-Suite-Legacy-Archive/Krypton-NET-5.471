@@ -9,19 +9,10 @@
 // *****************************************************************************
 
 using System;
-using System.IO;
-using System.Xml;
-using System.Text;
-using System.Data;
 using System.Drawing;
-using System.Drawing.Design;
 using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Windows.Forms;
-using System.Diagnostics;
 using ComponentFactory.Krypton.Toolkit;
 using ComponentFactory.Krypton.Navigator;
-using ComponentFactory.Krypton.Workspace;
 
 namespace ComponentFactory.Krypton.Docking
 {
@@ -34,7 +25,7 @@ namespace ComponentFactory.Krypton.Docking
     public class KryptonAutoHiddenProxyPage : KryptonPage
     {
         #region Instance Fields
-        private KryptonPage _page;
+
         #endregion
 
         #region Identity
@@ -43,14 +34,12 @@ namespace ComponentFactory.Krypton.Docking
         /// </summary>
         public KryptonAutoHiddenProxyPage(KryptonPage page)
         {
-            if (page == null)
-                throw new ArgumentNullException("page");
 
             // We are a proxy for this cached page reference
-            _page = page;
+            Page = page ?? throw new ArgumentNullException("page");
 
             // Text property was updated by the base class constructor, so now we update the actual referenced class
-            _page.Text = Text;
+            Page.Text = Text;
         }
 
         /// <summary>
@@ -59,8 +48,7 @@ namespace ComponentFactory.Krypton.Docking
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            if (_page != null)
-                _page.Dispose();
+            Page?.Dispose();
 
             base.Dispose(disposing);
         }
@@ -70,10 +58,7 @@ namespace ComponentFactory.Krypton.Docking
         /// <summary>
         /// Gets a reference to the page for which this is a proxy.
         /// </summary>
-        public KryptonPage Page
-        {
-            get { return _page; }
-        }
+        public KryptonPage Page { get; }
 
         /// <summary>
         /// Gets and sets the page text.
@@ -83,16 +68,22 @@ namespace ComponentFactory.Krypton.Docking
             get 
             {
                 if (Page != null)
+                {
                     return Page.Text;
+                }
                 else
+                {
                     return base.Text;
+                }
             }
             
             set 
             {
                 base.Text = value;
                 if (Page != null)
-                    Page.Text = value; 
+                {
+                    Page.Text = value;
+                }
             }
         }
 
@@ -101,8 +92,8 @@ namespace ComponentFactory.Krypton.Docking
         /// </summary>
         public override string TextTitle
         {
-            get { return Page.TextTitle; }
-            set { Page.TextTitle = value; }
+            get => Page.TextTitle;
+            set => Page.TextTitle = value;
         }
 
         /// <summary>
@@ -110,8 +101,8 @@ namespace ComponentFactory.Krypton.Docking
         /// </summary>
         public override string TextDescription
         {
-            get { return Page.TextDescription; }
-            set { Page.TextDescription = value; }
+            get => Page.TextDescription;
+            set => Page.TextDescription = value;
         }
 
         /// <summary>
@@ -119,8 +110,8 @@ namespace ComponentFactory.Krypton.Docking
         /// </summary>
         public override Image ImageSmall
         {
-            get { return Page.ImageSmall; }
-            set { Page.ImageSmall = value; }
+            get => Page.ImageSmall;
+            set => Page.ImageSmall = value;
         }
 
         /// <summary>
@@ -128,8 +119,8 @@ namespace ComponentFactory.Krypton.Docking
         /// </summary>
         public override Image ImageMedium
         {
-            get { return Page.ImageMedium; }
-            set { Page.ImageMedium = value; }
+            get => Page.ImageMedium;
+            set => Page.ImageMedium = value;
         }
 
         /// <summary>
@@ -137,8 +128,8 @@ namespace ComponentFactory.Krypton.Docking
         /// </summary>
         public override Image ImageLarge
         {
-            get { return Page.ImageLarge; }
-            set { Page.ImageLarge = value; }
+            get => Page.ImageLarge;
+            set => Page.ImageLarge = value;
         }
 
         /// <summary>
@@ -146,8 +137,8 @@ namespace ComponentFactory.Krypton.Docking
         /// </summary>
         public override Image ToolTipImage
         {
-            get { return Page.ToolTipImage; }
-            set { Page.ToolTipImage = value; }
+            get => Page.ToolTipImage;
+            set => Page.ToolTipImage = value;
         }
 
         /// <summary>
@@ -155,8 +146,8 @@ namespace ComponentFactory.Krypton.Docking
         /// </summary>
         public override Color ToolTipImageTransparentColor
         {
-            get { return Page.ToolTipImageTransparentColor; }
-            set { Page.ToolTipImageTransparentColor = value; }
+            get => Page.ToolTipImageTransparentColor;
+            set => Page.ToolTipImageTransparentColor = value;
         }
 
         /// <summary>
@@ -164,8 +155,8 @@ namespace ComponentFactory.Krypton.Docking
         /// </summary>
         public override string ToolTipTitle
         {
-            get { return Page.ToolTipTitle; }
-            set { Page.ToolTipTitle = value; }
+            get => Page.ToolTipTitle;
+            set => Page.ToolTipTitle = value;
         }
 
         /// <summary>
@@ -173,8 +164,8 @@ namespace ComponentFactory.Krypton.Docking
         /// </summary>
         public override string ToolTipBody
         {
-            get { return Page.ToolTipBody; }
-            set { Page.ToolTipBody = value; }
+            get => Page.ToolTipBody;
+            set => Page.ToolTipBody = value;
         }
 
         /// <summary>
@@ -182,8 +173,8 @@ namespace ComponentFactory.Krypton.Docking
         /// </summary>
         public override LabelStyle ToolTipStyle
         {
-            get { return Page.ToolTipStyle; }
-            set { Page.ToolTipStyle = value; }
+            get => Page.ToolTipStyle;
+            set => Page.ToolTipStyle = value;
         }
 
         /// <summary>
@@ -191,8 +182,8 @@ namespace ComponentFactory.Krypton.Docking
         /// </summary>
         public override KryptonContextMenu KryptonContextMenu
         {
-            get { return Page.KryptonContextMenu; }
-            set { Page.KryptonContextMenu = value; }
+            get => Page.KryptonContextMenu;
+            set => Page.KryptonContextMenu = value;
         }
 
         /// <summary>
@@ -200,8 +191,8 @@ namespace ComponentFactory.Krypton.Docking
         /// </summary>
         public override string UniqueName
         {
-            get { return Page.UniqueName; }
-            set { Page.UniqueName = value; }
+            get => Page.UniqueName;
+            set => Page.UniqueName = value;
         }
 
         /// <summary>
@@ -229,8 +220,8 @@ namespace ComponentFactory.Krypton.Docking
         /// </summary>
         public override int Flags
         {
-            get { return Page.Flags; }
-            set { Page.Flags = value; }
+            get => Page.Flags;
+            set => Page.Flags = value;
         }
 
         /// <summary>
@@ -268,8 +259,8 @@ namespace ComponentFactory.Krypton.Docking
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         public override bool LastVisibleSet
         {
-            get { return Page.LastVisibleSet; }
-            set { Page.LastVisibleSet = value; }
+            get => Page.LastVisibleSet;
+            set => Page.LastVisibleSet = value;
         }
         #endregion
     }

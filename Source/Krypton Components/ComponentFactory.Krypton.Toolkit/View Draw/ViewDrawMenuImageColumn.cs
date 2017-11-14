@@ -8,12 +8,7 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Diagnostics;
 
 namespace ComponentFactory.Krypton.Toolkit
@@ -58,7 +53,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public int ColumnWidth
         {
-            set { _separator.SeparatorSize = new Size(value, 0); }
+            set => _separator.SeparatorSize = new Size(value, 0);
         }
         #endregion
 

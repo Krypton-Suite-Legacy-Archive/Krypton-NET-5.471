@@ -8,12 +8,6 @@
 //  Version 4.5.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using System;
-using System.Text;
-using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Diagnostics;
 using ComponentFactory.Krypton.Toolkit;
 
@@ -25,7 +19,7 @@ namespace ComponentFactory.Krypton.Navigator
     internal class ViewLayoutOutlookMini : ViewLayoutDocker
     {
         #region Instance Fields
-        private ViewBuilderOutlookBase _viewBuilder; 
+
         #endregion
 
         #region Identity
@@ -36,7 +30,7 @@ namespace ComponentFactory.Krypton.Navigator
         public ViewLayoutOutlookMini(ViewBuilderOutlookBase viewBuilder)
         {
             Debug.Assert(viewBuilder != null);
-            _viewBuilder = viewBuilder;
+            ViewBuilder = viewBuilder;
         }
 
         /// <summary>
@@ -57,8 +51,9 @@ namespace ComponentFactory.Krypton.Navigator
         public ViewBuilderOutlookBase ViewBuilder
         {
             [System.Diagnostics.DebuggerStepThrough]
-            get { return _viewBuilder; }
+            get;
         }
+
         #endregion
 
         #region Layout
