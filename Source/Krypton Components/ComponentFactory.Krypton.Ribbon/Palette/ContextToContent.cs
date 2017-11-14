@@ -86,9 +86,15 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <returns>PaletteTextHint value.</returns>
         public override PaletteTextHint GetContentShortTextHint(PaletteState state)
         {
+<<<<<<< HEAD
             if (OverrideTextHint != PaletteTextHint.Inherit)
             {
                 return OverrideTextHint;
+=======
+            if (_overrideTextHint != PaletteTextHint.Inherit)
+            {
+                return _overrideTextHint;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
             else
             {
@@ -103,9 +109,15 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <returns>Color value.</returns>
         public override Color GetContentShortTextColor1(PaletteState state)
         {
+<<<<<<< HEAD
             if (OverrideTextColor != Color.Empty)
             {
                 return OverrideTextColor;
+=======
+            if (_overrideTextColor != Color.Empty)
+            {
+                return _overrideTextColor;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
             else
             {
@@ -120,9 +132,15 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <returns>Color value.</returns>
         public override Color GetContentShortTextColor2(PaletteState state)
         {
+<<<<<<< HEAD
             if (OverrideTextColor != Color.Empty)
             {
                 return OverrideTextColor;
+=======
+            if (_overrideTextColor != Color.Empty)
+            {
+                return _overrideTextColor;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
             else
             {
@@ -157,9 +175,15 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <returns>PaletteTextHint value.</returns>
         public override PaletteTextHint GetContentLongTextHint(PaletteState state)
         {
+<<<<<<< HEAD
             if (OverrideTextHint != PaletteTextHint.Inherit)
             {
                 return OverrideTextHint;
+=======
+            if (_overrideTextHint != PaletteTextHint.Inherit)
+            {
+                return _overrideTextHint;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
             else
             {
@@ -174,9 +198,15 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <returns>Color value.</returns>
         public override Color GetContentLongTextColor1(PaletteState state)
         {
+<<<<<<< HEAD
             if (OverrideTextColor != Color.Empty)
             {
                 return OverrideTextColor;
+=======
+            if (_overrideTextColor != Color.Empty)
+            {
+                return _overrideTextColor;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
             else
             {
@@ -191,9 +221,15 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <returns>Color value.</returns>
         public override Color GetContentLongTextColor2(PaletteState state)
         {
+<<<<<<< HEAD
             if (OverrideTextColor != Color.Empty)
             {
                 return OverrideTextColor;
+=======
+            if (_overrideTextColor != Color.Empty)
+            {
+                return _overrideTextColor;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
             else
             {

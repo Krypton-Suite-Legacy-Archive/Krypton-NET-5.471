@@ -158,7 +158,11 @@ namespace ComponentFactory.Krypton.Ribbon
 		    // Track if the mouse is inside the split area
             if (ButtonType == GroupButtonType.Split)
             {
+<<<<<<< HEAD
                 MouseInSplit = _splitRectangle.Contains(pt);
+=======
+                _mouseInSplit = _splitRectangle.Contains(pt);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
 
 		    // Update the visual state
@@ -198,7 +202,11 @@ namespace ComponentFactory.Krypton.Ribbon
                                 // Track if the mouse is inside the split area
                                 if (ButtonType == GroupButtonType.Split)
                                 {
+<<<<<<< HEAD
                                     MouseInSplit = _splitRectangle.Contains(pt);
+=======
+                                    _mouseInSplit = _splitRectangle.Contains(pt);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                                 }
 
                                 if (_splitRectangle.Contains(pt))
@@ -237,7 +245,11 @@ namespace ComponentFactory.Krypton.Ribbon
                 _rightButtonDown = true;
             }
 
+<<<<<<< HEAD
 		    return Captured;
+=======
+		    return _captured;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 		}
 
 		/// <summary>
@@ -276,7 +288,11 @@ namespace ComponentFactory.Krypton.Ribbon
                                     // Track if the mouse is inside the split area
                                     if (ButtonType == GroupButtonType.Split)
                                     {
+<<<<<<< HEAD
                                         MouseInSplit = _splitRectangle.Contains(pt);
+=======
+                                        _mouseInSplit = _splitRectangle.Contains(pt);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                                     }
 
                                     if (_splitRectangle.Contains(pt))
@@ -569,7 +585,11 @@ namespace ComponentFactory.Krypton.Ribbon
                         // We always show the button as being in the split when it has focus
                         if (_hasFocus)
                         {
+<<<<<<< HEAD
                             MouseInSplit = true;
+=======
+                            _mouseInSplit = true;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                         }
                     }
                     else

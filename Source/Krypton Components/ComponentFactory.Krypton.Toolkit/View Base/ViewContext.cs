@@ -76,7 +76,11 @@ namespace ComponentFactory.Krypton.Toolkit
             // Use the manager is provided, otherwise create a temporary one with a null view
             if (manager != null)
             {
+<<<<<<< HEAD
                 ViewManager = manager;
+=======
+                _manager = manager;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
             else
             {
@@ -114,7 +118,11 @@ namespace ComponentFactory.Krypton.Toolkit
                 // Only dispose if we created it
                 if (_disposeManager)
                 {
+<<<<<<< HEAD
                     ViewManager.Dispose();
+=======
+                    _manager.Dispose();
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
 
                 ViewManager = null;

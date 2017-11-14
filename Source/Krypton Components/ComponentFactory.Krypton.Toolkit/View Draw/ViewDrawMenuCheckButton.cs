@@ -71,7 +71,11 @@ namespace ComponentFactory.Krypton.Toolkit
             // Place the check box on the left of the available space but inside separators
             _innerDocker = new ViewLayoutDocker
             {
+<<<<<<< HEAD
                 { ViewDrawButton, ViewDockStyle.Fill },
+=======
+                { _drawButton, ViewDockStyle.Fill },
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 { new ViewLayoutSeparator(1), ViewDockStyle.Right },
                 { new ViewLayoutSeparator(1), ViewDockStyle.Left },
                 { new ViewLayoutSeparator(1), ViewDockStyle.Top },
@@ -167,7 +171,11 @@ namespace ComponentFactory.Krypton.Toolkit
                 }
                 else
                 {
+<<<<<<< HEAD
                     return KryptonContextMenuCheckButton.Enabled;
+=======
+                    return _checkButton.Enabled;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
         }
@@ -187,7 +195,11 @@ namespace ComponentFactory.Krypton.Toolkit
                 }
                 else
                 {
+<<<<<<< HEAD
                     return KryptonContextMenuCheckButton.Image;
+=======
+                    return _checkButton.Image;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
         }
@@ -207,7 +219,11 @@ namespace ComponentFactory.Krypton.Toolkit
                 }
                 else
                 {
+<<<<<<< HEAD
                     return KryptonContextMenuCheckButton.ImageTransparentColor;
+=======
+                    return _checkButton.ImageTransparentColor;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
         }
@@ -227,7 +243,11 @@ namespace ComponentFactory.Krypton.Toolkit
                 }
                 else
                 {
+<<<<<<< HEAD
                     return KryptonContextMenuCheckButton.Text;
+=======
+                    return _checkButton.Text;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
         }
@@ -247,7 +267,11 @@ namespace ComponentFactory.Krypton.Toolkit
                 }
                 else
                 {
+<<<<<<< HEAD
                     return KryptonContextMenuCheckButton.ExtraText;
+=======
+                    return _checkButton.ExtraText;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
         }
@@ -267,7 +291,11 @@ namespace ComponentFactory.Krypton.Toolkit
                 }
                 else
                 {
+<<<<<<< HEAD
                     return KryptonContextMenuCheckButton.Checked;
+=======
+                    return _checkButton.Checked;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
         }

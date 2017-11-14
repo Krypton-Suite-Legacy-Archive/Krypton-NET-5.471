@@ -311,6 +311,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 Factors = new float[] { 0.0f, 0.0f, 0.0f, 1.0f, 1.0f },
                 Positions = new float[] { 0.0f, 0.50f, 0.50f, 0.9f, 1.0f }
             };
+<<<<<<< HEAD
 
             _ribbonTabSelected2Blend = new Blend
             {
@@ -324,6 +325,21 @@ namespace ComponentFactory.Krypton.Toolkit
                 Positions = new float[] { 0.0f, 0.2f, 1.0f }
             };
 
+=======
+
+            _ribbonTabSelected2Blend = new Blend
+            {
+                Factors = new float[] { 0.0f, 1.0f, 1.0f },
+                Positions = new float[] { 0.0f, 0.75f, 1.0f }
+            };
+
+            _ribbonTabTopBlend = new Blend
+            {
+                Factors = new float[] { 0.0f, 1.0f, 1.0f },
+                Positions = new float[] { 0.0f, 0.2f, 1.0f }
+            };
+
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             _ribbonAppButtonBlend = new Blend
             {
                 Factors = new float[] { 0.0f, 0.0f, 0.5f, 1.0f, 1.0f },
@@ -1237,17 +1253,28 @@ namespace ComponentFactory.Krypton.Toolkit
             int col0 = availableRect.Left;
             int col1 = col0 + colWidths[0];
 
+<<<<<<< HEAD
             // Do we need to add a spacing gap after the first column?
             if (((colWidths[0] > 0) && (colWidths[1] > 0)) ||
                 ((colWidths[0] > 0) && (colWidths[1] == 0) && (colWidths[2] > 0)))
+=======
+			// Do we need to add a spacing gap after the first column?
+			if (((colWidths[0] > 0) && (colWidths[1] > 0)) ||
+				((colWidths[0] > 0) && (colWidths[1] == 0) && (colWidths[2] > 0)))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 col1 += spacingGap;
             }
 
             int col2 = col1 + colWidths[1];
 
+<<<<<<< HEAD
             // Do we need to add a spacing gap after the second column?
             if ((colWidths[1] > 0) && (colWidths[2] > 0))
+=======
+			// Do we need to add a spacing gap after the second column?
+			if ((colWidths[1] > 0) && (colWidths[2] > 0))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 col2 += spacingGap;
             }
@@ -1256,10 +1283,17 @@ namespace ComponentFactory.Krypton.Toolkit
             int row1 = row0 + rowHeights[0];
             int row2 = row1 + rowHeights[1];
 
+<<<<<<< HEAD
             // Decide on the ordering of the alignment to position
             PaletteRelativeAlign aAlign = (rtl == RightToLeft.Yes ? PaletteRelativeAlign.Far : PaletteRelativeAlign.Near);
             const PaletteRelativeAlign B_ALIGN = PaletteRelativeAlign.Center;
             PaletteRelativeAlign cAlign = (rtl == RightToLeft.Yes ? PaletteRelativeAlign.Near : PaletteRelativeAlign.Far);
+=======
+			// Decide on the ordering of the alignment to position
+			PaletteRelativeAlign aAlign = (rtl == RightToLeft.Yes ? PaletteRelativeAlign.Far : PaletteRelativeAlign.Near);
+			const PaletteRelativeAlign B_ALIGN = PaletteRelativeAlign.Center;
+			PaletteRelativeAlign cAlign = (rtl == RightToLeft.Yes ? PaletteRelativeAlign.Near : PaletteRelativeAlign.Far);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 
             // Size and position the contents of each aligned cell
             PositionAlignContent(memento, palette, state, rtl, aAlign, PaletteRelativeAlign.Near, col0, row0, colWidths[0], rowHeights[0], spacingGap);
@@ -2596,8 +2630,13 @@ namespace ComponentFactory.Krypton.Toolkit
             Image drawImage = palette.GetDropDownButtonImage(state);
             if (drawImage != null)
             {
+<<<<<<< HEAD
                 DrawImageHelper(context, drawImage, Color.Empty,
                                 displayRect, orientation, PaletteImageEffect.Normal,
+=======
+                DrawImageHelper(context, drawImage, Color.Empty, 
+                                displayRect, orientation, PaletteImageEffect.Normal, 
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                                 Color.Empty, Color.Empty);
             }
         }
@@ -3004,12 +3043,21 @@ namespace ComponentFactory.Krypton.Toolkit
             {
                 throw new ArgumentNullException("context");
             }
+<<<<<<< HEAD
 
             if (paletteGeneral == null)
             {
                 throw new ArgumentNullException("paletteGeneral");
             }
 
+=======
+
+            if (paletteGeneral == null)
+            {
+                throw new ArgumentNullException("paletteGeneral");
+            }
+
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             int x = displayRect.X + ((displayRect.Width - 2) / 2);
             Color darkColor = paletteGeneral.GetRibbonGroupSeparatorDark(state);
             Color lightColor = paletteGeneral.GetRibbonGroupSeparatorLight(state);
@@ -3244,7 +3292,11 @@ namespace ComponentFactory.Krypton.Toolkit
             Debug.Assert(context != null);
             Debug.Assert(dragDropPalette != null);
 
+<<<<<<< HEAD
             using (SolidBrush backBrush = new SolidBrush(dragDropPalette.GetDragDropSolidBack()))
+=======
+            using(SolidBrush backBrush = new SolidBrush(dragDropPalette.GetDragDropSolidBack()))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 context.Graphics.FillRectangle(backBrush, drawRect);
             }
@@ -3656,7 +3708,11 @@ namespace ComponentFactory.Krypton.Toolkit
                     {
                         context.Graphics.DrawPath(outsidePen, outside);
 
+<<<<<<< HEAD
                         using (SolidBrush insideBrush = new SolidBrush(elementPalette.GetElementColor3(state)))
+=======
+                        using(SolidBrush insideBrush = new SolidBrush(elementPalette.GetElementColor3(state)))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                         {
                             context.Graphics.FillPath(insideBrush, border);
                         }
@@ -5537,7 +5593,11 @@ namespace ComponentFactory.Krypton.Toolkit
             using (Clipping clip = new Clipping(context.Graphics, path))
             {
                 // Draw entire background in white
+<<<<<<< HEAD
                 using (SolidBrush lightBrush = new SolidBrush(ControlPaint.LightLight(backColor1)))
+=======
+                using(SolidBrush lightBrush = new SolidBrush(ControlPaint.LightLight(backColor1)))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 {
                     context.Graphics.FillRectangle(lightBrush, rect);
                 }
@@ -5724,7 +5784,11 @@ namespace ComponentFactory.Krypton.Toolkit
                 {
                     // Find the point size from the pixel height required
                     float point = (72 / context.Graphics.DpiY) * (fontSpace / 1.333f);
+<<<<<<< HEAD
 
+=======
+                    
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                     // No point having a font smaller than 3 points
                     if (point > 3)
                     {
@@ -6638,7 +6702,11 @@ namespace ComponentFactory.Krypton.Toolkit
                 using (GraphicsPath borderPath = CreateBorderBackPath(true, true, drawRect, PaletteDrawBorders.All, 1, rounding, true, 0),
                                     insidePath = CreateBorderBackPath(true, true, rectInside, PaletteDrawBorders.All, 1, rounding - 1, true, 0))
                 {
+<<<<<<< HEAD
                     using (SolidBrush borderBrush = new SolidBrush(Color.FromArgb(196, Color.White)))
+=======
+                    using(SolidBrush borderBrush = new SolidBrush(Color.FromArgb(196, Color.White)))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                     {
                         context.Graphics.FillPath(borderBrush, borderPath);
                     }
@@ -6709,7 +6777,11 @@ namespace ComponentFactory.Krypton.Toolkit
                 }
 
                 // Draw background in white top highlight the arrow
+<<<<<<< HEAD
                 using (AntiAlias aa = new AntiAlias(context.Graphics))
+=======
+                using(AntiAlias aa = new AntiAlias(context.Graphics))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 {
                     context.Graphics.FillPath(Brushes.White, innerPath);
                 }
@@ -6781,6 +6853,7 @@ namespace ComponentFactory.Krypton.Toolkit
                         {
                             // Create points for a polygon
                             Point[] pts = {new Point(0,  29), new Point(23, 29),
+<<<<<<< HEAD
                                                       new Point(29, 23), new Point(29, 0),
                                                       new Point(57, 0),  new Point(57, 23),
                                                       new Point(63, 29), new Point(87, 29),
@@ -6788,6 +6861,15 @@ namespace ComponentFactory.Krypton.Toolkit
                                                       new Point(57, 63), new Point(57, 87),
                                                       new Point(29, 87), new Point(29, 63),
                                                       new Point(23, 57), new Point(0,  57)};
+=======
+													  new Point(29, 23), new Point(29, 0),
+													  new Point(57, 0),  new Point(57, 23),
+													  new Point(63, 29), new Point(87, 29),
+													  new Point(87, 57), new Point(63, 57),
+													  new Point(57, 63), new Point(57, 87),
+													  new Point(29, 87), new Point(29, 63),
+													  new Point(23, 57), new Point(0,  57)};
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 
                             // Fill this area with a solid colour
                             g.FillPolygon(insideBrush, pts);
@@ -6808,11 +6890,19 @@ namespace ComponentFactory.Krypton.Toolkit
                         {
                             // Create points for a polygon
                             Point[] pts = {new Point(0,  29), new Point(23, 29),
+<<<<<<< HEAD
                                                       new Point(29, 23), new Point(57, 23),
                                                       new Point(63, 29), new Point(87, 29),
                                                       new Point(87, 57), new Point(63, 57),
                                                       new Point(57, 63), new Point(29, 63),
                                                       new Point(23, 57), new Point(0,  57)};
+=======
+													  new Point(29, 23), new Point(57, 23),
+													  new Point(63, 29), new Point(87, 29),
+													  new Point(87, 57), new Point(63, 57),
+													  new Point(57, 63), new Point(29, 63),
+													  new Point(23, 57), new Point(0,  57)};
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 
                             // Fill this area with a solid colour
                             g.FillPolygon(insideBrush, pts);
@@ -6842,12 +6932,21 @@ namespace ComponentFactory.Krypton.Toolkit
                         else if (dragData.ShowTop && dragData.ShowBottom)
                         {
                             // Create points for a polygon
+<<<<<<< HEAD
                             Point[] pts = {new Point(23, 29), new Point(29, 23),
                                                       new Point(29, 0),  new Point(57, 0),
                                                       new Point(57, 23), new Point(63, 29),
                                                       new Point(63, 57), new Point(57, 63),
                                                       new Point(57, 87), new Point(29, 87),
                                                       new Point(29, 63), new Point(23, 57)};
+=======
+                            Point[] pts = {new Point(23, 29), new Point(29, 23), 
+													  new Point(29, 0),  new Point(57, 0),  
+													  new Point(57, 23), new Point(63, 29), 
+													  new Point(63, 57), new Point(57, 63), 
+													  new Point(57, 87), new Point(29, 87), 
+													  new Point(29, 63), new Point(23, 57)};
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 
                             // Fill this area with a solid colour
                             g.FillPolygon(insideBrush, pts);
@@ -6876,10 +6975,17 @@ namespace ComponentFactory.Krypton.Toolkit
                         else if (dragData.ShowMiddle)
                         {
                             // Only draw the background for the middle square
+<<<<<<< HEAD
                             Point[] pts = {new Point(23, 29), new Point(29, 23),
                                                       new Point(57, 23), new Point(63, 29),
                                                       new Point(63, 57), new Point(57, 63),
                                                       new Point(29, 63), new Point(23, 57)};
+=======
+                            Point[] pts = {new Point(23, 29), new Point(29, 23), 
+													  new Point(57, 23), new Point(63, 29), 
+													  new Point(63, 57), new Point(57, 63),
+													  new Point(29, 63), new Point(23, 57)};
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 
                             g.FillPolygon(insideBrush, pts);
                             g.DrawPolygon(borderPen, pts);
@@ -7314,7 +7420,11 @@ namespace ComponentFactory.Krypton.Toolkit
                 context.Graphics.FillPath(cache.fillBrush, cache.outsidePath);
 
                 // Clip drawing to the outside border
+<<<<<<< HEAD
                 using (Clipping clip = new Clipping(context.Graphics, cache.outsidePath))
+=======
+                using(Clipping clip = new Clipping(context.Graphics, cache.outsidePath))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 {
                     context.Graphics.FillPath(cache.fillTopBrush, cache.outsidePath);
                 }
@@ -7395,7 +7505,11 @@ namespace ComponentFactory.Krypton.Toolkit
                     {
                         Blend = _ribbonGroupArea3
                     };
+<<<<<<< HEAD
                     cache.gradientBorderPen = (gradientTop ? new Pen(cache.gradientBorderBrush) : new Pen(c1));
+=======
+                    cache.gradientBorderPen = (gradientTop ? new Pen(cache.gradientBorderBrush) :  new Pen(c1));
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                     cache.solidBorderPen = new Pen(c2);
                     cache.shadowPen1 = new Pen(CommonHelper.MergeColors(c5, 0.4f, c1, 0.6f));
                     cache.shadowPen2 = new Pen(CommonHelper.MergeColors(c5, 0.25f, c1, 0.75f));
@@ -10498,11 +10612,19 @@ namespace ComponentFactory.Krypton.Toolkit
 
             using (LinearGradientBrush brushUpperGlow = new LinearGradientBrush(memento.rectUpperGlow, Color.Transparent, Color.Transparent, LinearGradientMode.Horizontal))
             {
+<<<<<<< HEAD
                 Color[] colorsUpperGlow = { Color.FromArgb(180, bottomDark),
                                                         Color.FromArgb(mediumTransparency, bottomMedium),
                                                         Color.FromArgb(lightTransparency, bottomLight),
                                                         Color.FromArgb(lightTransparency, bottomLight),
                                                         Color.FromArgb(mediumTransparency, bottomMedium),
+=======
+                Color[] colorsUpperGlow = { Color.FromArgb(180, bottomDark), 
+                                                        Color.FromArgb(mediumTransparency, bottomMedium), 
+                                                        Color.FromArgb(lightTransparency, bottomLight), 
+                                                        Color.FromArgb(lightTransparency, bottomLight), 
+                                                        Color.FromArgb(mediumTransparency, bottomMedium), 
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                                                         Color.FromArgb(180, bottomDark) };
 
                 float[] posUpperGlow = { 0.0f, 0.2f, 0.4f, 0.6f, 0.8f, 1.0f };
@@ -10693,7 +10815,11 @@ namespace ComponentFactory.Krypton.Toolkit
                 context.Graphics.FillPath(cache.insideFillBrush, cache.insideFillPath);
 
                 // Draw highlight over bottom half
+<<<<<<< HEAD
                 using (Clipping clip = new Clipping(context.Graphics, cache.insideFillPath))
+=======
+                using(Clipping clip = new Clipping(context.Graphics, cache.insideFillPath))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 {
                     context.Graphics.FillPath(cache.highlightBrush, cache.highlightPath);
                 }
@@ -10872,15 +10998,24 @@ namespace ComponentFactory.Krypton.Toolkit
                     cache.trackBottomPen = new Pen(c5);
 
                     GraphicsPath trackingPath = new GraphicsPath();
+<<<<<<< HEAD
                     trackingPath.AddEllipse(new Rectangle(rect.X, rect.Y + (rect.Height / 2), rect.Width - 3, rect.Height));
+=======
+                    trackingPath.AddEllipse(new Rectangle(rect.X, rect.Y + ( rect.Height / 2), rect.Width - 3, rect.Height));
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                     cache.trackHighlightBrush = new PathGradientBrush(trackingPath)
                     {
                         SurroundColors = new Color[] { Color.Transparent },
                         CenterColor = (dark ? (rect.Width > 50 ? _whiten60 : _whiten45) : _whiten160),
                         CenterPoint = new PointF(rect.X + ((rect.Width - 3) / 2), rect.Height)
                     };
+<<<<<<< HEAD
                     cache.trackFillBrush = new LinearGradientBrush(new RectangleF(rect.X - 1, rect.Y - 1, rect.Width + 2, rect.Height + 1),
                                                                    (dark ? _whiten5 : _whiten10),
+=======
+                    cache.trackFillBrush = new LinearGradientBrush(new RectangleF(rect.X - 1, rect.Y - 1, rect.Width + 2, rect.Height + 1), 
+                                                                   (dark ? _whiten5 : _whiten10), 
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                                                                    (dark ? _whiten5 : _darken5), 90f);
 
                     cache.pressedFillBrush = new LinearGradientBrush(new RectangleF(rect.X - 1, rect.Y - 1, rect.Width + 2, rect.Height + 2),
@@ -12033,6 +12168,7 @@ namespace ComponentFactory.Krypton.Toolkit
                     case VisualOrientation.Left:
                         Orientation = VisualOrientation.Left;
 
+<<<<<<< HEAD
                         // Reposition the image relative the display rectangle
                         if (DrawImage)
                         {
@@ -12100,4 +12236,73 @@ namespace ComponentFactory.Krypton.Toolkit
         }
         #endregion
     }
+=======
+						// Reposition the image relative the display rectangle
+						if (DrawImage)
+						{
+							int x = ImageRect.Y - displayRect.Top;
+							ImageRect.Y = (displayRect.Top + displayRect.Width) - ImageRect.Width - (ImageRect.X - displayRect.X);
+							ImageRect.X = x + displayRect.Left;
+						}
+
+						// Reposition the short text relative the display rectangle
+						if (DrawShortText)
+						{
+							int x = ShortTextRect.Y - displayRect.Top;
+							ShortTextRect.Y = (displayRect.Top + displayRect.Width) - ShortTextRect.Width - (ShortTextRect.X - displayRect.X);
+							ShortTextRect.X = x + displayRect.Left;
+							SwapRectangleSizes(ref ShortTextRect);
+						}
+
+						// Reposition the long text relative the display rectangle
+						if (DrawLongText)
+						{
+							int x = LongTextRect.Y - displayRect.Top;
+							LongTextRect.Y = (displayRect.Top + displayRect.Width) - LongTextRect.Width - (LongTextRect.X - displayRect.X);
+							LongTextRect.X = x + displayRect.Left;
+							SwapRectangleSizes(ref LongTextRect);
+						}
+						break;
+					case VisualOrientation.Right:
+                        Orientation = VisualOrientation.Right;
+
+						// Reposition the image relative the display rectangle
+						if (DrawImage)
+						{
+							int y = ImageRect.X - displayRect.Left;
+							ImageRect.X = (displayRect.Left + displayRect.Bottom) - ImageRect.Bottom;
+							ImageRect.Y = y + displayRect.Top;
+						}
+
+						// Reposition the short text relative the display rectangle
+						if (DrawShortText)
+						{
+							int y = ShortTextRect.X - displayRect.Left;
+							ShortTextRect.X = (displayRect.Left + displayRect.Bottom) - ShortTextRect.Bottom;
+							ShortTextRect.Y = y + displayRect.Top;
+							SwapRectangleSizes(ref ShortTextRect);
+						}
+
+						// Reposition the long text relative the display rectangle
+						if (DrawLongText)
+						{
+							int y = LongTextRect.X - displayRect.Left;
+							LongTextRect.X = (displayRect.Left + displayRect.Bottom) - LongTextRect.Bottom;
+							LongTextRect.Y = y + displayRect.Top;
+							SwapRectangleSizes(ref LongTextRect);
+						}
+						break;
+				}
+			}
+
+			private static void SwapRectangleSizes(ref Rectangle rect)
+			{
+				int temp = rect.Width;
+				rect.Width = rect.Height;
+				rect.Height = temp;
+			}
+        }
+		#endregion
+	}
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 }

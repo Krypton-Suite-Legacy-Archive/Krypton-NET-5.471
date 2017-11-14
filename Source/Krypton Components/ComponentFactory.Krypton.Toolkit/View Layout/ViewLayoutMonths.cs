@@ -406,6 +406,7 @@ namespace ComponentFactory.Krypton.Toolkit
                     DateTime newSelEnd = Calendar.SelectionEnd.AddMonths(move);
 
                     // Impose the min/max dates
+<<<<<<< HEAD
                     if (newSelStart > Calendar.MaxDate)
                     {
                         newSelStart = Calendar.MaxDate;
@@ -414,6 +415,16 @@ namespace ComponentFactory.Krypton.Toolkit
                     if (newSelEnd > Calendar.MaxDate)
                     {
                         newSelEnd = Calendar.MaxDate;
+=======
+                    if (newSelStart > _calendar.MaxDate)
+                    {
+                        newSelStart = _calendar.MaxDate;
+                    }
+
+                    if (newSelEnd > _calendar.MaxDate)
+                    {
+                        newSelEnd = _calendar.MaxDate;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                     }
 
                     // Shift selection onwards
@@ -456,6 +467,7 @@ namespace ComponentFactory.Krypton.Toolkit
                     DateTime newSelEnd = Calendar.SelectionEnd.AddMonths(-move);
 
                     // Impose the min/max dates
+<<<<<<< HEAD
                     if (newSelStart < Calendar.MinDate)
                     {
                         newSelStart = Calendar.MinDate;
@@ -464,6 +476,16 @@ namespace ComponentFactory.Krypton.Toolkit
                     if (newSelEnd < Calendar.MinDate)
                     {
                         newSelEnd = Calendar.MinDate;
+=======
+                    if (newSelStart < _calendar.MinDate)
+                    {
+                        newSelStart = _calendar.MinDate;
+                    }
+
+                    if (newSelEnd < _calendar.MinDate)
+                    {
+                        newSelEnd = _calendar.MinDate;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                     }
 
                     // Shift selection backwards
@@ -541,8 +563,13 @@ namespace ComponentFactory.Krypton.Toolkit
                 Size monthSize = this[1].GetPreferredSize(context);
 
                 // Find total width based on requested dimensions and add a single pixel space around and between months
+<<<<<<< HEAD
                 preferredSize.Width += (monthSize.Width * Calendar.CalendarDimensions.Width) + (GAP * Calendar.CalendarDimensions.Width) + GAP;
                 preferredSize.Height += (monthSize.Height * Calendar.CalendarDimensions.Height) + (GAP * Calendar.CalendarDimensions.Height) + GAP;
+=======
+                preferredSize.Width += (monthSize.Width * _calendar.CalendarDimensions.Width) + (GAP * _calendar.CalendarDimensions.Width) + GAP;
+                preferredSize.Height += (monthSize.Height * _calendar.CalendarDimensions.Height) + (GAP * _calendar.CalendarDimensions.Height) + GAP;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
 
             return preferredSize;
@@ -703,6 +730,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 _dayMeasure = "WW";
             }
 
+<<<<<<< HEAD
             if (Calendar.FirstDayOfWeek == Day.Default)
             {
                 DisplayDayOfWeek = CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek;
@@ -710,6 +738,15 @@ namespace ComponentFactory.Krypton.Toolkit
             else
             {
                 DisplayDayOfWeek = (DayOfWeek)((((int)Calendar.FirstDayOfWeek) + 1) % 6);
+=======
+            if (_calendar.FirstDayOfWeek == Day.Default)
+            {
+                _displayDayOfWeek = CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek;
+            }
+            else
+            {
+                _displayDayOfWeek = (DayOfWeek)((((int)_calendar.FirstDayOfWeek) + 1) % 6);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
 
             // Find the grid cell sizes needed for day names and day entries
@@ -732,7 +769,11 @@ namespace ComponentFactory.Krypton.Toolkit
             {
                 for (int i = Count - 1; i < months; i++)
                 {
+<<<<<<< HEAD
                     Add(new ViewDrawMonth(Calendar, this, _redirector, _needPaintDelegate));
+=======
+                    Add(new ViewDrawMonth(_calendar, this, _redirector, _needPaintDelegate));
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
             else if (Count > (months + 1))
@@ -787,7 +828,11 @@ namespace ComponentFactory.Krypton.Toolkit
 
                     if (_oldSelectionStart < _displayMonth)
                     {
+<<<<<<< HEAD
                         _displayMonth = new DateTime(Calendar.SelectionStart.Year, Calendar.SelectionStart.Month, 1);
+=======
+                        _displayMonth = new DateTime(_calendar.SelectionStart.Year, _calendar.SelectionStart.Month, 1);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                     }
                 }
             }

@@ -69,7 +69,11 @@ namespace ComponentFactory.Krypton.Toolkit
             StateNormal = new PaletteGroupBox(StateCommon, NeedPaintDelegate);
 
             // Create the internal panel used for containing content
+<<<<<<< HEAD
             Panel = new KryptonGroupPanel(this, StateCommon, StateDisabled, StateNormal, new NeedPaintHandler(OnGroupPanelPaint))
+=======
+            _panel = new KryptonGroupPanel(this, _stateCommon, _stateDisabled, _stateNormal, new NeedPaintHandler(OnGroupPanelPaint))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
 
                 // Make sure the panel back style always mimics our back style

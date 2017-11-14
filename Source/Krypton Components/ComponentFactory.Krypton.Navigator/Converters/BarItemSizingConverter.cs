@@ -18,7 +18,14 @@ namespace ComponentFactory.Krypton.Navigator
     public class BarItemSizingConverter : StringLookupConverter
     {
         #region Static Fields
+<<<<<<< HEAD
 
+=======
+        private Pair[] _pairs = { new Pair(BarItemSizing.Individual,           "Individual Sizing"),
+                                             new Pair(BarItemSizing.SameHeight,           "All Same Height"),
+                                             new Pair(BarItemSizing.SameWidth,            "All Same Width"),
+                                             new Pair(BarItemSizing.SameWidthAndHeight,   "All Same Width & Height") };
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
         #endregion
                                              
         #region Identity

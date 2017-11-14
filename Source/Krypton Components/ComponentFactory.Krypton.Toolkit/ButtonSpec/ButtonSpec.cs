@@ -97,8 +97,13 @@ namespace ComponentFactory.Krypton.Toolkit
             {
                 NeedPaint = new NeedPaintHandler(OnImageStateChanged)
             };
+<<<<<<< HEAD
             ContextMenuStrip = null;
             KryptonContextMenu = null;
+=======
+            _contextMenuStrip = null;
+            _kryptonContextMenu = null;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             _buttonSpecView = null;
         }
 
@@ -155,6 +160,7 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// Gets a value indicating if all values are default.
 		/// </summary>
 		[Browsable(false)]
+<<<<<<< HEAD
 		public virtual bool IsDefault => (_imageStates.IsDefault &&
 		                                  (Image == null) &&
 		                                  (ToolTipImage == null) &&
@@ -176,6 +182,34 @@ namespace ComponentFactory.Krypton.Toolkit
 		                                  AllowInheritToolTipTitle);
 
         #endregion
+=======
+		public virtual bool IsDefault
+		{
+			get
+			{
+                return (_imageStates.IsDefault &&
+                        (Image == null) &&
+                        (ToolTipImage == null) &&
+                        (ColorMap == Color.Empty) &&
+                        (ImageTransparentColor == Color.Empty) &&
+                        (ToolTipImageTransparentColor == Color.Empty) &&
+                        (Text == string.Empty) &&
+						(ExtraText == string.Empty) &&
+                        (ToolTipTitle == string.Empty) &&
+                        (ToolTipBody == string.Empty) &&
+                        (ToolTipStyle == LabelStyle.ToolTip) &&
+                        (Style == PaletteButtonStyle.Inherit) &&
+                        (Orientation == PaletteButtonOrientation.Inherit) &&
+                        (Edge == PaletteRelativeEdgeAlign.Inherit) &&
+                        (ContextMenuStrip == null) &&
+                        AllowInheritImage &&
+                        AllowInheritText &&
+                        AllowInheritExtraText &&
+                        AllowInheritToolTipTitle);
+			}
+		}
+		#endregion
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 
         #region Image
         /// <summary>
@@ -975,7 +1009,11 @@ namespace ComponentFactory.Krypton.Toolkit
             }
             else
             {
+<<<<<<< HEAD
                 return palette.GetButtonSpecImage(ProtectedType, state);
+=======
+                return palette.GetButtonSpecImage(_type, state);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
         }
 
@@ -996,7 +1034,11 @@ namespace ComponentFactory.Krypton.Toolkit
             }
             else
             {
+<<<<<<< HEAD
                 return palette.GetButtonSpecImageTransparentColor(ProtectedType);
+=======
+                return palette.GetButtonSpecImageTransparentColor(_type);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
         }
 
@@ -1017,7 +1059,11 @@ namespace ComponentFactory.Krypton.Toolkit
             }
             else
             {
+<<<<<<< HEAD
                 return palette.GetButtonSpecShortText(ProtectedType);
+=======
+                return palette.GetButtonSpecShortText(_type);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
         }
 
@@ -1038,7 +1084,11 @@ namespace ComponentFactory.Krypton.Toolkit
             }
             else
             {
+<<<<<<< HEAD
                 return palette.GetButtonSpecLongText(ProtectedType);
+=======
+                return palette.GetButtonSpecLongText(_type);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
         }
 
@@ -1055,7 +1105,11 @@ namespace ComponentFactory.Krypton.Toolkit
             }
             else
             {
+<<<<<<< HEAD
                 return palette.GetButtonSpecToolTipTitle(ProtectedType);
+=======
+                return palette.GetButtonSpecToolTipTitle(_type);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
         }
 
@@ -1072,7 +1126,11 @@ namespace ComponentFactory.Krypton.Toolkit
             }
             else
             {
+<<<<<<< HEAD
                 return palette.GetButtonSpecColorMap(ProtectedType);
+=======
+                return palette.GetButtonSpecColorMap(_type);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
         }
 
@@ -1089,7 +1147,11 @@ namespace ComponentFactory.Krypton.Toolkit
             }
             else
             {
+<<<<<<< HEAD
                 return ConvertToButtonStyle(palette.GetButtonSpecStyle(ProtectedType));
+=======
+                return ConvertToButtonStyle(palette.GetButtonSpecStyle(_type));
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
         }
 
@@ -1106,7 +1168,11 @@ namespace ComponentFactory.Krypton.Toolkit
             }
             else
             {
+<<<<<<< HEAD
                 return ConvertToButtonOrientation(palette.GetButtonSpecOrientation(ProtectedType));
+=======
+                return ConvertToButtonOrientation(palette.GetButtonSpecOrientation(_type));
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
         }
 
@@ -1123,7 +1189,11 @@ namespace ComponentFactory.Krypton.Toolkit
             }
             else
             {
+<<<<<<< HEAD
                 return ConvertToRelativeEdgeAlign(palette.GetButtonSpecEdge(ProtectedType));
+=======
+                return ConvertToRelativeEdgeAlign(palette.GetButtonSpecEdge(_type));
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
         }
 

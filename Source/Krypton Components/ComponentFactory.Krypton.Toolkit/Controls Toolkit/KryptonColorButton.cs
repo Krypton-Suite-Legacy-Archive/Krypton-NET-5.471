@@ -854,7 +854,11 @@ namespace ComponentFactory.Krypton.Toolkit
             }
             else
             {
+<<<<<<< HEAD
                 return Values.GetShortText();
+=======
+                return _buttonValues.GetShortText();
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
         }
 
@@ -870,7 +874,11 @@ namespace ComponentFactory.Krypton.Toolkit
             }
             else
             {
+<<<<<<< HEAD
                 return Values.GetLongText();
+=======
+                return _buttonValues.GetLongText();
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
         }
 
@@ -897,7 +905,11 @@ namespace ComponentFactory.Krypton.Toolkit
             }
             else
             {
+<<<<<<< HEAD
                 return Values.GetImageTransparentColor(state);
+=======
+                return _buttonValues.GetImageTransparentColor(state);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
         }
         #endregion

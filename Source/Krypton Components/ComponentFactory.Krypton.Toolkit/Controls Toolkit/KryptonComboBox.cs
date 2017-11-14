@@ -1104,7 +1104,11 @@ namespace ComponentFactory.Krypton.Toolkit
             };
 
             // Create view for the control border and background
+<<<<<<< HEAD
             _drawDockerOuter = new ViewDrawDocker(StateNormal.ComboBox.Back, StateNormal.ComboBox.Border)
+=======
+            _drawDockerOuter = new ViewDrawDocker(_stateNormal.ComboBox.Back, _stateNormal.ComboBox.Border)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 { _drawDockerInner, ViewDockStyle.Fill }
             };
@@ -2779,16 +2783,28 @@ namespace ComponentFactory.Krypton.Toolkit
             {
                 if (IsActive)
                 {
+<<<<<<< HEAD
                     return StateActive.ComboBox;
                 }
                 else
                 {
                     return StateNormal.ComboBox;
+=======
+                    return _stateActive.ComboBox;
+                }
+                else
+                {
+                    return _stateNormal.ComboBox;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
             else
             {
+<<<<<<< HEAD
                 return StateDisabled.ComboBox;
+=======
+                return _stateDisabled.ComboBox;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
         }
 

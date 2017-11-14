@@ -714,7 +714,11 @@ namespace ComponentFactory.Krypton.Ribbon
 
             // Are we a group inside a context tab?
             PaletteState elementState;
+<<<<<<< HEAD
             if (!string.IsNullOrEmpty(_ribbon.SelectedTab?.ContextName))
+=======
+            if ((_ribbon.SelectedTab != null) && !string.IsNullOrEmpty(_ribbon.SelectedTab.ContextName))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 elementState = Tracking ? PaletteState.ContextTracking : PaletteState.ContextNormal;
             }
@@ -790,7 +794,11 @@ namespace ComponentFactory.Krypton.Ribbon
             else
             {
                 // Are we a group inside a context tab?
+<<<<<<< HEAD
                 if (!string.IsNullOrEmpty(_ribbon.SelectedTab?.ContextName))
+=======
+                if ((_ribbon.SelectedTab != null) && !string.IsNullOrEmpty(_ribbon.SelectedTab.ContextName))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 {
                     ElementState = Tracking ? PaletteState.ContextTracking : PaletteState.ContextNormal;
                 }
@@ -879,7 +887,11 @@ namespace ComponentFactory.Krypton.Ribbon
                         PaletteState state = PaletteState.Pressed;
 
                         // Are we a group inside a context tab?
+<<<<<<< HEAD
                         if (!string.IsNullOrEmpty(_ribbon.SelectedTab?.ContextName))
+=======
+                        if ((_ribbon.SelectedTab != null) && !string.IsNullOrEmpty(_ribbon.SelectedTab.ContextName))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                         {
                             state = PaletteState.ContextPressed;
                         }

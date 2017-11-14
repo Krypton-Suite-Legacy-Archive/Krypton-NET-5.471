@@ -81,7 +81,11 @@ namespace ComponentFactory.Krypton.Toolkit
             StateNormal = new PaletteContent(StateCommon, NeedPaintDelegate);
 
             // Our view contains background and border with content inside
+<<<<<<< HEAD
             _drawContent = new ViewDrawContent(StateNormal, this, VisualOrientation.Top)
+=======
+            _drawContent = new ViewDrawContent(_stateNormal, this, VisualOrientation.Top)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 UseMnemonic = _useMnemonic
             };
@@ -366,7 +370,11 @@ namespace ComponentFactory.Krypton.Toolkit
             }
             else
             {
+<<<<<<< HEAD
                 return Values.GetShortText();
+=======
+                return _labelValues.GetShortText();
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
         }
 
@@ -382,7 +390,11 @@ namespace ComponentFactory.Krypton.Toolkit
             }
             else
             {
+<<<<<<< HEAD
                 return Values.GetLongText();
+=======
+                return _labelValues.GetLongText();
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
         }
 
@@ -399,7 +411,11 @@ namespace ComponentFactory.Krypton.Toolkit
             }
             else
             {
+<<<<<<< HEAD
                 return Values.GetImage(state);
+=======
+                return _labelValues.GetImage(state);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
         }
 
@@ -416,7 +432,11 @@ namespace ComponentFactory.Krypton.Toolkit
             }
             else
             {
+<<<<<<< HEAD
                 return Values.GetImageTransparentColor(state);
+=======
+                return _labelValues.GetImageTransparentColor(state);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
         }
         #endregion
@@ -538,11 +558,19 @@ namespace ComponentFactory.Krypton.Toolkit
 			// Push correct palettes into the view
 			if (Enabled)
             {
+<<<<<<< HEAD
                 _drawContent.SetPalette(StateNormal);
             }
             else
             {
                 _drawContent.SetPalette(StateDisabled);
+=======
+                _drawContent.SetPalette(_stateNormal);
+            }
+            else
+            {
+                _drawContent.SetPalette(_stateDisabled);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
 
             _drawContent.Enabled = Enabled;

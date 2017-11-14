@@ -92,7 +92,11 @@ namespace ComponentFactory.Krypton.Ribbon
         {
             get
             {
+<<<<<<< HEAD
                 if (Ribbon == null)
+=======
+                if (_ribbon == null)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 {
                     return Padding.Empty;
                 }

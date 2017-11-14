@@ -52,11 +52,19 @@ namespace ComponentFactory.Krypton.Navigator
             NeedPaint = needPaint;
 
             // Default values
+<<<<<<< HEAD
             AllowPopupPages = PopupPageAllow.OnlyOutlookMiniMode;
             Gap = DEFAULT_GAP;
             Border = DEFAULT_GAP;
             Element = DEFAULT_ELEMENT;
             Position = DEFAULT_POSITION;
+=======
+            _allowPopupPages = PopupPageAllow.OnlyOutlookMiniMode;
+            _gap = DEFAULT_GAP;
+            _border = DEFAULT_GAP;
+            _element = DEFAULT_ELEMENT;
+            _position = DEFAULT_POSITION;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
         }
 		#endregion
 
@@ -65,12 +73,26 @@ namespace ComponentFactory.Krypton.Navigator
         /// Gets a value indicating if all values are default.
         /// </summary>
         [Browsable(false)]
+<<<<<<< HEAD
         public override bool IsDefault => ((AllowPopupPages == PopupPageAllow.OnlyOutlookMiniMode) &&
                                            (Border == DEFAULT_BORDER) &&
                                            (Element == DEFAULT_ELEMENT) &&
                                            (Gap == DEFAULT_GAP) &&
                                            (Position == DEFAULT_POSITION));
 
+=======
+        public override bool IsDefault
+        {
+            get
+            {
+                return ((AllowPopupPages == PopupPageAllow.OnlyOutlookMiniMode) &&
+                        (Border == DEFAULT_BORDER) &&
+                        (Element == DEFAULT_ELEMENT) &&
+                        (Gap == DEFAULT_GAP) &&
+                        (Position == DEFAULT_POSITION));
+            }
+        }
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
         #endregion
 
         #region AllowPopupPages

@@ -1141,7 +1141,11 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <returns>Content style.</returns>
         public override PaletteContentStyle GetContentStyle()
         {
+<<<<<<< HEAD
             if (Apply)
+=======
+            if (_apply)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 return _primary.GetContentStyle();
             }

@@ -294,9 +294,15 @@ namespace ComponentFactory.Krypton.Docking
 
         private void RemoveFilter()
         {
+<<<<<<< HEAD
             if (FloatingWindow != null)
             {
                 FloatingWindow.FloatingMessages = null;
+=======
+            if (_window != null)
+            {
+                _window.FloatingMessages = null;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
 
             // Must remove filter to prevent memory leaks

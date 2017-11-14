@@ -32,8 +32,13 @@ namespace ComponentFactory.Krypton.Ribbon
 
 	    private const int TAB_MINWIDTH = 32;
 	    private const int TAB_EXCESS = 14;
+<<<<<<< HEAD
 
 	    #endregion
+=======
+	    private static ContextTabSetCollection _contextTabSets;
+        #endregion
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 
         #region Instance Fields
         private KryptonRibbon _ribbon;
@@ -603,9 +608,15 @@ namespace ComponentFactory.Krypton.Ribbon
             else
             {
                 // At run time we add the filler that acts like title bar header
+<<<<<<< HEAD
                 if (GetViewForSpare == null)
                 {
                     GetViewForSpare = new ViewLayoutRibbonTabsSpare();
+=======
+                if (_tabsSpare == null)
+                {
+                    _tabsSpare = new ViewLayoutRibbonTabsSpare();
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
 
                 // Always add at end of the list of tabs

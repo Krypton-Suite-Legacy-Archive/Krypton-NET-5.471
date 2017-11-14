@@ -204,7 +204,11 @@ namespace ComponentFactory.Krypton.Docking
                     {
                         // Only remove a matching placeholder page
                         KryptonPage page = AutoHiddenGroupControl.Pages[uniqueName];
+<<<<<<< HEAD
                         if (page is KryptonStorePage)
+=======
+                        if ((page != null) && (page is KryptonStorePage))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                         {
                             AutoHiddenGroupControl.Pages.Remove(page);
                         }
@@ -215,7 +219,11 @@ namespace ComponentFactory.Krypton.Docking
                     {
                         // Only remove a placeholder paged
                         KryptonPage page = AutoHiddenGroupControl.Pages[i];
+<<<<<<< HEAD
                         if (page is KryptonStorePage)
+=======
+                        if ((page != null) && (page is KryptonStorePage))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                         {
                             AutoHiddenGroupControl.Pages.RemoveAt(i);
                         }
@@ -269,7 +277,11 @@ namespace ComponentFactory.Krypton.Docking
                     {
                         // Return definitive answer 'true' if the group controls contains a store page for the unique name.
                         KryptonPage page = AutoHiddenGroupControl.Pages[uniqueName];
+<<<<<<< HEAD
                         if (page is KryptonStorePage)
+=======
+                        if ((page != null) && (page is KryptonStorePage))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                         {
                             return true;
                         }
@@ -305,7 +317,11 @@ namespace ComponentFactory.Krypton.Docking
                     {
                         // If we have the page (stored via a proxy) then return the actual page reference (but not for a placeholder)
                         KryptonPage page = AutoHiddenGroupControl.Pages[uniqueName];
+<<<<<<< HEAD
                         if (page is KryptonAutoHiddenProxyPage)
+=======
+                        if ((page != null) && (page is KryptonAutoHiddenProxyPage))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                         {
                             return ((KryptonAutoHiddenProxyPage)page).Page;
                         }
@@ -390,7 +406,11 @@ namespace ComponentFactory.Krypton.Docking
             if (location == DockingLocation.AutoHidden)
             {
                 KryptonPage page = AutoHiddenGroupControl.Pages[uniqueName];
+<<<<<<< HEAD
                 if (page is KryptonStorePage)
+=======
+                if ((page != null) && (page is KryptonStorePage))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 {
                     return this;
                 }

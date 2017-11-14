@@ -95,7 +95,11 @@ namespace ComponentFactory.Krypton.Toolkit
             // To prevent the contents of the viewport from being able to draw outside
             // the viewport (such as having child controls) we use a ViewLayoutControl
             // that uses a child control to restrict the drawing region.
+<<<<<<< HEAD
             ViewControl = new ViewLayoutControl(rootControl, Viewport)
+=======
+            _viewControl = new ViewLayoutControl(rootControl, _viewport)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 InDesignMode = rootControl.InDesignMode
             };

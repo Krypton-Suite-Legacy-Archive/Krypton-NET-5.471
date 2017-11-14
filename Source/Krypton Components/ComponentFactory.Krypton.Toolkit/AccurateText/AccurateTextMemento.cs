@@ -99,6 +99,7 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// <summary>
 		/// Get access to an empty TextMemento instance.
 		/// </summary>
+<<<<<<< HEAD
 		/// <remarks>
 		/// Only create the single instance when first requested
 		/// </remarks>
@@ -110,5 +111,26 @@ namespace ComponentFactory.Krypton.Toolkit
 		                                                 false));
 
 	    #endregion
+=======
+		internal static AccurateTextMemento Empty
+		{
+			get
+			{
+				// Only create the single instance when first requested
+				if (_empty == null)
+				{
+				    _empty = new AccurateTextMemento(string.Empty,
+				        null,
+				        Size.Empty,
+				        StringFormat.GenericDefault,
+				        TextRenderingHint.SystemDefault,
+				        false);
+				}
+
+			    return _empty;
+			}
+		}
+		#endregion
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
     }
 }

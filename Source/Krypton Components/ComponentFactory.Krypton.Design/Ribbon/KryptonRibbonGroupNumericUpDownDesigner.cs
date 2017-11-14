@@ -241,7 +241,11 @@ namespace ComponentFactory.Krypton.Ribbon
         private void OnToggleHelpers(object sender, EventArgs e)
         {
             // Invert the current toggle helper mode
+<<<<<<< HEAD
             if (_ribbonNumericUpDown?.Ribbon != null)
+=======
+            if ((_ribbonNumericUpDown != null) && (_ribbonNumericUpDown.Ribbon != null))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 _ribbonNumericUpDown.Ribbon.InDesignHelperMode = !_ribbonNumericUpDown.Ribbon.InDesignHelperMode;
             }

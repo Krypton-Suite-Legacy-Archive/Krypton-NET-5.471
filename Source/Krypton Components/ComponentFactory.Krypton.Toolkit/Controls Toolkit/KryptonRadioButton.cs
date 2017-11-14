@@ -119,7 +119,11 @@ namespace ComponentFactory.Krypton.Toolkit
             _overrideNormal = new PaletteContentInheritOverride(OverrideFocus, StateNormal, PaletteState.FocusOverride, false);
 
             // Our view contains background and border with content inside
+<<<<<<< HEAD
             _drawContent = new ViewDrawContent(_overrideNormal, Values, VisualOrientation.Top)
+=======
+            _drawContent = new ViewDrawContent(_overrideNormal, _labelValues, VisualOrientation.Top)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 UseMnemonic = _useMnemonic,
 
@@ -648,7 +652,11 @@ namespace ComponentFactory.Krypton.Toolkit
             }
             else
             {
+<<<<<<< HEAD
                 _drawContent.SetPalette(StateDisabled);
+=======
+                _drawContent.SetPalette(_stateDisabled);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
 
             _drawContent.Enabled = Enabled;

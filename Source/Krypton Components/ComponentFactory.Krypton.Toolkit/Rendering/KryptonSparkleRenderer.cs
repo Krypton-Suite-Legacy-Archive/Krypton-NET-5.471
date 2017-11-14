@@ -692,6 +692,7 @@ namespace ComponentFactory.Krypton.Toolkit
 
                     // Check if the status strip is inside a KryptonForm and using the Sparkle renderer, in 
                     // which case we want to extend the drawing down into the border area for an integrated look
+<<<<<<< HEAD
                     if (e.ToolStrip.Visible 
                         && (e.ToolStrip.Dock == DockStyle.Bottom) 
                         && (e.ToolStrip.RenderMode == ToolStripRenderMode.ManagerRenderMode) 
@@ -701,6 +702,18 @@ namespace ComponentFactory.Krypton.Toolkit
                         )
                     {
                         // Get the window borders
+=======
+                    if ((owner != null) && 
+                        (owner is KryptonForm) &&
+                        e.ToolStrip.Visible &&
+                        (e.ToolStrip.Dock == DockStyle.Bottom) &&
+                        (e.ToolStrip.Bottom == owner.ClientSize.Height) &&
+                        (e.ToolStrip.RenderMode == ToolStripRenderMode.ManagerRenderMode) &&
+                        (ToolStripManager.Renderer is KryptonSparkleRenderer))
+                    {
+                        // Get the window borders
+                        KryptonForm kryptonForm = (KryptonForm)owner;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 
                         // Finally check that the actual form is using custom chrome
                         if (kryptonForm.ApplyCustomChrome)

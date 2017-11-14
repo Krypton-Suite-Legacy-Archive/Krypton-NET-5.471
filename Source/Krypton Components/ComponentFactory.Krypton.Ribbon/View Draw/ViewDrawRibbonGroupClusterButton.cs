@@ -177,7 +177,11 @@ namespace ComponentFactory.Krypton.Ribbon
         public ViewBase GetFirstFocusItem()
         {
             // Only take focus if we are visible and enabled
+<<<<<<< HEAD
             if (GroupClusterButton.Visible && GroupClusterButton.Enabled)
+=======
+            if (_ribbonButton.Visible && _ribbonButton.Enabled)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 return _viewMediumSmall;
             }
@@ -196,7 +200,11 @@ namespace ComponentFactory.Krypton.Ribbon
         public ViewBase GetLastFocusItem()
         {
             // Only take focus if we are visible and enabled
+<<<<<<< HEAD
             if (GroupClusterButton.Visible && GroupClusterButton.Enabled)
+=======
+            if (_ribbonButton.Visible && _ribbonButton.Enabled)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 return _viewMediumSmall;
             }
@@ -360,7 +368,11 @@ namespace ComponentFactory.Krypton.Ribbon
             _borderForced = new PaletteBorderInheritForced(_ribbon.StateCommon.RibbonGroupClusterButton.PaletteBorder);
 
             // Create the background and border view
+<<<<<<< HEAD
             _viewMediumSmall = new ViewDrawRibbonGroupButtonBackBorder(_ribbon, GroupClusterButton, _backForced, _borderForced, true, _needPaint)
+=======
+            _viewMediumSmall = new ViewDrawRibbonGroupButtonBackBorder(_ribbon, _ribbonButton, _backForced, _borderForced, true, _needPaint)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 SplitVertical = false
             };
@@ -376,8 +388,13 @@ namespace ComponentFactory.Krypton.Ribbon
             ViewLayoutDocker contentLayout = new ViewLayoutDocker();
 
             // Create the image and drop down content
+<<<<<<< HEAD
             _viewMediumSmallImage = new ViewDrawRibbonGroupClusterButtonImage(_ribbon, GroupClusterButton);
             _viewMediumSmallText1 = new ViewDrawRibbonGroupClusterButtonText(_ribbon, GroupClusterButton)
+=======
+            _viewMediumSmallImage = new ViewDrawRibbonGroupClusterButtonImage(_ribbon, _ribbonButton);
+            _viewMediumSmallText1 = new ViewDrawRibbonGroupClusterButtonText(_ribbon, _ribbonButton)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 Visible = (_currentSize != GroupItemSize.Small)
             };
@@ -431,10 +448,17 @@ namespace ComponentFactory.Krypton.Ribbon
         private void UpdateEnabledState()
         {
             // Get the correct enabled state from the button definition
+<<<<<<< HEAD
             bool buttonEnabled = GroupClusterButton.Enabled;
             if (GroupClusterButton.KryptonCommand != null)
             {
                 buttonEnabled = GroupClusterButton.KryptonCommand.Enabled;
+=======
+            bool buttonEnabled = _ribbonButton.Enabled;
+            if (_ribbonButton.KryptonCommand != null)
+            {
+                buttonEnabled = _ribbonButton.KryptonCommand.Enabled;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
 
             // Take into account the ribbon state and mode
@@ -453,6 +477,7 @@ namespace ComponentFactory.Krypton.Ribbon
             // Only show as checked if also a check type button
             if (GroupClusterButton.ButtonType == GroupButtonType.Check)
             {
+<<<<<<< HEAD
                 if (GroupClusterButton.KryptonCommand != null)
                 {
                     checkedState = GroupClusterButton.KryptonCommand.Checked;
@@ -460,6 +485,15 @@ namespace ComponentFactory.Krypton.Ribbon
                 else
                 {
                     checkedState = GroupClusterButton.Checked;
+=======
+                if (_ribbonButton.KryptonCommand != null)
+                {
+                    checkedState = _ribbonButton.KryptonCommand.Checked;
+                }
+                else
+                {
+                    checkedState = _ribbonButton.Checked;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
 

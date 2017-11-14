@@ -125,9 +125,15 @@ namespace ComponentFactory.Krypton.Ribbon
                 if (GroupGallery != null)
                 {
                     // Must unhook to prevent memory leaks
+<<<<<<< HEAD
                     if (GroupGallery.LastGallery != null)
                     {
                         GroupGallery.LastGallery.Ribbon = null;
+=======
+                    if (_ribbonGallery.LastGallery != null)
+                    {
+                        _ribbonGallery.LastGallery.Ribbon = null;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                     }
 
                     GroupGallery.MouseEnterControl -= new EventHandler(OnMouseEnterControl);
@@ -153,11 +159,19 @@ namespace ComponentFactory.Krypton.Ribbon
         /// </summary>
         public void KeyTipSelect()
         {
+<<<<<<< HEAD
             GroupGallery.LastGallery?.ShownGalleryDropDown(GroupGallery.LastGallery.RectangleToScreen(GroupGallery.LastGallery.ClientRectangle),
                 KryptonContextMenuPositionH.Left,
                 KryptonContextMenuPositionV.Top,
                 null,
                 GroupGallery.DropButtonItemWidth);
+=======
+            _ribbonGallery.LastGallery?.ShownGalleryDropDown(_ribbonGallery.LastGallery.RectangleToScreen(_ribbonGallery.LastGallery.ClientRectangle),
+                KryptonContextMenuPositionH.Left,
+                KryptonContextMenuPositionV.Top,
+                null,
+                _ribbonGallery.DropButtonItemWidth);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
         }
         #endregion
 
@@ -191,16 +205,26 @@ namespace ComponentFactory.Krypton.Ribbon
         {
             if (_viewLarge.Visible)
             {
+<<<<<<< HEAD
                 if (GroupGallery.Visible && GroupGallery.Enabled)
+=======
+                if (_ribbonGallery.Visible && _ribbonGallery.Enabled)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 {
                     return _viewLarge;
                 }
             }
             else
             {
+<<<<<<< HEAD
                 if ((GroupGallery.Visible) &&
                     (GroupGallery.LastGallery != null) &&
                     (GroupGallery.LastGallery.CanSelect))
+=======
+                if ((_ribbonGallery.Visible) &&
+                    (_ribbonGallery.LastGallery != null) &&
+                    (_ribbonGallery.LastGallery.CanSelect))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 {
                     return this;
                 }
@@ -219,16 +243,26 @@ namespace ComponentFactory.Krypton.Ribbon
         {
             if (_viewLarge.Visible)
             {
+<<<<<<< HEAD
                 if (GroupGallery.Visible && GroupGallery.Enabled)
+=======
+                if (_ribbonGallery.Visible && _ribbonGallery.Enabled)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 {
                     return _viewLarge;
                 }
             }
             else
             {
+<<<<<<< HEAD
                 if ((GroupGallery.Visible) &&
                     (GroupGallery.LastGallery != null) &&
                     (GroupGallery.LastGallery.CanSelect))
+=======
+                if ((_ribbonGallery.Visible) &&
+                    (_ribbonGallery.LastGallery != null) &&
+                    (_ribbonGallery.LastGallery.CanSelect))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 {
                     return this;
                 }
@@ -579,7 +613,11 @@ namespace ComponentFactory.Krypton.Ribbon
             ViewLayoutDocker contentLayout = new ViewLayoutDocker();
 
             // Add the large button at the top
+<<<<<<< HEAD
             _viewLargeImage = new ViewDrawRibbonGroupGalleryImage(_ribbon, GroupGallery);
+=======
+            _viewLargeImage = new ViewDrawRibbonGroupGalleryImage(_ribbon, _ribbonGallery);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             ViewLayoutRibbonCenterPadding largeImagePadding = new ViewLayoutRibbonCenterPadding(_largeImagePadding)
             {
                 _viewLargeImage
@@ -619,11 +657,19 @@ namespace ComponentFactory.Krypton.Ribbon
 
         private void OnLargeButtonDropDown(object sender, EventArgs e)
         {
+<<<<<<< HEAD
             GroupGallery.LastGallery?.ShownGalleryDropDown(_ribbon.ViewRectangleToScreen(_viewLarge),
                 KryptonContextMenuPositionH.Left,
                 KryptonContextMenuPositionV.Below,
                 _viewLarge.FinishDelegate,
                 GroupGallery.DropButtonItemWidth);
+=======
+            _ribbonGallery.LastGallery?.ShownGalleryDropDown(_ribbon.ViewRectangleToScreen(_viewLarge),
+                KryptonContextMenuPositionH.Left,
+                KryptonContextMenuPositionV.Below,
+                _viewLarge.FinishDelegate,
+                _ribbonGallery.DropButtonItemWidth);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
         }
 
         private void OnContextClick(object sender, MouseEventArgs e)
@@ -815,8 +861,13 @@ namespace ComponentFactory.Krypton.Ribbon
                 if (visible)
                 {
                     // Only visible if on the currently selected page
+<<<<<<< HEAD
                     if ((GroupGallery.RibbonTab == null) ||
                         (_ribbon.SelectedTab != GroupGallery.RibbonTab))
+=======
+                    if ((_ribbonGallery.RibbonTab == null) ||
+                        (_ribbon.SelectedTab != _ribbonGallery.RibbonTab))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                     {
                         visible = false;
                     }
@@ -832,9 +883,15 @@ namespace ComponentFactory.Krypton.Ribbon
                         else
                         {
                             // Check that the group is not collapsed
+<<<<<<< HEAD
                             if ((GroupGallery.RibbonGroup.IsCollapsed) &&
                                 ((_ribbon.GetControllerControl(GroupGallery.Gallery) is KryptonRibbon) ||
                                  (_ribbon.GetControllerControl(GroupGallery.Gallery) is VisualPopupMinimized)))
+=======
+                            if ((_ribbonGallery.RibbonGroup.IsCollapsed) &&
+                                ((_ribbon.GetControllerControl(_ribbonGallery.Gallery) is KryptonRibbon) ||
+                                 (_ribbon.GetControllerControl(_ribbonGallery.Gallery) is VisualPopupMinimized)))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                             {
                                 visible = false;
                             }

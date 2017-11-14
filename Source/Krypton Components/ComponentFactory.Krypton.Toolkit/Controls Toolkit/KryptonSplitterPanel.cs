@@ -189,8 +189,16 @@ namespace ComponentFactory.Krypton.Toolkit
                 }
             }
 
+<<<<<<< HEAD
 			set => throw new NotSupportedException("Cannot set the Height of a KryptonSplitterPanel");
 	    }
+=======
+			set
+			{
+				throw new NotSupportedException("Cannot set the Height of a KryptonSplitterPanel");
+			}
+		}
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 
 		/// <summary>
 		/// Gets or sets the coordinates of the upper-left corner of the KryptonSplitterPanel relative to the upper-left corner of its KryptonSplitContainer. 
@@ -274,7 +282,11 @@ namespace ComponentFactory.Krypton.Toolkit
                 }
             }
 
+<<<<<<< HEAD
 			set => base.Size = value;
+=======
+			set { base.Size = value; }
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 		}
 
 		/// <summary>
@@ -333,7 +345,14 @@ namespace ComponentFactory.Krypton.Toolkit
                 }
             }
 
+<<<<<<< HEAD
 			set => throw new NotSupportedException("Cannot set the Width of a KryptonSplitterPanel");
+=======
+			set
+			{
+				throw new NotSupportedException("Cannot set the Width of a KryptonSplitterPanel");
+			}
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 		}
 
 		#endregion

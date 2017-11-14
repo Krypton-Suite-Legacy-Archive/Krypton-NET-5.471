@@ -114,7 +114,11 @@ namespace ComponentFactory.Krypton.Toolkit
             else
             {
                 // If no border edges are allowed then provide none
+<<<<<<< HEAD
                 if ((MaxBorderEdges == PaletteDrawBorders.None) || (BorderIgnoreNormal && (state == PaletteState.Normal)))
+=======
+                if ((_maxBorderEdges == PaletteDrawBorders.None) || (_borderIgnoreNormal && (state == PaletteState.Normal)))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 {
                     return PaletteDrawBorders.None;
                 }
@@ -136,9 +140,15 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// <returns>PaletteGraphicsHint value.</returns>
         public override PaletteGraphicsHint GetBorderGraphicsHint(PaletteState state)
         {
+<<<<<<< HEAD
             if (ForceGraphicsHint != PaletteGraphicsHint.Inherit)
             {
                 return ForceGraphicsHint;
+=======
+            if (_forceGraphicsHint != PaletteGraphicsHint.Inherit)
+            {
+                return _forceGraphicsHint;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
             else
             {

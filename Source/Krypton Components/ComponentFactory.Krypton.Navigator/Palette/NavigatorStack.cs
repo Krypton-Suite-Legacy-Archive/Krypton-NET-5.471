@@ -68,6 +68,7 @@ namespace ComponentFactory.Krypton.Navigator
         /// Gets a value indicating if all values are default.
         /// </summary>
         [Browsable(false)]
+<<<<<<< HEAD
         public override bool IsDefault => ((CheckButtonStyle == ButtonStyle.NavigatorStack) &&
                                            (BorderEdgeStyle == PaletteBorderStyle.ControlClient) &&
                                            StackAnimation &&
@@ -78,6 +79,23 @@ namespace ComponentFactory.Krypton.Navigator
                                            (StackMapText == MapKryptonPageText.TextTitle) &&
                                            (StackMapExtraText == MapKryptonPageText.None));
 
+=======
+        public override bool IsDefault
+        {
+            get
+            {
+                return ((CheckButtonStyle == ButtonStyle.NavigatorStack) &&
+                        (BorderEdgeStyle == PaletteBorderStyle.ControlClient) &&
+                        StackAnimation &&
+                        (StackOrientation == Orientation.Vertical) &&
+                        (StackAlignment == RelativePositionAlign.Center) &&
+                        (ItemOrientation == ButtonOrientation.Auto) &&
+                        (StackMapImage == MapKryptonPageImage.Small) &&
+                        (StackMapText == MapKryptonPageText.TextTitle) &&
+                        (StackMapExtraText == MapKryptonPageText.None));
+            }
+        }
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
         #endregion
 
         #region CheckButtonStyle

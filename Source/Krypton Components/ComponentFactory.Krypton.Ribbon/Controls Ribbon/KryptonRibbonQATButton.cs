@@ -115,7 +115,11 @@ namespace ComponentFactory.Krypton.Ribbon
                     // Only need to update display if we are visible
                     if (Visible)
                     {
+<<<<<<< HEAD
                         Ribbon?.PerformNeedPaint(false);
+=======
+                        _ribbon?.PerformNeedPaint(false);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                     }
                 }
             }
@@ -191,7 +195,11 @@ namespace ComponentFactory.Krypton.Ribbon
                     // Must try and paint to show change
                     if (Visible)
                     {
+<<<<<<< HEAD
                         Ribbon?.PerformNeedPaint(false);
+=======
+                        _ribbon?.PerformNeedPaint(false);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                     }
                 }
             }
@@ -327,7 +335,11 @@ namespace ComponentFactory.Krypton.Ribbon
                     // Only need to update display if we are visible
                     if (Visible)
                     {
+<<<<<<< HEAD
                         Ribbon?.PerformNeedPaint(false);
+=======
+                        _ribbon?.PerformNeedPaint(false);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                     }
                 }
             }
@@ -542,7 +554,11 @@ namespace ComponentFactory.Krypton.Ribbon
                 // Only need to update display if we are visible
                 if (Visible)
                 {
+<<<<<<< HEAD
                     Ribbon?.PerformNeedPaint(false);
+=======
+                    _ribbon?.PerformNeedPaint(false);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
         }

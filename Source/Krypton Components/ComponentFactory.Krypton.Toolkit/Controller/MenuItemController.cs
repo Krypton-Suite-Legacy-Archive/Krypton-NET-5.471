@@ -327,7 +327,11 @@ namespace ComponentFactory.Krypton.Toolkit
                     }
                     else
                     {
+<<<<<<< HEAD
                         ViewManager.KeyRight();
+=======
+                        _viewManager.KeyRight();
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                     }
 
                     break;

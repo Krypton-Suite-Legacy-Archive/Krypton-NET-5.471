@@ -612,11 +612,19 @@ namespace ComponentFactory.Krypton.Toolkit
 				// Render the border over the background and children
                 if (DrawTabBorder)
                 {
+<<<<<<< HEAD
                     context.Renderer.RenderTabBorder.DrawTabBorder(context, ClientRectangle, _paletteBorder, Orientation, State, TabBorderStyle);
                 }
                 else
                 {
                     context.Renderer.RenderStandardBorder.DrawBorder(context, ClientRectangle, _paletteBorder, Orientation, State);
+=======
+                    context.Renderer.RenderTabBorder.DrawTabBorder(context, ClientRectangle, _paletteBorder, _orientation, State, TabBorderStyle);
+                }
+                else
+                {
+                    context.Renderer.RenderStandardBorder.DrawBorder(context, ClientRectangle, _paletteBorder, _orientation, State);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
 		}

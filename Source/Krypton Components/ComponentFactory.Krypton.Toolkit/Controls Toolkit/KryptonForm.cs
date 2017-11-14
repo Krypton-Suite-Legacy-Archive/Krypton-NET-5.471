@@ -156,7 +156,11 @@ namespace ComponentFactory.Krypton.Toolkit
             _layoutNull = new ViewLayoutNull();
 
             // Create the root element that contains the title bar and null filler
+<<<<<<< HEAD
             _drawDocker = new ViewDrawForm(StateActive.Back, StateActive.Border)
+=======
+            _drawDocker = new ViewDrawForm(_stateActive.Back, _stateActive.Border)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 { _headingFixedSize, ViewDockStyle.Top },
                 { _layoutNull, ViewDockStyle.Fill }
@@ -1197,11 +1201,19 @@ namespace ComponentFactory.Krypton.Toolkit
                     // Make sure the max/restore setting is correct
                     if (WindowState == FormWindowState.Maximized)
                     {
+<<<<<<< HEAD
                         ButtonSpecMax.ButtonSpecType = PaletteButtonSpecStyle.FormRestore;
                     }
                     else
                     {
                         ButtonSpecMax.ButtonSpecType = PaletteButtonSpecStyle.FormMax;
+=======
+                        _buttonSpecMax.ButtonSpecType = PaletteButtonSpecStyle.FormRestore;
+                    }
+                    else
+                    {
+                        _buttonSpecMax.ButtonSpecType = PaletteButtonSpecStyle.FormMax;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                     }
 
                     // Make sure the min/restore setting is correct

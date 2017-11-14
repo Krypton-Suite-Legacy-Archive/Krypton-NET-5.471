@@ -76,6 +76,7 @@ namespace ComponentFactory.Krypton.Toolkit
             // Associate the view with the source component (for design time support)
             if (buttonSpec.AllowComponent)
             {
+<<<<<<< HEAD
                 ViewButton.Component = buttonSpec;
             }
 
@@ -83,6 +84,15 @@ namespace ComponentFactory.Krypton.Toolkit
             ViewCenter = new ViewLayoutCenter(paletteMetric, metricPadding, VisualOrientation.Top)
             {
                 ViewButton
+=======
+                _viewButton.Component = buttonSpec;
+            }
+
+            // Use a view center to place button in centre of given space
+            _viewCenter = new ViewLayoutCenter(paletteMetric, metricPadding, VisualOrientation.Top)
+            {
+                _viewButton
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             };
 
             // Create a controller for managing button behavior
@@ -376,6 +386,7 @@ namespace ComponentFactory.Krypton.Toolkit
                     Point pt;
 
                     // If the button spec is on the chrome titlebar then find position manually
+<<<<<<< HEAD
                     if (Manager.Control is Form)
                     {
                         pt = new Point(Manager.Control.Left + rect.Left, Manager.Control.Top + rect.Bottom + 3);
@@ -383,6 +394,15 @@ namespace ComponentFactory.Krypton.Toolkit
                     else
                     {
                         pt = Manager.Control.PointToScreen(new Point(rect.Left, rect.Bottom + 3));
+=======
+                    if (_manager.Control is Form)
+                    {
+                        pt = new Point(_manager.Control.Left + rect.Left, _manager.Control.Top + rect.Bottom + 3);
+                    }
+                    else
+                    {
+                        pt = _manager.Control.PointToScreen(new Point(rect.Left, rect.Bottom + 3));
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                     }
 
                     // Show the context menu just below the view itself

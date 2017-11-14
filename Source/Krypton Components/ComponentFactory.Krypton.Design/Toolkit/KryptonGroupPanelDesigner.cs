@@ -114,7 +114,11 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public void SelectParentControl()
         {
+<<<<<<< HEAD
             if (_panel?.Parent != null)
+=======
+            if ((_panel != null) && (_panel.Parent != null))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 _selectionService.SetSelectedComponents(new object[] { _panel.Parent }, SelectionTypes.Primary);
             }

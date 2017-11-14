@@ -473,6 +473,7 @@ namespace ComponentFactory.Krypton.Ribbon
 
             if (needPaint)
             {
+<<<<<<< HEAD
                 if ((Target1 != null) && !Target1.ClientRectangle.IsEmpty)
                 {
                     OnNeedPaint(false, Target1.ClientRectangle);
@@ -486,6 +487,21 @@ namespace ComponentFactory.Krypton.Ribbon
                 if ((Target3 != null) && !Target3.ClientRectangle.IsEmpty)
                 {
                     OnNeedPaint(false, Target3.ClientRectangle);
+=======
+                if ((_target1 != null) && !_target1.ClientRectangle.IsEmpty)
+                {
+                    OnNeedPaint(false, _target1.ClientRectangle);
+                }
+
+                if ((_target2 != null) && !_target2.ClientRectangle.IsEmpty)
+                {
+                    OnNeedPaint(false, _target2.ClientRectangle);
+                }
+
+                if ((_target3 != null) && !_target3.ClientRectangle.IsEmpty)
+                {
+                    OnNeedPaint(false, _target3.ClientRectangle);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
 
                 // Get the repaint to happen immediately

@@ -87,7 +87,11 @@ namespace ComponentFactory.Krypton.Toolkit
             // Ensure that text reflects reversed RTL setting
             if (rtl == RightToLeft.Yes)
             {
+<<<<<<< HEAD
                 format.FormatFlags |= StringFormatFlags.DirectionRightToLeft;
+=======
+                format.FormatFlags = StringFormatFlags.DirectionRightToLeft;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
 
             // How do we position text horizontally?

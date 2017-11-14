@@ -158,7 +158,14 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <returns>ViewBase of item; otherwise false.</returns>
         public ViewBase GetFirstFocusItem()
         {
+<<<<<<< HEAD
             if ((GroupComboBox.Visible) && (GroupComboBox.LastComboBox?.ComboBox != null) && (GroupComboBox.LastComboBox.ComboBox.CanSelect))
+=======
+            if ((_ribbonComboBox.Visible) &&
+                (_ribbonComboBox.LastComboBox != null) &&
+                (_ribbonComboBox.LastComboBox.ComboBox != null) &&
+                (_ribbonComboBox.LastComboBox.ComboBox.CanSelect))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 return this;
             }
@@ -176,7 +183,14 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <returns>ViewBase of item; otherwise false.</returns>
         public ViewBase GetLastFocusItem()
         {
+<<<<<<< HEAD
             if ((GroupComboBox.Visible) && (GroupComboBox.LastComboBox?.ComboBox != null) && (GroupComboBox.LastComboBox.ComboBox.CanSelect))
+=======
+            if ((_ribbonComboBox.Visible) &&
+                (_ribbonComboBox.LastComboBox != null) &&
+                (_ribbonComboBox.LastComboBox.ComboBox != null) &&
+                (_ribbonComboBox.LastComboBox.ComboBox.CanSelect))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 return this;
             }
@@ -559,24 +573,42 @@ namespace ComponentFactory.Krypton.Ribbon
                 if (visible)
                 {
                     // Only visible if on the currently selected page
+<<<<<<< HEAD
                     if ((GroupComboBox.RibbonTab == null) ||
                         (_ribbon.SelectedTab != GroupComboBox.RibbonTab))
+=======
+                    if ((_ribbonComboBox.RibbonTab == null) ||
+                        (_ribbon.SelectedTab != _ribbonComboBox.RibbonTab))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                     {
                         visible = false;
                     }
                     else
                     {
                         // Check the owning group is visible
+<<<<<<< HEAD
                         if ((GroupComboBox.RibbonContainer?.RibbonGroup != null) && !GroupComboBox.RibbonContainer.RibbonGroup.Visible && !_ribbon.InDesignMode)
+=======
+                        if ((_ribbonComboBox.RibbonContainer != null) &&
+                            (_ribbonComboBox.RibbonContainer.RibbonGroup != null) &&
+                            !_ribbonComboBox.RibbonContainer.RibbonGroup.Visible &&
+                            !_ribbon.InDesignMode)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                         {
                             visible = false;
                         }
                         else
                         {
                             // Check that the group is not collapsed
+<<<<<<< HEAD
                             if ((GroupComboBox.RibbonContainer.RibbonGroup.IsCollapsed) &&
                                 ((_ribbon.GetControllerControl(GroupComboBox.ComboBox) is KryptonRibbon) ||
                                  (_ribbon.GetControllerControl(GroupComboBox.ComboBox) is VisualPopupMinimized)))
+=======
+                            if ((_ribbonComboBox.RibbonContainer.RibbonGroup.IsCollapsed) &&
+                                ((_ribbon.GetControllerControl(_ribbonComboBox.ComboBox) is KryptonRibbon) ||
+                                 (_ribbon.GetControllerControl(_ribbonComboBox.ComboBox) is VisualPopupMinimized)))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                             {
                                 visible = false;
                             }

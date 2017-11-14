@@ -38,11 +38,19 @@ namespace ComponentFactory.Krypton.Toolkit
         public PaletteColorButtonStrings()
 		{
             // Default values
+<<<<<<< HEAD
             MoreColors = DEFAULT_MORE_COLORS;
             NoColor = DEFAULT_NO_COLOR;
             RecentColors = DEFAULT_RECENT_COLORS;
             StandardColors = DEFAULT_STANDARD_COLORS;
             ThemeColors = DEFAULT_THEME_COLORS;
+=======
+            _moreColors = DEFAULT_MORE_COLORS;
+            _noColor = DEFAULT_NO_COLOR;
+            _recentColors = DEFAULT_RECENT_COLORS;
+            _standardColors = DEFAULT_STANDARD_COLORS;
+            _themeColors = DEFAULT_THEME_COLORS;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
         }
 		#endregion
 
@@ -51,12 +59,26 @@ namespace ComponentFactory.Krypton.Toolkit
         /// Gets a value indicating if all values are default.
         /// </summary>
         [Browsable(false)]
+<<<<<<< HEAD
         public override bool IsDefault => (MoreColors.Equals(DEFAULT_MORE_COLORS)) &&
                                           (NoColor.Equals(DEFAULT_NO_COLOR)) &&
                                           (RecentColors.Equals(DEFAULT_RECENT_COLORS)) &&
                                           (StandardColors.Equals(DEFAULT_STANDARD_COLORS)) &&
                                           (ThemeColors.Equals(DEFAULT_THEME_COLORS));
 
+=======
+        public override bool IsDefault
+        {
+            get
+            {
+                return (MoreColors.Equals(DEFAULT_MORE_COLORS)) &&
+                       (NoColor.Equals(DEFAULT_NO_COLOR)) &&
+                       (RecentColors.Equals(DEFAULT_RECENT_COLORS)) &&
+                       (StandardColors.Equals(DEFAULT_STANDARD_COLORS)) &&
+                       (ThemeColors.Equals(DEFAULT_THEME_COLORS));
+            }
+        }
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
         #endregion
 
         #region MoreColors

@@ -289,7 +289,11 @@ namespace ComponentFactory.Krypton.Ribbon
 		/// <param name="e">A MouseEventArgs containing the event data.</param>
 		protected virtual void OnClick(MouseEventArgs e)
 		{
+<<<<<<< HEAD
             Click?.Invoke(Target, e);
+=======
+            Click?.Invoke(_target, e);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
         }
 
 		/// <summary>
@@ -298,14 +302,22 @@ namespace ComponentFactory.Krypton.Ribbon
 		/// <param name="needLayout">Does the palette change require a layout.</param>
 		protected virtual void OnNeedPaint(bool needLayout)
 		{
+<<<<<<< HEAD
             _needPaint?.Invoke(this, new NeedLayoutEventArgs(needLayout, Target.ClientRectangle));
+=======
+            _needPaint?.Invoke(this, new NeedLayoutEventArgs(needLayout, _target.ClientRectangle));
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
         }
 		#endregion
 
         #region Private
         private void OnRepeatTick(object sender, EventArgs e)
         {
+<<<<<<< HEAD
             if (Target.Enabled)
+=======
+            if (_target.Enabled)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 OnClick(new MouseEventArgs(MouseButtons.Left, 1, 0, 0, 0));
             }

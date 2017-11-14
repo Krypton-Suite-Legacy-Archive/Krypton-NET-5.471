@@ -51,7 +51,11 @@ namespace ComponentFactory.Krypton.Workspace
         {
             if (disposing)
             {
+<<<<<<< HEAD
                 Workspace = null;
+=======
+                _workspace = null;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
 
             base.Dispose(disposing);

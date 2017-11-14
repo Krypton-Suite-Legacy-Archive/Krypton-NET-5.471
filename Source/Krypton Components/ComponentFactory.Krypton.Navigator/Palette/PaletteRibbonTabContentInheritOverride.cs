@@ -1307,7 +1307,11 @@ namespace ComponentFactory.Krypton.Navigator
         /// <returns>Content style.</returns>
         public virtual PaletteContentStyle GetContentStyle()
         {
+<<<<<<< HEAD
             if (Apply)
+=======
+            if (_apply)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 return _primaryContent.GetContentStyle();
             }

@@ -80,7 +80,11 @@ namespace ComponentFactory.Krypton.Docking
         {
             if (disposing)
             {
+<<<<<<< HEAD
                 ControlElement = null;
+=======
+                _controlElement = null;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
 
             base.Dispose(disposing);
@@ -158,6 +162,7 @@ namespace ComponentFactory.Krypton.Docking
                         }
                     }
                 }
+<<<<<<< HEAD
 
                 // Transfer valid pages into the new dockspace
                 if (transferPages.Count > 0)
@@ -171,6 +176,21 @@ namespace ComponentFactory.Krypton.Docking
                     // Add pages into the target
                     dockspace.Append(transferPages.ToArray());
 
+=======
+
+                // Transfer valid pages into the new dockspace
+                if (transferPages.Count > 0)
+                {
+                    // Convert the incoming pages into store pages for restoring later
+                    manager.PropogateAction(DockingPropogateAction.StorePages, transferUniqueNames.ToArray());
+
+                    // Create a new dockspace at the start of the list so it is closest to the control edge
+                    KryptonDockingDockspace dockspace = (_outsideEdge ? dockedEdge.InsertDockspace(0) : dockedEdge.AppendDockspace());
+
+                    // Add pages into the target
+                    dockspace.Append(transferPages.ToArray());
+
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                     return true;
                 }
             }

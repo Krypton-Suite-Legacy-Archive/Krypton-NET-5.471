@@ -256,7 +256,11 @@ namespace ComponentFactory.Krypton.Docking
         public void HideUniqueName()
         {
             // If we are processing any page then instantly remove it
+<<<<<<< HEAD
             if (Page != null)
+=======
+            if (_page != null)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 MakeHidden();
             }
@@ -269,7 +273,11 @@ namespace ComponentFactory.Krypton.Docking
         public void HideUniqueName(string uniqueName)
         {
             // If we are processing the provided page then instantly remove it
+<<<<<<< HEAD
             if ((Page != null) && (Page.UniqueName == uniqueName))
+=======
+            if ((_page != null) && (_page.UniqueName == uniqueName))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 MakeHidden();
             }
@@ -429,9 +437,15 @@ namespace ComponentFactory.Krypton.Docking
                         SetBounds(Left, Top, Width + width, Height);
 
                         // Update the page with the new size to use in the future
+<<<<<<< HEAD
                         if (Page != null)
                         {
                             Page.AutoHiddenSlideSize = new Size(Page.AutoHiddenSlideSize.Width + width, Page.AutoHiddenSlideSize.Height);
+=======
+                        if (_page != null)
+                        {
+                            _page.AutoHiddenSlideSize = new Size(_page.AutoHiddenSlideSize.Width + width, _page.AutoHiddenSlideSize.Height);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                         }
 
                         break;
@@ -442,9 +456,15 @@ namespace ComponentFactory.Krypton.Docking
                         SetBounds(Left + width, Top, Width - width, Height);
 
                         // Update the page with the new size to use in the future
+<<<<<<< HEAD
                         if (Page != null)
                         {
                             Page.AutoHiddenSlideSize = new Size(Page.AutoHiddenSlideSize.Width - width, Page.AutoHiddenSlideSize.Height);
+=======
+                        if (_page != null)
+                        {
+                            _page.AutoHiddenSlideSize = new Size(_page.AutoHiddenSlideSize.Width - width, _page.AutoHiddenSlideSize.Height);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                         }
 
                         break;
@@ -454,9 +474,15 @@ namespace ComponentFactory.Krypton.Docking
                         SetBounds(Left, Top, Width, Height + height);
 
                         // Update the page with the new size to use in the future
+<<<<<<< HEAD
                         if (Page != null)
                         {
                             Page.AutoHiddenSlideSize = new Size(Page.AutoHiddenSlideSize.Width, Page.AutoHiddenSlideSize.Height + height);
+=======
+                        if (_page != null)
+                        {
+                            _page.AutoHiddenSlideSize = new Size(_page.AutoHiddenSlideSize.Width, _page.AutoHiddenSlideSize.Height + height);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                         }
 
                         break;
@@ -467,9 +493,15 @@ namespace ComponentFactory.Krypton.Docking
                         SetBounds(Left, Top + height, Width, Height - height);
 
                         // Update the page with the new size to use in the future
+<<<<<<< HEAD
                         if (Page != null)
                         {
                             Page.AutoHiddenSlideSize = new Size(Page.AutoHiddenSlideSize.Width, Page.AutoHiddenSlideSize.Height - height);
+=======
+                        if (_page != null)
+                        {
+                            _page.AutoHiddenSlideSize = new Size(_page.AutoHiddenSlideSize.Width, _page.AutoHiddenSlideSize.Height - height);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                         }
 
                         break;

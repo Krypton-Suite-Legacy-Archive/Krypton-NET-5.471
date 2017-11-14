@@ -409,7 +409,11 @@ namespace ComponentFactory.Krypton.Toolkit
                                     switch (NumericUpDown.TextAlign)
                                     {
                                         case HorizontalAlignment.Left:
+<<<<<<< HEAD
                                             if (NumericUpDown.RightToLeft == RightToLeft.Yes)
+=======
+                                            if (_kryptonNumericUpDown.RightToLeft == RightToLeft.Yes)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                                             {
                                                 stringFormat.Alignment = StringAlignment.Far;
                                             }
@@ -420,7 +424,11 @@ namespace ComponentFactory.Krypton.Toolkit
 
                                             break;
                                         case HorizontalAlignment.Right:
+<<<<<<< HEAD
                                             if (NumericUpDown.RightToLeft == RightToLeft.Yes)
+=======
+                                            if (_kryptonNumericUpDown.RightToLeft == RightToLeft.Yes)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                                             {
                                                 stringFormat.Alignment = StringAlignment.Far;
                                             }
@@ -452,7 +460,11 @@ namespace ComponentFactory.Krypton.Toolkit
                                     {
                                         using (SolidBrush foreBrush = new SolidBrush(_internalNumericUpDown.ForeColor))
                                         {
+<<<<<<< HEAD
                                             g.DrawString(_internalNumericUpDown.Text, NumericUpDown.GetTripleState().PaletteContent.GetContentShortTextFont(PaletteState.Disabled), foreBrush,
+=======
+                                            g.DrawString(_internalNumericUpDown.Text, _kryptonNumericUpDown.GetTripleState().PaletteContent.GetContentShortTextFont(PaletteState.Disabled), foreBrush,
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                                                          new RectangleF(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top),
                                                          stringFormat);
                                         }
@@ -947,7 +959,11 @@ namespace ComponentFactory.Krypton.Toolkit
             };
 
             // Create view for the control border and background
+<<<<<<< HEAD
             _drawDockerOuter = new ViewDrawDocker(StateNormal.Back, StateNormal.Border)
+=======
+            _drawDockerOuter = new ViewDrawDocker(_stateNormal.Back, _stateNormal.Border)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 { _drawDockerInner, ViewDockStyle.Fill }
             };
@@ -2120,16 +2136,28 @@ namespace ComponentFactory.Krypton.Toolkit
             {
                 if (IsActive)
                 {
+<<<<<<< HEAD
                     return StateActive;
                 }
                 else
                 {
                     return StateNormal;
+=======
+                    return _stateActive;
+                }
+                else
+                {
+                    return _stateNormal;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
             else
             {
+<<<<<<< HEAD
                 return StateDisabled;
+=======
+                return _stateDisabled;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
         }
 

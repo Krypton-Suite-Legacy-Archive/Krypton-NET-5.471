@@ -175,7 +175,11 @@ namespace ComponentFactory.Krypton.Toolkit
                 // Ask the panel to layout given our available size
                 using (ViewLayoutContext context = new ViewLayoutContext(_viewManager, this, _kryptonListBox, _kryptonListBox.Renderer))
                 {
+<<<<<<< HEAD
                     ViewDrawPanel.Layout(context);
+=======
+                    _drawPanel.Layout(context);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
 
@@ -312,7 +316,11 @@ namespace ComponentFactory.Krypton.Toolkit
 
                                 using (RenderContext context = new RenderContext(this, _kryptonListBox, g, realRect, _kryptonListBox.Renderer))
                                 {
+<<<<<<< HEAD
                                     ViewDrawPanel.Render(context);
+=======
+                                    _drawPanel.Render(context);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                                 }
 
                                 // Replace given DC with the screen DC for base window proc drawing
@@ -325,7 +333,11 @@ namespace ComponentFactory.Krypton.Toolkit
                                 {
                                     using (RenderContext context = new RenderContext(this, _kryptonListBox, g, realRect, _kryptonListBox.Renderer))
                                     {
+<<<<<<< HEAD
                                         ViewDrawPanel.Render(context);
+=======
+                                        _drawPanel.Render(context);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                                     }
                                 }
                             }
@@ -339,7 +351,11 @@ namespace ComponentFactory.Krypton.Toolkit
                                 using (Graphics g = Graphics.FromHdc(hdc))
                                     using (RenderContext context = new RenderContext(this, _kryptonListBox, g, realRect, _kryptonListBox.Renderer))
                                 {
+<<<<<<< HEAD
                                     ViewDrawPanel.Render(context);
+=======
+                                    _drawPanel.Render(context);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                                 }
                             }
                         }
@@ -599,7 +615,11 @@ namespace ComponentFactory.Krypton.Toolkit
             };
 
             // Create view for the control border and background
+<<<<<<< HEAD
             _drawDockerOuter = new ViewDrawDocker(StateNormal.Back, StateNormal.Border)
+=======
+            _drawDockerOuter = new ViewDrawDocker(_stateNormal.Back, _stateNormal.Border)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 { _drawDockerInner, ViewDockStyle.Fill }
             };
@@ -1722,16 +1742,28 @@ namespace ComponentFactory.Krypton.Toolkit
             {
                 if (IsActive)
                 {
+<<<<<<< HEAD
                     return StateActive;
                 }
                 else
                 {
                     return StateNormal;
+=======
+                    return _stateActive;
+                }
+                else
+                {
+                    return _stateNormal;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
             else
             {
+<<<<<<< HEAD
                 return StateDisabled;
+=======
+                return _stateDisabled;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
         }
 

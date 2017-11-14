@@ -158,9 +158,15 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <returns>ViewBase of item; otherwise false.</returns>
         public ViewBase GetFirstFocusItem()
         {
+<<<<<<< HEAD
             if ((GroupDateTimePicker.Visible) &&
                 (GroupDateTimePicker.LastDateTimePicker != null) &&
                 (GroupDateTimePicker.LastDateTimePicker.CanSelect))
+=======
+            if ((_ribbonDateTimePicker.Visible) &&
+                (_ribbonDateTimePicker.LastDateTimePicker != null) &&
+                (_ribbonDateTimePicker.LastDateTimePicker.CanSelect))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 return this;
             }
@@ -178,9 +184,15 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <returns>ViewBase of item; otherwise false.</returns>
         public ViewBase GetLastFocusItem()
         {
+<<<<<<< HEAD
             if ((GroupDateTimePicker.Visible) &&
                 (GroupDateTimePicker.LastDateTimePicker != null) &&
                 (GroupDateTimePicker.LastDateTimePicker.CanSelect))
+=======
+            if ((_ribbonDateTimePicker.Visible) &&
+                (_ribbonDateTimePicker.LastDateTimePicker != null) &&
+                (_ribbonDateTimePicker.LastDateTimePicker.CanSelect))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 return this;
             }
@@ -562,24 +574,42 @@ namespace ComponentFactory.Krypton.Ribbon
                 if (visible)
                 {
                     // Only visible if on the currently selected page
+<<<<<<< HEAD
                     if ((GroupDateTimePicker.RibbonTab == null) ||
                         (_ribbon.SelectedTab != GroupDateTimePicker.RibbonTab))
+=======
+                    if ((_ribbonDateTimePicker.RibbonTab == null) ||
+                        (_ribbon.SelectedTab != _ribbonDateTimePicker.RibbonTab))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                     {
                         visible = false;
                     }
                     else
                     {
                         // Check the owning group is visible
+<<<<<<< HEAD
                         if ((GroupDateTimePicker.RibbonContainer?.RibbonGroup != null) && !GroupDateTimePicker.RibbonContainer.RibbonGroup.Visible && !_ribbon.InDesignMode)
+=======
+                        if ((_ribbonDateTimePicker.RibbonContainer != null) &&
+                            (_ribbonDateTimePicker.RibbonContainer.RibbonGroup != null) &&
+                            !_ribbonDateTimePicker.RibbonContainer.RibbonGroup.Visible &&
+                            !_ribbon.InDesignMode)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                         {
                             visible = false;
                         }
                         else
                         {
                             // Check that the group is not collapsed
+<<<<<<< HEAD
                             if ((GroupDateTimePicker.RibbonContainer.RibbonGroup.IsCollapsed) &&
                                 ((_ribbon.GetControllerControl(GroupDateTimePicker.DateTimePicker) is KryptonRibbon) ||
                                  (_ribbon.GetControllerControl(GroupDateTimePicker.DateTimePicker) is VisualPopupMinimized)))
+=======
+                            if ((_ribbonDateTimePicker.RibbonContainer.RibbonGroup.IsCollapsed) &&
+                                ((_ribbon.GetControllerControl(_ribbonDateTimePicker.DateTimePicker) is KryptonRibbon) ||
+                                 (_ribbon.GetControllerControl(_ribbonDateTimePicker.DateTimePicker) is VisualPopupMinimized)))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                             {
                                 visible = false;
                             }

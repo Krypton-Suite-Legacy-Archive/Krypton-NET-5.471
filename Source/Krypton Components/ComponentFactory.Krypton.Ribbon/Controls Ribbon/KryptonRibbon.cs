@@ -291,7 +291,11 @@ namespace ComponentFactory.Krypton.Ribbon
                 // Can only ever set the auto size to true
                 if (value)
                 {
+<<<<<<< HEAD
                     base.AutoSize = true;
+=======
+                    base.AutoSize = value;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
         }
@@ -848,9 +852,15 @@ namespace ComponentFactory.Krypton.Ribbon
                         _ribbonDocker.Remove(GroupsArea);
 
                         // Put the groups view back into the main display
+<<<<<<< HEAD
                         if (!_drawMinimizedPanel.Contains(GroupsArea))
                         {
                             _drawMinimizedPanel.Add(GroupsArea);
+=======
+                        if (!_drawMinimizedPanel.Contains(_groupsArea))
+                        {
+                            _drawMinimizedPanel.Add(_groupsArea);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                         }
 
                         // Need to move any child controls out of the client area so they are not shown,
@@ -1342,7 +1352,11 @@ namespace ComponentFactory.Krypton.Ribbon
             }
 
             // If we have a parent form then ask it to check for a change in composition height
+<<<<<<< HEAD
             CaptionArea.KryptonForm?.RecalculateComposition();
+=======
+            _captionArea.KryptonForm?.RecalculateComposition();
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 
             base.OnLayout(levent);
         }
@@ -1629,11 +1643,19 @@ namespace ComponentFactory.Krypton.Ribbon
 
             if (SelectedTab != null)
             {
+<<<<<<< HEAD
                 newFocus = TabsArea.LayoutTabs.GetViewForRibbonTab(SelectedTab);
             }
             else if (!RealMinimizedMode)
             {
                 newFocus = TabsArea.LayoutTabs.GetViewForFirstRibbonTab();
+=======
+                newFocus = _tabsArea.LayoutTabs.GetViewForRibbonTab(SelectedTab);
+            }
+            else if (!RealMinimizedMode)
+            {
+                newFocus = _tabsArea.LayoutTabs.GetViewForFirstRibbonTab();
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
 
             // If no tab to select, then use the application button
@@ -1691,7 +1713,11 @@ namespace ComponentFactory.Krypton.Ribbon
         protected override void OnKeyPress(KeyPressEventArgs e)
         {
             // If we want to intercept key pressed for use with key tips
+<<<<<<< HEAD
             if (KeyboardMode && InKeyTipsMode)
+=======
+            if (_keyboardMode && _keyboardKeyTips)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 _keyTipControlE.AppendKeyPress(char.ToUpper(e.KeyChar));
             }
@@ -2111,7 +2137,18 @@ namespace ComponentFactory.Krypton.Ribbon
             }
 
             // Caller is only interested in the KryptonForm parent
+<<<<<<< HEAD
             return c as KryptonForm;
+=======
+            if ((c != null) && (c is KryptonForm))
+            {
+                return c as KryptonForm;
+            }
+            else
+            {
+                return null;
+            }
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
         }
 
         internal ButtonStyle QATButtonStyle
@@ -2426,7 +2463,11 @@ namespace ComponentFactory.Krypton.Ribbon
         internal void KillKeyboardMode()
         {
             // If in keyboard mode, then exit the mode
+<<<<<<< HEAD
             if (KeyboardMode)
+=======
+            if (_keyboardMode)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 ToggleKeyboardMode();
             }
@@ -2504,7 +2545,11 @@ namespace ComponentFactory.Krypton.Ribbon
 
         internal void UpdateQAT()
         {
+<<<<<<< HEAD
             CaptionArea?.UpdateQAT();
+=======
+            _captionArea?.UpdateQAT();
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
         }
 
         internal KeyTipMode KeyTipMode
@@ -2563,6 +2608,7 @@ namespace ComponentFactory.Krypton.Ribbon
             KeyTipInfoList keyTipList = new KeyTipInfoList();
 
             // Add the application button/tab
+<<<<<<< HEAD
             if (TabsArea.LayoutAppButton.Visible)
             {
                 keyTipList.Add(TabsArea.GetAppButtonKeyTip());
@@ -2571,12 +2617,26 @@ namespace ComponentFactory.Krypton.Ribbon
             if (TabsArea.LayoutAppTab.Visible)
             {
                 keyTipList.Add(TabsArea.GetAppTabKeyTip());
+=======
+            if (_tabsArea.LayoutAppButton.Visible)
+            {
+                keyTipList.Add(_tabsArea.GetAppButtonKeyTip());
+            }
+
+            if (_tabsArea.LayoutAppTab.Visible)
+            {
+                keyTipList.Add(_tabsArea.GetAppTabKeyTip());
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
 
             // Add the quick access toolbar buttons
             if (QATLocation == QATLocation.Above)
             {
+<<<<<<< HEAD
                 keyTipList.AddRange(CaptionArea.VisibleQAT.GetQATKeyTips());
+=======
+                keyTipList.AddRange(_captionArea.VisibleQAT.GetQATKeyTips());
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
             else
             {
@@ -3125,7 +3185,11 @@ namespace ComponentFactory.Krypton.Ribbon
         private void OnRibbonContextsClearing(object sender, EventArgs e)
         {
             // Unhook from all the context instances
+<<<<<<< HEAD
             foreach (KryptonRibbonContext context in RibbonContexts)
+=======
+            foreach(KryptonRibbonContext context in RibbonContexts)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 context.PropertyChanged -= new PropertyChangedEventHandler(OnContextPropertyChanged);
             }

@@ -67,9 +67,15 @@ namespace ComponentFactory.Krypton.Navigator
             _orientation = Orientation.Vertical;
             _itemOrientation = ButtonOrientation.Auto;
             _headerSecondaryVisible = InheritBool.False;
+<<<<<<< HEAD
             TextMoreButtons = DEFAULT_MORE_BUTTONS;
             TextFewerButtons = DEFAULT_FEWER_BUTTONS;
             TextAddRemoveButtons = DEFAULT_ADD_REMOVE_BUTTONS;
+=======
+            _textMoreButtons = DEFAULT_MORE_BUTTONS;
+            _textFewerButtons = DEFAULT_FEWER_BUTTONS;
+            _textAddRemoveButtons = DEFAULT_ADD_REMOVE_BUTTONS;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             _showDropDownButton = true;
         }
 		#endregion
@@ -79,6 +85,7 @@ namespace ComponentFactory.Krypton.Navigator
         /// Gets a value indicating if all values are default.
         /// </summary>
         [Browsable(false)]
+<<<<<<< HEAD
         public override bool IsDefault => (Full.IsDefault &&
                                            Mini.IsDefault &&
                                            (CheckButtonStyle == ButtonStyle.NavigatorStack) &&
@@ -92,6 +99,26 @@ namespace ComponentFactory.Krypton.Navigator
                                            (TextAddRemoveButtons.Equals(DEFAULT_ADD_REMOVE_BUTTONS)) &&
                                            ShowDropDownButton);
 
+=======
+        public override bool IsDefault
+        {
+            get
+            {
+                return (Full.IsDefault &&
+                        Mini.IsDefault &&
+                        (CheckButtonStyle == ButtonStyle.NavigatorStack) &&
+                        (OverflowButtonStyle == ButtonStyle.NavigatorOverflow) &&
+                        (BorderEdgeStyle == PaletteBorderStyle.ControlClient) &&
+                        (Orientation == Orientation.Vertical) &&
+                        (ItemOrientation == ButtonOrientation.Auto) &&
+                        (HeaderSecondaryVisible == InheritBool.False) &&
+                        (TextMoreButtons.Equals(DEFAULT_MORE_BUTTONS)) &&
+                        (TextFewerButtons.Equals(DEFAULT_FEWER_BUTTONS)) &&
+                        (TextAddRemoveButtons.Equals(DEFAULT_ADD_REMOVE_BUTTONS)) &&
+                        ShowDropDownButton);
+            }
+        }
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
         #endregion
 
         #region Full

@@ -91,13 +91,21 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// <returns>InheritBool value.</returns>
 		public override InheritBool GetBorderDraw(PaletteState state)
 		{
+<<<<<<< HEAD
             if (OverrideBorderToFalse)
+=======
+            if (_overrideBorderToFalse)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 return InheritBool.False;
             }
             else
             {
+<<<<<<< HEAD
                 return _redirect.GetBorderDraw(Style, state);
+=======
+                return _redirect.GetBorderDraw(_style, state);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
         }
 

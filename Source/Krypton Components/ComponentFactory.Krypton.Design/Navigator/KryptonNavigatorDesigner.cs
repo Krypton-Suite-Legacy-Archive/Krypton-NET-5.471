@@ -60,7 +60,11 @@ namespace ComponentFactory.Krypton.Navigator
             EnableDesignMode(Navigator.ChildPanel, "PageContainer");
 
             // Make sure that all the pages in control can be designed
+<<<<<<< HEAD
             foreach (KryptonPage page in Navigator.Pages)
+=======
+            foreach (KryptonPage page in _navigator.Pages)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 EnableDesignMode(page, page.Name);
             }
@@ -271,7 +275,11 @@ namespace ComponentFactory.Krypton.Navigator
             // tracking element is informed that the mouse has left the control
             if (!ret && _lastHitTest)
             {
+<<<<<<< HEAD
                 Navigator.DesignerMouseLeave();
+=======
+                _navigator.DesignerMouseLeave();
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
 
             // Cache the last answer recovered
@@ -461,9 +469,15 @@ namespace ComponentFactory.Krypton.Navigator
                     RaiseComponentChanging(propertyPages);
 
                     // Get the designer to destroy each page in turn
+<<<<<<< HEAD
                     for(int i=Navigator.Pages.Count; i>0; i--)
                     {
                         _designerHost.DestroyComponent(Navigator.Pages[0]);
+=======
+                    for(int i=_navigator.Pages.Count; i>0; i--)
+                    {
+                        _designerHost.DestroyComponent(_navigator.Pages[0]);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                     }
 
                     RaiseComponentChanged(propertyPages, null, null);

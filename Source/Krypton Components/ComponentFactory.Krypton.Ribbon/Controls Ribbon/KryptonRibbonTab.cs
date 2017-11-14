@@ -117,7 +117,11 @@ namespace ComponentFactory.Krypton.Ribbon
                 // Forward the reference to all children (just in case the children
                 // are added before the group is added to the tab, in which case the
                 // reference will not be set as yet)
+<<<<<<< HEAD
                 foreach (KryptonRibbonGroup group in Groups)
+=======
+                foreach (KryptonRibbonGroup group in _ribbonGroups)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 {
                     @group.Ribbon = value;
                 }

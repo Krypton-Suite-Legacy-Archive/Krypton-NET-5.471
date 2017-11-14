@@ -163,7 +163,11 @@ namespace ComponentFactory.Krypton.Toolkit
 		{
 			get
 			{
+<<<<<<< HEAD
                 if (ForceBorderFirst)
+=======
+                if (_forceBorderFirst)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 {
                     return false;
                 }

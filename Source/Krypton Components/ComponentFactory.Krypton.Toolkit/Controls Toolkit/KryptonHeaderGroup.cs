@@ -119,7 +119,11 @@ namespace ComponentFactory.Krypton.Toolkit
             StateNormal = new PaletteHeaderGroup(StateCommon, StateCommon.HeaderPrimary, StateCommon.HeaderSecondary, NeedPaintDelegate);
 
             // Create the internal panel used for containing content
+<<<<<<< HEAD
             Panel = new KryptonGroupPanel(this, StateCommon, StateDisabled, StateNormal, new NeedPaintHandler(OnGroupPanelPaint))
+=======
+            _panel = new KryptonGroupPanel(this, _stateCommon, _stateDisabled, _stateNormal, new NeedPaintHandler(OnGroupPanelPaint))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
 
                 // Make sure the panel back style always mimics our back style
@@ -127,9 +131,15 @@ namespace ComponentFactory.Krypton.Toolkit
             };
 
             // Create view for header 1
+<<<<<<< HEAD
             _drawHeading1 = new ViewDrawDocker(StateNormal.HeaderPrimary.Back,
                                                StateNormal.HeaderPrimary.Border,
                                                StateNormal.HeaderPrimary,
+=======
+            _drawHeading1 = new ViewDrawDocker(_stateNormal.HeaderPrimary.Back,
+                                               _stateNormal.HeaderPrimary.Border,
+                                               _stateNormal.HeaderPrimary,
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                                                PaletteMetricBool.None,
 											   PaletteMetricPadding.HeaderGroupPaddingPrimary,
 											   VisualOrientation.Top);
@@ -149,7 +159,11 @@ namespace ComponentFactory.Krypton.Toolkit
             _drawHeading2.Add(_drawContent2, ViewDockStyle.Fill);
 
             // Create view for the control border and background
+<<<<<<< HEAD
             _drawDocker = new ViewDrawDocker(StateNormal.Back, StateNormal.Border, StateNormal,
+=======
+            _drawDocker = new ViewDrawDocker(_stateNormal.Back, _stateNormal.Border, _stateNormal,
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                                              PaletteMetricBool.HeaderGroupOverlay)
             {
 

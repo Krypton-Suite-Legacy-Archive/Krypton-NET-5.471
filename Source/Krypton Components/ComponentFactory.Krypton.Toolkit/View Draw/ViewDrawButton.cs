@@ -127,14 +127,22 @@ namespace ComponentFactory.Krypton.Toolkit
             _drawCanvas = new ViewDrawSplitCanvas(_paletteNormal.PaletteBack, _paletteNormal.PaletteBorder, paletteMetric, PaletteMetricPadding.None, orientation);
 
             // Use a docker layout to organize the contents of the canvas
+<<<<<<< HEAD
             LayoutDocker = new ViewLayoutDocker
+=======
+            _layoutDocker = new ViewLayoutDocker
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 { _drawContent, ViewDockStyle.Fill },
                 { _drawSplitBorder, ViewDockStyle.Right },
                 { _drawDropDown, ViewDockStyle.Right },
                 { _drawOuterSeparator, ViewDockStyle.Right }
             };
+<<<<<<< HEAD
             LayoutDocker.Tag = this;
+=======
+            _layoutDocker.Tag = this;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 
 			// Pass the mnemonic default to the content view
 			_drawContent.UseMnemonic = useMnemonic;

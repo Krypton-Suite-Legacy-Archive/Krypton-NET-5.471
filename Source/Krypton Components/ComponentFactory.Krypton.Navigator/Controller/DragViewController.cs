@@ -128,9 +128,15 @@ namespace ComponentFactory.Krypton.Navigator
             {
                 if (_dragging)
                 {
+<<<<<<< HEAD
                     OnDragMove(MousePoint);
                 }
                 else if (!_dragRect.Contains(MousePoint))
+=======
+                    OnDragMove(_mousePoint);
+                }
+                else if (!_dragRect.Contains(_mousePoint))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 {
                     // Only attempt dragging once per time the mouse is pressed on the element
                     if (!_draggingAttempt)

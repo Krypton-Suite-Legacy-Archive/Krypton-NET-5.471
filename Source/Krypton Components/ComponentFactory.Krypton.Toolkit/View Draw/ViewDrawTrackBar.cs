@@ -110,7 +110,11 @@ namespace ComponentFactory.Krypton.Toolkit
             _layoutTop = new ViewLayoutDocker
             {
                 { _ticksTop, ViewDockStyle.Top },
+<<<<<<< HEAD
                 { TrackPosition, ViewDockStyle.Top },
+=======
+                { _trackPosition, ViewDockStyle.Top },
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 { _ticksBottom, ViewDockStyle.Top }
             };
             _layoutTop.Padding = Padding;

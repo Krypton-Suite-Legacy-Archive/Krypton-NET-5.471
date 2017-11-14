@@ -164,7 +164,11 @@ namespace ComponentFactory.Krypton.Ribbon
 
                 // Forward the reference to all children (just in case the children
                 // are added before the this object is added to the owner)
+<<<<<<< HEAD
                 foreach (KryptonRibbonGroupItem item in Items)
+=======
+                foreach (KryptonRibbonGroupItem item in _ribbonGroupItems)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 {
                     item.Ribbon = value;
                 }
@@ -187,7 +191,11 @@ namespace ComponentFactory.Krypton.Ribbon
 
                 // Forward the reference to all children (just in case the children
                 // are added before the this object is added to the owner)
+<<<<<<< HEAD
                 foreach (KryptonRibbonGroupItem item in Items)
+=======
+                foreach (KryptonRibbonGroupItem item in _ribbonGroupItems)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 {
                     item.RibbonTab = value;
                 }

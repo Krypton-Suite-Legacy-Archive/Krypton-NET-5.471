@@ -398,7 +398,11 @@ namespace ComponentFactory.Krypton.Navigator
                 }
                 else
                 {
+<<<<<<< HEAD
                     return Pages.IndexOf(SelectedPage);
+=======
+                    return _pages.IndexOf(SelectedPage);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
 
@@ -426,7 +430,11 @@ namespace ComponentFactory.Krypton.Navigator
                     }
 
 				    // Request the change by changing the SelectedPage
+<<<<<<< HEAD
                     SelectedPage = Pages[value];
+=======
+                    SelectedPage = _pages[value];
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 				}
 			}
 		}
@@ -1000,7 +1008,11 @@ namespace ComponentFactory.Krypton.Navigator
                 while (view != null)
                 {
                     // If the view is associated with a page then return that page
+<<<<<<< HEAD
                     if (view.Component is KryptonPage)
+=======
+                    if ((view.Component != null) && (view.Component is KryptonPage))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                     {
                         return (KryptonPage)view.Component;
                     }
@@ -1270,7 +1282,11 @@ namespace ComponentFactory.Krypton.Navigator
                 }
                 else
                 {
+<<<<<<< HEAD
                     ViewBuilder.GotFocus();
+=======
+                    _viewBuilder.GotFocus();
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
 
@@ -1285,7 +1301,11 @@ namespace ComponentFactory.Krypton.Navigator
         protected override void OnLostFocus(EventArgs e)
         {
             // We should have a view builder at all times
+<<<<<<< HEAD
             ViewBuilder?.LostFocus();
+=======
+            _viewBuilder?.LostFocus();
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 
             // Let base class perform standard processing
             base.OnLostFocus(e);
@@ -1304,7 +1324,11 @@ namespace ComponentFactory.Krypton.Navigator
                 ViewBase element = ViewManager.Root.ViewFromPoint(new Point(e.X, e.Y));
 
                 // Ask the view builder if pressing the element needs to give us focus
+<<<<<<< HEAD
                 if (ViewBuilder.GiveNavigatorFocus(element))
+=======
+                if (_viewBuilder.GiveNavigatorFocus(element))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 {
                     Focus();
                 }
@@ -1398,7 +1422,11 @@ namespace ComponentFactory.Krypton.Navigator
             // Let the view builder perform view specific actions
             if (!handled)
             {
+<<<<<<< HEAD
                 handled = ViewBuilder.ProcessDialogKey(keyData);
+=======
+                handled = _viewBuilder.ProcessDialogKey(keyData);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
 
             // If we did not handle the key then give it to the base class
@@ -1455,7 +1483,11 @@ namespace ComponentFactory.Krypton.Navigator
             if (UseMnemonic && CanProcessMnemonic())
             {
                 // Ask the view builder if the mnemonic can be used
+<<<<<<< HEAD
                 if (ViewBuilder.ProcessMnemonic(charCode))
+=======
+                if (_viewBuilder.ProcessMnemonic(charCode))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 {
                     return true;
                 }
@@ -1480,11 +1512,19 @@ namespace ComponentFactory.Krypton.Navigator
             {
                 if (attach)
                 {
+<<<<<<< HEAD
                     ChildPanel.AttachGlobalEvents();
                 }
                 else
                 {
                     ChildPanel.UnattachGlobalEvents();
+=======
+                    _childPanel.AttachGlobalEvents();
+                }
+                else
+                {
+                    _childPanel.UnattachGlobalEvents();
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
 
@@ -2108,7 +2148,11 @@ namespace ComponentFactory.Krypton.Navigator
 
             if (position == PopupPagePosition.ModeAppropriate)
             {
+<<<<<<< HEAD
                 position = ViewBuilder.GetPopupPagePosition();
+=======
+                position = _viewBuilder.GetPopupPagePosition();
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
 
             return position;
@@ -2375,10 +2419,17 @@ namespace ComponentFactory.Krypton.Navigator
         private void CreateChildControl()
         {
             // Create the internal panel used for containing content
+<<<<<<< HEAD
             ChildPanel = new KryptonGroupPanel(this,
                                                 StateCommon.HeaderGroup,
                                                 StateDisabled.HeaderGroup,
                                                 StateNormal.HeaderGroup,
+=======
+            _childPanel = new KryptonGroupPanel(this,
+                                                _stateCommon.HeaderGroup,
+                                                _stateDisabled.HeaderGroup,
+                                                _stateNormal.HeaderGroup,
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                                                 new NeedPaintHandler(OnGroupPanelPaint))
             {
 
@@ -2401,13 +2452,22 @@ namespace ComponentFactory.Krypton.Navigator
             ToolTipManager.CancelToolTip += new EventHandler(OnCancelToolTip);
 
             // Create the manager for handling hovering
+<<<<<<< HEAD
             HoverManager = new ToolTipManager
+=======
+            _hoverManager = new ToolTipManager
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 ShowInterval = 400,
                 CloseInterval = 400
             };
+<<<<<<< HEAD
             HoverManager.ShowToolTip += new EventHandler<ToolTipEventArgs>(OnStartHover);
             HoverManager.CancelToolTip += new EventHandler(OnEndHover);
+=======
+            _hoverManager.ShowToolTip += new EventHandler<ToolTipEventArgs>(OnStartHover);
+            _hoverManager.CancelToolTip += new EventHandler(OnEndHover);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
         }
         #endregion
 

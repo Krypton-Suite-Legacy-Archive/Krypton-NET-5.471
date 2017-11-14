@@ -834,7 +834,11 @@ namespace ComponentFactory.Krypton.Navigator
                         break;
                     case Keys.Space:
                     case Keys.Enter:
+<<<<<<< HEAD
                         if (HasFocus)
+=======
+                        if (_hasFocus)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                         {
                             KeyPressedPageView();
                         }

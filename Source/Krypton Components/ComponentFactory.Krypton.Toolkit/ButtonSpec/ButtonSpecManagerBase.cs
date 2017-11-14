@@ -705,7 +705,11 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <param name="needLayout">Does the palette change require a layout.</param>
         protected virtual void OnNeedPaint(object sender, bool needLayout)
         {
+<<<<<<< HEAD
             NeedPaint?.Invoke(sender, new NeedLayoutEventArgs(needLayout));
+=======
+            _needPaint?.Invoke(sender, new NeedLayoutEventArgs(needLayout));
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
         }
         #endregion
 

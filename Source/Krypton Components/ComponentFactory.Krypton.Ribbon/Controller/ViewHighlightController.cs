@@ -238,7 +238,11 @@ namespace ComponentFactory.Krypton.Ribbon
 		/// <param name="needLayout">Does the palette change require a layout.</param>
 		protected virtual void OnNeedPaint(bool needLayout)
 		{
+<<<<<<< HEAD
             _needPaint?.Invoke(this, new NeedLayoutEventArgs(needLayout, Target.ClientRectangle));
+=======
+            _needPaint?.Invoke(this, new NeedLayoutEventArgs(needLayout, _target.ClientRectangle));
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
         }
 
         /// <summary>

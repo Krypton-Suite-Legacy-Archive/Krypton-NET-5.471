@@ -49,6 +49,7 @@ namespace ComponentFactory.Krypton.Ribbon
 		{
             // Default values
             _appButtonKeyTip = DEFAULT_APP_BUTTON_KEY_TIP;
+<<<<<<< HEAD
             CustomizeQuickAccessToolbar = DEFAULT_CUSTOMIZE_QUICK_ACCESS_TOOLBAR;
             Minimize = DEFAULT_MINIMIZE;
             MoreColors = DEFAULT_MORE_COLORS;
@@ -61,6 +62,20 @@ namespace ComponentFactory.Krypton.Ribbon
             ShowQATBelowRibbon = DEFAULT_SHOW_QAT_BELOW_RIBBON;
             StandardColors = DEFAULT_STANDARD_COLORS;
             ThemeColors = DEFAULT_THEME_COLORS;
+=======
+            _customizeQuickAccessToolbar = DEFAULT_CUSTOMIZE_QUICK_ACCESS_TOOLBAR;
+            _minimize = DEFAULT_MINIMIZE;
+            _moreColors = DEFAULT_MORE_COLORS;
+            _noColor = DEFAULT_NO_COLOR;
+            _recentDocuments = DEFAULT_RECENT_DOCUMENTS;
+            _recentColors = DEFAULT_RECENT_COLORS;
+            _showAboveRibbon = DEFAULT_SHOW_ABOVE_RIBBON;
+            _showBelowRibbon = DEFAULT_SHOW_BELOW_RIBBON;
+            _showQATAboveRibbon = DEFAULT_SHOW_QAT_ABOVE_RIBBON;
+            _showQATBelowRibbon = DEFAULT_SHOW_QAT_BELOW_RIBBON;
+            _standardColors = DEFAULT_STANDARD_COLORS;
+            _themeColors = DEFAULT_THEME_COLORS;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
         }
 		#endregion
 
@@ -69,6 +84,7 @@ namespace ComponentFactory.Krypton.Ribbon
         /// Gets a value indicating if all values are default.
         /// </summary>
         [Browsable(false)]
+<<<<<<< HEAD
         public override bool IsDefault => (AppButtonKeyTip.Equals(DEFAULT_APP_BUTTON_KEY_TIP)) &&
                                           (CustomizeQuickAccessToolbar.Equals(DEFAULT_CUSTOMIZE_QUICK_ACCESS_TOOLBAR)) &&
                                           (Minimize.Equals(DEFAULT_MINIMIZE)) &&
@@ -83,6 +99,27 @@ namespace ComponentFactory.Krypton.Ribbon
                                           (StandardColors.Equals(DEFAULT_STANDARD_COLORS)) &&
                                           (ThemeColors.Equals(DEFAULT_THEME_COLORS));
 
+=======
+        public override bool IsDefault
+        {
+            get
+            {
+                return (AppButtonKeyTip.Equals(DEFAULT_APP_BUTTON_KEY_TIP)) &&
+                       (CustomizeQuickAccessToolbar.Equals(DEFAULT_CUSTOMIZE_QUICK_ACCESS_TOOLBAR)) &&
+                       (Minimize.Equals(DEFAULT_MINIMIZE)) &&
+                       (MoreColors.Equals(DEFAULT_MORE_COLORS)) &&
+                       (NoColor.Equals(DEFAULT_NO_COLOR)) &&
+                       (RecentDocuments.Equals(DEFAULT_RECENT_DOCUMENTS)) &&
+                       (RecentColors.Equals(DEFAULT_RECENT_COLORS)) &&
+                       (ShowAboveRibbon.Equals(DEFAULT_SHOW_ABOVE_RIBBON)) &&
+                       (ShowBelowRibbon.Equals(DEFAULT_SHOW_BELOW_RIBBON)) &&
+                       (ShowQATAboveRibbon.Equals(DEFAULT_SHOW_QAT_ABOVE_RIBBON)) &&
+                       (ShowQATBelowRibbon.Equals(DEFAULT_SHOW_QAT_BELOW_RIBBON)) &&
+                       (StandardColors.Equals(DEFAULT_STANDARD_COLORS)) &&
+                       (ThemeColors.Equals(DEFAULT_THEME_COLORS));
+            }
+        }
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
         #endregion
 
         #region AppButtonKeyTip

@@ -87,10 +87,17 @@ namespace ComponentFactory.Krypton.Navigator
             _actionContext = ContextButtonAction.SelectPage;
             _actionPrevious = _actionNext = DirectionButtonAction.ModeAppropriateAction;
             _displayPrevious = _displayNext = _displayContext = _displayClosed = ButtonDisplay.Logic;
+<<<<<<< HEAD
             CloseButtonShortcut = DEFAULT_SHORTCUT_CLOSE;
             ContextButtonShortcut = DEFAULT_SHORTCUT_CONTEXT;
             NextButtonShortcut = DEFAULT_SHORTCUT_NEXT;
             PreviousButtonShortcut = DEFAULT_SHORTCUT_PREVIOUS;
+=======
+            _shortcutClose = DEFAULT_SHORTCUT_CLOSE;
+            _shortcutContext = DEFAULT_SHORTCUT_CONTEXT;
+            _shortcutNext = DEFAULT_SHORTCUT_NEXT;
+            _shortcutPrevious = DEFAULT_SHORTCUT_PREVIOUS;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
         }
 		#endregion
 
@@ -99,6 +106,7 @@ namespace ComponentFactory.Krypton.Navigator
         /// Gets a value indicating if all values are default.
         /// </summary>
         [Browsable(false)]
+<<<<<<< HEAD
         public override bool IsDefault => ((ButtonSpecs.Count == 0) &&
                                            PreviousButton.IsDefault &&
                                            (PreviousButtonAction == DirectionButtonAction.ModeAppropriateAction) &&
@@ -119,6 +127,33 @@ namespace ComponentFactory.Krypton.Navigator
                                            (CloseButtonShortcut == DEFAULT_SHORTCUT_CLOSE) &&
                                            (ButtonDisplayLogic == ButtonDisplayLogic.Context));
 
+=======
+        public override bool IsDefault
+        {
+            get
+            {
+                return ((ButtonSpecs.Count == 0) &&
+                        PreviousButton.IsDefault &&
+                        (PreviousButtonAction == DirectionButtonAction.ModeAppropriateAction) &&
+                        (PreviousButtonDisplay == ButtonDisplay.Logic) &&
+                        (PreviousButtonShortcut == DEFAULT_SHORTCUT_PREVIOUS) &&
+                        NextButton.IsDefault &&
+                        (NextButtonAction == DirectionButtonAction.ModeAppropriateAction) &&
+                        (NextButtonDisplay == ButtonDisplay.Logic) &&
+                        (NextButtonShortcut == DEFAULT_SHORTCUT_NEXT) &&
+                        ContextButton.IsDefault &&
+                        (ContextButtonDisplay == ButtonDisplay.Logic) &&
+                        (ContextButtonShortcut == DEFAULT_SHORTCUT_CONTEXT) &&
+                        (ContextMenuMapText == MapKryptonPageText.TextTitle) &&
+                        (ContextMenuMapImage == MapKryptonPageImage.Small) &&
+                        CloseButton.IsDefault &&
+                        (CloseButtonAction == CloseButtonAction.RemovePageAndDispose) &&
+                        (CloseButtonDisplay == ButtonDisplay.Logic) &&
+                        (CloseButtonShortcut == DEFAULT_SHORTCUT_CLOSE) &&
+                        (ButtonDisplayLogic == ButtonDisplayLogic.Context));
+            }
+        }
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
         #endregion
 
         #region ButtonSpecs

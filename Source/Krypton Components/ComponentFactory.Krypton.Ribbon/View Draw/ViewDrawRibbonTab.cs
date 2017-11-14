@@ -766,7 +766,11 @@ namespace ComponentFactory.Krypton.Ribbon
 
         private void OnTabContextClicked(object sender, MouseEventArgs e)
         {
+<<<<<<< HEAD
             if (Ribbon.InDesignMode)
+=======
+            if (_ribbon.InDesignMode)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 _ribbonTab.OnDesignTimeContextMenu(new MouseEventArgs(MouseButtons.Right, 1, e.X, e.Y, 0));
             }

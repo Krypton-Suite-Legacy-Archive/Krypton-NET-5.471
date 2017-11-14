@@ -91,7 +91,11 @@ namespace ComponentFactory.Krypton.Ribbon
             _maximumLength = 55;
 
             // Create the actual track barcontrol and set initial settings
+<<<<<<< HEAD
             TrackBar = new KryptonTrackBar
+=======
+            _trackBar = new KryptonTrackBar
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 DrawBackground = false,
                 TickStyle = TickStyle.None,
@@ -260,11 +264,19 @@ namespace ComponentFactory.Krypton.Ribbon
                 _minimumLength = value;
                 if (Orientation == Orientation.Horizontal)
                 {
+<<<<<<< HEAD
                     TrackBar.MinimumSize = new Size(_minimumLength, 0);
                 }
                 else
                 {
                     TrackBar.MinimumSize = new Size(0, _minimumLength);
+=======
+                    _trackBar.MinimumSize = new Size(_minimumLength, 0);
+                }
+                else
+                {
+                    _trackBar.MinimumSize = new Size(0, _minimumLength);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
         }
@@ -284,11 +296,19 @@ namespace ComponentFactory.Krypton.Ribbon
                 _maximumLength = value;
                 if (Orientation == Orientation.Horizontal)
                 {
+<<<<<<< HEAD
                     TrackBar.MaximumSize = new Size(_maximumLength, 0);
                 }
                 else
                 {
                     TrackBar.MaximumSize = new Size(0, _maximumLength);
+=======
+                    _trackBar.MaximumSize = new Size(_maximumLength, 0);
+                }
+                else
+                {
+                    _trackBar.MaximumSize = new Size(0, _maximumLength);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
         }
@@ -617,7 +637,11 @@ namespace ComponentFactory.Krypton.Ribbon
         private void OnPaletteNeedPaint(object sender, NeedLayoutEventArgs e)
         {
             // Pass request onto the view provided paint delegate
+<<<<<<< HEAD
             ViewPaintDelegate?.Invoke(this, e);
+=======
+            _viewPaintDelegate?.Invoke(this, e);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
         }
 
         private void OnTrackBarGotFocus(object sender, EventArgs e)

@@ -139,7 +139,11 @@ namespace ComponentFactory.Krypton.Ribbon
             // Only take focus if we are visible and enabled
             if (GroupButton.Visible && GroupButton.Enabled)
             {
+<<<<<<< HEAD
                 if (_viewLarge == GroupButton.ButtonView)
+=======
+                if (_viewLarge == _ribbonButton.ButtonView)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 {
                     return _viewLarge;
                 }
@@ -165,7 +169,11 @@ namespace ComponentFactory.Krypton.Ribbon
             // Only take focus if we are visible and enabled
             if (GroupButton.Visible && GroupButton.Enabled)
             {
+<<<<<<< HEAD
                 if (_viewLarge == GroupButton.ButtonView)
+=======
+                if (_viewLarge == _ribbonButton.ButtonView)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 {
                     return _viewLarge;
                 }
@@ -385,7 +393,11 @@ namespace ComponentFactory.Krypton.Ribbon
             ViewLayoutDocker contentLayout = new ViewLayoutDocker();
 
             // Add the large button at the top
+<<<<<<< HEAD
             _viewLargeImage = new ViewDrawRibbonGroupButtonImage(_ribbon, GroupButton, true);
+=======
+            _viewLargeImage = new ViewDrawRibbonGroupButtonImage(_ribbon, _ribbonButton, true);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             ViewLayoutRibbonCenterPadding largeImagePadding = new ViewLayoutRibbonCenterPadding(_largeImagePadding)
             {
                 _viewLargeImage
@@ -489,10 +501,17 @@ namespace ComponentFactory.Krypton.Ribbon
         private void UpdateEnabledState()
         {
             // Get the correct enabled state from the button definition
+<<<<<<< HEAD
             bool buttonEnabled = GroupButton.Enabled;
             if (GroupButton.KryptonCommand != null)
             {
                 buttonEnabled = GroupButton.KryptonCommand.Enabled;
+=======
+            bool buttonEnabled = _ribbonButton.Enabled;
+            if (_ribbonButton.KryptonCommand != null)
+            {
+                buttonEnabled = _ribbonButton.KryptonCommand.Enabled;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
 
             // Take into account the ribbon state and mode
@@ -520,6 +539,7 @@ namespace ComponentFactory.Krypton.Ribbon
             // Only show as checked if also a check type button
             if (GroupButton.ButtonType == GroupButtonType.Check)
             {
+<<<<<<< HEAD
                 if (GroupButton.KryptonCommand != null)
                 {
                     checkedState = GroupButton.KryptonCommand.Checked;
@@ -527,6 +547,15 @@ namespace ComponentFactory.Krypton.Ribbon
                 else
                 {
                     checkedState = GroupButton.Checked;
+=======
+                if (_ribbonButton.KryptonCommand != null)
+                {
+                    checkedState = _ribbonButton.KryptonCommand.Checked;
+                }
+                else
+                {
+                    checkedState = _ribbonButton.Checked;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
 

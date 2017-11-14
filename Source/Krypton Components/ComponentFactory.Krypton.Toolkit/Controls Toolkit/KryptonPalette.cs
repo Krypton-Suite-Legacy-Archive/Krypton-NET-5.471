@@ -1574,11 +1574,19 @@ namespace ComponentFactory.Krypton.Toolkit
 
             if (expanded)
             {
+<<<<<<< HEAD
                 retImage = Images.TreeView.Minus;
             }
             else
             {
                 retImage = Images.TreeView.Plus;
+=======
+                retImage = _images.TreeView.Minus;
+            }
+            else
+            {
+                retImage = _images.TreeView.Plus;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
 
             // Not found, then inherit from target
@@ -1608,6 +1616,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 case CheckState.Unchecked:
                     if (!enabled)
                     {
+<<<<<<< HEAD
                         retImage = Images.CheckBox.UncheckedDisabled;
                     }
                     else if (pressed)
@@ -1621,12 +1630,28 @@ namespace ComponentFactory.Krypton.Toolkit
                     else
                     {
                         retImage = Images.CheckBox.UncheckedNormal;
+=======
+                        retImage = _images.CheckBox.UncheckedDisabled;
+                    }
+                    else if (pressed)
+                    {
+                        retImage = _images.CheckBox.UncheckedPressed;
+                    }
+                    else if (tracking)
+                    {
+                        retImage = _images.CheckBox.UncheckedTracking;
+                    }
+                    else
+                    {
+                        retImage = _images.CheckBox.UncheckedNormal;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                     }
 
                     break;
                 case CheckState.Checked:
                     if (!enabled)
                     {
+<<<<<<< HEAD
                         retImage = Images.CheckBox.CheckedDisabled;
                     }
                     else if (pressed)
@@ -1640,12 +1665,28 @@ namespace ComponentFactory.Krypton.Toolkit
                     else
                     {
                         retImage = Images.CheckBox.CheckedNormal;
+=======
+                        retImage = _images.CheckBox.CheckedDisabled;
+                    }
+                    else if (pressed)
+                    {
+                        retImage = _images.CheckBox.CheckedPressed;
+                    }
+                    else if (tracking)
+                    {
+                        retImage = _images.CheckBox.CheckedTracking;
+                    }
+                    else
+                    {
+                        retImage = _images.CheckBox.CheckedNormal;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                     }
 
                     break;
                 case CheckState.Indeterminate:
                     if (!enabled)
                     {
+<<<<<<< HEAD
                         retImage = Images.CheckBox.IndeterminateDisabled;
                     }
                     else if (pressed)
@@ -1659,6 +1700,21 @@ namespace ComponentFactory.Krypton.Toolkit
                     else
                     {
                         retImage = Images.CheckBox.IndeterminateNormal;
+=======
+                        retImage = _images.CheckBox.IndeterminateDisabled;
+                    }
+                    else if (pressed)
+                    {
+                        retImage = _images.CheckBox.IndeterminatePressed;
+                    }
+                    else if (tracking)
+                    {
+                        retImage = _images.CheckBox.IndeterminateTracking;
+                    }
+                    else
+                    {
+                        retImage = _images.CheckBox.IndeterminateNormal;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                     }
 
                     break;
@@ -1667,7 +1723,11 @@ namespace ComponentFactory.Krypton.Toolkit
             // Use common image as the last resort
             if (retImage == null)
             {
+<<<<<<< HEAD
                 retImage = Images.CheckBox.Common;
+=======
+                retImage = _images.CheckBox.Common;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
 
             // If nothing found then use the base palette
@@ -1698,6 +1758,7 @@ namespace ComponentFactory.Krypton.Toolkit
             {
                 if (!enabled)
                 {
+<<<<<<< HEAD
                     retImage = Images.RadioButton.UncheckedDisabled;
                 }
                 else if (pressed)
@@ -1711,12 +1772,28 @@ namespace ComponentFactory.Krypton.Toolkit
                 else
                 {
                     retImage = Images.RadioButton.UncheckedNormal;
+=======
+                    retImage = _images.RadioButton.UncheckedDisabled;
+                }
+                else if (pressed)
+                {
+                    retImage = _images.RadioButton.UncheckedPressed;
+                }
+                else if (tracking)
+                {
+                    retImage = _images.RadioButton.UncheckedTracking;
+                }
+                else
+                {
+                    retImage = _images.RadioButton.UncheckedNormal;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
             else
             {
                 if (!enabled)
                 {
+<<<<<<< HEAD
                     retImage = Images.RadioButton.CheckedDisabled;
                 }
                 else if (pressed)
@@ -1730,13 +1807,32 @@ namespace ComponentFactory.Krypton.Toolkit
                 else
                 {
                     retImage = Images.RadioButton.CheckedNormal;
+=======
+                    retImage = _images.RadioButton.CheckedDisabled;
+                }
+                else if (pressed)
+                {
+                    retImage = _images.RadioButton.CheckedPressed;
+                }
+                else if (tracking)
+                {
+                    retImage = _images.RadioButton.CheckedTracking;
+                }
+                else
+                {
+                    retImage = _images.RadioButton.CheckedNormal;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
 
             // Use common image as the last resort
             if (retImage == null)
             {
+<<<<<<< HEAD
                 retImage = Images.RadioButton.Common;
+=======
+                retImage = _images.RadioButton.Common;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
 
             // If nothing found then use the base palette
@@ -1777,7 +1873,11 @@ namespace ComponentFactory.Krypton.Toolkit
             // Use common image as the last resort
             if (retImage == null)
             {
+<<<<<<< HEAD
                 retImage = Images.DropDownButton.Common;
+=======
+                retImage = _images.DropDownButton.Common;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
 
             // If nothing found then use the base palette

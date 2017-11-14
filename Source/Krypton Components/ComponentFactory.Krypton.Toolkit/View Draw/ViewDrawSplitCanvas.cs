@@ -68,6 +68,7 @@ namespace ComponentFactory.Krypton.Toolkit
 							       VisualOrientation orientation)
 		{
 			// Cache the starting values
+<<<<<<< HEAD
 			PaletteBorder = paletteBorder;
 			PaletteBack = paletteBack;
             _paletteBackDraw = new PaletteBackInheritForced(PaletteBack)
@@ -76,6 +77,16 @@ namespace ComponentFactory.Krypton.Toolkit
             };
             _paletteBackLight = new PaletteBackLightenColors(PaletteBack);
             PaletteMetric = paletteMetric;
+=======
+			_paletteBorder = paletteBorder;
+			_paletteBack = paletteBack;
+            _paletteBackDraw = new PaletteBackInheritForced(_paletteBack)
+            {
+                ForceDraw = InheritBool.True
+            };
+            _paletteBackLight = new PaletteBackLightenColors(_paletteBack);
+            _paletteMetric = paletteMetric;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             _paletteBorderNormal = paletteBorder;
             _paletteBackNormal = paletteBack;
 			_metricPadding = metricPadding;
@@ -229,7 +240,11 @@ namespace ComponentFactory.Krypton.Toolkit
             // otherwise we update the decorator with the palette as the new inheritance to use
             if (_borderForced == null)
             {
+<<<<<<< HEAD
                 PaletteBorder = paletteBorder;
+=======
+                _paletteBorder = paletteBorder;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
             else
             {
@@ -429,6 +444,7 @@ namespace ComponentFactory.Krypton.Toolkit
 			// Apply space the border takes up
             if (DrawTabBorder)
             {
+<<<<<<< HEAD
                 preferredSize = CommonHelper.ApplyPadding(Orientation, preferredSize, context.Renderer.RenderTabBorder.GetTabBorderDisplayPadding(context, PaletteBorder, State, Orientation, TabBorderStyle));
             }
             else
@@ -438,6 +454,17 @@ namespace ComponentFactory.Krypton.Toolkit
 
             // Do we have a metric source for additional padding?
             if ((PaletteMetric != null) && (_metricPadding != PaletteMetricPadding.None))
+=======
+                preferredSize = CommonHelper.ApplyPadding(Orientation, preferredSize, context.Renderer.RenderTabBorder.GetTabBorderDisplayPadding(context, _paletteBorder, State, Orientation, TabBorderStyle));
+            }
+            else
+            {
+                preferredSize = CommonHelper.ApplyPadding(Orientation, preferredSize, context.Renderer.RenderStandardBorder.GetBorderDisplayPadding(_paletteBorder, State, Orientation));
+            }
+
+            // Do we have a metric source for additional padding?
+            if ((_paletteMetric != null) && (_metricPadding != PaletteMetricPadding.None))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 			{
 				// Apply padding needed outside the border of the canvas
                 preferredSize = CommonHelper.ApplyPadding(Orientation, preferredSize, PaletteMetric.GetMetricPadding(State, _metricPadding));
@@ -478,11 +505,19 @@ namespace ComponentFactory.Krypton.Toolkit
             // Calculate how much space the border takes up
             if (DrawTabBorder)
             {
+<<<<<<< HEAD
                 padding = context.Renderer.RenderTabBorder.GetTabBorderDisplayPadding(context, PaletteBorder, State, Orientation, TabBorderStyle);
             }
             else
             {
                 padding = context.Renderer.RenderStandardBorder.GetBorderDisplayPadding(PaletteBorder, State, Orientation);
+=======
+                padding = context.Renderer.RenderTabBorder.GetTabBorderDisplayPadding(context, _paletteBorder, State, Orientation, TabBorderStyle);
+            }
+            else
+            {
+                padding = context.Renderer.RenderStandardBorder.GetBorderDisplayPadding(_paletteBorder, State, Orientation);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
 
             // Apply the padding to the client rectangle
@@ -547,11 +582,19 @@ namespace ComponentFactory.Krypton.Toolkit
                     // Restrict the clipping to the area inside the canvas border
                     if (DrawTabBorder)
                     {
+<<<<<<< HEAD
                         borderPath = context.Renderer.RenderTabBorder.GetTabBorderPath(context, ClientRectangle, PaletteBorder, Orientation, State, TabBorderStyle);
                     }
                     else
                     {
                         borderPath = context.Renderer.RenderStandardBorder.GetBorderPath(context, ClientRectangle, PaletteBorder, Orientation, State);
+=======
+                        borderPath = context.Renderer.RenderTabBorder.GetTabBorderPath(context, ClientRectangle, _paletteBorder, Orientation, State, TabBorderStyle);
+                    }
+                    else
+                    {
+                        borderPath = context.Renderer.RenderStandardBorder.GetBorderPath(context, ClientRectangle, _paletteBorder, Orientation, State);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                     }
 
                     // Create a new region the same as the existing clipping region
@@ -615,11 +658,19 @@ namespace ComponentFactory.Krypton.Toolkit
                             {
                                 if (SplitWithFading)
                                 {
+<<<<<<< HEAD
                                     DrawBackground(context, rect, (mouseInSplit ? _paletteBackLight : PaletteBack), PaletteBorder, PaletteState.Tracking);
                                 }
                                 else
                                 {
                                     DrawBackground(context, rect, (mouseInSplit ? _paletteBackDraw : PaletteBack), PaletteBorder, (mouseInSplit ? PaletteState.Normal : PaletteState.Tracking));
+=======
+                                    DrawBackground(context, rect, (mouseInSplit ? _paletteBackLight : _paletteBack), _paletteBorder, PaletteState.Tracking);
+                                }
+                                else
+                                {
+                                    DrawBackground(context, rect, (mouseInSplit ? _paletteBackDraw : _paletteBack), _paletteBorder, (mouseInSplit ? PaletteState.Normal : PaletteState.Tracking));
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                                 }
                             }
 
@@ -627,11 +678,19 @@ namespace ComponentFactory.Krypton.Toolkit
                             {
                                 if (SplitWithFading)
                                 {
+<<<<<<< HEAD
                                     DrawBackground(context, rect, (mouseInSplit ? PaletteBack : _paletteBackLight), PaletteBorder, PaletteState.Tracking);
                                 }
                                 else
                                 {
                                     DrawBackground(context, rect, (mouseInSplit ? PaletteBack : _paletteBackDraw), PaletteBorder, (mouseInSplit ? PaletteState.Tracking : PaletteState.Normal));
+=======
+                                    DrawBackground(context, rect, (mouseInSplit ? _paletteBack : _paletteBackLight), _paletteBorder, PaletteState.Tracking);
+                                }
+                                else
+                                {
+                                    DrawBackground(context, rect, (mouseInSplit ? _paletteBack : _paletteBackDraw), _paletteBorder, (mouseInSplit ? PaletteState.Tracking : PaletteState.Normal));
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                                 }
                             }
                             break;
@@ -640,6 +699,7 @@ namespace ComponentFactory.Krypton.Toolkit
                             {
                                 if (SplitWithFading)
                                 {
+<<<<<<< HEAD
                                     DrawBackground(context, rect, (mouseInSplit ? PaletteBack : _paletteBackLight),
                                                    PaletteBorder, (mouseInSplit ? PaletteState.Pressed : PaletteState.Tracking));
                                 }
@@ -647,6 +707,15 @@ namespace ComponentFactory.Krypton.Toolkit
                                 {
                                     DrawBackground(context, rect, (mouseInSplit ? PaletteBack : _paletteBackDraw),
                                                    PaletteBorder, (mouseInSplit ? PaletteState.Pressed : PaletteState.Normal));
+=======
+                                    DrawBackground(context, rect, (mouseInSplit ? _paletteBack : _paletteBackLight),
+                                                   _paletteBorder, (mouseInSplit ? PaletteState.Pressed : PaletteState.Tracking));
+                                }
+                                else
+                                {
+                                    DrawBackground(context, rect, (mouseInSplit ? _paletteBack : _paletteBackDraw),
+                                                   _paletteBorder, (mouseInSplit ? PaletteState.Pressed : PaletteState.Normal));
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                                 }
                             }
 
@@ -654,6 +723,7 @@ namespace ComponentFactory.Krypton.Toolkit
                             {
                                 if (SplitWithFading)
                                 {
+<<<<<<< HEAD
                                     DrawBackground(context, rect, (mouseInSplit ? _paletteBackLight : PaletteBack),
                                                   PaletteBorder, (mouseInSplit ? PaletteState.Tracking : PaletteState.Pressed));
                                 }
@@ -661,6 +731,15 @@ namespace ComponentFactory.Krypton.Toolkit
                                 {
                                     DrawBackground(context, rect, (mouseInSplit ? _paletteBackDraw : PaletteBack),
                                                    PaletteBorder, (mouseInSplit ? PaletteState.Normal : PaletteState.Pressed));
+=======
+                                    DrawBackground(context, rect, (mouseInSplit ? _paletteBackLight : _paletteBack),
+                                                  _paletteBorder, (mouseInSplit ? PaletteState.Tracking : PaletteState.Pressed));
+                                }
+                                else
+                                {
+                                    DrawBackground(context, rect, (mouseInSplit ? _paletteBackDraw : _paletteBack),
+                                                   _paletteBorder, (mouseInSplit ? PaletteState.Normal : PaletteState.Pressed));
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                                 }
                             }
                             break;
@@ -671,7 +750,11 @@ namespace ComponentFactory.Krypton.Toolkit
                 }
                 else
                 {
+<<<<<<< HEAD
                     DrawBackground(context, rect, PaletteBack, PaletteBorder, State);
+=======
+                    DrawBackground(context, rect, _paletteBack, _paletteBorder, State);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
         }
@@ -699,6 +782,14 @@ namespace ComponentFactory.Krypton.Toolkit
                                 DrawBorder(context, rect, PaletteBorder, PaletteState.Pressed);
                             }
 
+<<<<<<< HEAD
+=======
+                            using (Clipping clipToSplitter = new Clipping(context.Graphics, (mouseInSplit ? _splitRectangle : _nonSplitRectangle)))
+                            {
+                                DrawBorder(context, rect, _paletteBorder, PaletteState.Pressed);
+                            }
+
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                             break;
                         default:
                             DrawBorder(context, rect, PaletteBorder, State);
@@ -707,7 +798,11 @@ namespace ComponentFactory.Krypton.Toolkit
                 }
                 else
                 {
+<<<<<<< HEAD
                     DrawBorder(context, rect, PaletteBorder, State);
+=======
+                    DrawBorder(context, rect, _paletteBorder, State);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
 		}
@@ -750,11 +845,19 @@ namespace ComponentFactory.Krypton.Toolkit
             // Render the border over the background and children
             if (DrawTabBorder)
             {
+<<<<<<< HEAD
                 context.Renderer.RenderTabBorder.DrawTabBorder(context, rect, PaletteBorder, Orientation, state, TabBorderStyle);
             }
             else
             {
                 context.Renderer.RenderStandardBorder.DrawBorder(context, rect, PaletteBorder, Orientation, state);
+=======
+                context.Renderer.RenderTabBorder.DrawTabBorder(context, rect, _paletteBorder, _orientation, state, TabBorderStyle);
+            }
+            else
+            {
+                context.Renderer.RenderStandardBorder.DrawBorder(context, rect, _paletteBorder, _orientation, state);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
         }
 

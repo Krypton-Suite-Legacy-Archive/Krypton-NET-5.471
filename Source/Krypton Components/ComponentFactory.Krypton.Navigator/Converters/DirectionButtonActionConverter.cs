@@ -18,7 +18,14 @@ namespace ComponentFactory.Krypton.Navigator
     public class DirectionButtonActionConverter : StringLookupConverter
     {
         #region Static Fields
+<<<<<<< HEAD
 
+=======
+        private Pair[] _pairs = { new Pair(DirectionButtonAction.None,                   "None (Do nothing)"),
+                                             new Pair(DirectionButtonAction.SelectPage,             "Select Page"),
+                                             new Pair(DirectionButtonAction.MoveBar,                "Move Bar"),
+                                             new Pair(DirectionButtonAction.ModeAppropriateAction,  "Mode Appropriate Action") };
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
         #endregion
                                              
         #region Identity

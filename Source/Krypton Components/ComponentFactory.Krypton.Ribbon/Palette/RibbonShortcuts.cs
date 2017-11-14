@@ -38,9 +38,15 @@ namespace ComponentFactory.Krypton.Ribbon
         public RibbonShortcuts()
 		{
             // Default values
+<<<<<<< HEAD
             ToggleMinimizeMode = DEFAULT_TOGGLE_MINIMIZE_MODE;
             ToggleKeyboardAccess1 = DEFAULT_TOGGLE_KEYBOARD_ACCESS1;
             ToggleKeyboardAccess2 = DEFAULT_TOGGLE_KEYBOARD_ACCESS2;
+=======
+            _toggleMinimizeMode = DEFAULT_TOGGLE_MINIMIZE_MODE;
+            _toggleKeyboardAccess1 = DEFAULT_TOGGLE_KEYBOARD_ACCESS1;
+            _toggleKeyboardAccess2 = DEFAULT_TOGGLE_KEYBOARD_ACCESS2;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
         }
 		#endregion
 
@@ -49,10 +55,22 @@ namespace ComponentFactory.Krypton.Ribbon
         /// Gets a value indicating if all values are default.
         /// </summary>
         [Browsable(false)]
+<<<<<<< HEAD
         public override bool IsDefault => ((ToggleMinimizeMode == DEFAULT_TOGGLE_MINIMIZE_MODE) &&
                                            (ToggleKeyboardAccess1 == DEFAULT_TOGGLE_KEYBOARD_ACCESS1) &&
                                            (ToggleKeyboardAccess2 == DEFAULT_TOGGLE_KEYBOARD_ACCESS2));
 
+=======
+        public override bool IsDefault
+        {
+            get
+            {
+                return ((ToggleMinimizeMode == DEFAULT_TOGGLE_MINIMIZE_MODE) &&
+                        (ToggleKeyboardAccess1 == DEFAULT_TOGGLE_KEYBOARD_ACCESS1) &&
+                        (ToggleKeyboardAccess2 == DEFAULT_TOGGLE_KEYBOARD_ACCESS2));
+            }
+        }
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
         #endregion
 
         #region ToggleMinimizeMode

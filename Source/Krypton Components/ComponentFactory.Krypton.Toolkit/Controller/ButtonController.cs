@@ -250,9 +250,15 @@ namespace ComponentFactory.Krypton.Toolkit
                     {
                         if (_dragging)
                         {
+<<<<<<< HEAD
                             OnDragMove(MousePoint);
                         }
                         else if (!_dragRect.IsEmpty && !_dragRect.Contains(MousePoint))
+=======
+                            OnDragMove(_mousePoint);
+                        }
+                        else if (!_dragRect.IsEmpty && !_dragRect.Contains(_mousePoint))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                         {
                             if (!_draggingAttempt)
                             {
@@ -756,7 +762,11 @@ namespace ComponentFactory.Krypton.Toolkit
             PaletteState newState;
 
             // If the button is disabled then show as disabled
+<<<<<<< HEAD
             if (!Target.Enabled)
+=======
+            if (!_target.Enabled)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 newState = PaletteState.Disabled;
             }
@@ -776,7 +786,11 @@ namespace ComponentFactory.Krypton.Toolkit
                         // Do we show the button as pressed only when over the button?
                         if (IsOnlyPressedWhenOver)
                         {
+<<<<<<< HEAD
                             if (Target.ClientRectangle.Contains(pt))
+=======
+                            if (_target.ClientRectangle.Contains(pt))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                             {
                                 newState = PaletteState.Pressed;
                             }
@@ -908,7 +922,11 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// <param name="e">A MouseEventArgs containing the event data.</param>
 		protected virtual void OnClick(MouseEventArgs e)
 		{
+<<<<<<< HEAD
             Click?.Invoke(Target, e);
+=======
+            Click?.Invoke(_target, e);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
         }
 
         /// <summary>
@@ -917,7 +935,11 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <param name="e">A MouseEventArgs containing the event data.</param>
         protected virtual void OnRightClick(MouseEventArgs e)
         {
+<<<<<<< HEAD
             RightClick?.Invoke(Target, e);
+=======
+            RightClick?.Invoke(_target, e);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
         }
         
         /// <summary>
@@ -926,7 +948,11 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// <param name="e">A MouseEventArgs containing the event data.</param>
 		protected virtual void OnMouseSelect(MouseEventArgs e)
 		{
+<<<<<<< HEAD
             MouseSelect?.Invoke(Target, e);
+=======
+            MouseSelect?.Invoke(_target, e);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
         }
 
 		/// <summary>
@@ -935,7 +961,11 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// <param name="needLayout">Does the palette change require a layout.</param>
 		protected virtual void OnNeedPaint(bool needLayout)
 		{
+<<<<<<< HEAD
             _needPaint?.Invoke(this, new NeedLayoutEventArgs(needLayout, Target.ClientRectangle));
+=======
+            _needPaint?.Invoke(this, new NeedLayoutEventArgs(needLayout, _target.ClientRectangle));
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
         }
 		#endregion
 

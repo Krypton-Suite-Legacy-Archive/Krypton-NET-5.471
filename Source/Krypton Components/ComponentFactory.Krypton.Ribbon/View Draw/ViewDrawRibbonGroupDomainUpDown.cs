@@ -158,7 +158,14 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <returns>ViewBase of item; otherwise false.</returns>
         public ViewBase GetFirstFocusItem()
         {
+<<<<<<< HEAD
             if ((GroupDomainUpDown.Visible) && (GroupDomainUpDown.LastDomainUpDown?.DomainUpDown != null) && (GroupDomainUpDown.LastDomainUpDown.DomainUpDown.CanSelect))
+=======
+            if ((_ribbonDomainUpDown.Visible) &&
+                (_ribbonDomainUpDown.LastDomainUpDown != null) &&
+                (_ribbonDomainUpDown.LastDomainUpDown.DomainUpDown != null) &&
+                (_ribbonDomainUpDown.LastDomainUpDown.DomainUpDown.CanSelect))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 return this;
             }
@@ -176,7 +183,14 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <returns>ViewBase of item; otherwise false.</returns>
         public ViewBase GetLastFocusItem()
         {
+<<<<<<< HEAD
             if ((GroupDomainUpDown.Visible) && (GroupDomainUpDown.LastDomainUpDown?.DomainUpDown != null) && (GroupDomainUpDown.LastDomainUpDown.DomainUpDown.CanSelect))
+=======
+            if ((_ribbonDomainUpDown.Visible) &&
+                (_ribbonDomainUpDown.LastDomainUpDown != null) &&
+                (_ribbonDomainUpDown.LastDomainUpDown.DomainUpDown != null) &&
+                (_ribbonDomainUpDown.LastDomainUpDown.DomainUpDown.CanSelect))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 return this;
             }
@@ -558,24 +572,42 @@ namespace ComponentFactory.Krypton.Ribbon
                 if (visible)
                 {
                     // Only visible if on the currently selected page
+<<<<<<< HEAD
                     if ((GroupDomainUpDown.RibbonTab == null) ||
                         (_ribbon.SelectedTab != GroupDomainUpDown.RibbonTab))
+=======
+                    if ((_ribbonDomainUpDown.RibbonTab == null) ||
+                        (_ribbon.SelectedTab != _ribbonDomainUpDown.RibbonTab))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                     {
                         visible = false;
                     }
                     else
                     {
                         // Check the owning group is visible
+<<<<<<< HEAD
                         if ((GroupDomainUpDown.RibbonContainer?.RibbonGroup != null) && !GroupDomainUpDown.RibbonContainer.RibbonGroup.Visible && !_ribbon.InDesignMode)
+=======
+                        if ((_ribbonDomainUpDown.RibbonContainer != null) &&
+                            (_ribbonDomainUpDown.RibbonContainer.RibbonGroup != null) &&
+                            !_ribbonDomainUpDown.RibbonContainer.RibbonGroup.Visible &&
+                            !_ribbon.InDesignMode)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                         {
                             visible = false;
                         }
                         else
                         {
                             // Check that the group is not collapsed
+<<<<<<< HEAD
                             if ((GroupDomainUpDown.RibbonContainer.RibbonGroup.IsCollapsed) &&
                                 ((_ribbon.GetControllerControl(GroupDomainUpDown.DomainUpDown) is KryptonRibbon) ||
                                  (_ribbon.GetControllerControl(GroupDomainUpDown.DomainUpDown) is VisualPopupMinimized)))
+=======
+                            if ((_ribbonDomainUpDown.RibbonContainer.RibbonGroup.IsCollapsed) &&
+                                ((_ribbon.GetControllerControl(_ribbonDomainUpDown.DomainUpDown) is KryptonRibbon) ||
+                                 (_ribbon.GetControllerControl(_ribbonDomainUpDown.DomainUpDown) is VisualPopupMinimized)))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                             {
                                 visible = false;
                             }

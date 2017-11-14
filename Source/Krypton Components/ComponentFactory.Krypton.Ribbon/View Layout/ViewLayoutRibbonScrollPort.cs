@@ -182,7 +182,11 @@ namespace ComponentFactory.Krypton.Ribbon
             // tabs area acts like the application title bar and can be used to manipulate the application
             if (_ribbonTabs != null)
             {
+<<<<<<< HEAD
                 ViewLayoutControl.ChildControl.WndProcHitTest += new EventHandler<ViewControlHitTestArgs>(OnChildWndProcHitTest);
+=======
+                _viewControl.ChildControl.WndProcHitTest += new EventHandler<ViewControlHitTestArgs>(OnChildWndProcHitTest);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
 
             // Create the two scrollers used when not enough space for filler
@@ -243,7 +247,11 @@ namespace ComponentFactory.Krypton.Ribbon
         /// </summary>
         public override bool Visible
         {
+<<<<<<< HEAD
             get => base.Visible;
+=======
+            get { return base.Visible; }
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 
             set
             {
@@ -285,7 +293,11 @@ namespace ComponentFactory.Krypton.Ribbon
         /// </summary>
         public Orientation Orientation
         {
+<<<<<<< HEAD
             get => _orientation;
+=======
+            get { return _orientation; }
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 
             set
             {
@@ -474,9 +486,15 @@ namespace ComponentFactory.Krypton.Ribbon
             ViewLayoutControl.GetPreferredSize(context);
 
             // Ensure context has the correct control
+<<<<<<< HEAD
             if ((ViewLayoutControl.ChildControl != null) && !ViewLayoutControl.ChildControl.IsDisposed)
             {
                 using (CorrectContextControl ccc = new CorrectContextControl(context, ViewLayoutControl.ChildControl))
+=======
+            if ((_viewControl.ChildControl != null) && !_viewControl.ChildControl.IsDisposed)
+            {
+                using (CorrectContextControl ccc = new CorrectContextControl(context, _viewControl.ChildControl))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 {
                     _viewFiller.Layout(context);
                 }
@@ -600,11 +618,19 @@ namespace ComponentFactory.Krypton.Ribbon
                 // Apply the offset to the display of the view filler
                 if (Orientation == Orientation.Horizontal)
                 {
+<<<<<<< HEAD
                     ViewLayoutControl.LayoutOffset = new Point(-_scrollOffset, 0);
                 }
                 else
                 {
                     ViewLayoutControl.LayoutOffset = new Point(0, -_scrollOffset);
+=======
+                    _viewControl.LayoutOffset = new Point(-_scrollOffset, 0);
+                }
+                else
+                {
+                    _viewControl.LayoutOffset = new Point(0, -_scrollOffset);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
 
                 // Position the filler in the remaining space

@@ -950,13 +950,21 @@ namespace ComponentFactory.Krypton.Toolkit
         {
             get
             {
+<<<<<<< HEAD
                 if (InternalMenuStripFont == null)
+=======
+                if (_menuFont == null)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 {
                     return BaseKCT.MenuStripFont;
                 }
                 else
                 {
+<<<<<<< HEAD
                     return InternalMenuStripFont;
+=======
+                    return _menuFont;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
         }
@@ -1506,13 +1514,21 @@ namespace ComponentFactory.Krypton.Toolkit
         {
             get
             {
+<<<<<<< HEAD
                 if (InternalStatusStripFont == null)
+=======
+                if (_statusFont == null)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 {
                     return BaseKCT.StatusStripFont;
                 }
                 else
                 {
+<<<<<<< HEAD
                     return InternalStatusStripFont;
+=======
+                    return _statusFont;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
         }
@@ -1621,13 +1637,21 @@ namespace ComponentFactory.Krypton.Toolkit
         {
             get
             {
+<<<<<<< HEAD
                 if (InternalToolStripFont == null)
+=======
+                if (_toolFont == null)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 {
                     return BaseKCT.ToolStripFont;
                 }
                 else
                 {
+<<<<<<< HEAD
                     return InternalToolStripFont;
+=======
+                    return _toolFont;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
         }
@@ -1909,13 +1933,21 @@ namespace ComponentFactory.Krypton.Toolkit
         {
             get
             {
+<<<<<<< HEAD
                 if (InternalUseRoundedEdges == InheritBool.Inherit)
+=======
+                if (_useRoundedEdges == InheritBool.Inherit)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 {
                     return BaseKCT.UseRoundedEdges;
                 }
                 else
                 {
+<<<<<<< HEAD
                     return InternalUseRoundedEdges;
+=======
+                    return _useRoundedEdges;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
         }

@@ -49,8 +49,13 @@ namespace ComponentFactory.Krypton.Docking
         public KryptonDockingEdgeAutoHidden(string name, Control control, DockingEdge edge)
             : base(name)
         {
+<<<<<<< HEAD
             Control = control ?? throw new ArgumentNullException("control");
             Edge = edge;
+=======
+            _control = control ?? throw new ArgumentNullException("control");
+            _edge = edge;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             _panelEventFired = false;
 
             // Create and add the panel used to host auto hidden groups

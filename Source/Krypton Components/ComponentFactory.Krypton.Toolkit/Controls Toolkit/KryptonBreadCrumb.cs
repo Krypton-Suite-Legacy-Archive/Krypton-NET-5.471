@@ -120,7 +120,11 @@ namespace ComponentFactory.Krypton.Toolkit
 
 			// Our view contains background and border with crumbs inside
             _layoutCrumbs = new ViewLayoutCrumbs(this, NeedPaintDelegate);
+<<<<<<< HEAD
             _drawDocker = new ViewDrawDocker(StateNormal.Back, StateNormal.Border, null)
+=======
+            _drawDocker = new ViewDrawDocker(_stateNormal.Back, _stateNormal.Border, null)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 { _layoutCrumbs, ViewDockStyle.Fill }
             };
@@ -611,11 +615,19 @@ namespace ComponentFactory.Krypton.Toolkit
 			// Push correct palettes into the view
 			if (Enabled)
             {
+<<<<<<< HEAD
                 _drawDocker.SetPalettes(StateNormal.Back, StateNormal.Border);
             }
             else
             {
                 _drawDocker.SetPalettes(StateDisabled.Back, StateDisabled.Border);
+=======
+                _drawDocker.SetPalettes(_stateNormal.Back, _stateNormal.Border);
+            }
+            else
+            {
+                _drawDocker.SetPalettes(_stateDisabled.Back, _stateDisabled.Border);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
 
             _drawDocker.Enabled = Enabled;

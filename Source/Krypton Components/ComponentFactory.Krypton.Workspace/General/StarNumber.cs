@@ -77,7 +77,11 @@ namespace ComponentFactory.Krypton.Workspace
                     // If there is only an asterisk in the string
                     if (value.Length == 1)
                     {
+<<<<<<< HEAD
                         StarSize = 1;
+=======
+                        _starSize = 1;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                     }
                     else
                     {

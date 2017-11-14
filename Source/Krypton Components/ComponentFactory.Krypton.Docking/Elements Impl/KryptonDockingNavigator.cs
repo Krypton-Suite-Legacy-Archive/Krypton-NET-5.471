@@ -53,7 +53,11 @@ namespace ComponentFactory.Krypton.Docking
             : base(name)
         {
             _storeName = storeName;
+<<<<<<< HEAD
             DockableNavigatorControl = navigator ?? throw new ArgumentNullException("navigator");
+=======
+            _navigator = navigator ?? throw new ArgumentNullException("navigator");
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 
             DockableNavigatorControl.Disposed += new EventHandler(OnDockableNavigatorDisposed);
             DockableNavigatorControl.CellPageInserting += new EventHandler<KryptonPageEventArgs>(OnDockableNavigatorPageInserting);
@@ -489,7 +493,11 @@ namespace ComponentFactory.Krypton.Docking
                     {
                         // Only remove a matching unique name if it is a placeholder page
                         KryptonPage removePage = DockableNavigatorControl.Pages[uniqueName];
+<<<<<<< HEAD
                         if (removePage is KryptonStorePage)
+=======
+                        if ((removePage != null) && (removePage is KryptonStorePage))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                         {
                             DockableNavigatorControl.Pages.Remove(removePage);
                         }
@@ -502,7 +510,11 @@ namespace ComponentFactory.Krypton.Docking
                         {
                             // Remove all placeholders
                             KryptonPage page = DockableNavigatorControl.Pages[i];
+<<<<<<< HEAD
                             if (page is KryptonStorePage)
+=======
+                            if ((page != null) && (page is KryptonStorePage))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                             {
                                 DockableNavigatorControl.Pages.Remove(page);
                             }
@@ -543,7 +555,11 @@ namespace ComponentFactory.Krypton.Docking
                     {
                         // Return definitive answer 'true' if the group controls contains a store page for the unique name.
                         KryptonPage page = DockableNavigatorControl.Pages[uniqueName];
+<<<<<<< HEAD
                         if (page is KryptonStorePage)
+=======
+                        if ((page != null) && (page is KryptonStorePage))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                         {
                             return true;
                         }
@@ -702,7 +718,11 @@ namespace ComponentFactory.Krypton.Docking
             if (location == DockingLocation.Navigator)
             {
                 KryptonPage page = DockableNavigatorControl.Pages[uniqueName];
+<<<<<<< HEAD
                 if (page is KryptonStorePage)
+=======
+                if ((page != null) && (page is KryptonStorePage))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 {
                     return this;
                 }

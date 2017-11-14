@@ -18,7 +18,12 @@ namespace ComponentFactory.Krypton.Navigator
     public class ContextButtonActionConverter : StringLookupConverter
     {
         #region Static Fields
+<<<<<<< HEAD
 
+=======
+        private Pair[] _pairs = { new Pair(ContextButtonAction.None,         "None (Do nothing)"),
+                                             new Pair(ContextButtonAction.SelectPage,   "Select Page") };
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
         #endregion
                                              
         #region Identity

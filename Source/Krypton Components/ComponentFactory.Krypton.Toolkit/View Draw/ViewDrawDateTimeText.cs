@@ -66,7 +66,11 @@ namespace ComponentFactory.Krypton.Toolkit
                 StringBuilder ret = new StringBuilder();
                 for(int i=0; i<_fragments.Count; i++)
                 {
+<<<<<<< HEAD
                     ret.Append(_fragments[i].GetDisplay(DateTime));
+=======
+                    ret.Append(_fragments[i].GetDisplay(_dt));
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
 
                 return ret.ToString();
@@ -355,11 +359,19 @@ namespace ComponentFactory.Krypton.Toolkit
                 // Pass request onto the fragment itself
                 if (_activeFragment >= 0)
                 {
+<<<<<<< HEAD
                     return _fragments[_activeFragment].Increment(DateTime, forward);
                 }
                 else
                 {
                     return DateTime;
+=======
+                    return _fragments[_activeFragment].Increment(_dt, forward);
+                }
+                else
+                {
+                    return _dt;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
 
@@ -373,11 +385,19 @@ namespace ComponentFactory.Krypton.Toolkit
                 // Pass request onto the fragment itself
                 if (_activeFragment >= 0)
                 {
+<<<<<<< HEAD
                     return _fragments[_activeFragment].AMPM(DateTime, am);
                 }
                 else
                 {
                     return DateTime;
+=======
+                    return _fragments[_activeFragment].AMPM(_dt, am);
+                }
+                else
+                {
+                    return _dt;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
 
@@ -623,7 +643,11 @@ namespace ComponentFactory.Krypton.Toolkit
                                 else
                                 {
                                     // Draw text for this fragment only
+<<<<<<< HEAD
                                     TextRenderer.DrawText(context.Graphics, _fragments[i].GetDisplay(DateTime), font, drawText, foreColor, DRAW_LEFT_FLAGS);
+=======
+                                    TextRenderer.DrawText(context.Graphics, _fragments[i].GetDisplay(_dt), font, drawText, foreColor, DRAW_LEFT_FLAGS);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                                 }
 
                                 lastTotalWidth = totalWidth;
@@ -830,11 +854,19 @@ namespace ComponentFactory.Krypton.Toolkit
 
                 if (length == 0)
                 {
+<<<<<<< HEAD
                     Fragment = string.Empty;
                 }
                 else
                 {
                     Fragment = format.Substring(0, length);
+=======
+                    _fragment = string.Empty;
+                }
+                else
+                {
+                    _fragment = format.Substring(0, length);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
 

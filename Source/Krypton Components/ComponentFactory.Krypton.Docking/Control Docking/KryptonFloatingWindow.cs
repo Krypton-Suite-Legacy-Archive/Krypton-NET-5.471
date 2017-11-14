@@ -135,17 +135,29 @@ namespace ComponentFactory.Krypton.Docking
                     break;
                 case PI.WM_KEYDOWN:
                     base.WndProc(ref m);
+<<<<<<< HEAD
                     FloatingMessages?.OnKEYDOWN(ref m);
+=======
+                    _floatingMessages?.OnKEYDOWN(ref m);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 
                     return;
                 case PI.WM_MOUSEMOVE:
                     base.WndProc(ref m);
+<<<<<<< HEAD
                     FloatingMessages?.OnMOUSEMOVE();
+=======
+                    _floatingMessages?.OnMOUSEMOVE();
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 
                     return;
                 case PI.WM_LBUTTONUP:
                     base.WndProc(ref m);
+<<<<<<< HEAD
                     FloatingMessages?.OnLBUTTONUP();
+=======
+                    _floatingMessages?.OnLBUTTONUP();
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 
                     return;
             }

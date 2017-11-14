@@ -38,7 +38,11 @@ namespace ComponentFactory.Krypton.Toolkit
 
             // Remember details
             _verb = verb ?? throw new ArgumentNullException("verb");
+<<<<<<< HEAD
             Category = category ?? throw new ArgumentNullException("category");
+=======
+            _category = category ?? throw new ArgumentNullException("category");
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
         }
         #endregion
 

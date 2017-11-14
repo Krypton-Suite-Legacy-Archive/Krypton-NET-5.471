@@ -50,6 +50,7 @@ namespace ComponentFactory.Krypton.Toolkit
             KryptonContextMenuRadioButton.SetPaletteRedirect(provider.ProviderRedirector);
 
             // Create the content for the actual heading text/image
+<<<<<<< HEAD
             ViewDrawContent = new ViewDrawContent((ItemEnabled ? (IPaletteContent)KryptonContextMenuRadioButton.OverrideNormal : (IPaletteContent)KryptonContextMenuRadioButton.OverrideDisabled),
                                                _contentValues, VisualOrientation.Top)
             {
@@ -66,12 +67,34 @@ namespace ComponentFactory.Krypton.Toolkit
             _layoutCenter = new ViewLayoutCenter
             {
                 ViewDrawRadioButton
+=======
+            _drawContent = new ViewDrawContent((_itemEnabled ? (IPaletteContent)_radioButton.OverrideNormal : (IPaletteContent)_radioButton.OverrideDisabled),
+                                               _contentValues, VisualOrientation.Top)
+            {
+                UseMnemonic = true,
+                Enabled = _itemEnabled
+            };
+
+            // Create the radio button image drawer and place inside element so it is always centered
+            _drawRadioButton = new ViewDrawRadioButton(_radioButton.StateRadioButtonImages)
+            {
+                CheckState = _radioButton.Checked,
+                Enabled = _itemEnabled
+            };
+            _layoutCenter = new ViewLayoutCenter
+            {
+                _drawRadioButton
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             };
 
             // Place the radio button on the left of the available space but inside separators
             _innerDocker = new ViewLayoutDocker
             {
+<<<<<<< HEAD
                 { ViewDrawContent, ViewDockStyle.Fill },
+=======
+                { _drawContent, ViewDockStyle.Fill },
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 { _layoutCenter, ViewDockStyle.Left },
                 { new ViewLayoutSeparator(1), ViewDockStyle.Right },
                 { new ViewLayoutSeparator(3), ViewDockStyle.Left },

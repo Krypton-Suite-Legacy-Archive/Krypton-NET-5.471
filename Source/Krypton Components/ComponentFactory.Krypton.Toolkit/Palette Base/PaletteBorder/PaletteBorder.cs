@@ -840,7 +840,14 @@ namespace ComponentFactory.Krypton.Toolkit
 		[RefreshPropertiesAttribute(RefreshProperties.All)]
 		public Image Image
 		{
+<<<<<<< HEAD
 			get => _storage?.BorderImage;
+=======
+			get
+			{
+			    return _storage?.BorderImage;
+			}
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 
 		    set
 			{

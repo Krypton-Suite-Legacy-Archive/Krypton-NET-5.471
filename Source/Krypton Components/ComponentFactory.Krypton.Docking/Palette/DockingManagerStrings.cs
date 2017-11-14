@@ -74,6 +74,7 @@ namespace ComponentFactory.Krypton.Docking
         /// Gets a value indicating if all values are default.
         /// </summary>
         [Browsable(false)]
+<<<<<<< HEAD
         public override bool IsDefault => (_textAutoHide.Equals(DEFAULT_TEXT_AUTO_HIDE) &&
                                            _textClose.Equals(DEFAULT_TEXT_CLOSE) &&
                                            _textDock.Equals(DEFAULT_TEXT_DOCK) &&
@@ -81,6 +82,19 @@ namespace ComponentFactory.Krypton.Docking
                                            _textHide.Equals(DEFAULT_TEXT_HIDE) &&
                                            _textTabbedDocument.Equals(DEFAULT_TEXT_TABBED_DOCUMENT) &&
                                            _textWindowLocation.Equals(DEFAULT_TEXT_WINDOW_LOCATION));
+=======
+        public override bool IsDefault
+        {
+            get
+            {
+                return (_textAutoHide.Equals(DEFAULT_TEXT_AUTO_HIDE) &&
+                        _textClose.Equals(DEFAULT_TEXT_CLOSE) &&
+                        _textDock.Equals(DEFAULT_TEXT_DOCK) &&
+                        _textFloat.Equals(DEFAULT_TEXT_FLOAT) &&
+                        _textHide.Equals(DEFAULT_TEXT_HIDE) &&
+                        _textTabbedDocument.Equals(DEFAULT_TEXT_TABBED_DOCUMENT) &&
+                        _textWindowLocation.Equals(DEFAULT_TEXT_WINDOW_LOCATION));
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 
         #endregion
 

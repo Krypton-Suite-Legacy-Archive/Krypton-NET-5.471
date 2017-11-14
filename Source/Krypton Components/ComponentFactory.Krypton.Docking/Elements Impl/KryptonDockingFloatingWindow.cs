@@ -48,8 +48,13 @@ namespace ComponentFactory.Krypton.Docking
                 throw new ArgumentNullException("owner");
             }
 
+<<<<<<< HEAD
             FloatspaceElement = floatspace ?? throw new ArgumentNullException("floatspace");
             FloatspaceElement.Disposed += new EventHandler(OnDockingFloatspaceDisposed);
+=======
+            _floatspace = floatspace ?? throw new ArgumentNullException("floatspace");
+            _floatspace.Disposed += new EventHandler(OnDockingFloatspaceDisposed);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 
             // Create the actual window control and hook into events
             FloatingWindow = new KryptonFloatingWindow(owner, floatspace.FloatspaceControl);
@@ -63,7 +68,11 @@ namespace ComponentFactory.Krypton.Docking
                 Anchor = (AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom),
                 Visible = false
             };
+<<<<<<< HEAD
             FloatingWindow.Controls.Add(_obscure);
+=======
+            _window.Controls.Add(_obscure);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 
             // Add the floatspace as the only child of this collection
             InternalAdd(floatspace);

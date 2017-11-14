@@ -139,7 +139,11 @@ namespace ComponentFactory.Krypton.Ribbon
             // Only take focus if we are visible and enabled
             if (GroupColorButton.Visible && GroupColorButton.Enabled)
             {
+<<<<<<< HEAD
                 if (_viewLarge == GroupColorButton.ColorButtonView)
+=======
+                if (_viewLarge == _ribbonColorButton.ColorButtonView)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 {
                     return _viewLarge;
                 }
@@ -165,7 +169,11 @@ namespace ComponentFactory.Krypton.Ribbon
             // Only take focus if we are visible and enabled
             if (GroupColorButton.Visible && GroupColorButton.Enabled)
             {
+<<<<<<< HEAD
                 if (_viewLarge == GroupColorButton.ColorButtonView)
+=======
+                if (_viewLarge == _ribbonColorButton.ColorButtonView)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 {
                     return _viewLarge;
                 }
@@ -385,7 +393,11 @@ namespace ComponentFactory.Krypton.Ribbon
             ViewLayoutDocker contentLayout = new ViewLayoutDocker();
 
             // Add the large button at the top
+<<<<<<< HEAD
             _viewLargeImage = new ViewDrawRibbonGroupColorButtonImage(_ribbon, GroupColorButton, true);
+=======
+            _viewLargeImage = new ViewDrawRibbonGroupColorButtonImage(_ribbon, _ribbonColorButton, true);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             ViewLayoutRibbonCenterPadding largeImagePadding = new ViewLayoutRibbonCenterPadding(_largeImagePadding)
             {
                 _viewLargeImage
@@ -489,10 +501,17 @@ namespace ComponentFactory.Krypton.Ribbon
         private void UpdateEnabledState()
         {
             // Get the correct enabled state from the button definition
+<<<<<<< HEAD
             bool buttonEnabled = GroupColorButton.Enabled;
             if (GroupColorButton.KryptonCommand != null)
             {
                 buttonEnabled = GroupColorButton.KryptonCommand.Enabled;
+=======
+            bool buttonEnabled = _ribbonColorButton.Enabled;
+            if (_ribbonColorButton.KryptonCommand != null)
+            {
+                buttonEnabled = _ribbonColorButton.KryptonCommand.Enabled;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
 
             bool enabled = _ribbon.InDesignHelperMode || (buttonEnabled && _ribbon.Enabled);
@@ -519,6 +538,7 @@ namespace ComponentFactory.Krypton.Ribbon
             // Only show as checked if also a check type button
             if (GroupColorButton.ButtonType == GroupButtonType.Check)
             {
+<<<<<<< HEAD
                 if (GroupColorButton.KryptonCommand != null)
                 {
                     checkedState = GroupColorButton.KryptonCommand.Checked;
@@ -526,6 +546,15 @@ namespace ComponentFactory.Krypton.Ribbon
                 else
                 {
                     checkedState = GroupColorButton.Checked;
+=======
+                if (_ribbonColorButton.KryptonCommand != null)
+                {
+                    checkedState = _ribbonColorButton.KryptonCommand.Checked;
+                }
+                else
+                {
+                    checkedState = _ribbonColorButton.Checked;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
 

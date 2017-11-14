@@ -52,7 +52,11 @@ namespace ComponentFactory.Krypton.Ribbon
             _ribbonGroup = ribbonGroup;
 
             // Create a view element for drawing the group
+<<<<<<< HEAD
             ViewGroup = new ViewDrawRibbonGroup(ribbon, ribbonGroup, NeedPaintDelegate)
+=======
+            _viewGroup = new ViewDrawRibbonGroup(ribbon, ribbonGroup, NeedPaintDelegate)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 Collapsed = false
             };
@@ -60,7 +64,11 @@ namespace ComponentFactory.Krypton.Ribbon
             // Create the background that will contain the actual group instance
             _viewBackground = new ViewDrawRibbonGroupsBorder(ribbon, true, NeedPaintDelegate)
             {
+<<<<<<< HEAD
                 ViewGroup
+=======
+                _viewGroup
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             };
 
             // Attach the root to the view manager instance
@@ -87,7 +95,11 @@ namespace ComponentFactory.Krypton.Ribbon
                 ViewManager.MouseLeave(EventArgs.Empty);
 
                 // Do we need to restore the previous focus from the ribbon
+<<<<<<< HEAD
                 if (RestorePreviousFocus)
+=======
+                if (_restorePreviousFocus)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 {
                     _ribbon.RestorePreviousFocus();
                 }
@@ -225,7 +237,11 @@ namespace ComponentFactory.Krypton.Ribbon
                 // Find the size the group requests to be
                 using (ViewLayoutContext context = new ViewLayoutContext(this, Renderer))
                 {
+<<<<<<< HEAD
                     popupSize = ViewGroup.GetPreferredSize(context);
+=======
+                    popupSize = _viewGroup.GetPreferredSize(context);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
 
                 // Override the height to enforce the correct group height

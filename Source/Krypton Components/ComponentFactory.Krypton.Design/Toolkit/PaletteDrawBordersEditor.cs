@@ -25,7 +25,11 @@ namespace ComponentFactory.Krypton.Toolkit
         public override UITypeEditorEditStyle GetEditStyle(ITypeDescriptorContext context)
         {
             // We show a drop down for editing the PaletteDrawBorders value.
+<<<<<<< HEAD
             if (context?.Instance != null)
+=======
+            if ((context != null) && (context.Instance != null))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 return UITypeEditorEditStyle.DropDown;
             }

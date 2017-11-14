@@ -50,7 +50,11 @@ namespace ComponentFactory.Krypton.Toolkit
             StateNormal = new PaletteDouble(StateCommon, NeedPaintDelegate);
 
             // Create the internal panel used for containing content
+<<<<<<< HEAD
             Panel = new KryptonGroupPanel(this, StateCommon, StateDisabled, StateNormal, new NeedPaintHandler(OnGroupPanelPaint))
+=======
+            _panel = new KryptonGroupPanel(this, _stateCommon, _stateDisabled, _stateNormal, new NeedPaintHandler(OnGroupPanelPaint))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
 
                 // Make sure the panel back style always mimics our back style
@@ -61,7 +65,11 @@ namespace ComponentFactory.Krypton.Toolkit
             _layoutFill = new ViewLayoutFill(Panel);
 
             // Create view for the control border and background
+<<<<<<< HEAD
             _drawDocker = new ViewDrawDocker(StateNormal.Back, StateNormal.Border)
+=======
+            _drawDocker = new ViewDrawDocker(_stateNormal.Back, _stateNormal.Border)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 { _layoutFill, ViewDockStyle.Fill }
             };
@@ -389,11 +397,19 @@ namespace ComponentFactory.Krypton.Toolkit
 			// Push correct palettes into the view
 			if (Enabled)
             {
+<<<<<<< HEAD
                 _drawDocker.SetPalettes(StateNormal.Back, StateNormal.Border);
             }
             else
             {
                 _drawDocker.SetPalettes(StateDisabled.Back, StateDisabled.Border);
+=======
+                _drawDocker.SetPalettes(_stateNormal.Back, _stateNormal.Border);
+            }
+            else
+            {
+                _drawDocker.SetPalettes(_stateDisabled.Back, _stateDisabled.Border);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
 
             _drawDocker.Enabled = Enabled;

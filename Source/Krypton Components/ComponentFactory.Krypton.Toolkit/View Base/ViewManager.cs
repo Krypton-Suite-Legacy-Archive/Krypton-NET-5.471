@@ -326,7 +326,11 @@ namespace ComponentFactory.Krypton.Toolkit
             // Do nothing if the control is disposed
             if (!context.Control.IsDisposed)
             {
+<<<<<<< HEAD
                 if (OutputDebug)
+=======
+                if (_outputDebug)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 {
                     PI.QueryPerformanceCounter(ref _outputStart);
                 }
@@ -422,7 +426,11 @@ namespace ComponentFactory.Krypton.Toolkit
             // Do nothing if the control is disposed or inside a layout call
             if (!Control.IsDisposed)
             {
+<<<<<<< HEAD
                 if (OutputDebug)
+=======
+                if (_outputDebug)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 {
                     PI.QueryPerformanceCounter(ref _outputStart);
                 }
@@ -653,11 +661,19 @@ namespace ComponentFactory.Krypton.Toolkit
             // Tell current view of source event
             if (ActiveView != null)
             {
+<<<<<<< HEAD
                 ActiveView.GotFocus(Control);
             }
             else
             {
                 _root?.GotFocus(Control);
+=======
+                ActiveView.GotFocus(_control);
+            }
+            else
+            {
+                _root?.GotFocus(_control);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
         }
 
@@ -669,11 +685,19 @@ namespace ComponentFactory.Krypton.Toolkit
             // Tell current view of source event
             if (ActiveView != null)
             {
+<<<<<<< HEAD
                 ActiveView.LostFocus(Control);
             }
             else
             {
                 _root?.LostFocus(Control);
+=======
+                ActiveView.LostFocus(_control);
+            }
+            else
+            {
+                _root?.LostFocus(_control);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
         }
         #endregion

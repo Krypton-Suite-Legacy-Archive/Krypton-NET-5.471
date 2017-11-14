@@ -423,7 +423,11 @@ namespace ComponentFactory.Krypton.Ribbon
         /// </summary>
         public void RecreateButtons()
         {
+<<<<<<< HEAD
             ButtonSpecManager?.RecreateButtons();
+=======
+            _buttonManager?.RecreateButtons();
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
         }
         #endregion
 
@@ -474,7 +478,11 @@ namespace ComponentFactory.Krypton.Ribbon
             LayoutTabs = new ViewLayoutRibbonTabs(_ribbon, NeedPaintDelegate);
 
             // Put inside a viewport so scrollers are used when tabs cannot be shrunk to fill space
+<<<<<<< HEAD
             _tabsViewport = new ViewLayoutRibbonScrollPort(_ribbon, System.Windows.Forms.Orientation.Horizontal, LayoutTabs, true, SCROLL_SPEED, NeedPaintDelegate)
+=======
+            _tabsViewport = new ViewLayoutRibbonScrollPort(_ribbon, System.Windows.Forms.Orientation.Horizontal, _layoutRibbonTabs, true, SCROLL_SPEED, NeedPaintDelegate)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 TransparentBackground = true
             };
@@ -650,7 +658,13 @@ namespace ComponentFactory.Krypton.Ribbon
         {
             _invalidateTimer.Stop();
 
+<<<<<<< HEAD
             if ((_captionArea?.KryptonForm != null) && _captionArea.UsingCustomChrome)
+=======
+            if ((_captionArea != null) &&
+                (_captionArea.KryptonForm != null) &&
+                _captionArea.UsingCustomChrome)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 if (_captionArea.KryptonForm.PaintCount == _paintCount)
                 {
@@ -816,7 +830,11 @@ namespace ComponentFactory.Krypton.Ribbon
                                 toolTipStyle = _ribbon.RibbonAppButton.AppButtonToolTipStyle;
 
                                 // Display below the mouse cursor
+<<<<<<< HEAD
                                 screenRect.Height += (SystemInformation.CursorSize.Height / 3) * 2;
+=======
+                                screenRect.Height += SystemInformation.CursorSize.Height / 3 * 2;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                             }
                             break;
                         case ViewDrawRibbonQATButton viewElement1:
@@ -839,7 +857,11 @@ namespace ComponentFactory.Krypton.Ribbon
                             }
                             break;
                         default:
+<<<<<<< HEAD
                             if (e.Target.Parent is ViewDrawRibbonGroupLabel viewElement2)
+=======
+                            if ((e.Target.Parent != null) && (e.Target.Parent is ViewDrawRibbonGroupLabel))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                             {
                                 // Cast to correct type
 
@@ -866,13 +888,21 @@ namespace ComponentFactory.Krypton.Ribbon
                             {
                                 switch (e.Target)
                                 {
+<<<<<<< HEAD
                                     case ViewDrawRibbonGroupButtonBackBorder viewElement3:
+=======
+                                    case ViewDrawRibbonGroupButtonBackBorder viewElement2:
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                                     {
                                         // Is the target is a button or cluster button
                                         // Cast to correct type
 
                                         // Create a content that recovers values from a KryptonRibbonGroupItem
+<<<<<<< HEAD
                                         GroupItemToolTipToContent groupItemContent = new GroupItemToolTipToContent(viewElement3.GroupItem);
+=======
+                                        GroupItemToolTipToContent groupItemContent = new GroupItemToolTipToContent(viewElement2.GroupItem);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 
                                         // Is there actually anything to show for the tooltip
                                         if (groupItemContent.HasContent)
@@ -880,14 +910,23 @@ namespace ComponentFactory.Krypton.Ribbon
                                             sourceContent = groupItemContent;
 
                                             // Grab the style from the group button/group cluster button settings
+<<<<<<< HEAD
                                             toolTipStyle = viewElement3.GroupItem.InternalToolTipStyle;
+=======
+                                            toolTipStyle = viewElement2.GroupItem.InternalToolTipStyle;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 
                                             // Display below the bottom of the ribbon control
                                             Rectangle ribbonScreenRect = _ribbon.ToolTipScreenRectangle;
                                             screenRect.Y = ribbonScreenRect.Y;
                                             screenRect.Height = ribbonScreenRect.Height;
+<<<<<<< HEAD
                                             screenRect.X = ribbonScreenRect.X + viewElement3.ClientLocation.X;
                                             screenRect.Width = viewElement3.ClientWidth;
+=======
+                                            screenRect.X = ribbonScreenRect.X + viewElement2.ClientLocation.X;
+                                            screenRect.Width = viewElement2.ClientWidth;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                                         }
                                         break;
                                     }
@@ -943,7 +982,11 @@ namespace ComponentFactory.Krypton.Ribbon
                                     }
                                     default:
                                         // Find the button spec associated with the tooltip request
+<<<<<<< HEAD
                                         ButtonSpec buttonSpec = ButtonSpecManager.ButtonSpecFromView(e.Target);
+=======
+                                        ButtonSpec buttonSpec = _buttonManager.ButtonSpecFromView(e.Target);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 
                                         // If the tooltip is for a button spec
                                         if (buttonSpec != null)
@@ -963,7 +1006,11 @@ namespace ComponentFactory.Krypton.Ribbon
                                                     toolTipStyle = buttonSpec.ToolTipStyle;
 
                                                     // Display below the mouse cursor
+<<<<<<< HEAD
                                                     screenRect.Height += (SystemInformation.CursorSize.Height / 3) * 2;
+=======
+                                                    screenRect.Height += SystemInformation.CursorSize.Height / 3 * 2;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                                                 }
                                             }
                                         }

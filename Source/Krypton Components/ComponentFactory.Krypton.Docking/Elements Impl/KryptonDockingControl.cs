@@ -330,7 +330,11 @@ namespace ComponentFactory.Krypton.Docking
                 Anchor = (AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom),
                 Visible = false
             };
+<<<<<<< HEAD
             Control.Controls.Add(_obscure);
+=======
+            _control.Controls.Add(_obscure);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 
             // Create docking elements for managing each of the four control edges
             Add(new KryptonDockingEdge("Top", control, DockingEdge.Top));

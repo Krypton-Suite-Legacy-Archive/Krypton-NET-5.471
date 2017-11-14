@@ -134,7 +134,11 @@ namespace ComponentFactory.Krypton.Ribbon
             ToolTipStyle = LabelStyle.SuperTip;
 
             // Create the actual text box control and set initial settings
+<<<<<<< HEAD
             Gallery = new KryptonGallery
+=======
+            _gallery = new KryptonGallery
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 AlwaysActive = false,
                 TabStop = false,

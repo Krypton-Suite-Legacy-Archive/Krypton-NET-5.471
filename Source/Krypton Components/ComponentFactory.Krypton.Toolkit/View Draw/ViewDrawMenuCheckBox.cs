@@ -53,6 +53,7 @@ namespace ComponentFactory.Krypton.Toolkit
             KryptonContextMenuCheckBox.SetPaletteRedirect(provider.ProviderRedirector);
 
             // Create the content for the actual heading text/image
+<<<<<<< HEAD
             ViewDrawContent = new ViewDrawContent((ItemEnabled ? (IPaletteContent)KryptonContextMenuCheckBox.OverrideNormal : (IPaletteContent)KryptonContextMenuCheckBox.OverrideDisabled),
                                                _contentValues, VisualOrientation.Top)
             {
@@ -69,12 +70,34 @@ namespace ComponentFactory.Krypton.Toolkit
             _layoutCenter = new ViewLayoutCenter
             {
                 ViewDrawCheckBox
+=======
+            _drawContent = new ViewDrawContent((_itemEnabled ? (IPaletteContent)_checkBox.OverrideNormal : (IPaletteContent)_checkBox.OverrideDisabled),
+                                               _contentValues, VisualOrientation.Top)
+            {
+                UseMnemonic = true,
+                Enabled = _itemEnabled
+            };
+
+            // Create the check box image drawer and place inside element so it is always centered
+            _drawCheckBox = new ViewDrawCheckBox(_checkBox.StateCheckBoxImages)
+            {
+                CheckState = ResolveCheckState,
+                Enabled = _itemEnabled
+            };
+            _layoutCenter = new ViewLayoutCenter
+            {
+                _drawCheckBox
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             };
 
             // Place the check box on the left of the available space but inside separators
             _innerDocker = new ViewLayoutDocker
             {
+<<<<<<< HEAD
                 { ViewDrawContent, ViewDockStyle.Fill },
+=======
+                { _drawContent, ViewDockStyle.Fill },
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 { _layoutCenter, ViewDockStyle.Left },
                 { new ViewLayoutSeparator(1), ViewDockStyle.Right },
                 { new ViewLayoutSeparator(3), ViewDockStyle.Left },
@@ -187,7 +210,11 @@ namespace ComponentFactory.Krypton.Toolkit
                 }
                 else
                 {
+<<<<<<< HEAD
                     return KryptonContextMenuCheckBox.Enabled;
+=======
+                    return _checkBox.Enabled;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
         }
@@ -207,7 +234,11 @@ namespace ComponentFactory.Krypton.Toolkit
                 }
                 else
                 {
+<<<<<<< HEAD
                     return KryptonContextMenuCheckBox.Image;
+=======
+                    return _checkBox.Image;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
         }
@@ -227,7 +258,11 @@ namespace ComponentFactory.Krypton.Toolkit
                 }
                 else
                 {
+<<<<<<< HEAD
                     return KryptonContextMenuCheckBox.ImageTransparentColor;
+=======
+                    return _checkBox.ImageTransparentColor;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
         }
@@ -247,7 +282,11 @@ namespace ComponentFactory.Krypton.Toolkit
                 }
                 else
                 {
+<<<<<<< HEAD
                     return KryptonContextMenuCheckBox.Text;
+=======
+                    return _checkBox.Text;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
         }
@@ -267,7 +306,11 @@ namespace ComponentFactory.Krypton.Toolkit
                 }
                 else
                 {
+<<<<<<< HEAD
                     return KryptonContextMenuCheckBox.ExtraText;
+=======
+                    return _checkBox.ExtraText;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
         }
@@ -287,7 +330,11 @@ namespace ComponentFactory.Krypton.Toolkit
                 }
                 else
                 {
+<<<<<<< HEAD
                     return KryptonContextMenuCheckBox.CheckState;
+=======
+                    return _checkBox.CheckState;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
         }

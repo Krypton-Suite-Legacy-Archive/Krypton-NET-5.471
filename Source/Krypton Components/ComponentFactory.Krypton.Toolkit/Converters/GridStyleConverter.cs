@@ -16,7 +16,13 @@ namespace ComponentFactory.Krypton.Toolkit
     internal class GridStyleConverter : StringLookupConverter
     {
         #region Static Fields
+<<<<<<< HEAD
 
+=======
+        private Pair[] _pairs = { new Pair(GridStyle.List,       "List"),
+                                             new Pair(GridStyle.Sheet,      "Sheet"),
+                                             new Pair(GridStyle.Custom1,    "Custom1") };
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
         #endregion
 
         #region Identity

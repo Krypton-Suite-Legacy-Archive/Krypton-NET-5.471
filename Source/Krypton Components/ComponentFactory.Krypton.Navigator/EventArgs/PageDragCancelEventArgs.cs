@@ -43,7 +43,11 @@ namespace ComponentFactory.Krypton.Navigator
 
             if (pages != null)
             {
+<<<<<<< HEAD
                 Pages.AddRange(pages);
+=======
+                _pages.AddRange(pages);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
 		}
 

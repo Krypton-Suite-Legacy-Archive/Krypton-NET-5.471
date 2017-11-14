@@ -177,7 +177,11 @@ namespace ComponentFactory.Krypton.Ribbon
         public ViewBase GetFirstFocusItem()
         {
             // Only take focus if we are visible and enabled
+<<<<<<< HEAD
             if (GroupClusterColorButton.Visible && GroupClusterColorButton.Enabled)
+=======
+            if (_ribbonColorButton.Visible && _ribbonColorButton.Enabled)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 return _viewMediumSmall;
             }
@@ -196,7 +200,11 @@ namespace ComponentFactory.Krypton.Ribbon
         public ViewBase GetLastFocusItem()
         {
             // Only take focus if we are visible and enabled
+<<<<<<< HEAD
             if (GroupClusterColorButton.Visible && GroupClusterColorButton.Enabled)
+=======
+            if (_ribbonColorButton.Visible && _ribbonColorButton.Enabled)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 return _viewMediumSmall;
             }
@@ -360,7 +368,11 @@ namespace ComponentFactory.Krypton.Ribbon
             _borderForced = new PaletteBorderInheritForced(_ribbon.StateCommon.RibbonGroupClusterButton.PaletteBorder);
 
             // Create the background and border view
+<<<<<<< HEAD
             _viewMediumSmall = new ViewDrawRibbonGroupButtonBackBorder(_ribbon, GroupClusterColorButton, _backForced, _borderForced, true, _needPaint)
+=======
+            _viewMediumSmall = new ViewDrawRibbonGroupButtonBackBorder(_ribbon, _ribbonColorButton, _backForced, _borderForced, true, _needPaint)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 SplitVertical = false
             };
@@ -376,8 +388,13 @@ namespace ComponentFactory.Krypton.Ribbon
             ViewLayoutDocker contentLayout = new ViewLayoutDocker();
 
             // Create the image and drop down content
+<<<<<<< HEAD
             _viewMediumSmallImage = new ViewDrawRibbonGroupClusterColorButtonImage(_ribbon, GroupClusterColorButton);
             _viewMediumSmallText1 = new ViewDrawRibbonGroupClusterColorButtonText(_ribbon, GroupClusterColorButton)
+=======
+            _viewMediumSmallImage = new ViewDrawRibbonGroupClusterColorButtonImage(_ribbon, _ribbonColorButton);
+            _viewMediumSmallText1 = new ViewDrawRibbonGroupClusterColorButtonText(_ribbon, _ribbonColorButton)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 Visible = (_currentSize != GroupItemSize.Small)
             };
@@ -431,10 +448,17 @@ namespace ComponentFactory.Krypton.Ribbon
         private void UpdateEnabledState()
         {
             // Get the correct enabled state from the button definition
+<<<<<<< HEAD
             bool buttonEnabled = GroupClusterColorButton.Enabled;
             if (GroupClusterColorButton.KryptonCommand != null)
             {
                 buttonEnabled = GroupClusterColorButton.KryptonCommand.Enabled;
+=======
+            bool buttonEnabled = _ribbonColorButton.Enabled;
+            if (_ribbonColorButton.KryptonCommand != null)
+            {
+                buttonEnabled = _ribbonColorButton.KryptonCommand.Enabled;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
 
             bool enabled = _ribbon.InDesignHelperMode || (buttonEnabled && _ribbon.Enabled);
@@ -452,6 +476,7 @@ namespace ComponentFactory.Krypton.Ribbon
             // Only show as checked if also a check type button
             if (GroupClusterColorButton.ButtonType == GroupButtonType.Check)
             {
+<<<<<<< HEAD
                 if (GroupClusterColorButton.KryptonCommand != null)
                 {
                     checkedState = GroupClusterColorButton.KryptonCommand.Checked;
@@ -459,6 +484,15 @@ namespace ComponentFactory.Krypton.Ribbon
                 else
                 {
                     checkedState = GroupClusterColorButton.Checked;
+=======
+                if (_ribbonColorButton.KryptonCommand != null)
+                {
+                    checkedState = _ribbonColorButton.KryptonCommand.Checked;
+                }
+                else
+                {
+                    checkedState = _ribbonColorButton.Checked;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
 

@@ -141,7 +141,11 @@ namespace ComponentFactory.Krypton.Toolkit
                                                     PaletteMetricPadding.SeparatorPaddingLowProfile, Orientation.Vertical);
 
             // Get the separator to fill the entire client area
+<<<<<<< HEAD
             _drawDocker = new ViewDrawDocker(StateNormal.Back, StateNormal.Border)
+=======
+            _drawDocker = new ViewDrawDocker(_stateNormal.Back, _stateNormal.Border)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 IgnoreAllBorderAndPadding = true
             };
@@ -646,11 +650,19 @@ namespace ComponentFactory.Krypton.Toolkit
             // Push correct palettes into the view
             if (Enabled)
             {
+<<<<<<< HEAD
                 _drawDocker.SetPalettes(StateNormal.Back, StateNormal.Border);
             }
             else
             {
                 _drawDocker.SetPalettes(StateDisabled.Back, StateDisabled.Border);
+=======
+                _drawDocker.SetPalettes(_stateNormal.Back, _stateNormal.Border);
+            }
+            else
+            {
+                _drawDocker.SetPalettes(_stateDisabled.Back, _stateDisabled.Border);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
 
             _drawDocker.Enabled = Enabled;

@@ -28,7 +28,11 @@ namespace ComponentFactory.Krypton.Navigator
         public void AddRange(IDragTargetProvider provider, PageDragEndData dragEndData)
         {
             DragTargetList targets = provider?.GenerateDragTargets(dragEndData);
+<<<<<<< HEAD
             if ((targets != null) && (targets.Count > 0))
+=======
+            if (targets != null && (targets.Count > 0))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 AddRange(targets);
             }

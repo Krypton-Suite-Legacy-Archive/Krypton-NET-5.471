@@ -234,9 +234,15 @@ namespace ComponentFactory.Krypton.Toolkit
                     found = (CurrentPopup == popup);
 
                     // If possible then kill the current popup
+<<<<<<< HEAD
                     if (!CurrentPopup.IsDisposed)
                     {
                         CurrentPopup.Dispose();
+=======
+                    if (!_current.IsDisposed)
+                    {
+                        _current.Dispose();
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                     }
 
                     CurrentPopup = null;
@@ -244,7 +250,11 @@ namespace ComponentFactory.Krypton.Toolkit
                     // If anything on stack, then it becomes the current one
                     if (_stack.Count > 0)
                     {
+<<<<<<< HEAD
                         CurrentPopup = _stack.Pop();
+=======
+                        _current = _stack.Pop();
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                     }
                 }
                 while (!found && (CurrentPopup != null));
@@ -269,9 +279,15 @@ namespace ComponentFactory.Krypton.Toolkit
             if (CurrentPopup != null)
             {
                 // Kill the popup window
+<<<<<<< HEAD
                 if (!CurrentPopup.IsDisposed)
                 {
                     CurrentPopup.Dispose();
+=======
+                if (!_current.IsDisposed)
+                {
+                    _current.Dispose();
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
 
                 // Is there anything stacked?
@@ -387,9 +403,15 @@ namespace ComponentFactory.Krypton.Toolkit
                     if (activeWindow != _activeWindow)
                     {
                         // If the current window has become active, ask popup if that is allowed
+<<<<<<< HEAD
                         if ((activeWindow == CurrentPopup.Handle) && CurrentPopup.AllowBecomeActiveWhenCurrent)
                         {
                             _activeWindow = CurrentPopup.Handle;
+=======
+                        if ((activeWindow == _current.Handle) && _current.AllowBecomeActiveWhenCurrent)
+                        {
+                            _activeWindow = _current.Handle;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                         }
                         else
                         {
@@ -462,7 +484,11 @@ namespace ComponentFactory.Krypton.Toolkit
                     case PI.WM_SYSKEYUP:
                     case PI.WM_SYSDEADCHAR:
                         // If the popup is telling us to redirect keyboard to itself
+<<<<<<< HEAD
                         if (!CurrentPopup.KeyboardInert)
+=======
+                        if (!_current.KeyboardInert)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                         {
                             return ProcessKeyboard(ref m);
                         }
@@ -518,7 +544,11 @@ namespace ComponentFactory.Krypton.Toolkit
                 // Message is intended for the current popup which means we ask the popup if it
                 // would like to kill the entire stack because it knows the mouse down should
                 // cancel the showing of popups.
+<<<<<<< HEAD
                 if (CurrentPopup.DoesCurrentMouseDownEndAllTracking(m, ScreenPtToClientPt(screenPt)))
+=======
+                if (_current.DoesCurrentMouseDownEndAllTracking(m, ScreenPtToClientPt(screenPt)))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 {
                     EndAllTracking();
                 }
@@ -528,7 +558,11 @@ namespace ComponentFactory.Krypton.Toolkit
                 // If the current popup is not the intended recipient but the current popup knows
                 // that the mouse down is safe because it is within the client area of itself, then
                 // just let the message carry on as normal.
+<<<<<<< HEAD
                 if (CurrentPopup.DoesCurrentMouseDownContinueTracking(m, ScreenPtToClientPt(screenPt)))
+=======
+                if (_current.DoesCurrentMouseDownContinueTracking(m, ScreenPtToClientPt(screenPt)))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 {
                     return processed;
                 }
@@ -558,7 +592,11 @@ namespace ComponentFactory.Krypton.Toolkit
                                         CurrentPopup.Dispose();
                                         if (_stack.Count > 0)
                                         {
+<<<<<<< HEAD
                                             CurrentPopup = _stack.Pop();
+=======
+                                            _current = _stack.Pop();
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                                         }
                                     }
                                 }
@@ -605,7 +643,11 @@ namespace ComponentFactory.Krypton.Toolkit
             Point screenPt = new Point(PI.LOWORD((int)m.LParam), PI.HIWORD((int)m.LParam));
 
             // Ask the popup if this message causes the entire stack to be killed
+<<<<<<< HEAD
             if (CurrentPopup.DoesCurrentMouseDownEndAllTracking(m, ScreenPtToClientPt(screenPt)))
+=======
+            if (_current.DoesCurrentMouseDownEndAllTracking(m, ScreenPtToClientPt(screenPt)))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 EndAllTracking();
             }
@@ -647,7 +689,11 @@ namespace ComponentFactory.Krypton.Toolkit
                 Point screenPt = CommonHelper.ClientMouseMessageToScreenPt(m);
 
                 // Ask the current popup if it allows the mouse move
+<<<<<<< HEAD
                 if (CurrentPopup.AllowMouseMove(m, screenPt))
+=======
+                if (_current.AllowMouseMove(m, screenPt))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 {
                     return false;
                 }
@@ -678,7 +724,11 @@ namespace ComponentFactory.Krypton.Toolkit
 
         private bool ProcessMouseMoveWithCMS(ref Message m)
         {
+<<<<<<< HEAD
             if (CurrentPopup == null)
+=======
+            if (_current == null)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 return false;
             }
@@ -697,7 +747,11 @@ namespace ComponentFactory.Krypton.Toolkit
             IntPtr hWnd = PI.WindowFromPoint(screenPIPt);
 
             // Is the window handle that of the currently tracking popup
+<<<<<<< HEAD
             if (CurrentPopup.Handle == hWnd)
+=======
+            if (_current.Handle == hWnd)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 return true;
             }

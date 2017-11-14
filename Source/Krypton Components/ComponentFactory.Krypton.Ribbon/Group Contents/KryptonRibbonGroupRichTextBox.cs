@@ -188,7 +188,11 @@ namespace ComponentFactory.Krypton.Ribbon
             _keyTip = "X";
 
             // Create the actual text box control and set initial settings
+<<<<<<< HEAD
             RichTextBox = new KryptonRichTextBox
+=======
+            _richTextBox = new KryptonRichTextBox
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 InputControlStyle = InputControlStyle.Ribbon,
                 AlwaysActive = false,
@@ -1536,7 +1540,11 @@ namespace ComponentFactory.Krypton.Ribbon
         private void OnPaletteNeedPaint(object sender, NeedLayoutEventArgs e)
         {
             // Pass request onto the view provided paint delegate
+<<<<<<< HEAD
             ViewPaintDelegate?.Invoke(this, e);
+=======
+            _viewPaintDelegate?.Invoke(this, e);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
         }
 
         private void OnRichTextBoxAcceptsTabChanged(object sender, EventArgs e)

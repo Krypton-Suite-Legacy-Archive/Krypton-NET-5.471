@@ -548,7 +548,11 @@ namespace ComponentFactory.Krypton.Toolkit
             }
 
             // Pass request onto the displaying control if we have one
+<<<<<<< HEAD
             VisualContextMenu?.PerformNeedPaint(e.NeedLayout);
+=======
+            _contextMenu?.PerformNeedPaint(e.NeedLayout);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
         }
 
         private void OnContextMenuDisposed(object sender, EventArgs e)
@@ -560,9 +564,15 @@ namespace ComponentFactory.Krypton.Toolkit
                 VisualContextMenu.Disposed -= new EventHandler(OnContextMenuDisposed);
 
                 // Copy to ourself the close reason
+<<<<<<< HEAD
                 if (VisualContextMenu.CloseReason.HasValue)
                 {
                     CloseReason = VisualContextMenu.CloseReason.Value;
+=======
+                if (_contextMenu.CloseReason.HasValue)
+                {
+                    CloseReason = _contextMenu.CloseReason.Value;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
 
                 // No longer need to cache reference

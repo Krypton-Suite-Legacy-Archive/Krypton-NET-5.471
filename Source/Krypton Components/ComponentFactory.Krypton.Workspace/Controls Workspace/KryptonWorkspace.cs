@@ -2567,11 +2567,19 @@ namespace ComponentFactory.Krypton.Workspace
             // Push correct palettes into the view
             if (Enabled)
             {
+<<<<<<< HEAD
                 _drawPanel.SetPalettes(StateNormal.Back);
             }
             else
             {
                 _drawPanel.SetPalettes(StateDisabled.Back);
+=======
+                _drawPanel.SetPalettes(_stateNormal.Back);
+            }
+            else
+            {
+                _drawPanel.SetPalettes(_stateDisabled.Back);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
 
             _drawPanel.Enabled = Enabled;
@@ -3286,7 +3294,11 @@ namespace ComponentFactory.Krypton.Workspace
                                 int itemSpace = availableSpace;
                                 if (visibleStarChildren > 1)
                                 {
+<<<<<<< HEAD
                                     itemSpace = (int)((availableSpace / starTotal) * info[i].CacheStarSize.StarSize);
+=======
+                                    itemSpace = (int)(availableSpace / starTotal * info[i].CacheStarSize.StarSize);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                                 }
 
                                 // If the calculation is less than the minimum

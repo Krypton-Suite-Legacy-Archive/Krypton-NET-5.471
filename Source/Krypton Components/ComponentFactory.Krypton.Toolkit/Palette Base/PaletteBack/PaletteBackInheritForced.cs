@@ -84,6 +84,7 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// <returns>InheritBool value.</returns>
         public override InheritBool GetBackDraw(PaletteState state)
         {
+<<<<<<< HEAD
             if (ForceDraw != InheritBool.Inherit)
             {
                 return ForceDraw;
@@ -91,6 +92,15 @@ namespace ComponentFactory.Krypton.Toolkit
             else
             {
                 if (BorderIgnoreNormal && (state == PaletteState.Normal))
+=======
+            if (_forceDraw != InheritBool.Inherit)
+            {
+                return _forceDraw;
+            }
+            else
+            {
+                if (_borderIgnoreNormal && (state == PaletteState.Normal))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 {
                     return InheritBool.False;
                 }
@@ -108,9 +118,15 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// <returns>PaletteGraphicsHint value.</returns>
         public override PaletteGraphicsHint GetBackGraphicsHint(PaletteState state)
         {
+<<<<<<< HEAD
             if (ForceGraphicsHint != PaletteGraphicsHint.Inherit)
             {
                 return ForceGraphicsHint;
+=======
+            if (_forceGraphicsHint != PaletteGraphicsHint.Inherit)
+            {
+                return _forceGraphicsHint;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
             else
             {

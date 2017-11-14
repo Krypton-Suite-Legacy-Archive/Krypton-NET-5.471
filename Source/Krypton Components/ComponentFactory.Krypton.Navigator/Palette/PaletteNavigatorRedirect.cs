@@ -390,9 +390,15 @@ namespace ComponentFactory.Krypton.Navigator
             switch (metric)
             {
                 case PaletteMetricInt.PageButtonInset:
+<<<<<<< HEAD
                     if (Metrics.PageButtonSpecInset != -1)
                     {
                         return Metrics.PageButtonSpecInset;
+=======
+                    if (_paletteMetrics.PageButtonSpecInset != -1)
+                    {
+                        return _paletteMetrics.PageButtonSpecInset;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                     }
                     break;
             }
@@ -412,9 +418,15 @@ namespace ComponentFactory.Krypton.Navigator
             switch (metric)
             {
                 case PaletteMetricPadding.PageButtonPadding:
+<<<<<<< HEAD
                     if (!Metrics.PageButtonSpecPadding.Equals(CommonHelper.InheritPadding))
                     {
                         return Metrics.PageButtonSpecPadding;
+=======
+                    if (!_paletteMetrics.PageButtonSpecPadding.Equals(CommonHelper.InheritPadding))
+                    {
+                        return _paletteMetrics.PageButtonSpecPadding;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                     }
                     break;
             }

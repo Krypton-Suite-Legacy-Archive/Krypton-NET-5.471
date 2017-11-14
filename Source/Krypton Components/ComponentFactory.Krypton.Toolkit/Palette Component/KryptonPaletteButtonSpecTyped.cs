@@ -50,7 +50,11 @@ namespace ComponentFactory.Krypton.Toolkit
             _allowInheritText = true;
             _allowInheritExtraText = true;
             _allowInheritToolTipTitle = true;
+<<<<<<< HEAD
             ImageStates = new CheckButtonImageStates
+=======
+            _imageStates = new CheckButtonImageStates
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 NeedPaint = new NeedPaintHandler(OnImageStateChanged)
             };
@@ -62,6 +66,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// Gets a value indicating if all values are default.
         /// </summary>
         [Browsable(false)]
+<<<<<<< HEAD
         public override bool IsDefault => (base.IsDefault &&
                                            ImageStates.IsDefault&&
                                            (Image == null) &&
@@ -74,6 +79,25 @@ namespace ComponentFactory.Krypton.Toolkit
                                            AllowInheritExtraText &&
                                            AllowInheritToolTipTitle);
 
+=======
+        public override bool IsDefault
+        {
+            get
+            {
+                return (base.IsDefault &&
+                        _imageStates.IsDefault&&
+                        (Image == null) &&
+                        (Text == string.Empty) &&
+                        (ExtraText == string.Empty) &&
+                        (ToolTipTitle == string.Empty) &&
+                        (ColorMap == Color.Empty) &&
+                        AllowInheritImage &&
+                        AllowInheritText &&
+                        AllowInheritExtraText &&
+                        AllowInheritToolTipTitle);
+            }
+        }
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
         #endregion
 
         #region PopulateFromBase

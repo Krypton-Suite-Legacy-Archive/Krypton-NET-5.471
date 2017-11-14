@@ -55,7 +55,11 @@ namespace ComponentFactory.Krypton.Toolkit
             _drawContent = new ViewDrawContent(linkLabel.OverrideFocusNotVisited, _contentValues, VisualOrientation.Top)
             {
                 UseMnemonic = true,
+<<<<<<< HEAD
                 Enabled = ItemEnabled
+=======
+                Enabled = _itemEnabled
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             };
 
             // Place label link in the center of the area but inside some separator to add spacing
@@ -136,7 +140,11 @@ namespace ComponentFactory.Krypton.Toolkit
                 }
                 else
                 {
+<<<<<<< HEAD
                     return KryptonContextMenuLinkLabel.Image;
+=======
+                    return _linkLabel.Image;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
         }
@@ -156,7 +164,11 @@ namespace ComponentFactory.Krypton.Toolkit
                 }
                 else
                 {
+<<<<<<< HEAD
                     return KryptonContextMenuLinkLabel.ImageTransparentColor;
+=======
+                    return _linkLabel.ImageTransparentColor;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
         }
@@ -176,7 +188,11 @@ namespace ComponentFactory.Krypton.Toolkit
                 }
                 else
                 {
+<<<<<<< HEAD
                     return KryptonContextMenuLinkLabel.Text;
+=======
+                    return _linkLabel.Text;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
         }
@@ -196,7 +212,11 @@ namespace ComponentFactory.Krypton.Toolkit
                 }
                 else
                 {
+<<<<<<< HEAD
                     return KryptonContextMenuLinkLabel.ExtraText;
+=======
+                    return _linkLabel.ExtraText;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
         }

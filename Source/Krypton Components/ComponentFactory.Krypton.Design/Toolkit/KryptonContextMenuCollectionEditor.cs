@@ -81,7 +81,11 @@ namespace ComponentFactory.Krypton.Toolkit
                 #region Implementation
                 private int ImageIndexFromItem()
                 {
+<<<<<<< HEAD
                     switch (Item)
+=======
+                    switch (_item)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                     {
                         case KryptonContextMenuCheckBox _:
                             return 6;

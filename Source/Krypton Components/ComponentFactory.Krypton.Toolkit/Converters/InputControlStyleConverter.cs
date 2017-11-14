@@ -16,7 +16,14 @@ namespace ComponentFactory.Krypton.Toolkit
     internal class InputControlStyleConverter : StringLookupConverter
     {
         #region Static Fields
+<<<<<<< HEAD
 
+=======
+        private Pair[] _pairs = { new Pair(InputControlStyle.Standalone, "Standalone"),
+                                             new Pair(InputControlStyle.Ribbon,     "Ribbon"),
+                                             new Pair(InputControlStyle.Custom1,    "Custom1"),
+ };
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
         #endregion
 
         #region Identity

@@ -127,7 +127,14 @@ namespace ComponentFactory.Krypton.Toolkit
 		[RefreshPropertiesAttribute(RefreshProperties.All)]
 		public virtual Font Font
 		{
+<<<<<<< HEAD
             get => _storage?.ContentTextFont;
+=======
+            get
+            {
+                return _storage?.ContentTextFont;
+            }
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 
 		    set
 			{
@@ -767,7 +774,14 @@ namespace ComponentFactory.Krypton.Toolkit
         [RefreshPropertiesAttribute(RefreshProperties.All)]
         public virtual Image Image
         {
+<<<<<<< HEAD
             get => _storage?.ContentTextImage;
+=======
+            get
+            {
+                return _storage?.ContentTextImage;
+            }
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 
             set
             {

@@ -443,7 +443,11 @@ namespace ComponentFactory.Krypton.Toolkit
                 {
                     e.TextColor = _disabled;
                 }
+<<<<<<< HEAD
                 else if (!e.Item.Pressed && !e.Item.Selected)
+=======
+                else if(!e.Item.Pressed && !e.Item.Selected)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 {
                     switch (e.ToolStrip)
                     {
@@ -738,6 +742,7 @@ namespace ComponentFactory.Krypton.Toolkit
                     // Create border and clipping paths
                     using (GraphicsPath borderPath = CreateBorderPath(e.AffectedBounds, CUT_CONTEXT_MENU),
                         clipPath = CreateClipBorderPath(e.AffectedBounds, CUT_CONTEXT_MENU))
+<<<<<<< HEAD
                     {
                         // Clip all drawing to within the border path
                         using (Clipping clipping = new Clipping(e.Graphics, clipPath))
@@ -754,6 +759,24 @@ namespace ComponentFactory.Krypton.Toolkit
                     // Make sure the font is current
                     if (e.ToolStrip.Font != KCT.StatusStripFont)
                     {
+=======
+                    {
+                        // Clip all drawing to within the border path
+                        using (Clipping clipping = new Clipping(e.Graphics, clipPath))
+                        {
+                            // Create the background brush
+                            using (SolidBrush backBrush = new SolidBrush(KCT.ToolStripDropDownBackground))
+                            {
+                                e.Graphics.FillPath(backBrush, borderPath);
+                            }
+                        }
+                    }
+                    break;
+                case StatusStrip _:
+                    // Make sure the font is current
+                    if (e.ToolStrip.Font != KCT.StatusStripFont)
+                    {
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                         e.ToolStrip.Font = KCT.StatusStripFont;
                     }
 
@@ -764,6 +787,7 @@ namespace ComponentFactory.Krypton.Toolkit
 
                     // Check if the status strip is inside a KryptonForm and using the Office 2007 renderer, in 
                     // which case we want to extend the drawing down into the border area for an integrated look
+<<<<<<< HEAD
                     if (e.ToolStrip.Visible
                         && (e.ToolStrip.Dock == DockStyle.Bottom)
                         && (e.ToolStrip.RenderMode == ToolStripRenderMode.ManagerRenderMode)
@@ -773,6 +797,18 @@ namespace ComponentFactory.Krypton.Toolkit
                         )
                     {
                         // Get the window borders
+=======
+                    if ((owner != null) && 
+                        (owner is KryptonForm) &&
+                        e.ToolStrip.Visible &&
+                        (e.ToolStrip.Dock == DockStyle.Bottom) &&
+                        (e.ToolStrip.Bottom == owner.ClientSize.Height) &&
+                        (e.ToolStrip.RenderMode == ToolStripRenderMode.ManagerRenderMode) &&
+                        (ToolStripManager.Renderer is KryptonOffice2007Renderer))
+                    {
+                        // Get the window borders
+                        KryptonForm kryptonForm = (KryptonForm)owner;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 
                         // Finally check that the actual form is using custom chrome
                         if (kryptonForm.ApplyCustomChrome)

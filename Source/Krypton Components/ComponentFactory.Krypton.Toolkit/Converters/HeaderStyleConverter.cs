@@ -16,7 +16,18 @@ namespace ComponentFactory.Krypton.Toolkit
     internal class HeaderStyleConverter : StringLookupConverter
     {
         #region Static Fields
+<<<<<<< HEAD
 
+=======
+        private Pair[] _pairs = { new Pair(HeaderStyle.Primary,      "Primary"),
+                                             new Pair(HeaderStyle.Secondary,    "Secondary"), 
+                                             new Pair(HeaderStyle.DockInactive, "Dock - Inactive"), 
+                                             new Pair(HeaderStyle.DockActive,   "Dock - Active"), 
+                                             new Pair(HeaderStyle.Form,         "Form"), 
+                                             new Pair(HeaderStyle.Calendar,     "Calendar"), 
+                                             new Pair(HeaderStyle.Custom1,      "Custom1"),
+                                             new Pair(HeaderStyle.Custom2,      "Custom2"),  };
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
         #endregion
 
         #region Identity

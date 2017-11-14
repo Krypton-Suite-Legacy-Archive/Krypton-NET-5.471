@@ -848,9 +848,15 @@ namespace ComponentFactory.Krypton.Toolkit
             _paletteOffice2010Black?.UserPreferenceChanged();
 
             _paletteSparkleBlue?.UserPreferenceChanged();
+<<<<<<< HEAD
 
             _paletteSparkleOrange?.UserPreferenceChanged();
 
+=======
+
+            _paletteSparkleOrange?.UserPreferenceChanged();
+
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             _paletteSparklePurple?.UserPreferenceChanged();
 
             UpdateToolStripManager();
@@ -870,18 +876,30 @@ namespace ComponentFactory.Krypton.Toolkit
             if (globalPalette != InternalGlobalPalette)
             {
                 // Unhook from current palette events
+<<<<<<< HEAD
                 if (InternalGlobalPalette != null)
                 {
                     InternalGlobalPalette.PalettePaint -= new EventHandler<PaletteLayoutEventArgs>(OnPalettePaint);
+=======
+                if (_globalPalette != null)
+                {
+                    _globalPalette.PalettePaint -= new EventHandler<PaletteLayoutEventArgs>(OnPalettePaint);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
 
                 // Remember the new palette
                 InternalGlobalPalette = globalPalette;
 
                 // Hook to new palette events
+<<<<<<< HEAD
                 if (InternalGlobalPalette != null)
                 {
                     InternalGlobalPalette.PalettePaint += new EventHandler<PaletteLayoutEventArgs>(OnPalettePaint);
+=======
+                if (_globalPalette != null)
+                {
+                    _globalPalette.PalettePaint += new EventHandler<PaletteLayoutEventArgs>(OnPalettePaint);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
         }
@@ -902,7 +920,11 @@ namespace ComponentFactory.Krypton.Toolkit
         {
             if (_globalApplyToolstrips)
             {
+<<<<<<< HEAD
                 ToolStripManager.Renderer = InternalGlobalPalette.GetRenderer().RenderToolStrip(InternalGlobalPalette);
+=======
+                ToolStripManager.Renderer = _globalPalette.GetRenderer().RenderToolStrip(_globalPalette);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
         }
 

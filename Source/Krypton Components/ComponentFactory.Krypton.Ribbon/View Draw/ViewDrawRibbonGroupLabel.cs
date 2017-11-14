@@ -294,7 +294,11 @@ namespace ComponentFactory.Krypton.Ribbon
             }
 
             // Add the large button at the top
+<<<<<<< HEAD
             _viewLargeLabelImage = new ViewDrawRibbonGroupLabelImage(_ribbon, GroupLabel, true);
+=======
+            _viewLargeLabelImage = new ViewDrawRibbonGroupLabelImage(_ribbon, _ribbonLabel, true);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             _viewLargeImage = new ViewLayoutRibbonCenterPadding(_largeImagePadding)
             {
                 _viewLargeLabelImage
@@ -331,9 +335,15 @@ namespace ComponentFactory.Krypton.Ribbon
             }
 
             // Create the image and drop down content
+<<<<<<< HEAD
             _viewMediumSmallLabelImage = new ViewDrawRibbonGroupLabelImage(_ribbon, GroupLabel, false);
             _viewMediumSmallText1 = new ViewDrawRibbonGroupLabelText(_ribbon, GroupLabel, true);
             _viewMediumSmallText2 = new ViewDrawRibbonGroupLabelText(_ribbon, GroupLabel, false);
+=======
+            _viewMediumSmallLabelImage = new ViewDrawRibbonGroupLabelImage(_ribbon, _ribbonLabel, false);
+            _viewMediumSmallText1 = new ViewDrawRibbonGroupLabelText(_ribbon, _ribbonLabel, true);
+            _viewMediumSmallText2 = new ViewDrawRibbonGroupLabelText(_ribbon, _ribbonLabel, false);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             _viewMediumSmallImage = new ViewLayoutRibbonCenterPadding(_smallImagePadding)
             {
                 _viewMediumSmallLabelImage
@@ -370,10 +380,17 @@ namespace ComponentFactory.Krypton.Ribbon
         private void UpdateEnabledState()
         {
             // Get the correct enabled state from the button definition
+<<<<<<< HEAD
             bool buttonEnabled = GroupLabel.Enabled;
             if (GroupLabel.KryptonCommand != null)
             {
                 buttonEnabled = GroupLabel.KryptonCommand.Enabled;
+=======
+            bool buttonEnabled = _ribbonLabel.Enabled;
+            if (_ribbonLabel.KryptonCommand != null)
+            {
+                buttonEnabled = _ribbonLabel.KryptonCommand.Enabled;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
 
             // Take into account the ribbon state and mode

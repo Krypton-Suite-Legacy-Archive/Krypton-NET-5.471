@@ -217,9 +217,15 @@ namespace ComponentFactory.Krypton.Navigator
 
                 _needPaint = value;
 
+<<<<<<< HEAD
                 if (ButtonSpecManager != null)
                 {
                     ButtonSpecManager.NeedPaint = _needPaint;
+=======
+                if (_buttonManager != null)
+                {
+                    _buttonManager.NeedPaint = _needPaint;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
         }
@@ -298,7 +304,11 @@ namespace ComponentFactory.Krypton.Navigator
         /// <returns>Reference to ButtonSpec; otherwise null.</returns>
         public ButtonSpec ButtonSpecFromView(ViewBase element)
         {
+<<<<<<< HEAD
             return ButtonSpecManager?.ButtonSpecFromView(element);
+=======
+            return _buttonManager?.ButtonSpecFromView(element);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
         }
         #endregion
 
@@ -460,9 +470,15 @@ namespace ComponentFactory.Krypton.Navigator
             if ((Navigator.SelectedPage != _page) && Navigator.AllowTabSelect)
             {
                 // This event might have caused the page to be removed or hidden and so check the page is still present before selecting it
+<<<<<<< HEAD
                 if (Navigator.ChildPanel.Controls.Contains(_page) && _page.LastVisibleSet)
                 {
                     Navigator.SelectedPage = _page;
+=======
+                if (_navigator.ChildPanel.Controls.Contains(_page) && _page.LastVisibleSet)
+                {
+                    _navigator.SelectedPage = _page;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
         }
@@ -475,9 +491,15 @@ namespace ComponentFactory.Krypton.Navigator
         protected virtual void OnRightClick(object sender, MouseEventArgs e)
         {
             // Can only select the page if not already selected and allowed to select a tab
+<<<<<<< HEAD
             if ((Navigator.SelectedPage != _page) && Navigator.AllowTabSelect)
             {
                 Navigator.SelectedPage = _page;
+=======
+            if ((_navigator.SelectedPage != _page) && _navigator.AllowTabSelect)
+            {
+                _navigator.SelectedPage = _page;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
 
             // Generate event so user can decide what, if any, context menu to show
@@ -489,13 +511,21 @@ namespace ComponentFactory.Krypton.Navigator
             {
                 if (CommonHelper.ValidKryptonContextMenu(scma.KryptonContextMenu))
                 {
+<<<<<<< HEAD
                     scma.KryptonContextMenu.Show(Navigator, Navigator.PointToScreen(new Point(e.X, e.Y)));
+=======
+                    scma.KryptonContextMenu.Show(_navigator, _navigator.PointToScreen(new Point(e.X, e.Y)));
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
                 else 
                 {
                     if (CommonHelper.ValidContextMenuStrip(scma.ContextMenuStrip))
                     {
+<<<<<<< HEAD
                         scma.ContextMenuStrip.Show(Navigator.PointToScreen(new Point(e.X, e.Y)));
+=======
+                        scma.ContextMenuStrip.Show(_navigator.PointToScreen(new Point(e.X, e.Y)));
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                     }
                 }
             }

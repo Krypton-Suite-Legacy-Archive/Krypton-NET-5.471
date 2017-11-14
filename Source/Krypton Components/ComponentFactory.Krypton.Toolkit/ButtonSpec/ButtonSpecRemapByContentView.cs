@@ -44,8 +44,18 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Gets the palette content to use for remapping.
         /// </summary>
+<<<<<<< HEAD
         public override IPaletteContent PaletteContent => Foreground?.GetPalette();
 
+=======
+        public override IPaletteContent PaletteContent 
+        {
+            get
+            {
+                return _foreground?.GetPalette();
+            }
+        }
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
         #endregion
 
         #region PaletteState

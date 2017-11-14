@@ -507,7 +507,16 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <returns>ViewBase associated with the point.</returns>
         public ViewBase ViewFromPoint(Point pt)
         {
+<<<<<<< HEAD
             return ViewManager?.Root?.ViewFromPoint(pt);
+=======
+            if ((ViewManager != null) && (ViewManager.Root != null))
+            {
+                return ViewManager.Root.ViewFromPoint(pt);
+            }
+
+            return null;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
         }
         #endregion
         

@@ -459,7 +459,11 @@ namespace ComponentFactory.Krypton.Ribbon
                         int extraLines = _topLine - _beginLine;
 
                         // Limit check the number of previous lines to show
+<<<<<<< HEAD
                         if ((_topLine - extraLines) < 0)
+=======
+                        if (_topLine - extraLines < 0)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                         {
                             extraLines = _topLine;
                         }

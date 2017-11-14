@@ -379,7 +379,11 @@ namespace ComponentFactory.Krypton.Docking
                             {
                                 // Remove all placeholders
                                 KryptonPage page = cell.Pages[i];
+<<<<<<< HEAD
                                 if (page is KryptonStorePage)
+=======
+                                if ((page != null) && (page is KryptonStorePage))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                                 {
                                     cell.Pages.Remove(page);
                                 }
@@ -453,7 +457,11 @@ namespace ComponentFactory.Krypton.Docking
                     {
                         // Return definitive answer 'true' if the group controls contains a store page for the unique name.
                         KryptonPage page = SpaceControl.PageForUniqueName(uniqueName);
+<<<<<<< HEAD
                         if (page is KryptonStorePage)
+=======
+                        if ((page != null) && (page is KryptonStorePage))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                         {
                             return true;
                         }

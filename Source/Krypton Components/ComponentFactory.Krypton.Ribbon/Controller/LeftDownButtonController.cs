@@ -145,7 +145,11 @@ namespace ComponentFactory.Krypton.Ribbon
                       Ribbon.InDesignMode ||
                       (CommonHelper.ActiveFloatingWindow != null);
 
+<<<<<<< HEAD
             if (!IsFixed)
+=======
+            if (!_fixedPressed)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 _updateTimer.Start();
             }
@@ -223,7 +227,11 @@ namespace ComponentFactory.Krypton.Ribbon
             // Mouse is no longer over the target
             _mouseOver = false;
 
+<<<<<<< HEAD
             if (!IsFixed)
+=======
+            if (!_fixedPressed)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 _updateTimer.Start();
             }
@@ -257,7 +265,11 @@ namespace ComponentFactory.Krypton.Ribbon
             if (Ribbon.Enabled)
             {
                 // Are we showing with the fixed state?
+<<<<<<< HEAD
                 if (IsFixed)
+=======
+                if (_fixedPressed)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 {
                     newState = PaletteState.Pressed;
                 }
@@ -285,7 +297,11 @@ namespace ComponentFactory.Krypton.Ribbon
                 OnNeedPaint(false, Target.ClientRectangle);
 
                 // Get the repaint to happen immediately
+<<<<<<< HEAD
                 if (!Ribbon.InKeyboardMode)
+=======
+                if (!_ribbon.InKeyboardMode)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 {
                     Application.DoEvents();
                 }

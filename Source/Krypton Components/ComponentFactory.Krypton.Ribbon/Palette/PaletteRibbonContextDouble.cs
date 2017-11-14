@@ -210,10 +210,17 @@ namespace ComponentFactory.Krypton.Ribbon
         {
             // We need an associated ribbon tab
             // Does the ribbon tab have a context setting?
+<<<<<<< HEAD
             if (!string.IsNullOrEmpty(RibbonTab?.ContextName))
             {
                 // Find the context definition for this context
                 KryptonRibbonContext ribbonContext = _ribbon.RibbonContexts[RibbonTab.ContextName];
+=======
+            if (!string.IsNullOrEmpty(_ribbonTab?.ContextName))
+            {
+                // Find the context definition for this context
+                KryptonRibbonContext ribbonContext = _ribbon.RibbonContexts[_ribbonTab.ContextName];
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 
                 // Should always work, but you never know!
                 if (ribbonContext != null)

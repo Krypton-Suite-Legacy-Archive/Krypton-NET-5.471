@@ -228,8 +228,13 @@ namespace ComponentFactory.Krypton.Ribbon
 
         private void CreateOutsideDocker()
         {
+<<<<<<< HEAD
             _drawOutsideBack = new PaletteBackToPalette(Redirector, PaletteBackStyle.ControlRibbonAppMenu);
             _drawOutsideBorder = new PaletteBorderToPalette(Redirector, PaletteBorderStyle.ControlRibbonAppMenu);
+=======
+            _drawOutsideBack = new PaletteBackToPalette(_redirector, PaletteBackStyle.ControlRibbonAppMenu);
+            _drawOutsideBorder = new PaletteBorderToPalette(_redirector, PaletteBorderStyle.ControlRibbonAppMenu);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             _drawOutsideDocker = new ViewDrawRibbonAppMenu(_drawOutsideBack, _drawOutsideBorder, _appButtonBottom, _rectAppButtonBottomHalf)
             {
                 KeyController = new ContextMenuController((ViewContextMenuManager)ViewManager)

@@ -85,7 +85,11 @@ namespace ComponentFactory.Krypton.Ribbon
         {
             get 
             {
+<<<<<<< HEAD
                 if (OwnerForm == null)
+=======
+                if (_ownerForm == null)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 {
                     return base.Visible;
                 }

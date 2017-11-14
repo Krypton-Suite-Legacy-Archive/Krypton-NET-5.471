@@ -287,9 +287,15 @@ namespace ComponentFactory.Krypton.Navigator
 		/// <returns>RelativeAlignment value.</returns>
 		public PaletteRelativeAlign GetContentImageH(PaletteState state)
 		{
+<<<<<<< HEAD
 			if (Image.ImageH != PaletteRelativeAlign.Inherit)
 			{
 			    return Image.ImageH;
+=======
+			if (_image.ImageH != PaletteRelativeAlign.Inherit)
+			{
+			    return _image.ImageH;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 			}
 			else
 			{
@@ -304,9 +310,15 @@ namespace ComponentFactory.Krypton.Navigator
 		/// <returns>RelativeAlignment value.</returns>
 		public PaletteRelativeAlign GetContentImageV(PaletteState state)
 		{
+<<<<<<< HEAD
 			if (Image.ImageV != PaletteRelativeAlign.Inherit)
 			{
 			    return Image.ImageV;
+=======
+			if (_image.ImageV != PaletteRelativeAlign.Inherit)
+			{
+			    return _image.ImageV;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 			}
 			else
 			{
@@ -321,9 +333,15 @@ namespace ComponentFactory.Krypton.Navigator
 		/// <returns>PaletteImageEffect value.</returns>
 		public PaletteImageEffect GetContentImageEffect(PaletteState state)
 		{
+<<<<<<< HEAD
 			if (Image.Effect != PaletteImageEffect.Inherit)
 			{
 			    return Image.Effect;
+=======
+			if (_image.Effect != PaletteImageEffect.Inherit)
+			{
+			    return _image.Effect;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 			}
 			else
 			{
@@ -338,9 +356,15 @@ namespace ComponentFactory.Krypton.Navigator
         /// <returns>Color value.</returns>
         public Color GetContentImageColorMap(PaletteState state)
         {
+<<<<<<< HEAD
             if (Image.ImageColorMap != Color.Empty)
             {
                 return Image.ImageColorMap;
+=======
+            if (_image.ImageColorMap != Color.Empty)
+            {
+                return _image.ImageColorMap;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
             else
             {
@@ -355,9 +379,15 @@ namespace ComponentFactory.Krypton.Navigator
         /// <returns>Color value.</returns>
         public Color GetContentImageColorTo(PaletteState state)
         {
+<<<<<<< HEAD
             if (Image.ImageColorTo != Color.Empty)
             {
                 return Image.ImageColorTo;
+=======
+            if (_image.ImageColorTo != Color.Empty)
+            {
+                return _image.ImageColorTo;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
             else
             {
@@ -388,9 +418,15 @@ namespace ComponentFactory.Krypton.Navigator
 		/// <returns>Font value.</returns>
 		public Font GetContentShortTextFont(PaletteState state)
 		{
+<<<<<<< HEAD
 			if (ShortText.Font != null)
 			{
 			    return ShortText.Font;
+=======
+			if (_shortText.Font != null)
+			{
+			    return _shortText.Font;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 			}
 			else
 			{
@@ -405,9 +441,15 @@ namespace ComponentFactory.Krypton.Navigator
         /// <returns>Font value.</returns>
         public Font GetContentShortTextNewFont(PaletteState state)
         {
+<<<<<<< HEAD
             if (ShortText.Font != null)
             {
                 return ShortText.Font;
+=======
+            if (_shortText.Font != null)
+            {
+                return _shortText.Font;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
             else
             {
@@ -422,9 +464,15 @@ namespace ComponentFactory.Krypton.Navigator
 		/// <returns>PaletteTextHint value.</returns>
 		public PaletteTextHint GetContentShortTextHint(PaletteState state)
 		{
+<<<<<<< HEAD
 			if (ShortText.Hint != PaletteTextHint.Inherit)
 			{
 			    return ShortText.Hint;
+=======
+			if (_shortText.Hint != PaletteTextHint.Inherit)
+			{
+			    return _shortText.Hint;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 			}
 			else
 			{
@@ -439,9 +487,15 @@ namespace ComponentFactory.Krypton.Navigator
         /// <returns>PaletteTextPrefix value.</returns>
         public PaletteTextHotkeyPrefix GetContentShortTextPrefix(PaletteState state)
         {
+<<<<<<< HEAD
             if (ShortText.Prefix != PaletteTextHotkeyPrefix.Inherit)
             {
                 return ShortText.Prefix;
+=======
+            if (_shortText.Prefix != PaletteTextHotkeyPrefix.Inherit)
+            {
+                return _shortText.Prefix;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
             else
             {
@@ -456,9 +510,15 @@ namespace ComponentFactory.Krypton.Navigator
 		/// <returns>PaletteTextTrim value.</returns>
 		public PaletteTextTrim GetContentShortTextTrim(PaletteState state)
 		{
+<<<<<<< HEAD
 			if (ShortText.Trim != PaletteTextTrim.Inherit)
 			{
 			    return ShortText.Trim;
+=======
+			if (_shortText.Trim != PaletteTextTrim.Inherit)
+			{
+			    return _shortText.Trim;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 			}
 			else
 			{
@@ -473,9 +533,15 @@ namespace ComponentFactory.Krypton.Navigator
 		/// <returns>RelativeAlignment value.</returns>
 		public PaletteRelativeAlign GetContentShortTextH(PaletteState state)
 		{
+<<<<<<< HEAD
 			if (ShortText.TextH != PaletteRelativeAlign.Inherit)
 			{
 			    return ShortText.TextH;
+=======
+			if (_shortText.TextH != PaletteRelativeAlign.Inherit)
+			{
+			    return _shortText.TextH;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 			}
 			else
 			{
@@ -490,9 +556,15 @@ namespace ComponentFactory.Krypton.Navigator
 		/// <returns>RelativeAlignment value.</returns>
 		public PaletteRelativeAlign GetContentShortTextV(PaletteState state)
 		{
+<<<<<<< HEAD
 			if (ShortText.TextV != PaletteRelativeAlign.Inherit)
 			{
 			    return ShortText.TextV;
+=======
+			if (_shortText.TextV != PaletteRelativeAlign.Inherit)
+			{
+			    return _shortText.TextV;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 			}
 			else
 			{
@@ -507,9 +579,15 @@ namespace ComponentFactory.Krypton.Navigator
 		/// <returns>RelativeAlignment value.</returns>
 		public PaletteRelativeAlign GetContentShortTextMultiLineH(PaletteState state)
 		{
+<<<<<<< HEAD
 			if (ShortText.MultiLineH != PaletteRelativeAlign.Inherit)
 			{
 			    return ShortText.MultiLineH;
+=======
+			if (_shortText.MultiLineH != PaletteRelativeAlign.Inherit)
+			{
+			    return _shortText.MultiLineH;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 			}
 			else
 			{
@@ -524,9 +602,15 @@ namespace ComponentFactory.Krypton.Navigator
 		/// <returns>InheritBool value.</returns>
 		public InheritBool GetContentShortTextMultiLine(PaletteState state)
 		{
+<<<<<<< HEAD
 			if (ShortText.MultiLine != InheritBool.Inherit)
 			{
 			    return ShortText.MultiLine;
+=======
+			if (_shortText.MultiLine != InheritBool.Inherit)
+			{
+			    return _shortText.MultiLine;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 			}
 			else
 			{
@@ -693,9 +777,15 @@ namespace ComponentFactory.Krypton.Navigator
 		/// <param name="state">Palette value should be applicable to this state.</param>
 		public Font GetContentLongTextFont(PaletteState state)
 		{
+<<<<<<< HEAD
 			if (LongText.Font != null)
 			{
 			    return LongText.Font;
+=======
+			if (_longText.Font != null)
+			{
+			    return _longText.Font;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 			}
 			else
 			{
@@ -710,9 +800,15 @@ namespace ComponentFactory.Krypton.Navigator
         /// <returns>Font value.</returns>
         public Font GetContentLongTextNewFont(PaletteState state)
         {
+<<<<<<< HEAD
             if (LongText.Font != null)
             {
                 return LongText.Font;
+=======
+            if (_longText.Font != null)
+            {
+                return _longText.Font;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
             else
             {
@@ -727,9 +823,15 @@ namespace ComponentFactory.Krypton.Navigator
 		/// <returns>PaletteTextHint value.</returns>
 		public PaletteTextHint GetContentLongTextHint(PaletteState state)
 		{
+<<<<<<< HEAD
 			if (LongText.Hint != PaletteTextHint.Inherit)
 			{
 			    return LongText.Hint;
+=======
+			if (_longText.Hint != PaletteTextHint.Inherit)
+			{
+			    return _longText.Hint;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 			}
 			else
 			{
@@ -744,9 +846,15 @@ namespace ComponentFactory.Krypton.Navigator
         /// <returns>PaletteTextPrefix value.</returns>
         public PaletteTextHotkeyPrefix GetContentLongTextPrefix(PaletteState state)
         {
+<<<<<<< HEAD
             if (LongText.Prefix != PaletteTextHotkeyPrefix.Inherit)
             {
                 return LongText.Prefix;
+=======
+            if (_longText.Prefix != PaletteTextHotkeyPrefix.Inherit)
+            {
+                return _longText.Prefix;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
             else
             {
@@ -761,9 +869,15 @@ namespace ComponentFactory.Krypton.Navigator
 		/// <returns>PaletteTextTrim value.</returns>
 		public PaletteTextTrim GetContentLongTextTrim(PaletteState state)
 		{
+<<<<<<< HEAD
 			if (LongText.Trim != PaletteTextTrim.Inherit)
 			{
 			    return LongText.Trim;
+=======
+			if (_longText.Trim != PaletteTextTrim.Inherit)
+			{
+			    return _longText.Trim;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 			}
 			else
 			{
@@ -778,9 +892,15 @@ namespace ComponentFactory.Krypton.Navigator
 		/// <returns>RelativeAlignment value.</returns>
 		public PaletteRelativeAlign GetContentLongTextH(PaletteState state)
 		{
+<<<<<<< HEAD
 			if (LongText.TextH != PaletteRelativeAlign.Inherit)
 			{
 			    return LongText.TextH;
+=======
+			if (_longText.TextH != PaletteRelativeAlign.Inherit)
+			{
+			    return _longText.TextH;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 			}
 			else
 			{
@@ -795,9 +915,15 @@ namespace ComponentFactory.Krypton.Navigator
 		/// <returns>RelativeAlignment value.</returns>
 		public PaletteRelativeAlign GetContentLongTextV(PaletteState state)
 		{
+<<<<<<< HEAD
 			if (LongText.TextV != PaletteRelativeAlign.Inherit)
 			{
 			    return LongText.TextV;
+=======
+			if (_longText.TextV != PaletteRelativeAlign.Inherit)
+			{
+			    return _longText.TextV;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 			}
 			else
 			{
@@ -812,9 +938,15 @@ namespace ComponentFactory.Krypton.Navigator
 		/// <returns>RelativeAlignment value.</returns>
 		public PaletteRelativeAlign GetContentLongTextMultiLineH(PaletteState state)
 		{
+<<<<<<< HEAD
 			if (LongText.MultiLineH != PaletteRelativeAlign.Inherit)
 			{
 			    return LongText.MultiLineH;
+=======
+			if (_longText.MultiLineH != PaletteRelativeAlign.Inherit)
+			{
+			    return _longText.MultiLineH;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 			}
 			else
 			{
@@ -829,9 +961,15 @@ namespace ComponentFactory.Krypton.Navigator
 		/// <returns>InheritBool value.</returns>
 		public InheritBool GetContentLongTextMultiLine(PaletteState state)
 		{
+<<<<<<< HEAD
 			if (LongText.MultiLine != InheritBool.Inherit)
 			{
 			    return LongText.MultiLine;
+=======
+			if (_longText.MultiLine != InheritBool.Inherit)
+			{
+			    return _longText.MultiLine;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 			}
 			else
 			{
@@ -987,7 +1125,21 @@ namespace ComponentFactory.Krypton.Navigator
 		[RefreshPropertiesAttribute(RefreshProperties.All)]
 		public Padding Padding
 		{
+<<<<<<< HEAD
             get => _storage?.ContentPadding ?? CommonHelper.InheritPadding;
+=======
+            get
+            {
+                if (_storage == null)
+                {
+                    return CommonHelper.InheritPadding;
+                }
+                else
+                {
+                    return _storage.ContentPadding;
+                }
+            }
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 
 		    set
 			{
@@ -1065,7 +1217,21 @@ namespace ComponentFactory.Krypton.Navigator
 		[RefreshPropertiesAttribute(RefreshProperties.All)]
 		public int AdjacentGap
 		{
+<<<<<<< HEAD
             get => _storage?.ContentAdjacentGap ?? -1;
+=======
+            get
+            {
+                if (_storage == null)
+                {
+                    return -1;
+                }
+                else
+                {
+                    return _storage.ContentAdjacentGap;
+                }
+            }
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 
 		    set
 			{

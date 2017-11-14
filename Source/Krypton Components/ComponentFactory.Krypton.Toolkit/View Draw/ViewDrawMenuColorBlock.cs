@@ -198,7 +198,11 @@ namespace ComponentFactory.Krypton.Toolkit
             }
 
             // Draw ourself in the designated color
+<<<<<<< HEAD
             using (SolidBrush brush = new SolidBrush(Color))
+=======
+            using (SolidBrush brush = new SolidBrush(_color))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 context.Graphics.FillRectangle(brush, drawRect);
             }

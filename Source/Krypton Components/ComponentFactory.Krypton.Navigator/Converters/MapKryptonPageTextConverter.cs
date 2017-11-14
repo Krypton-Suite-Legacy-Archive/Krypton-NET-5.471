@@ -18,7 +18,25 @@ namespace ComponentFactory.Krypton.Navigator
     public class MapKryptonPageTextConverter : StringLookupConverter
     {
         #region Static Fields
+<<<<<<< HEAD
 
+=======
+        private Pair[] _pairs = { new Pair(MapKryptonPageText.None,                          "None (Empty string)"),
+                                             new Pair(MapKryptonPageText.Text,                          "Text"),
+                                             new Pair(MapKryptonPageText.TextTitle,                     "Text - Title"), 
+                                             new Pair(MapKryptonPageText.TextTitleDescription,          "Text - Title - Description"),
+                                             new Pair(MapKryptonPageText.TextDescription,               "Text - Description"), 
+                                             new Pair(MapKryptonPageText.Title,                         "Title"), 
+                                             new Pair(MapKryptonPageText.TitleText,                     "Title - Text"),
+                                             new Pair(MapKryptonPageText.TitleDescription,              "Title - Description"),
+                                             new Pair(MapKryptonPageText.Description,                   "Description"),
+                                             new Pair(MapKryptonPageText.DescriptionText,               "Description - Text"),
+                                             new Pair(MapKryptonPageText.DescriptionTitle,              "Description - Title"),
+                                             new Pair(MapKryptonPageText.DescriptionTitleText,          "Description - Title - Text"),
+                                             new Pair(MapKryptonPageText.ToolTipTitle,                  "ToolTipTitle"),
+                                             new Pair(MapKryptonPageText.ToolTipBody,                   "ToolTipBody"),
+        };
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
         #endregion
                                              
         #region Identity

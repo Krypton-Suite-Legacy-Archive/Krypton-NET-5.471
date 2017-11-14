@@ -138,7 +138,11 @@ namespace ComponentFactory.Krypton.Toolkit
             }
             else
             {
+<<<<<<< HEAD
                 return Inherit.GetBackColor1(state);
+=======
+                return _inherit.GetBackColor1(state);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
         }
         #endregion

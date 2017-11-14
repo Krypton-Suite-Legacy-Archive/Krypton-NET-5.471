@@ -36,7 +36,11 @@ namespace ComponentFactory.Krypton.Docking
         {
 
             // We are a proxy for this cached page reference
+<<<<<<< HEAD
             Page = page ?? throw new ArgumentNullException("page");
+=======
+            _page = page ?? throw new ArgumentNullException("page");
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 
             // Text property was updated by the base class constructor, so now we update the actual referenced class
             Page.Text = Text;
@@ -48,7 +52,11 @@ namespace ComponentFactory.Krypton.Docking
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
+<<<<<<< HEAD
             Page?.Dispose();
+=======
+            _page?.Dispose();
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 
             base.Dispose(disposing);
         }

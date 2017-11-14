@@ -57,6 +57,10 @@ namespace ComponentFactory.Krypton.Toolkit
         private const int VK_MENU = 0x12;
         
         private static readonly char[] _singleDateFormat = { 'd', 'f', 'F', 'g', 'h', 'H', 'K', 'm', 'M', 's', 't', 'y', 'z' };
+<<<<<<< HEAD
+=======
+        private static readonly Padding _inheritPadding = new Padding(-1);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
         private static readonly int[] _daysInMonth = new int[12] { 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334 };
 
         private static int _nextId = 1000;

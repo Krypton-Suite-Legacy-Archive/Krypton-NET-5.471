@@ -140,7 +140,11 @@ namespace ComponentFactory.Krypton.Ribbon
             // Only take focus if we are visible and enabled
             if (GroupRadioButton.Visible && GroupRadioButton.Enabled)
             {
+<<<<<<< HEAD
                 if (_viewLarge == GroupRadioButton.RadioButtonView)
+=======
+                if (_viewLarge == _ribbonRadioButton.RadioButtonView)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 {
                     return _viewLarge;
                 }
@@ -166,7 +170,11 @@ namespace ComponentFactory.Krypton.Ribbon
             // Only take focus if we are visible and enabled
             if (GroupRadioButton.Visible && GroupRadioButton.Enabled)
             {
+<<<<<<< HEAD
                 if (_viewLarge == GroupRadioButton.RadioButtonView)
+=======
+                if (_viewLarge == _ribbonRadioButton.RadioButtonView)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 {
                     return _viewLarge;
                 }
@@ -345,7 +353,11 @@ namespace ComponentFactory.Krypton.Ribbon
             _viewLarge = new ViewLayoutRibbonRadioButton();
 
             // Add the large button at the top
+<<<<<<< HEAD
             _viewLargeImage = new ViewDrawRibbonGroupRadioButtonImage(_ribbon, GroupRadioButton, true);
+=======
+            _viewLargeImage = new ViewDrawRibbonGroupRadioButtonImage(_ribbon, _ribbonRadioButton, true);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             ViewLayoutRibbonCenterPadding largeImagePadding = new ViewLayoutRibbonCenterPadding(_largeImagePadding)
             {
                 _viewLargeImage
@@ -382,9 +394,15 @@ namespace ComponentFactory.Krypton.Ribbon
             _viewMediumSmall = new ViewLayoutRibbonRadioButton();
 
             // Create the image and drop down content
+<<<<<<< HEAD
             _viewMediumSmallImage = new ViewDrawRibbonGroupRadioButtonImage(_ribbon, GroupRadioButton, false);
             _viewMediumSmallText1 = new ViewDrawRibbonGroupRadioButtonText(_ribbon, GroupRadioButton, true);
             _viewMediumSmallText2 = new ViewDrawRibbonGroupRadioButtonText(_ribbon, GroupRadioButton, false);
+=======
+            _viewMediumSmallImage = new ViewDrawRibbonGroupRadioButtonImage(_ribbon, _ribbonRadioButton, false);
+            _viewMediumSmallText1 = new ViewDrawRibbonGroupRadioButtonText(_ribbon, _ribbonRadioButton, true);
+            _viewMediumSmallText2 = new ViewDrawRibbonGroupRadioButtonText(_ribbon, _ribbonRadioButton, false);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             ViewLayoutRibbonCenterPadding imagePadding = new ViewLayoutRibbonCenterPadding(_smallImagePadding)
             {
                 _viewMediumSmallImage

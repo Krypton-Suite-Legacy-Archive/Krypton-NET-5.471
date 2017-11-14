@@ -83,12 +83,21 @@ namespace ComponentFactory.Krypton.Workspace
             _events = true;
 
             // Add a button spec used to handle maximize/restore functionality
+<<<<<<< HEAD
             MaximizeRestoreButton = new ButtonSpecNavigator
             {
                 Type = PaletteButtonSpecStyle.WorkspaceMaximize
             };
             MaximizeRestoreButton.Click += new EventHandler(OnMaximizeRestoreButtonClicked);
             Button.ButtonSpecs.Add(MaximizeRestoreButton);
+=======
+            _maxamizeRestoreButton = new ButtonSpecNavigator
+            {
+                Type = PaletteButtonSpecStyle.WorkspaceMaximize
+            };
+            _maxamizeRestoreButton.Click += new EventHandler(OnMaximizeRestoreButtonClicked);
+            Button.ButtonSpecs.Add(_maxamizeRestoreButton);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
         }
 
         /// <summary>

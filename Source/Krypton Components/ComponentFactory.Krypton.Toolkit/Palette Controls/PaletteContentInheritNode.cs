@@ -121,7 +121,11 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// <returns>Font value.</returns>
         public override Font GetContentShortTextFont(PaletteState state)
         {
+<<<<<<< HEAD
             if (TreeNode?.NodeFont != null)
+=======
+            if ((TreeNode != null) && (TreeNode.NodeFont != null))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 return TreeNode.NodeFont;
             }
@@ -138,7 +142,11 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <returns>Font value.</returns>
         public override Font GetContentShortTextNewFont(PaletteState state)
         {
+<<<<<<< HEAD
             if (TreeNode?.NodeFont != null)
+=======
+            if ((TreeNode != null) && (TreeNode.NodeFont != null))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 return TreeNode.NodeFont;
             }

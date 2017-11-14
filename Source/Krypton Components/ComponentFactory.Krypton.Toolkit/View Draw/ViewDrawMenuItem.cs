@@ -130,7 +130,11 @@ namespace ComponentFactory.Krypton.Toolkit
                 string shortcutString = KryptonContextMenuItem.ShortcutKeyDisplayString;
                 if (string.IsNullOrEmpty(shortcutString))
                 {
+<<<<<<< HEAD
                     shortcutString = (KryptonContextMenuItem.ShortcutKeys != Keys.None) ? new KeysConverter().ConvertToString(KryptonContextMenuItem.ShortcutKeys) : string.Empty;
+=======
+                    shortcutString = (_menuItem.ShortcutKeys != Keys.None) ? new KeysConverter().ConvertToString(_menuItem.ShortcutKeys) : string.Empty;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
 
                 if (shortcutString.Length > 0)
@@ -257,7 +261,11 @@ namespace ComponentFactory.Krypton.Toolkit
                 }
                 else
                 {
+<<<<<<< HEAD
                     return KryptonContextMenuItem.Enabled;
+=======
+                    return _menuItem.Enabled;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
         }
@@ -273,7 +281,11 @@ namespace ComponentFactory.Krypton.Toolkit
             {
                 if (_cachedCommand != null)
                 {
+<<<<<<< HEAD
                     if (KryptonContextMenuItem.LargeKryptonCommandImage)
+=======
+                    if (_menuItem.LargeKryptonCommandImage)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                     {
                         return _cachedCommand.ImageLarge;
                     }
@@ -284,7 +296,11 @@ namespace ComponentFactory.Krypton.Toolkit
                 }
                 else
                 {
+<<<<<<< HEAD
                     return KryptonContextMenuItem.Image;
+=======
+                    return _menuItem.Image;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
         }
@@ -304,7 +320,11 @@ namespace ComponentFactory.Krypton.Toolkit
                 }
                 else
                 {
+<<<<<<< HEAD
                     return KryptonContextMenuItem.ImageTransparentColor;
+=======
+                    return _menuItem.ImageTransparentColor;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
         }
@@ -324,7 +344,11 @@ namespace ComponentFactory.Krypton.Toolkit
                 }
                 else
                 {
+<<<<<<< HEAD
                     return KryptonContextMenuItem.Text;
+=======
+                    return _menuItem.Text;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
         }
@@ -344,7 +368,11 @@ namespace ComponentFactory.Krypton.Toolkit
                 }
                 else
                 {
+<<<<<<< HEAD
                     return KryptonContextMenuItem.ExtraText;
+=======
+                    return _menuItem.ExtraText;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
         }
@@ -364,7 +392,11 @@ namespace ComponentFactory.Krypton.Toolkit
                 }
                 else
                 {
+<<<<<<< HEAD
                     return KryptonContextMenuItem.Checked;
+=======
+                    return _menuItem.Checked;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
         }
@@ -384,7 +416,11 @@ namespace ComponentFactory.Krypton.Toolkit
                 }
                 else
                 {
+<<<<<<< HEAD
                     return KryptonContextMenuItem.CheckState;
+=======
+                    return _menuItem.CheckState;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
         }
@@ -622,7 +658,11 @@ namespace ComponentFactory.Krypton.Toolkit
                 PaletteContextMenuItemState menuItemState = (ItemEnabled ? KryptonContextMenuItem.StateNormal : KryptonContextMenuItem.StateDisabled);
 
                 // Update palettes based on Checked state
+<<<<<<< HEAD
                 PaletteTripleJustImage justImage = (ResolveChecked ? KryptonContextMenuItem.StateChecked.ItemImage : menuItemState.ItemImage);
+=======
+                PaletteTripleJustImage justImage = (ResolveChecked ? _menuItem.StateChecked.ItemImage : menuItemState.ItemImage);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 _imageCanvas?.SetPalettes(justImage.Back, justImage.Border);
 
                 // Update the Enabled state
@@ -633,7 +673,11 @@ namespace ComponentFactory.Krypton.Toolkit
                 _subMenuContent.Enabled = ItemEnabled;
                 if (_shortcutContent != null)
                 {
+<<<<<<< HEAD
                     _shortcutContent.Enabled = ItemEnabled;
+=======
+                    _shortcutContent.Enabled = _itemEnabled;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
 
                 // Update the Text/ExtraText
@@ -646,7 +690,11 @@ namespace ComponentFactory.Krypton.Toolkit
 
             }
 
+<<<<<<< HEAD
             SplitSeparator?.SetPalettes(splitPalette.Back, splitPalette.Border);
+=======
+            _splitSeparator?.SetPalettes(splitPalette.Back, splitPalette.Border);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 
             return base.GetPreferredSize(context);
         }

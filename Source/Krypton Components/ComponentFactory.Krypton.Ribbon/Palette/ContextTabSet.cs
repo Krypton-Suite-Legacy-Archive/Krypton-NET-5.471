@@ -97,9 +97,15 @@ namespace ComponentFactory.Krypton.Ribbon
         {
             Point ret = new Point(FirstTab.ClientLocation.X - 1, FirstTab.ClientLocation.Y);
 
+<<<<<<< HEAD
             if (FirstTab.OwningControl != null)
             {
                 ret = FirstTab.OwningControl.PointToScreen(ret);
+=======
+            if (_firstTab.OwningControl != null)
+            {
+                ret = _firstTab.OwningControl.PointToScreen(ret);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
 
             return ret;

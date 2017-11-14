@@ -96,6 +96,7 @@ namespace ComponentFactory.Krypton.Ribbon
         /// Gets a value indicating if all values are default.
         /// </summary>
         [Browsable(false)]
+<<<<<<< HEAD
         public override bool IsDefault => ((AppButtonImage == _defaultAppImage) &&
                                            (AppButtonText == DEFAULT_APP_TEXT) &&
                                            (AppButtonBaseColorDark == _defaultAppBaseColorDark) &&
@@ -113,6 +114,29 @@ namespace ComponentFactory.Krypton.Ribbon
                                            (AppButtonToolTipImageTransparentColor == Color.Empty) &&
                                            (AppButtonToolTipStyle == LabelStyle.SuperTip) &&
                                            AppButtonVisible);
+=======
+        public override bool IsDefault
+        {
+            get
+            {
+                return ((AppButtonImage == _defaultAppImage) &&
+                        (AppButtonText == DEFAULT_APP_TEXT) &&
+                        (AppButtonBaseColorDark == _defaultAppBaseColorDark) &&
+                        (AppButtonBaseColorLight == _defaultAppBaseColorLight) &&
+                        (AppButtonTextColor == Color.White) &&
+                        (AppButtonMenuItems.Count == 0) &&
+                        (AppButtonRecentDocs.Count == 0) &&
+                        AppButtonMinRecentSize.Equals(new Size(250, 250)) &&
+                        AppButtonMaxRecentSize.Equals(new Size(350, 350)) &&
+                        AppButtonShowRecentDocs &&
+                        (AppButtonSpecs.Count == 0) &&
+                        string.IsNullOrEmpty(AppButtonToolTipBody) &&
+                        string.IsNullOrEmpty(AppButtonToolTipBody) &&
+                        (AppButtonToolTipImage == null) &&
+                        (AppButtonToolTipImageTransparentColor == Color.Empty) &&
+                        (AppButtonToolTipStyle == LabelStyle.SuperTip) &&
+                        AppButtonVisible);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 
         #endregion
 

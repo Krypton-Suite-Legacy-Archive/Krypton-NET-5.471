@@ -328,7 +328,11 @@ namespace ComponentFactory.Krypton.Navigator
                 }
                 else
                 {
+<<<<<<< HEAD
                     gap = context.Renderer.RenderTabBorder.GetTabBorderSpacingGap(TabBorderStyle);
+=======
+                    gap = context.Renderer.RenderTabBorder.GetTabBorderSpacingGap(_tabBorderStyle);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
 
                 // Line spacing gap can never be less than zero
@@ -829,11 +833,19 @@ namespace ComponentFactory.Krypton.Navigator
             // Enfore the minimum height of the bar
             if (BarVertical)
             {
+<<<<<<< HEAD
                 preferredSize.Width = Math.Max(preferredSize.Width, BarMinimumHeight);
             }
             else
             {
                 preferredSize.Height = Math.Max(preferredSize.Height, BarMinimumHeight);
+=======
+                preferredSize.Width = Math.Max(preferredSize.Width, _barMinimumHeight);
+            }
+            else
+            {
+                preferredSize.Height = Math.Max(preferredSize.Height, _barMinimumHeight);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
 
             return preferredSize;
@@ -866,7 +878,11 @@ namespace ComponentFactory.Krypton.Navigator
                 }
                 else
                 {
+<<<<<<< HEAD
                     gap = context.Renderer.RenderTabBorder.GetTabBorderSpacingGap(TabBorderStyle);
+=======
+                    gap = context.Renderer.RenderTabBorder.GetTabBorderSpacingGap(_tabBorderStyle);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
 
                 // Line spacing gap can never be less than zero
@@ -930,7 +946,11 @@ namespace ComponentFactory.Krypton.Navigator
                                 // At the left edge, we need to ensure buttons are align by there right edges
                                 if (Orientation == VisualOrientation.Left)
                                 {
+<<<<<<< HEAD
                                     xPosition = (xPos + lineDetails.CrossLength) - _childSizes[itemIndex].Width;
+=======
+                                    xPosition = xPos + lineDetails.CrossLength - _childSizes[itemIndex].Width;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                                 }
 
                                 // Create the rectangle that shows all of the check button
@@ -997,7 +1017,11 @@ namespace ComponentFactory.Krypton.Navigator
                                 // At the top edge, we need to ensure buttons are align by there bottom edges
                                 if (Orientation == VisualOrientation.Top)
                                 {
+<<<<<<< HEAD
                                     yPosition = (yPos + lineDetails.CrossLength) - _childSizes[itemIndex].Height;
+=======
+                                    yPosition = yPos + lineDetails.CrossLength - _childSizes[itemIndex].Height;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                                 }
 
                                 // Create the rectangle that shows all of the check button
@@ -1074,11 +1098,19 @@ namespace ComponentFactory.Krypton.Navigator
                 case RelativePositionAlign.Center:
                     if (reversePosition)
                     {
+<<<<<<< HEAD
                         return ClientRectangle.Right - ((ClientRectangle.Width - lineDetails.InlineLength) / 2);
                     }
                     else
                     {
                         return ClientLocation.X + ((ClientRectangle.Width - lineDetails.InlineLength) / 2);
+=======
+                        return ClientRectangle.Right - (ClientRectangle.Width - lineDetails.InlineLength) / 2;
+                    }
+                    else
+                    {
+                        return ClientLocation.X + (ClientRectangle.Width - lineDetails.InlineLength) / 2;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                     }
                 case RelativePositionAlign.Far:
                     if (reversePosition)
@@ -1129,11 +1161,19 @@ namespace ComponentFactory.Krypton.Navigator
                 case RelativePositionAlign.Center:
                     if (reversePosition)
                     {
+<<<<<<< HEAD
                         return ClientRectangle.Bottom - ((ClientRectangle.Height - lineDetails.InlineLength) / 2);
                     }
                     else
                     {
                         return ClientLocation.Y + ((ClientRectangle.Height - lineDetails.InlineLength) / 2);
+=======
+                        return ClientRectangle.Bottom - (ClientRectangle.Height - lineDetails.InlineLength) / 2;
+                    }
+                    else
+                    {
+                        return ClientLocation.Y + (ClientRectangle.Height - lineDetails.InlineLength) / 2;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                     }
                 case RelativePositionAlign.Far:
                     if (reversePosition)

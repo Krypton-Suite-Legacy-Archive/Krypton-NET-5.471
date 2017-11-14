@@ -837,7 +837,11 @@ namespace ComponentFactory.Krypton.Toolkit
                     // Ask the view to repaint the visual structure
                     if (!IsDisposed && !Disposing)
                     {
+<<<<<<< HEAD
                         ViewManager.Paint(Renderer, e);
+=======
+                        ViewManager.Paint(_renderer, e);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                     }
 
                     // Request for a refresh has been serviced

@@ -168,7 +168,11 @@ namespace ComponentFactory.Krypton.Toolkit
                 // Ask the panel to layout given our available size
                 using (ViewLayoutContext context = new ViewLayoutContext(_viewManager, this, _kryptonTreeView, _kryptonTreeView.Renderer))
                 {
+<<<<<<< HEAD
                     ViewDrawPanel.Layout(context);
+=======
+                    _drawPanel.Layout(context);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
 
@@ -282,7 +286,11 @@ namespace ComponentFactory.Krypton.Toolkit
 
                                 using (RenderContext context = new RenderContext(this, _kryptonTreeView, g, realRect, _kryptonTreeView.Renderer))
                                 {
+<<<<<<< HEAD
                                     ViewDrawPanel.Render(context);
+=======
+                                    _drawPanel.Render(context);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                                 }
 
                                 // We can only control the background color by using the built in property and not
@@ -661,7 +669,11 @@ namespace ComponentFactory.Krypton.Toolkit
             };
 
             // Create view for the control border and background
+<<<<<<< HEAD
             _drawDockerOuter = new ViewDrawDocker(StateNormal.Back, StateNormal.Border)
+=======
+            _drawDockerOuter = new ViewDrawDocker(_stateNormal.Back, _stateNormal.Border)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 { _drawDockerInner, ViewDockStyle.Fill }
             };
@@ -2022,16 +2034,28 @@ namespace ComponentFactory.Krypton.Toolkit
             {
                 if (IsActive)
                 {
+<<<<<<< HEAD
                     return StateActive;
                 }
                 else
                 {
                     return StateNormal;
+=======
+                    return _stateActive;
+                }
+                else
+                {
+                    return _stateNormal;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
             else
             {
+<<<<<<< HEAD
                 return StateDisabled;
+=======
+                return _stateDisabled;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
         }
 

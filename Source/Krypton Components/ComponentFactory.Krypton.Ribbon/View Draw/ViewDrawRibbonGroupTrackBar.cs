@@ -158,9 +158,15 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <returns>ViewBase of item; otherwise false.</returns>
         public ViewBase GetFirstFocusItem()
         {
+<<<<<<< HEAD
             if ((GroupTrackBar.Visible) &&
                 (GroupTrackBar.LastTrackBar != null) &&
                 (GroupTrackBar.LastTrackBar.CanSelect))
+=======
+            if ((_ribbonTrackBar.Visible) &&
+                (_ribbonTrackBar.LastTrackBar != null) &&
+                (_ribbonTrackBar.LastTrackBar.CanSelect))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 return this;
             }
@@ -178,9 +184,15 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <returns>ViewBase of item; otherwise false.</returns>
         public ViewBase GetLastFocusItem()
         {
+<<<<<<< HEAD
             if ((GroupTrackBar.Visible) &&
                 (GroupTrackBar.LastTrackBar != null) &&
                 (GroupTrackBar.LastTrackBar.CanSelect))
+=======
+            if ((_ribbonTrackBar.Visible) &&
+                (_ribbonTrackBar.LastTrackBar != null) &&
+                (_ribbonTrackBar.LastTrackBar.CanSelect))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 return this;
             }
@@ -562,24 +574,42 @@ namespace ComponentFactory.Krypton.Ribbon
                 if (visible)
                 {
                     // Only visible if on the currently selected page
+<<<<<<< HEAD
                     if ((GroupTrackBar.RibbonTab == null) ||
                         (_ribbon.SelectedTab != GroupTrackBar.RibbonTab))
+=======
+                    if ((_ribbonTrackBar.RibbonTab == null) ||
+                        (_ribbon.SelectedTab != _ribbonTrackBar.RibbonTab))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                     {
                         visible = false;
                     }
                     else
                     {
                         // Check the owning group is visible
+<<<<<<< HEAD
                         if ((GroupTrackBar.RibbonContainer?.RibbonGroup != null) && !GroupTrackBar.RibbonContainer.RibbonGroup.Visible && !_ribbon.InDesignMode)
+=======
+                        if ((_ribbonTrackBar.RibbonContainer != null) &&
+                            (_ribbonTrackBar.RibbonContainer.RibbonGroup != null) &&
+                            !_ribbonTrackBar.RibbonContainer.RibbonGroup.Visible &&
+                            !_ribbon.InDesignMode)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                         {
                             visible = false;
                         }
                         else
                         {
                             // Check that the group is not collapsed
+<<<<<<< HEAD
                             if ((GroupTrackBar.RibbonContainer.RibbonGroup.IsCollapsed) &&
                                 ((_ribbon.GetControllerControl(GroupTrackBar.TrackBar) is KryptonRibbon) ||
                                  (_ribbon.GetControllerControl(GroupTrackBar.TrackBar) is VisualPopupMinimized)))
+=======
+                            if ((_ribbonTrackBar.RibbonContainer.RibbonGroup.IsCollapsed) &&
+                                ((_ribbon.GetControllerControl(_ribbonTrackBar.TrackBar) is KryptonRibbon) ||
+                                 (_ribbon.GetControllerControl(_ribbonTrackBar.TrackBar) is VisualPopupMinimized)))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                             {
                                 visible = false;
                             }

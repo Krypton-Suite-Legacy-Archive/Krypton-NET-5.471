@@ -269,7 +269,11 @@ namespace ComponentFactory.Krypton.Toolkit
         public override void MouseLeave(Control c, ViewBase next)
 		{
             // If leaving when currently moving, then abort the movement
+<<<<<<< HEAD
             if (IsMoving)
+=======
+            if (_moving)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 AbortMoving();
             }
@@ -313,7 +317,11 @@ namespace ComponentFactory.Krypton.Toolkit
             if (e.KeyCode == Keys.Escape)
             {
                 // If we are capturing mouse input
+<<<<<<< HEAD
                 if (IsMoving)
+=======
+                if (_moving)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 {
                     AbortMoving();
                 }
@@ -331,7 +339,11 @@ namespace ComponentFactory.Krypton.Toolkit
         public override void LostFocus(Control c)
         {
             // If we are capturing mouse input
+<<<<<<< HEAD
             if (IsMoving)
+=======
+            if (_moving)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 AbortMoving();
             }

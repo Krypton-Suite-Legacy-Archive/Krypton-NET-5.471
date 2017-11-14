@@ -134,7 +134,11 @@ namespace ComponentFactory.Krypton.Ribbon
                 _rightButtonDown = true;
             }
 
+<<<<<<< HEAD
 		    return Captured;
+=======
+		    return _captured;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 		}
 
         /// <summary>
@@ -402,7 +406,11 @@ namespace ComponentFactory.Krypton.Ribbon
                 // If capturing input....
                 if (Captured)
                 {
+<<<<<<< HEAD
                     if (_fixedPressed || TargetMain.ClientRectangle.Contains(pt))
+=======
+                    if (_fixedPressed || _targetMain.ClientRectangle.Contains(pt))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                     {
                         pressed = true;
                     }
@@ -435,7 +443,11 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <param name="e">An EventArgs containing the event data.</param>
 		protected virtual void OnClick(EventArgs e)
 		{
+<<<<<<< HEAD
             Click?.Invoke(TargetMain, e);
+=======
+            Click?.Invoke(_targetMain, e);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
         }
 
         /// <summary>
@@ -453,7 +465,11 @@ namespace ComponentFactory.Krypton.Ribbon
 		/// <param name="needLayout">Does the palette change require a layout.</param>
 		protected virtual void OnNeedPaint(bool needLayout)
 		{
+<<<<<<< HEAD
             _needPaint?.Invoke(this, new NeedLayoutEventArgs(needLayout, TargetMain.ClientRectangle));
+=======
+            _needPaint?.Invoke(this, new NeedLayoutEventArgs(needLayout, _targetMain.ClientRectangle));
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
         }
 		#endregion
 

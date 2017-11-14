@@ -121,9 +121,15 @@ namespace ComponentFactory.Krypton.Ribbon
             StateActive = new PaletteGalleryState(StateCommon, NeedPaintDelegate);
 
             // Create and organize the buttons
+<<<<<<< HEAD
             _buttonUp = new ViewDrawRibbonGalleryButton(Redirector, PaletteRelativeAlign.Near, PaletteRibbonGalleryButton.Up, Images, NeedPaintDelegate);
             _buttonDown = new ViewDrawRibbonGalleryButton(Redirector, PaletteRelativeAlign.Center, PaletteRibbonGalleryButton.Down, Images, NeedPaintDelegate);
             _buttonContext = new ViewDrawRibbonGalleryButton(Redirector, PaletteRelativeAlign.Far, PaletteRibbonGalleryButton.DropDown, Images, NeedPaintDelegate);
+=======
+            _buttonUp = new ViewDrawRibbonGalleryButton(Redirector, PaletteRelativeAlign.Near, PaletteRibbonGalleryButton.Up, _images, NeedPaintDelegate);
+            _buttonDown = new ViewDrawRibbonGalleryButton(Redirector, PaletteRelativeAlign.Center, PaletteRibbonGalleryButton.Down, _images, NeedPaintDelegate);
+            _buttonContext = new ViewDrawRibbonGalleryButton(Redirector, PaletteRelativeAlign.Far, PaletteRibbonGalleryButton.DropDown, _images, NeedPaintDelegate);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             _buttonsLayout = new ViewLayoutRibbonGalleryButtons
             {
                 _buttonUp,
@@ -975,16 +981,28 @@ namespace ComponentFactory.Krypton.Ribbon
             {
                 if (IsActive)
                 {
+<<<<<<< HEAD
                     return StateActive;
                 }
                 else
                 {
                     return StateNormal;
+=======
+                    return _stateActive;
+                }
+                else
+                {
+                    return _stateNormal;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
             else
             {
+<<<<<<< HEAD
                 return StateDisabled;
+=======
+                return _stateDisabled;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
         }
 

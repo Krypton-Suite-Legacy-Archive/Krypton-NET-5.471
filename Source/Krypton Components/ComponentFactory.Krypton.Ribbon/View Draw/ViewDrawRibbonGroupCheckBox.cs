@@ -140,7 +140,11 @@ namespace ComponentFactory.Krypton.Ribbon
             // Only take focus if we are visible and enabled
             if (GroupCheckBox.Visible && GroupCheckBox.Enabled)
             {
+<<<<<<< HEAD
                 if (_viewLarge == GroupCheckBox.CheckBoxView)
+=======
+                if (_viewLarge == _ribbonCheckBox.CheckBoxView)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 {
                     return _viewLarge;
                 }
@@ -166,7 +170,11 @@ namespace ComponentFactory.Krypton.Ribbon
             // Only take focus if we are visible and enabled
             if (GroupCheckBox.Visible && GroupCheckBox.Enabled)
             {
+<<<<<<< HEAD
                 if (_viewLarge == GroupCheckBox.CheckBoxView)
+=======
+                if (_viewLarge == _ribbonCheckBox.CheckBoxView)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 {
                     return _viewLarge;
                 }
@@ -345,7 +353,11 @@ namespace ComponentFactory.Krypton.Ribbon
             _viewLarge = new ViewLayoutRibbonCheckBox();
 
             // Add the large button at the top
+<<<<<<< HEAD
             _viewLargeImage = new ViewDrawRibbonGroupCheckBoxImage(_ribbon, GroupCheckBox, true);
+=======
+            _viewLargeImage = new ViewDrawRibbonGroupCheckBoxImage(_ribbon, _ribbonCheckBox, true);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             ViewLayoutRibbonCenterPadding largeImagePadding = new ViewLayoutRibbonCenterPadding(_largeImagePadding)
             {
                 _viewLargeImage
@@ -382,9 +394,15 @@ namespace ComponentFactory.Krypton.Ribbon
             _viewMediumSmall = new ViewLayoutRibbonCheckBox();
 
             // Create the image and drop down content
+<<<<<<< HEAD
             _viewMediumSmallImage = new ViewDrawRibbonGroupCheckBoxImage(_ribbon, GroupCheckBox, false);
             _viewMediumSmallText1 = new ViewDrawRibbonGroupCheckBoxText(_ribbon, GroupCheckBox, true);
             _viewMediumSmallText2 = new ViewDrawRibbonGroupCheckBoxText(_ribbon, GroupCheckBox, false);
+=======
+            _viewMediumSmallImage = new ViewDrawRibbonGroupCheckBoxImage(_ribbon, _ribbonCheckBox, false);
+            _viewMediumSmallText1 = new ViewDrawRibbonGroupCheckBoxText(_ribbon, _ribbonCheckBox, true);
+            _viewMediumSmallText2 = new ViewDrawRibbonGroupCheckBoxText(_ribbon, _ribbonCheckBox, false);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             ViewLayoutRibbonCenterPadding imagePadding = new ViewLayoutRibbonCenterPadding(_smallImagePadding)
             {
                 _viewMediumSmallImage
@@ -429,10 +447,17 @@ namespace ComponentFactory.Krypton.Ribbon
         private void UpdateEnabledState()
         {
             // Get the correct enabled state from the button definition
+<<<<<<< HEAD
             bool buttonEnabled = GroupCheckBox.Enabled;
             if (GroupCheckBox.KryptonCommand != null)
             {
                 buttonEnabled = GroupCheckBox.KryptonCommand.Enabled;
+=======
+            bool buttonEnabled = _ribbonCheckBox.Enabled;
+            if (_ribbonCheckBox.KryptonCommand != null)
+            {
+                buttonEnabled = _ribbonCheckBox.KryptonCommand.Enabled;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
 
             // Take into account the ribbon state and mode
@@ -454,6 +479,7 @@ namespace ComponentFactory.Krypton.Ribbon
         private void UpdateCheckState()
         {
             CheckState newCheckState = CheckState.Unchecked;
+<<<<<<< HEAD
             if (GroupCheckBox.KryptonCommand != null)
             {
                 newCheckState = GroupCheckBox.KryptonCommand.CheckState;
@@ -461,6 +487,15 @@ namespace ComponentFactory.Krypton.Ribbon
             else
             {
                 newCheckState = GroupCheckBox.CheckState;
+=======
+            if (_ribbonCheckBox.KryptonCommand != null)
+            {
+                newCheckState = _ribbonCheckBox.KryptonCommand.CheckState;
+            }
+            else
+            {
+                newCheckState = _ribbonCheckBox.CheckState;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
 
             _viewLargeImage.CheckState = newCheckState;

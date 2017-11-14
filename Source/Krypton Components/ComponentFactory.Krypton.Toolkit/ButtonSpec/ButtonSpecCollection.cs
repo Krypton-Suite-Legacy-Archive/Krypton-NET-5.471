@@ -81,7 +81,11 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <param name="e">A NavButtonSpecEventArgs instance containing event data.</param>
         protected void OnInserting(ButtonSpecEventArgs e)
         {
+<<<<<<< HEAD
             e.ButtonSpec.Owner = Owner;
+=======
+            e.ButtonSpec.Owner = _owner;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             Inserting?.Invoke(this, e);
         }
 

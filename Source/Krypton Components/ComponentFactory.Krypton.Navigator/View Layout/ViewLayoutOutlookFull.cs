@@ -204,7 +204,11 @@ namespace ComponentFactory.Krypton.Navigator
             }
 
             // If visible state of an overflow button has changed, need to relayout
+<<<<<<< HEAD
             if (!beforeOverflowState.Equals(ViewBuilder.GetOverflowButtonStates()))
+=======
+            if (!beforeOverflowState.Equals(_viewBuilder.GetOverflowButtonStates()))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 NeedPaint(true);
             }

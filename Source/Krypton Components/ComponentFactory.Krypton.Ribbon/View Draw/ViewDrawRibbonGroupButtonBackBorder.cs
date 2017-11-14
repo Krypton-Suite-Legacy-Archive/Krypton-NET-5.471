@@ -274,7 +274,11 @@ namespace ComponentFactory.Krypton.Ribbon
                     // Entire area is drawn using draw state
                     DrawBackground(_paletteBack, context, ClientRectangle, drawState);
 
+<<<<<<< HEAD
                     if (ConstantBorder)
+=======
+                    if (_constantBorder)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                     {
                         DrawBorder(_paletteBorder, context, ClientRectangle, PaletteState.Normal);
                     }
@@ -284,7 +288,11 @@ namespace ComponentFactory.Krypton.Ribbon
                     }
                     break;
                 case GroupButtonType.Split:
+<<<<<<< HEAD
                     if (SplitVertical)
+=======
+                    if (_splitVertical)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                     {
                         DrawVerticalSplit(context, drawState);
                     }
@@ -329,7 +337,11 @@ namespace ComponentFactory.Krypton.Ribbon
                         {
                             if (splitWithFading)
                             {
+<<<<<<< HEAD
                                 if (DrawNonTrackingAreas)
+=======
+                                if (_drawNonTrackingAreas)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                                 {
                                     DrawBackground(_paletteBackLight, context, ClientRectangle, PaletteState.Tracking);
                                 }
@@ -350,7 +362,11 @@ namespace ComponentFactory.Krypton.Ribbon
                         {
                             if (splitWithFading)
                             {
+<<<<<<< HEAD
                                 if (DrawNonTrackingAreas)
+=======
+                                if (_drawNonTrackingAreas)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                                 {
                                     DrawBackground(_paletteBackLight, context, partialRect, PaletteState.Tracking);
                                 }
@@ -372,7 +388,11 @@ namespace ComponentFactory.Krypton.Ribbon
                         {
                             if (splitWithFading)
                             {
+<<<<<<< HEAD
                                 if (DrawNonTrackingAreas)
+=======
+                                if (_drawNonTrackingAreas)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                                 {
                                     DrawBackground(_paletteBackLight, context, ClientRectangle, PaletteState.Tracking);
                                 }
@@ -401,7 +421,11 @@ namespace ComponentFactory.Krypton.Ribbon
                         {
                             if (splitWithFading)
                             {
+<<<<<<< HEAD
                                 if (DrawNonTrackingAreas)
+=======
+                                if (_drawNonTrackingAreas)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                                 {
                                     DrawBackground(_paletteBackLight, context, ClientRectangle, PaletteState.Pressed);
                                 }
@@ -422,7 +446,11 @@ namespace ComponentFactory.Krypton.Ribbon
                         {
                             if (splitWithFading)
                             {
+<<<<<<< HEAD
                                 if (DrawNonTrackingAreas)
+=======
+                                if (_drawNonTrackingAreas)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                                 {
                                     DrawBackground(_paletteBackLight, context, partialRect, PaletteState.Tracking);
                                 }
@@ -444,7 +472,11 @@ namespace ComponentFactory.Krypton.Ribbon
                         {
                             if (splitWithFading)
                             {
+<<<<<<< HEAD
                                 if (DrawNonTrackingAreas)
+=======
+                                if (_drawNonTrackingAreas)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                                 {
                                     DrawBackground(_paletteBackLight, context, ClientRectangle, PaletteState.Tracking);
                                 }
@@ -466,7 +498,11 @@ namespace ComponentFactory.Krypton.Ribbon
                     }
 
                     // Draw the border for the click and split areas
+<<<<<<< HEAD
                     if (Controller.MouseInSplit)
+=======
+                    if (_controller.MouseInSplit)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                     {
                         using (Clipping clipToSplitter = new Clipping(context.Graphics, belowSplitRect))
                         {
@@ -516,7 +552,11 @@ namespace ComponentFactory.Krypton.Ribbon
                         {
                             if (splitWithFading)
                             {
+<<<<<<< HEAD
                                 if (DrawNonTrackingAreas)
+=======
+                                if (_drawNonTrackingAreas)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                                 {
                                     DrawBackground(_paletteBackLight, context, ClientRectangle, PaletteState.Tracking);
                                 }
@@ -537,7 +577,11 @@ namespace ComponentFactory.Krypton.Ribbon
                         {
                             if (splitWithFading)
                             {
+<<<<<<< HEAD
                                 if (DrawNonTrackingAreas)
+=======
+                                if (_drawNonTrackingAreas)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                                 {
                                     DrawBackground(_paletteBackLight, context, ClientRectangle, PaletteState.Tracking);
                                 }
@@ -559,7 +603,11 @@ namespace ComponentFactory.Krypton.Ribbon
                         {
                             if (splitWithFading)
                             {
+<<<<<<< HEAD
                                 if (DrawNonTrackingAreas)
+=======
+                                if (_drawNonTrackingAreas)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                                 {
                                     DrawBackground(_paletteBackLight, context, ClientRectangle, PaletteState.Tracking);
                                 }
@@ -578,7 +626,11 @@ namespace ComponentFactory.Krypton.Ribbon
                     }
 
                     // Draw the entire border around the button
+<<<<<<< HEAD
                     if (ConstantBorder)
+=======
+                    if (_constantBorder)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                     {
                         DrawBorder(_paletteBorder, context, ClientRectangle, PaletteState.Normal);
                     }
@@ -598,7 +650,11 @@ namespace ComponentFactory.Krypton.Ribbon
                         {
                             if (splitWithFading)
                             {
+<<<<<<< HEAD
                                 if (DrawNonTrackingAreas)
+=======
+                                if (_drawNonTrackingAreas)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                                 {
                                     DrawBackground(_paletteBackLight, context, ClientRectangle, PaletteState.Pressed);
                                 }
@@ -619,7 +675,11 @@ namespace ComponentFactory.Krypton.Ribbon
                         {
                             if (splitWithFading)
                             {
+<<<<<<< HEAD
                                 if (DrawNonTrackingAreas)
+=======
+                                if (_drawNonTrackingAreas)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                                 {
                                     DrawBackground(_paletteBackLight, context, ClientRectangle, PaletteState.Tracking);
                                 }
@@ -641,7 +701,11 @@ namespace ComponentFactory.Krypton.Ribbon
                         {
                             if (splitWithFading)
                             {
+<<<<<<< HEAD
                                 if (DrawNonTrackingAreas)
+=======
+                                if (_drawNonTrackingAreas)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                                 {
                                     DrawBackground(_paletteBackLight, context, ClientRectangle, PaletteState.Tracking);
                                 }
@@ -660,7 +724,11 @@ namespace ComponentFactory.Krypton.Ribbon
                     }
 
                     // Draw the entire border around the button
+<<<<<<< HEAD
                     if (ConstantBorder)
+=======
+                    if (_constantBorder)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                     {
                         DrawBorder(_paletteBorder, context, ClientRectangle, PaletteState.Normal);
                     }
@@ -672,7 +740,11 @@ namespace ComponentFactory.Krypton.Ribbon
                         DrawBorder(_paletteBorder, context, ClientRectangle, PaletteState.Tracking);
 
                         // Draw the border for the click and split areas
+<<<<<<< HEAD
                         if (Controller.MouseInSplit)
+=======
+                        if (_controller.MouseInSplit)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                         {
                             using (Clipping clipToSplitter = new Clipping(context.Graphics, afterSplitRect))
                             {

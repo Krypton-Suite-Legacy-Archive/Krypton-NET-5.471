@@ -36,8 +36,13 @@ namespace ComponentFactory.Krypton.Docking
         public KryptonDockingEdge(string name, Control control, DockingEdge edge)
             : base(name)
         {
+<<<<<<< HEAD
             Control = control ?? throw new ArgumentNullException("control");
             Edge = edge;
+=======
+            _control = control ?? throw new ArgumentNullException("control");
+            _edge = edge;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 
             // Auto create elements for handling standard docked content and auto hidden content
             InternalAdd(new KryptonDockingEdgeAutoHidden("AutoHidden", control, edge));

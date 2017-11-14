@@ -273,7 +273,11 @@ namespace ComponentFactory.Krypton.Ribbon
             PaletteState newState;
 
             // If the button is disabled then show as disabled
+<<<<<<< HEAD
             if (!Target.Enabled)
+=======
+            if (!_target.Enabled)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 newState = PaletteState.Disabled;
             }
@@ -287,7 +291,11 @@ namespace ComponentFactory.Krypton.Ribbon
                     // Do we show the button as pressed only when over the button?
                     if (IsOnlyPressedWhenOver)
                     {
+<<<<<<< HEAD
                         if (Target.ClientRectangle.Contains(pt))
+=======
+                        if (_target.ClientRectangle.Contains(pt))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                         {
                             newState = PaletteState.Pressed;
                         }
@@ -334,7 +342,11 @@ namespace ComponentFactory.Krypton.Ribbon
 		/// <param name="e">A MouseEventArgs containing the event data.</param>
 		protected virtual void OnClick(MouseEventArgs e)
 		{
+<<<<<<< HEAD
             Click?.Invoke(Target, e);
+=======
+            Click?.Invoke(_target, e);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
         }
 
 		/// <summary>

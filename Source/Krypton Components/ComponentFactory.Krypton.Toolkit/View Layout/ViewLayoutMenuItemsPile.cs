@@ -58,7 +58,11 @@ namespace ComponentFactory.Krypton.Toolkit
             imageDocker.Visible = imageColumn;
 
             // Create a vertical stack that contains each individual menu item
+<<<<<<< HEAD
             ItemStack = new ViewLayoutStack(false)
+=======
+            _itemStack = new ViewLayoutStack(false)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 FillLastChild = false
             };
@@ -66,7 +70,11 @@ namespace ComponentFactory.Krypton.Toolkit
             // Use a docker with the item stack as the fill
             ViewLayoutDocker stackDocker = new ViewLayoutDocker
             {
+<<<<<<< HEAD
                 { ItemStack, ViewDockStyle.Fill }
+=======
+                { _itemStack, ViewDockStyle.Fill }
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             };
 
             // Grab the padding for around the item stack

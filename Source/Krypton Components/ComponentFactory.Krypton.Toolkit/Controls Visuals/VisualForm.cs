@@ -942,7 +942,11 @@ namespace ComponentFactory.Krypton.Toolkit
                     // Do we need to recalc the border size as well as invalidate?
                     if (e.NeedLayout)
                     {
+<<<<<<< HEAD
                         NeedLayout = true;
+=======
+                        _needLayout = true;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                     }
 
                     InvalidateNonClient();

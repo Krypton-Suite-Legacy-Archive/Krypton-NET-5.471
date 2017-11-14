@@ -16,7 +16,13 @@ namespace ComponentFactory.Krypton.Toolkit
     internal class KryptonLinkBehaviorConverter : StringLookupConverter
     {
         #region Static Fields
+<<<<<<< HEAD
 
+=======
+        private Pair[] _pairs = { new Pair(KryptonLinkBehavior.AlwaysUnderline,  "Always Underline"),
+                                             new Pair(KryptonLinkBehavior.HoverUnderline,   "Hover Underline"),
+                                             new Pair(KryptonLinkBehavior.NeverUnderline,   "Never Underline") };
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
         #endregion
 
         #region Identity

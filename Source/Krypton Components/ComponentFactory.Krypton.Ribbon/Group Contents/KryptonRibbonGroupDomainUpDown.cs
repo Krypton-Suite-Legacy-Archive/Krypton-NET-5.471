@@ -131,7 +131,11 @@ namespace ComponentFactory.Krypton.Ribbon
             _keyTip = "X";
 
             // Create the actual domain up-down control and set initial settings
+<<<<<<< HEAD
             DomainUpDown = new KryptonDomainUpDown
+=======
+            _domainUpDown = new KryptonDomainUpDown
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 InputControlStyle = InputControlStyle.Ribbon,
                 AlwaysActive = false,
@@ -734,7 +738,11 @@ namespace ComponentFactory.Krypton.Ribbon
         private void OnPaletteNeedPaint(object sender, NeedLayoutEventArgs e)
         {
             // Pass request onto the view provided paint delegate
+<<<<<<< HEAD
             ViewPaintDelegate?.Invoke(this, e);
+=======
+            _viewPaintDelegate?.Invoke(this, e);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
         }
 
         private void OnDomainUpDownScroll(object sender, ScrollEventArgs e)

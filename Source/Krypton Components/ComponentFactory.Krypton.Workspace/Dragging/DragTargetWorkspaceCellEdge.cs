@@ -57,7 +57,11 @@ namespace ComponentFactory.Krypton.Workspace
         {
             if (disposing)
             {
+<<<<<<< HEAD
                 Cell = null;
+=======
+                _cell = null;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
 
             base.Dispose(disposing);
@@ -86,7 +90,11 @@ namespace ComponentFactory.Krypton.Workspace
                 {
                     // Create list of all the visible pages in the cell
                     KryptonPageCollection visiblePages = new KryptonPageCollection();
+<<<<<<< HEAD
                     foreach (KryptonPage page in Cell.Pages)
+=======
+                    foreach (KryptonPage page in _cell.Pages)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                     {
                         if (page.LastVisibleSet)
                         {

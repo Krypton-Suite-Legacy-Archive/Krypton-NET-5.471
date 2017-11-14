@@ -329,7 +329,11 @@ namespace ComponentFactory.Krypton.Toolkit
         {
             if ((Colors != null) && (color != null))
             {
+<<<<<<< HEAD
                 foreach (Color[] column in Colors)
+=======
+                foreach (Color[] column in _colors)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 {
                     foreach (Color row in column)
                     {

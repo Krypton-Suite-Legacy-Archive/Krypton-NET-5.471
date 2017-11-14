@@ -48,13 +48,22 @@ namespace ComponentFactory.Krypton.Navigator
             {
                 _paletteDragDrop = paletteDragDrop;
                 _renderer = renderer;
+<<<<<<< HEAD
                 ScreenRect = target.ScreenRect;
                 DrawRect = target.DrawRect;
+=======
+                _screenRect = target.ScreenRect;
+                _drawRect = target.DrawRect;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 _hintToTarget = new HintToTarget
                 {
                     { target.Hint & DragTargetHint.ExcludeFlags, target }
                 };
+<<<<<<< HEAD
                 ExcludeCluster = (target.Hint & DragTargetHint.ExcludeCluster) == DragTargetHint.ExcludeCluster;
+=======
+                _excludeCluster = (target.Hint & DragTargetHint.ExcludeCluster) == DragTargetHint.ExcludeCluster;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
 
             /// <summary>

@@ -93,6 +93,7 @@ namespace ComponentFactory.Krypton.Navigator
         /// Gets a value indicating if all values are default.
         /// </summary>
         [Browsable(false)]
+<<<<<<< HEAD
         public override bool IsDefault => ((CheckButtonStyle == ButtonStyle.Standalone) &&
                                            (TabStyle == TabStyle.HighProfile) &&
                                            (TabBorderStyle == TabBorderStyle.RoundedOutsizeMedium) &&
@@ -111,6 +112,31 @@ namespace ComponentFactory.Krypton.Navigator
                                            BarAnimation &&
                                            (BarMultiline == BarMultiline.Singleline));
 
+=======
+        public override bool IsDefault
+        {
+            get
+            {
+                return ((CheckButtonStyle == ButtonStyle.Standalone) &&
+                        (TabStyle == TabStyle.HighProfile) &&
+                        (TabBorderStyle == TabBorderStyle.RoundedOutsizeMedium) &&
+                        (BarFirstItemInset == _defaultBarFirstItemInset) &&
+                        (BarLastItemInset == _defaultBarLastItemInset) &&
+                        (BarMapImage == MapKryptonPageImage.Small) &&
+                        (BarMapText == MapKryptonPageText.TextTitle) &&
+                        (BarMapExtraText == MapKryptonPageText.None) &&
+                        (BarOrientation == VisualOrientation.Top) &&
+                        (ItemSizing == BarItemSizing.SameHeight) &&
+                        (ItemMinimumSize == _defaultItemMinimumSize) &&
+                        (ItemMaximumSize == _defaultItemMaximumSize) &&
+                        (ItemOrientation == ButtonOrientation.Auto) &&
+                        (ItemAlignment == RelativePositionAlign.Near) &&
+                        (BarMinimumHeight == _defaultBarMinimumHeight) &&
+                        BarAnimation &&
+                        (BarMultiline == BarMultiline.Singleline));
+            }
+        }
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
         #endregion
 
         #region BarAnimation

@@ -205,7 +205,11 @@ namespace ComponentFactory.Krypton.Toolkit
             _drawMonths = new ViewLayoutMonths(null, null, null, this, Redirector, NeedPaintDelegate);
 
             // Place the months layout view inside a standard docker which provides the control border
+<<<<<<< HEAD
             _drawDocker = new ViewDrawDocker(StateNormal.Back, StateNormal.Border, null)
+=======
+            _drawDocker = new ViewDrawDocker(_stateNormal.Back, _stateNormal.Border, null)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 { _drawMonths, ViewDockStyle.Fill }
             };
@@ -423,13 +427,21 @@ namespace ComponentFactory.Krypton.Toolkit
 
                 for (int i = 0; i < 12; i++)
                 {
+<<<<<<< HEAD
                     AnnuallyBoldedDatesMask[i] = 0;
+=======
+                    _annualDays[i] = 0;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
 
                 // Set bitmap matching the days of month to be bolded
                 foreach (DateTime dt in value)
                 {
+<<<<<<< HEAD
                     AnnuallyBoldedDatesMask[dt.Month - 1] |= 1 << (dt.Day - 1);
+=======
+                    _annualDays[dt.Month - 1] |= 1 << (dt.Day - 1);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
 
                 PerformNeedPaint(true);
@@ -469,7 +481,11 @@ namespace ComponentFactory.Krypton.Toolkit
                 MonthlyBoldedDatesMask = 0;
                 foreach (DateTime dt in value)
                 {
+<<<<<<< HEAD
                     MonthlyBoldedDatesMask |= 1 << (dt.Day - 1);
+=======
+                    _monthlyDays |= 1 << (dt.Day - 1);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
 
                 PerformNeedPaint(true);
@@ -1204,7 +1220,11 @@ namespace ComponentFactory.Krypton.Toolkit
             _annualDates.Clear();
             for (int i = 0; i < 12; i++)
             {
+<<<<<<< HEAD
                 AnnuallyBoldedDatesMask[i] = 0;
+=======
+                _annualDays[i] = 0;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
 
             PerformNeedPaint(true);
@@ -1932,6 +1952,7 @@ namespace ComponentFactory.Krypton.Toolkit
 
         private void SetFocusDay()
         {
+<<<<<<< HEAD
             if (FocusDay == null)
             {
                 FocusDay = SelectionStart.Date;
@@ -1945,6 +1966,21 @@ namespace ComponentFactory.Krypton.Toolkit
                 else if (FocusDay.Value > SelectionStart)
                 {
                     FocusDay = SelectionEnd.Date;
+=======
+            if (_focusDay == null)
+            {
+                _focusDay = SelectionStart.Date;
+            }
+            else
+            {
+                if (_focusDay.Value < SelectionStart)
+                {
+                    _focusDay = SelectionStart.Date;
+                }
+                else if (_focusDay.Value > SelectionStart)
+                {
+                    _focusDay = SelectionEnd.Date;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
         }

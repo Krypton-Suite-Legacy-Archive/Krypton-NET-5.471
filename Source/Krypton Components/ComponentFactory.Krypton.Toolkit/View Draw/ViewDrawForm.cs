@@ -82,7 +82,11 @@ namespace ComponentFactory.Krypton.Toolkit
 		{
             // Do we have a status strip to try and merge?
 		    // Is the status strip using the global renderer?
+<<<<<<< HEAD
 		    if (StatusStrip?.RenderMode == ToolStripRenderMode.ManagerRenderMode)
+=======
+		    if (_statusStrip?.RenderMode == ToolStripRenderMode.ManagerRenderMode)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 		    {
 		        // Cast to correct type
 
@@ -96,10 +100,17 @@ namespace ComponentFactory.Krypton.Toolkit
 
 		            // Size the render strip to the apparent size when merged into borders
 		            _renderStrip.Width = form.Width;
+<<<<<<< HEAD
 		            _renderStrip.Height = StatusStrip.Height + borders.Bottom;
 
 		            // Find vertical start of the status strip
 		            int y = StatusStrip.Top + borders.Top;
+=======
+		            _renderStrip.Height = _statusStrip.Height + borders.Bottom;
+
+		            // Find vertical start of the status strip
+		            int y = _statusStrip.Top + borders.Top;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 
 		            try
 		            {

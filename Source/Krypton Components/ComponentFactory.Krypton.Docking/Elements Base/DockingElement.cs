@@ -142,7 +142,11 @@ namespace ComponentFactory.Krypton.Docking
             set 
             {
                 // We do not allow the same name to occur twice in a collection (so check new parent collection)
+<<<<<<< HEAD
                 if (value?[Name] != null)
+=======
+                if ((value != null) && (value[Name] != null))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 {
                     throw new ArgumentNullException("Parent provided already has our Name in its collection.");
                 }

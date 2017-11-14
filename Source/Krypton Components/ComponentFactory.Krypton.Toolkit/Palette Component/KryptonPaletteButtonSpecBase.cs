@@ -282,7 +282,11 @@ namespace ComponentFactory.Krypton.Toolkit
             }
             else
             {
+<<<<<<< HEAD
                 return Redirector.GetButtonSpecStyle(style);
+=======
+                return _redirector.GetButtonSpecStyle(style);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
         }
 
@@ -309,7 +313,11 @@ namespace ComponentFactory.Krypton.Toolkit
             }
             else
             {
+<<<<<<< HEAD
                 return Redirector.GetButtonSpecEdge(style);
+=======
+                return _redirector.GetButtonSpecEdge(style);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
         }
 
@@ -326,7 +334,11 @@ namespace ComponentFactory.Krypton.Toolkit
             }
             else
             {
+<<<<<<< HEAD
                 return Redirector.GetButtonSpecOrientation(style);
+=======
+                return _redirector.GetButtonSpecOrientation(style);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
         }
         #endregion

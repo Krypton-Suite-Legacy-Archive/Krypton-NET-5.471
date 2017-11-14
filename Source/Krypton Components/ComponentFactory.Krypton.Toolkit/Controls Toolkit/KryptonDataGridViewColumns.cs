@@ -332,7 +332,11 @@ namespace ComponentFactory.Krypton.Toolkit
         public override void DetachEditingControl()
         {
             DataGridView dataGridView = DataGridView;
+<<<<<<< HEAD
             if (dataGridView?.EditingControl == null)
+=======
+            if ((dataGridView == null) || (dataGridView.EditingControl == null))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 throw new InvalidOperationException("Cell is detached or its grid has no editing control.");
             }
@@ -1171,11 +1175,19 @@ namespace ComponentFactory.Krypton.Toolkit
                 {
                     CheckState checkState = CheckState.Unchecked;
 
+<<<<<<< HEAD
                     if (formattedValue is CheckState state)
                     {
                         checkState = state;
                     }
                     else if (formattedValue is bool)
+=======
+                    if ((formattedValue != null) && (formattedValue is CheckState))
+                    {
+                        checkState = (CheckState)formattedValue;
+                    }
+                    else if ((formattedValue != null) && (formattedValue is bool))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                     {
                         if ((bool)formattedValue)
                         {
@@ -1205,7 +1217,11 @@ namespace ComponentFactory.Krypton.Toolkit
                         Size checkBoxSize;
 
                         // Find out the requested size of the check box drawing
+<<<<<<< HEAD
                         using (ViewLayoutContext viewContent = new ViewLayoutContext(kDgv, kDgv.Renderer))
+=======
+                        using (ViewLayoutContext viewContent = new ViewLayoutContext(kDGV, kDGV.Renderer))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                         {
                             checkBoxSize = renderContext.Renderer.RenderGlyph.GetCheckBoxPreferredSize(viewContent, 
                                                                                                        kDgv.Redirector,
@@ -1735,7 +1751,11 @@ namespace ComponentFactory.Krypton.Toolkit
                 {
                     _shortTextValue.ShortText = col.Text;
                 }
+<<<<<<< HEAD
                 else if (!string.IsNullOrEmpty(FormattedValue?.ToString()))
+=======
+                else if ((FormattedValue != null) && !string.IsNullOrEmpty(FormattedValue.ToString()))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 {
                     _shortTextValue.ShortText = FormattedValue.ToString();
                 }
@@ -1834,11 +1854,19 @@ namespace ComponentFactory.Krypton.Toolkit
                         }
 
                         // Update the display text
+<<<<<<< HEAD
                         if ((kDgv.Columns[ColumnIndex] is KryptonDataGridViewButtonColumn col) && col.UseColumnTextForButtonValue && !kDgv.Rows[rowIndex].IsNewRow)
                         {
                             _shortTextValue.ShortText = col.Text;
                         }
                         else if (!string.IsNullOrEmpty(FormattedValue?.ToString()))
+=======
+                        if ((kDGV.Columns[ColumnIndex] is KryptonDataGridViewButtonColumn col) && col.UseColumnTextForButtonValue && !kDGV.Rows[rowIndex].IsNewRow)
+                        {
+                            _shortTextValue.ShortText = col.Text;
+                        }
+                        else if ((FormattedValue != null) && !string.IsNullOrEmpty(FormattedValue.ToString()))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                         {
                             _shortTextValue.ShortText = FormattedValue.ToString();
                         }
@@ -1852,7 +1880,11 @@ namespace ComponentFactory.Krypton.Toolkit
                         cellBounds.Height--;
 
                         // Apply the padding
+<<<<<<< HEAD
                         if (kDgv.RightToLeftInternal)
+=======
+                        if (kDGV.RightToLeftInternal)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                         {
                             cellBounds.Offset(cellStyle.Padding.Right, cellStyle.Padding.Bottom);
                         }
@@ -2413,7 +2445,11 @@ namespace ComponentFactory.Krypton.Toolkit
                 SetElementStateAndPalette();
 
                 // Update the display text
+<<<<<<< HEAD
                 if ((rowIndex >= 0) && !string.IsNullOrEmpty(FormattedValue?.ToString()))
+=======
+                if ((rowIndex >= 0) && (FormattedValue != null) && !string.IsNullOrEmpty(FormattedValue.ToString()))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 {
                     _shortTextValue.ShortText = FormattedValue.ToString();
                 }
@@ -2495,13 +2531,21 @@ namespace ComponentFactory.Krypton.Toolkit
                         SetElementStateAndPalette();
 
                         // Update the display text
+<<<<<<< HEAD
                         if (!string.IsNullOrEmpty(formattedValue?.ToString()))
+=======
+                        if ((formattedValue != null) && !string.IsNullOrEmpty(formattedValue.ToString()))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                         {
                             _shortTextValue.ShortText = formattedValue.ToString();
                         }
                         else
                         {
+<<<<<<< HEAD
                             if ((kDgv.Columns[ColumnIndex] is KryptonDataGridViewButtonColumn col) && col.UseColumnTextForButtonValue && !kDgv.Rows[rowIndex].IsNewRow)
+=======
+                            if ((kDGV.Columns[ColumnIndex] is KryptonDataGridViewButtonColumn col) && col.UseColumnTextForButtonValue && !kDGV.Rows[rowIndex].IsNewRow)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                             {
                                 _shortTextValue.ShortText = col.Text;
                             }
@@ -2516,7 +2560,11 @@ namespace ComponentFactory.Krypton.Toolkit
                         cellBounds.Height--;
 
                         // Apply the padding
+<<<<<<< HEAD
                         if (kDgv.RightToLeftInternal)
+=======
+                        if (kDGV.RightToLeftInternal)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                         {
                             cellBounds.Offset(cellStyle.Padding.Right, cellStyle.Padding.Bottom);
                         }
@@ -3313,14 +3361,22 @@ namespace ComponentFactory.Krypton.Toolkit
         public override void DetachEditingControl()
         {
             DataGridView dataGridView = DataGridView;
+<<<<<<< HEAD
             if (dataGridView?.EditingControl == null)
+=======
+            if ((dataGridView == null) || (dataGridView.EditingControl == null))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 throw new InvalidOperationException("Cell is detached or its grid has no editing control.");
             }
 
             if (dataGridView.EditingControl is KryptonNumericUpDown numericUpDown)
             {
+<<<<<<< HEAD
                 if (OwningColumn is KryptonDataGridViewNumericUpDownColumn)
+=======
+                if (OwningColumn is KryptonDataGridViewNumericUpDownColumn numericColumn)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 {
                     foreach (ButtonSpec bs in numericUpDown.ButtonSpecs)
                     {
@@ -4170,7 +4226,11 @@ namespace ComponentFactory.Krypton.Toolkit
         public override void DetachEditingControl()
         {
             DataGridView dataGridView = DataGridView;
+<<<<<<< HEAD
             if (dataGridView?.EditingControl == null)
+=======
+            if ((dataGridView == null) || (dataGridView.EditingControl == null))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 throw new InvalidOperationException("Cell is detached or its grid has no editing control.");
             }
@@ -5364,14 +5424,22 @@ namespace ComponentFactory.Krypton.Toolkit
         public override void DetachEditingControl()
         {
             DataGridView dataGridView = DataGridView;
+<<<<<<< HEAD
             if (dataGridView?.EditingControl == null)
+=======
+            if ((dataGridView == null) || (dataGridView.EditingControl == null))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 throw new InvalidOperationException("Cell is detached or its grid has no editing control.");
             }
 
             if (dataGridView.EditingControl is KryptonComboBox comboBox)
             {
+<<<<<<< HEAD
                 if (OwningColumn is KryptonDataGridViewComboBoxColumn)
+=======
+                if (OwningColumn is KryptonDataGridViewComboBoxColumn comboColumn)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 {
                     foreach (ButtonSpec bs in comboBox.ButtonSpecs)
                     {
@@ -7372,7 +7440,11 @@ namespace ComponentFactory.Krypton.Toolkit
         public override void DetachEditingControl()
         {
             DataGridView dataGridView = DataGridView;
+<<<<<<< HEAD
             if (dataGridView?.EditingControl == null)
+=======
+            if ((dataGridView == null) || (dataGridView.EditingControl == null))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 throw new InvalidOperationException("Cell is detached or its grid has no editing control.");
             }
@@ -9316,14 +9388,22 @@ namespace ComponentFactory.Krypton.Toolkit
         public override void DetachEditingControl()
         {
             DataGridView dataGridView = DataGridView;
+<<<<<<< HEAD
             if (dataGridView?.EditingControl == null)
+=======
+            if ((dataGridView == null) || (dataGridView.EditingControl == null))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 throw new InvalidOperationException("Cell is detached or its grid has no editing control.");
             }
 
             if (dataGridView.EditingControl is KryptonMaskedTextBox maskedTextBox)
             {
+<<<<<<< HEAD
                 if (OwningColumn is KryptonDataGridViewMaskedTextBoxColumn)
+=======
+                if (OwningColumn is KryptonDataGridViewMaskedTextBoxColumn maskedTextBoxColumn)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 {
                     foreach (ButtonSpec bs in maskedTextBox.ButtonSpecs)
                     {

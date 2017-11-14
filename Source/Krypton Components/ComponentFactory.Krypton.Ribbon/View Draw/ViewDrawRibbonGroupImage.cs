@@ -141,7 +141,11 @@ namespace ComponentFactory.Krypton.Ribbon
             IPaletteRibbonBack paletteBack;
 
             // Are we a group inside a context tab?
+<<<<<<< HEAD
             if (!string.IsNullOrEmpty(_ribbon.SelectedTab?.ContextName))
+=======
+            if ((_ribbon.SelectedTab != null) && !string.IsNullOrEmpty(_ribbon.SelectedTab.ContextName))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 ElementState = _viewGroup.Pressed ? PaletteState.Pressed : _viewGroup.Tracking ? PaletteState.ContextTracking : PaletteState.ContextNormal;
             }

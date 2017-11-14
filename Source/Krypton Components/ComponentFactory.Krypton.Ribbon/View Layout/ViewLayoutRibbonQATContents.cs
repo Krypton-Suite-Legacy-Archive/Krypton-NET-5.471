@@ -329,9 +329,15 @@ namespace ComponentFactory.Krypton.Ribbon
                             ViewDrawRibbonQATButton view = (ViewDrawRibbonQATButton)child;
 
                             // If the quick access toolbar button wants to be visible
+<<<<<<< HEAD
                             if (view.QATButton.GetVisible() || Ribbon.InDesignHelperMode)
                             {
                                 Overflow = true;
+=======
+                            if (view.QATButton.GetVisible() || _ribbon.InDesignHelperMode)
+                            {
+                                _overflow = true;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                             }
                         }
                     }
@@ -553,7 +559,11 @@ namespace ComponentFactory.Krypton.Ribbon
                 // If a new button, create a view for it now
                 if (view == null)
                 {
+<<<<<<< HEAD
                     view = new ViewDrawRibbonQATButton(Ribbon, qatButton, _needPaint);
+=======
+                    view = new ViewDrawRibbonQATButton(_ribbon, qatButton, _needPaint);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
 
                 // Add to the lookup for future reference
@@ -608,11 +618,19 @@ namespace ComponentFactory.Krypton.Ribbon
 
             if (_extraButton.Overflow)
             {
+<<<<<<< HEAD
                 Ribbon.DisplayQATOverflowMenu(screenRect, this, finishDelegate);
             }
             else
             {
                 Ribbon.DisplayQATCustomizeMenu(screenRect, this, finishDelegate);
+=======
+                _ribbon.DisplayQATOverflowMenu(screenRect, this, finishDelegate);
+            }
+            else
+            {
+                _ribbon.DisplayQATCustomizeMenu(screenRect, this, finishDelegate);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
         }
         #endregion

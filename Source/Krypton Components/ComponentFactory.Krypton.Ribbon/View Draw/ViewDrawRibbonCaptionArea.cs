@@ -211,7 +211,11 @@ namespace ComponentFactory.Krypton.Ribbon
         {
             get
             {
+<<<<<<< HEAD
                 if (UsingCustomChrome)
+=======
+                if (_integrated)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 {
                     return _captionQAT;
                 }
@@ -296,7 +300,11 @@ namespace ComponentFactory.Krypton.Ribbon
         {
             if (UsingCustomChrome)
             {
+<<<<<<< HEAD
                 KryptonForm.PerformNeedPaint(layout);
+=======
+                _kryptonForm.PerformNeedPaint(layout);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
         }
         #endregion
@@ -325,9 +333,15 @@ namespace ComponentFactory.Krypton.Ribbon
         {
             get
             {
+<<<<<<< HEAD
                 if (KryptonForm != null)
                 {
                     return KryptonForm.RealWindowBorders;
+=======
+                if (_kryptonForm != null)
+                {
+                    return _kryptonForm.RealWindowBorders;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
                 else
                 {
@@ -439,16 +453,28 @@ namespace ComponentFactory.Krypton.Ribbon
             _otherAppButton = new ViewLayoutRibbonAppButton(_ribbon, false);
 
             // Connect up the application button controller to the two button elements
+<<<<<<< HEAD
             AppButtonController = new AppButtonController(_ribbon)
+=======
+            _appButtonController = new AppButtonController(_ribbon)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 Target1 = _captionAppButton.AppButton,
                 Target2 = _otherAppButton.AppButton
             };
+<<<<<<< HEAD
             AppButtonController.NeedPaint += new NeedPaintHandler(OnAppButtonNeedPaint);
             _captionAppButton.MouseController = AppButtonController;
             _otherAppButton.MouseController = AppButtonController;
             AppTabController = new AppTabController(_ribbon);
             AppTabController.NeedPaint += new NeedPaintHandler(OnAppButtonNeedPaint);
+=======
+            _appButtonController.NeedPaint += new NeedPaintHandler(OnAppButtonNeedPaint);
+            _captionAppButton.MouseController = _appButtonController;
+            _otherAppButton.MouseController = _appButtonController;
+            _appTabController = new AppTabController(_ribbon);
+            _appTabController.NeedPaint += new NeedPaintHandler(OnAppButtonNeedPaint);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 
             // When not showing the app button we show this spacer instead
             _spaceInsteadOfAppButton = new ViewLayoutSeparator(0)
@@ -461,7 +487,11 @@ namespace ComponentFactory.Krypton.Ribbon
             _nonCaptionQAT = new ViewLayoutRibbonQATMini(_ribbon, NeedPaintDelegate);
 
             // Layout needed to position and draw the context titles
+<<<<<<< HEAD
             ContextTitles = new ViewLayoutRibbonContextTitles(_ribbon, this)
+=======
+            _contextTiles = new ViewLayoutRibbonContextTitles(_ribbon, this)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 ReverseRenderOrder = true
             };
@@ -654,7 +684,11 @@ namespace ComponentFactory.Krypton.Ribbon
             {
                 // When integrated into composition we need to repaint whenever the
                 // owning form changes active status, as we are drawing the caption
+<<<<<<< HEAD
                 if (KryptonForm.ApplyCustomChrome && KryptonForm.ApplyComposition)
+=======
+                if (_kryptonForm.ApplyCustomChrome && _kryptonForm.ApplyComposition)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 {
                     PerformNeedPaint(true);
                 }
@@ -668,18 +702,30 @@ namespace ComponentFactory.Krypton.Ribbon
             _ribbon.Refresh();
 
             // If we have integrated the button into the custom chrome caption area
+<<<<<<< HEAD
             if (UsingCustomChrome)
             {
                 KryptonForm.PerformNeedPaint(e.NeedLayout);
+=======
+            if (_integrated)
+            {
+                _kryptonForm.PerformNeedPaint(e.NeedLayout);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
         }
 
         private void OnIntegratedNeedPaint(object sender, NeedLayoutEventArgs e)
         {
             // If we have integrated the button into the custom chrome caption area
+<<<<<<< HEAD
             if (UsingCustomChrome)
             {
                 KryptonForm.PerformNeedPaint(e.NeedLayout);
+=======
+            if (_integrated)
+            {
+                _kryptonForm.PerformNeedPaint(e.NeedLayout);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
         }
         #endregion

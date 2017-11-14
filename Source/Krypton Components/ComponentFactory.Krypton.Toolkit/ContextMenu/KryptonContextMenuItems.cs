@@ -55,7 +55,11 @@ namespace ComponentFactory.Krypton.Toolkit
             // Add any initial set of item
             if (children != null)
             {
+<<<<<<< HEAD
                 Items.AddRange(children);
+=======
+                _items.AddRange(children);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
 
             // Create the redirector that can get values from the krypton context menu

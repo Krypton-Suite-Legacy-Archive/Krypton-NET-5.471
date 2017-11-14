@@ -150,7 +150,11 @@ namespace ComponentFactory.Krypton.Ribbon
             _keyTip = "X";
 
             // Create the actual date time picker control and set initial settings
+<<<<<<< HEAD
             DateTimePicker = new KryptonDateTimePicker
+=======
+            _dateTimePicker = new KryptonDateTimePicker
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 InputControlStyle = InputControlStyle.Ribbon,
                 AlwaysActive = false,
@@ -1102,7 +1106,11 @@ namespace ComponentFactory.Krypton.Ribbon
         private void OnPaletteNeedPaint(object sender, NeedLayoutEventArgs e)
         {
             // Pass request onto the view provided paint delegate
+<<<<<<< HEAD
             ViewPaintDelegate?.Invoke(this, e);
+=======
+            _viewPaintDelegate?.Invoke(this, e);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
         }
 
         private void OnDateTimePickerGotFocus(object sender, EventArgs e)

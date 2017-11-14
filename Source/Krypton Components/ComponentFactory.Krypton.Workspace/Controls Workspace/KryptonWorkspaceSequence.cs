@@ -92,9 +92,15 @@ namespace ComponentFactory.Krypton.Workspace
             {
                 if (Children != null)
                 {
+<<<<<<< HEAD
                     for (int i = Children.Count - 1; i >= 0; i--)
                     {
                         Children[i].Dispose();
+=======
+                    for (int i = _children.Count - 1; i >= 0; i--)
+                    {
+                        _children[i].Dispose();
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                     }
 
                     Children.PropertyChanged -= new PropertyChangedEventHandler(OnChildrenPropertyChanged);

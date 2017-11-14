@@ -222,7 +222,11 @@ namespace ComponentFactory.Krypton.Toolkit
                 _captured = true;
 
                 // Ensure the month calendar has the focus
+<<<<<<< HEAD
                 if (c is KryptonMonthCalendar && !c.ContainsFocus)
+=======
+                if ((c != null) && (c is KryptonMonthCalendar) && !c.ContainsFocus)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 {
                     c.Focus();
                 }
@@ -464,7 +468,11 @@ namespace ComponentFactory.Krypton.Toolkit
                 _months.FocusDay = focusDate;
                 _months.Calendar.SetSelectionRange(focusDate, focusDate);
 
+<<<<<<< HEAD
                 if (ViewManager != null)
+=======
+                if (_viewManager != null)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 {
                     _needPaint(this, new NeedLayoutEventArgs(true));
                 }
@@ -501,7 +509,11 @@ namespace ComponentFactory.Krypton.Toolkit
                 _months.FocusDay = focusDate;
                 _months.Calendar.SetSelectionRange(startDate, endDate);
 
+<<<<<<< HEAD
                 if (ViewManager != null)
+=======
+                if (_viewManager != null)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 {
                     _needPaint(this, new NeedLayoutEventArgs(true));
                 }

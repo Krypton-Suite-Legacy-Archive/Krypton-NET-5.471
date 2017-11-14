@@ -494,7 +494,11 @@ namespace ComponentFactory.Krypton.Docking
             if (location == DockingLocation.Workspace)
             {
                 KryptonPage page = DockableWorkspaceControl.PageForUniqueName(uniqueName);
+<<<<<<< HEAD
                 if (page is KryptonStorePage)
+=======
+                if ((page != null) && (page is KryptonStorePage))
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 {
                     return this;
                 }

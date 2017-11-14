@@ -206,12 +206,21 @@ namespace ComponentFactory.Krypton.Toolkit
             _inputControlStyle = InputControlStyle.Standalone;
             _upDownButtonStyle = ButtonStyle.InputControl;
             _dropButtonStyle = ButtonStyle.InputControl;
+<<<<<<< HEAD
             CalendarHeaderStyle = HeaderStyle.Calendar;
             CalendarDayStyle = ButtonStyle.CalendarDay;
             CalendarDayOfWeekStyle = ButtonStyle.CalendarDay;
             CalendarDimensions = new Size(1, 1);
             _today = DEFAULT_TODAY;
             CalendarFirstDayOfWeek = Day.Default;
+=======
+            _headerStyle = HeaderStyle.Calendar;
+            _dayStyle = ButtonStyle.CalendarDay;
+            _dayOfWeekStyle = ButtonStyle.CalendarDay;
+            _dimensions = new Size(1, 1);
+            _today = DEFAULT_TODAY;
+            _firstDayOfWeek = Day.Default;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             _annualDates = new DateTimeList();
             _monthlyDates = new DateTimeList();
             _dates = new DateTimeList();
@@ -226,15 +235,25 @@ namespace ComponentFactory.Krypton.Toolkit
             StateActive = new PaletteInputControlTripleStates(StateCommon, NeedPaintDelegate);
 
             // Add a checkbox to the left of the text area
+<<<<<<< HEAD
             Images = new CheckBoxImages(NeedPaintDelegate);
             PaletteRedirectCheckBox paletteCheckBoxImages = new PaletteRedirectCheckBox(Redirector, Images);
             InternalViewDrawCheckBox = new ViewDrawCheckBox(paletteCheckBoxImages)
+=======
+            _checkBoxImages = new CheckBoxImages(NeedPaintDelegate);
+            PaletteRedirectCheckBox paletteCheckBoxImages = new PaletteRedirectCheckBox(Redirector, _checkBoxImages);
+            _drawCheckBox = new ViewDrawCheckBox(paletteCheckBoxImages)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 CheckState = CheckState.Checked
             };
             _layoutCheckBox = new ViewLayoutCenter
             {
+<<<<<<< HEAD
                 new ViewLayoutPadding(new Padding(1, 1, 4, 1), InternalViewDrawCheckBox)
+=======
+                new ViewLayoutPadding(new Padding(1, 1, 4, 1), _drawCheckBox)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             };
             _layoutCheckBox.Visible = false;
 
@@ -285,7 +304,11 @@ namespace ComponentFactory.Krypton.Toolkit
             _drawDockerInner.Add(_upDownFit, ViewDockStyle.Right);
 
             // Create view for the control border and background
+<<<<<<< HEAD
             _drawDockerOuter = new ViewDrawDocker(StateNormal.Back, StateNormal.Border)
+=======
+            _drawDockerOuter = new ViewDrawDocker(_stateNormal.Back, _stateNormal.Border)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 { new ViewLayoutPadding(new Padding(2, 0, 1, 0), _drawDockerInner), ViewDockStyle.Fill }
             };
@@ -661,7 +684,11 @@ namespace ComponentFactory.Krypton.Toolkit
                         }
                         else
                         {
+<<<<<<< HEAD
                             InternalViewDrawCheckBox.CheckState = CheckState.Checked;
+=======
+                            _drawCheckBox.CheckState = CheckState.Checked;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                         }
 
                         // Do we need to update the date time value?
@@ -1448,7 +1475,11 @@ namespace ComponentFactory.Krypton.Toolkit
                 }
                 else
                 {
+<<<<<<< HEAD
                     return (DesignMode || AlwaysActive || ContainsFocus || IsMouseOver);
+=======
+                    return (DesignMode || AlwaysActive || ContainsFocus || _mouseOver);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
         }
@@ -1821,7 +1852,11 @@ namespace ComponentFactory.Krypton.Toolkit
                 if (e.KeyCode == Keys.Space)
                 {
                     // If focus is on the checkbox then invert checked state
+<<<<<<< HEAD
                     if (InternalViewDrawCheckBox.ForcedTracking)
+=======
+                    if (_drawCheckBox.ForcedTracking)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                     {
                         Checked = !Checked;
                     }
@@ -2024,7 +2059,11 @@ namespace ComponentFactory.Krypton.Toolkit
                 // If we have a checbox then give it the focus
                 if (ShowCheckBox)
                 {
+<<<<<<< HEAD
                     InternalViewDrawCheckBox.ForcedTracking = true;
+=======
+                    _drawCheckBox.ForcedTracking = true;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
                 else
                 {
@@ -2200,16 +2239,28 @@ namespace ComponentFactory.Krypton.Toolkit
             {
                 if (IsActive)
                 {
+<<<<<<< HEAD
                     return StateActive;
                 }
                 else
                 {
                     return StateNormal;
+=======
+                    return _stateActive;
+                }
+                else
+                {
+                    return _stateNormal;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                 }
             }
             else
             {
+<<<<<<< HEAD
                 return StateDisabled;
+=======
+                return _stateDisabled;
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
         }
 

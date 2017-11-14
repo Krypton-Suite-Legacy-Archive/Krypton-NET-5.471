@@ -129,7 +129,11 @@ namespace ComponentFactory.Krypton.Toolkit
                                                    StateDisabled.Separator, StateNormal.Separator, StateTracking, StatePressed,
                                                     PaletteMetricPadding.SeparatorPaddingLowProfile, Orientation.Vertical);
 
+<<<<<<< HEAD
             _drawPanel = new ViewDrawPanel(StateNormal.Back)
+=======
+            _drawPanel = new ViewDrawPanel(_stateNormal.Back)
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             {
                 _drawSeparator
             };
@@ -1158,11 +1162,19 @@ namespace ComponentFactory.Krypton.Toolkit
             // Push correct palettes into the view
             if (Enabled)
             {
+<<<<<<< HEAD
                 _drawPanel.SetPalettes(StateNormal.Back);
             }
             else
             {
                 _drawPanel.SetPalettes(StateDisabled.Back);
+=======
+                _drawPanel.SetPalettes(_stateNormal.Back);
+            }
+            else
+            {
+                _drawPanel.SetPalettes(_stateDisabled.Back);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
             }
 
             _drawPanel.Enabled = Enabled;

@@ -235,9 +235,15 @@ namespace ComponentFactory.Krypton.Toolkit
                 using (CorrectContextControl ccc = new CorrectContextControl(context, ChildControl))
                 {
                     // Ask the view for its preferred size
+<<<<<<< HEAD
                     if (ChildView != null)
                     {
                         return ChildView.GetPreferredSize(context);
+=======
+                    if (_viewChild != null)
+                    {
+                        return _viewChild.GetPreferredSize(context);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
                     }
                 }
             }
@@ -291,7 +297,11 @@ namespace ComponentFactory.Krypton.Toolkit
 
                     // Do we have a child view to layout?
                     // Layout the child view
+<<<<<<< HEAD
                     ChildView?.Layout(context);
+=======
+                    _viewChild?.Layout(context);
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
 
                     // Put back the original display value now we have finished
                     context.DisplayRectangle = ClientRectangle;

@@ -16,7 +16,14 @@ namespace ComponentFactory.Krypton.Toolkit
     internal class SeparatorStyleConverter : StringLookupConverter
     {
         #region Static Fields
+<<<<<<< HEAD
 
+=======
+        private Pair[] _pairs = { new Pair(SeparatorStyle.LowProfile,            "Low Profile"),
+                                             new Pair(SeparatorStyle.HighProfile,           "High Profile"),  
+                                             new Pair(SeparatorStyle.HighInternalProfile,   "High Internal Profile"),  
+                                             new Pair(SeparatorStyle.Custom1,               "Custom1"),  };
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
         #endregion
 
         #region Identity

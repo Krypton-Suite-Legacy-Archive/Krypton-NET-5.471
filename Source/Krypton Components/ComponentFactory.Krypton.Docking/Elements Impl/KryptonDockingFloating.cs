@@ -38,7 +38,11 @@ namespace ComponentFactory.Krypton.Docking
         public KryptonDockingFloating(string name, Form ownerForm)
             : base(name)
         {
+<<<<<<< HEAD
             OwnerForm = ownerForm ?? throw new ArgumentNullException("owner");
+=======
+            _ownerForm = ownerForm ?? throw new ArgumentNullException("owner");
+>>>>>>> 34c21c928b71cd4ee4309f654c1d3400dc34b747
         }
         #endregion
 
