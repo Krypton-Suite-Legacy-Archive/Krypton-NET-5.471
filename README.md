@@ -33,4 +33,7 @@
   - Create test project - has theme selection, for type testing
 * Remove Severity Code Description Project File Line Suppression State Warning CS0618 'SecurityAction.RequestMinimum' is obsolete: 'Assembly level declarative security is obsolete and is no longer enforced by the CLR by default. See http://go.microsoft.com/fwlink/?LinkID=155570 for more information.' Basic Events 2015 [Source Path]\Krypton-NET-4.7\Source\Krypton Navigator Examples\Basic Events\Properties\AssemblyInfo.cs 35 Active
 
+## 2017-11-15 Repository update:
+* Removed 'db.lock' file for easier Visual Studio commits
+
 ## NOTE: This is a mirror of the Krypton-NET-4.7 repository, therefore it may take a day or two to update this repository with the .NET 4.7.1 framework. Thank you for your patientce. 
