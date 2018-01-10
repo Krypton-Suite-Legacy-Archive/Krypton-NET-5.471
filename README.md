@@ -60,13 +60,13 @@
 * Work out why clipping is the default for "DrawText" 
   - Applies to buttons, lLabels, Form Titles
   - Create test project - has theme selection, for type testing
-* Remove 'Severity Code Description Project File Line Suppression State' Warning CS0618 'SecurityAction.RequestMinimum' is obsolete: 'Assembly level declarative security is obsolete and is no longer enforced by the CLR by default. See http://go.microsoft.com/fwlink/?LinkID=155570 for more information.' Basic Events 2015 [Source Path]\Krypton-NET-4.7\Source\Krypton Navigator Examples\Basic Events\Properties\AssemblyInfo.cs 35 Active
+* Remove 'Severity Code Description Project File Line Suppression State' Warning CS0618 'SecurityAction.RequestMinimum' is obsolete: 'Assembly level declarative security is obsolete and is no longer enforced by the CLR by default. See http://go.microsoft.com/fwlink/?LinkID=155570 for more information.' Basic Events 2015 [Source Path]\Krypton-NET-4.7.1\Source\Krypton Navigator Examples\Basic Events\Properties\AssemblyInfo.cs 35 Active
 =======
 ## 2017-10-17 Commits are:
-* An update to Component factory's KryptonToolkit to support the .NET 4.7 framework.
+* An update to Component factory's KryptonToolkit to support the .NET 4.7.1 framework.
 * Add generic c# .gitignore
 * Change the solution to reflect Visual Studio 2017 usage
-* Change Test apps to use .Net 4.7 Target framework
+* Change Test apps to use .Net 4.7.1 Target framework
 * Add designer dll to test apps to allow visual design and testing without GAC'ing
 
 
@@ -94,10 +94,10 @@
 
 
 ## 2017-10-17 Commits are:
-* An update to Component factory's KryptonToolkit to support the .NET 4.7 framework.
+* An update to Component factory's KryptonToolkit to support the .NET 4.7.1 framework.
 * Add generic c# .gitignore
 * Change the solution to reflect Visual Studio 2017 usage
-* Change Test apps to use .Net 4.7 Target framework
+* Change Test apps to use .Net 4.7.1 Target framework
 * Add designer Dll to test apps to allow visual design and testing without GAC'ing
 
 =======
@@ -114,6 +114,6 @@
 * Work out why clipping is the default for "DrawText" 
   - Applies to buttons, lLabels, Form Titles
   - Create test project - has theme selection, for type testing
-* Remove Severity Code Description Project File Line Suppression State Warning CS0618 'SecurityAction.RequestMinimum' is obsolete: 'Assembly level declarative security is obsolete and is no longer enforced by the CLR by default. See http://go.microsoft.com/fwlink/?LinkID=155570 for more information.' Basic Events 2015 [Source Path]\Krypton-NET-4.7\Source\Krypton Navigator Examples\Basic Events\Properties\AssemblyInfo.cs 35 Active
+* Remove Severity Code Description Project File Line Suppression State Warning CS0618 'SecurityAction.RequestMinimum' is obsolete: 'Assembly level declarative security is obsolete and is no longer enforced by the CLR by default. See http://go.microsoft.com/fwlink/?LinkID=155570 for more information.' Basic Events 2015 [Source Path]\Krypton-NET-4.7.1\Source\Krypton Navigator Examples\Basic Events\Properties\AssemblyInfo.cs 35 Active
 
-## NOTE: This is a mirror of the Krypton-NET-4.7 repository, therefore it may take a day or two to update this repository with the .NET 4.7.1 framework. Thank you for your patience. 
+## NOTE: This is a mirror of the Krypton-NET-4.7.1 repository, therefore it may take a day or two to update this repository with the .NET 4.7.1 framework. Thank you for your patience. 
