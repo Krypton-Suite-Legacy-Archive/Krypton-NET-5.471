@@ -1,14 +1,33 @@
 ﻿# Krypton-NET-4.7.1
 
+## 2018-10-10 Assembly values modifications
+* Updated values as suggested in issue #7
+* Refreshed Nuget package data to reflect changes
+
+=======
+
+## 2018-01-09 Incremental versioning
+* To reflect the .Net version move to Major.Minor of 4.70
+* Build will increment, with the final useless installable number left at zero
+* Use "[Automatic Versions](https://marketplace.visualstudio.com/items?itemName=PrecisionInfinity.AutomaticVersions)" to perform the update build number action
+
 =======
 
 ## 2018-01-08 Repository changes
 * Nuget package upload
 * Chocolatey package is in the works
+
+=======
+
+## 2018-01-07 pm Toolkit Solution changes
 * Reupload of fresh binaries after a good fight!
 * Changed year of all classes, controls etc from 2017 to 2018
 * Mass rebuild of solution
-* Eradicated all references of 4.5.0.0 to 4.7.1.0
+* Eradicated all references of 4.5.0.0 to 4.7.0.0
+
+=======
+
+## 2018-01-07 Toolkit Solution
 * Message content size adjustment in KryptonTaskDialog; ComponentFactory commit [5463f83](https://github.com/ComponentFactory/Krypton/commit/5463f835bcdbfffbafc9002923e0bea831bed211)
 * Remove "Assignment is not used"
 * Initialise orientation in mementos correctly
@@ -23,8 +42,10 @@
   * Added KryptonMenuImageSelect click event; commit [621ab7c](https://github.com/Cocotteseb/Krypton/commit/ef4a415b84ac4ce9b145db9d723701a0099ce0f1)
   * Trying to fixed rare crashed in KryptonRibbon Composition; commit [ef4a415](https://github.com/Cocotteseb/Krypton/commit/c55aeadc2224ed68a7446bf3986eb02bf0415751)
   * Add DPI Awareness for Tab images (Mixture of commits)
-* Update a few test to use Offices2013 palettes
+* Update a few test to use Office 2013 palettes
 * Remove Binaries from Git
+
+## 2018-01-06 Toolkit solution and Examples II changes:
 * Remove "redundant delegate constructors" for callbacks
 * Fix "OnClick" routing for 
   - ListBox
@@ -34,8 +55,6 @@
 * Update the test project to see if click on TextBox's work as expected 
 * Set some private fields to "readonly"
 * Fix AddToWorkspace in KryptonDockingManager
-
-=======
 
 ## 2017-11-12 Toolkit Examples II solution changes:
 * Work out why clipping is the default for "DrawText" 
@@ -96,5 +115,3 @@
   - Applies to buttons, lLabels, Form Titles
   - Create test project - has theme selection, for type testing
 * Remove Severity Code Description Project File Line Suppression State Warning CS0618 'SecurityAction.RequestMinimum' is obsolete: 'Assembly level declarative security is obsolete and is no longer enforced by the CLR by default. See http://go.microsoft.com/fwlink/?LinkID=155570 for more information.' Basic Events 2015 [Source Path]\Krypton-NET-4.7\Source\Krypton Navigator Examples\Basic Events\Properties\AssemblyInfo.cs 35 Active
-
-## NOTE: This is a mirror of the Krypton-NET-4.7 repository, therefore it may take a day or two to update this repository with the .NET 4.7.1 framework. Thank you for your patience. 
