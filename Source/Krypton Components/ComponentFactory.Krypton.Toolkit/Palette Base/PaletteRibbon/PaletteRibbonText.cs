@@ -1,11 +1,12 @@
 ﻿// *****************************************************************************
-// 
-//  © Component Factory Pty Ltd, modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2010 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//	The software and associated documentation supplied hereunder are the 
+// BSD 3-Clause License (https://github.com/ComponentFactory/Krypton/blob/master/LICENSE)
+//  © Component Factory Pty Ltd, 2006-2018, All rights reserved.
+// The software and associated documentation supplied hereunder are the 
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.7.0.0 	www.ComponentFactory.com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 
 using System.Drawing;
@@ -80,10 +81,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// Populate values from the base palette.
         /// </summary>
         /// <param name="state">Palette state to use when populating.</param>
-        public void PopulateFromBase(PaletteState state)
-        {
-            TextColor = GetRibbonTextColor(state);
-        }
+        public void PopulateFromBase(PaletteState state) => TextColor = GetRibbonTextColor(state);
+
         #endregion
 
         #region TextColor
@@ -112,34 +111,17 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Reset the TextColor to the default value.
         /// </summary>
-        public void ResetTextColor()
-        {
-            TextColor = Color.Empty;
-        }
+        public void ResetTextColor() => TextColor = Color.Empty;
 
         /// <summary>
         /// Gets the tab color for the item text.
         /// </summary>
         /// <param name="state">Palette value should be applicable to this state.</param>
         /// <returns>Color value.</returns>
-        public Color GetRibbonTextColor(PaletteState state)
-        {
-            if (TextColor != Color.Empty)
-            {
-                return TextColor;
-            }
-            else
-            {
-                if (_inheritText != null)
-                {
-                    return _inheritText.GetRibbonTextColor(state);
-                }
-                else
-                {
-                    return Color.Empty;
-                }
-            }
-        }
+        public Color GetRibbonTextColor(PaletteState state) => TextColor != Color.Empty
+            ? TextColor
+            : (_inheritText?.GetRibbonTextColor(state) ?? Color.Empty);
+
         #endregion
     }
 }

@@ -1,20 +1,21 @@
 ﻿// *****************************************************************************
-// 
-//  © Component Factory Pty Ltd, modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2010 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//	The software and associated documentation supplied hereunder are the 
+// BSD 3-Clause License (https://github.com/ComponentFactory/Krypton/blob/master/LICENSE)
+//  © Component Factory Pty Ltd, 2006-2018, All rights reserved.
+// The software and associated documentation supplied hereunder are the 
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.7.0.0 	www.ComponentFactory.com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 
 using System;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.ComponentModel;
-using System.Windows.Forms;
 using System.Runtime.InteropServices;
-using System.Diagnostics;
+using System.Windows.Forms;
 
 namespace ComponentFactory.Krypton.Toolkit
 {
@@ -33,8 +34,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Collection for managing ButtonSpecAny instances.
         /// </summary>
-        public class FormButtonSpecCollection : ButtonSpecCollection<ButtonSpecAny> 
-        { 
+        public class FormButtonSpecCollection : ButtonSpecCollection<ButtonSpecAny>
+        {
             #region Identity
             /// <summary>
             /// Initialize a new instance of the FormButtonSpecCollection class.
@@ -50,8 +51,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Collection for managing NavigatorButtonSpec instances.
         /// </summary>
-        public class FormFixedButtonSpecCollection : ButtonSpecCollection<ButtonSpecFormFixed> 
-        { 
+        public class FormFixedButtonSpecCollection : ButtonSpecCollection<ButtonSpecFormFixed>
+        {
             #region Identity
             /// <summary>
             /// Initialize a new instance of the FormFixedButtonSpecCollection class.
@@ -68,7 +69,8 @@ namespace ComponentFactory.Krypton.Toolkit
         #region Static Fields
         private static readonly Size CAPTION_ICON_SIZE = new Size(16, 16);
         private const int HT_CORNER = 8;
-
+        // Drop shadow
+        private const int CS_DROPSHADOW = 0x00020000;
         #endregion
 
         #region Instance Fields
@@ -92,6 +94,7 @@ namespace ComponentFactory.Krypton.Toolkit
         private bool _recreateButtons;
         private bool _firstCheckView;
         private bool _lastNotNormal;
+        private bool _useDropShadow;
         private StatusStrip _statusStrip;
         private Bitmap _cacheBitmap;
         private Icon _cacheIcon;
@@ -106,7 +109,7 @@ namespace ComponentFactory.Krypton.Toolkit
         {
             // Default properties
             _headerStyle = HeaderStyle.Form;
-		    _headerStylePrev = _headerStyle;
+            _headerStylePrev = _headerStyle;
             AllowButtonSpecToolTips = false;
             _allowFormChrome = true;
             _allowStatusStripMerge = true;
@@ -254,7 +257,7 @@ namespace ComponentFactory.Krypton.Toolkit
         public bool AllowFormChrome
         {
             get => _allowFormChrome;
-            set 
+            set
             {
                 if (_allowFormChrome != value)
                 {
@@ -345,6 +348,24 @@ namespace ComponentFactory.Krypton.Toolkit
                     StateCommon.BackStyle = value;
                     PerformNeedPaint(false);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Allows the use of drop shadow around the form.
+        /// </summary>
+        [Category("Visuals")]
+        [Description("Allows the use of drop shadow around the form.")]
+        [DefaultValue(true)]
+        public bool UseDropShadow
+        {
+            get => _useDropShadow;
+
+            set
+            {
+                _useDropShadow = value;
+
+                UpdateDropShadowDraw(_useDropShadow);
             }
         }
 
@@ -793,6 +814,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="sender">Source of notification.</param>
         /// <param name="e">An EventArgs containing event data.</param>
+        /// <exception cref="ArgumentNullException"></exception>
         protected override void OnButtonSpecChanged(object sender, EventArgs e)
         {
             Debug.Assert(e != null);
@@ -800,7 +822,7 @@ namespace ComponentFactory.Krypton.Toolkit
             // Validate incoming reference
             if (e == null)
             {
-                throw new ArgumentNullException("e");
+                throw new ArgumentNullException(nameof(e));
             }
 
             // Recreate all the button specs with new values
@@ -961,14 +983,7 @@ namespace ComponentFactory.Krypton.Toolkit
                     break;
                 default:
                     // When maximized we do not have any borders around the client
-                    if (WindowState == FormWindowState.Maximized)
-                    {
-                        borders = Padding.Empty;
-                    }
-                    else
-                    {
-                        borders = RealWindowBorders;
-                    }
+                    borders = WindowState == FormWindowState.Maximized ? Padding.Empty : RealWindowBorders;
 
                     break;
             }
@@ -1196,14 +1211,9 @@ namespace ComponentFactory.Krypton.Toolkit
                 if (ViewManager != null)
                 {
                     // Make sure the max/restore setting is correct
-                    if (WindowState == FormWindowState.Maximized)
-                    {
-                        ButtonSpecMax.ButtonSpecType = PaletteButtonSpecStyle.FormRestore;
-                    }
-                    else
-                    {
-                        ButtonSpecMax.ButtonSpecType = PaletteButtonSpecStyle.FormMax;
-                    }
+                    ButtonSpecMax.ButtonSpecType = WindowState == FormWindowState.Maximized
+                        ? PaletteButtonSpecStyle.FormRestore
+                        : PaletteButtonSpecStyle.FormMax;
 
                     // Make sure the min/restore setting is correct
                     if (WindowState == FormWindowState.Minimized)
@@ -1222,13 +1232,13 @@ namespace ComponentFactory.Krypton.Toolkit
                     // Recreate buttons to get latest state
                     _buttonManager.RefreshButtons();
 
-			        // Never set the header style unless it has changed, as it causes a relayout
-			        if (_headerStyle != _headerStylePrev)
-			        {
+                    // Never set the header style unless it has changed, as it causes a relayout
+                    if (_headerStyle != _headerStylePrev)
+                    {
                         // Ensure the header style matches the form border style
                         SetHeaderStyle(_drawHeading, StateCommon.Header, _headerStyle);
 
-				        // Remember last header style set
+                        // Remember last header style set
                         _headerStylePrev = _headerStyle;
                     }
 
@@ -1259,7 +1269,7 @@ namespace ComponentFactory.Krypton.Toolkit
                     if (!NeedLayout)
                     {
                         bool notNormal = false;
-                        foreach(ButtonSpecView bsv in _buttonManager.ButtonSpecViews)
+                        foreach (ButtonSpecView bsv in _buttonManager.ButtonSpecViews)
                         {
                             switch (bsv.ViewButton.State)
                             {
@@ -1312,14 +1322,7 @@ namespace ComponentFactory.Krypton.Toolkit
                                         SuspendPaint();
                                     }
 
-                                    if (path != null)
-                                    {
-                                        UpdateBorderRegion(new Region(path));
-                                    }
-                                    else
-                                    {
-                                        UpdateBorderRegion(null);
-                                    }
+                                    UpdateBorderRegion(path != null ? new Region(path) : null);
 
                                     if (!_firstCheckView)
                                     {
@@ -1580,6 +1583,53 @@ namespace ComponentFactory.Krypton.Toolkit
             if (PaletteMode == PaletteMode.Global)
             {
                 UpdateCustomChromeDecision();
+            }
+        }
+        #endregion
+
+        #region Drop Shadow Methods
+        /// <summary>
+        /// Calls the method that draws the drop shadow around the form.
+        /// </summary>
+        /// <param name="useDropShadow">Use dropshadow user input value.</param>
+        private void UpdateDropShadowDraw(bool useDropShadow)
+        {
+            if (useDropShadow)
+            {
+                DrawDropShadow();
+            }
+        }
+
+        /// <summary>
+        /// A wrapper that draws the drop shadow around the form.
+        /// </summary>
+        /// <returns>The shadow around the form.</returns>
+        private void DrawDropShadow()
+        {
+            GetCreateParams();
+        }
+
+        /// <summary>
+        /// Test code
+        /// </summary>
+        /// <returns>The overrides</returns>
+        private CreateParams GetCreateParams()
+        {
+            CreateParams cp = base.CreateParams;
+
+            return cp;
+        }
+
+        // Example by juverpp
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                // add the drop shadow flag for automatically drawing
+                // a drop shadow around the form
+                CreateParams cp = base.CreateParams;
+                cp.ClassStyle |= CS_DROPSHADOW;
+                return cp;
             }
         }
         #endregion

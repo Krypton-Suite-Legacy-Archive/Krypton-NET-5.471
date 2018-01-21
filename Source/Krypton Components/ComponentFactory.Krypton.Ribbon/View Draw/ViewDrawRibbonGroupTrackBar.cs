@@ -1,11 +1,12 @@
 ﻿// *****************************************************************************
-// 
-//  © Component Factory Pty Ltd, modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2010 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//	The software and associated documentation supplied hereunder are the 
+// BSD 3-Clause License (https://github.com/ComponentFactory/Krypton/blob/master/LICENSE)
+//  © Component Factory Pty Ltd, 2006-2018, All rights reserved.
+// The software and associated documentation supplied hereunder are the 
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.7.0.0 	www.ComponentFactory.com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 
 using System;
@@ -304,14 +305,9 @@ namespace ComponentFactory.Krypton.Ribbon
                 preferredSize.Width = NULL_CONTROL_WIDTH;
             }
 
-            if (_currentSize == GroupItemSize.Large)
-            {
-                preferredSize.Height = _ribbon.CalculatedValues.GroupTripleHeight;
-            }
-            else
-            {
-                preferredSize.Height = _ribbon.CalculatedValues.GroupLineHeight;
-            }
+            preferredSize.Height = _currentSize == GroupItemSize.Large
+                ? _ribbon.CalculatedValues.GroupTripleHeight
+                : _ribbon.CalculatedValues.GroupLineHeight;
 
             return preferredSize;
         }
@@ -570,7 +566,10 @@ namespace ComponentFactory.Krypton.Ribbon
                     else
                     {
                         // Check the owning group is visible
-                        if ((GroupTrackBar.RibbonContainer?.RibbonGroup != null) && !GroupTrackBar.RibbonContainer.RibbonGroup.Visible && !_ribbon.InDesignMode)
+                        if ((GroupTrackBar.RibbonContainer?.RibbonGroup != null) 
+                            && !GroupTrackBar.RibbonContainer.RibbonGroup.Visible 
+                            && !_ribbon.InDesignMode
+                            )
                         {
                             visible = false;
                         }
@@ -579,7 +578,8 @@ namespace ComponentFactory.Krypton.Ribbon
                             // Check that the group is not collapsed
                             if ((GroupTrackBar.RibbonContainer.RibbonGroup.IsCollapsed) &&
                                 ((_ribbon.GetControllerControl(GroupTrackBar.TrackBar) is KryptonRibbon) ||
-                                 (_ribbon.GetControllerControl(GroupTrackBar.TrackBar) is VisualPopupMinimized)))
+                                 (_ribbon.GetControllerControl(GroupTrackBar.TrackBar) is VisualPopupMinimized))
+                                )
                             {
                                 visible = false;
                             }

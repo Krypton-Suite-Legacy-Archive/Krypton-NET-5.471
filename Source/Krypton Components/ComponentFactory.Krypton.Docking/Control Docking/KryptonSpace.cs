@@ -1,11 +1,12 @@
 ﻿// *****************************************************************************
-// 
-//  © Component Factory Pty Ltd, modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2010 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//	The software and associated documentation supplied hereunder are the 
+// BSD 3-Clause License (https://github.com/ComponentFactory/Krypton/blob/master/LICENSE)
+//  © Component Factory Pty Ltd, 2006-2018, All rights reserved.
+// The software and associated documentation supplied hereunder are the 
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.7.0.0 	www.ComponentFactory.com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 
 using System;
@@ -441,14 +442,7 @@ namespace ComponentFactory.Krypton.Docking
             // Should be apply docking specific appearance settings?
             if (ApplyDockingAppearance)
             {
-                if (cell.Pages.VisibleCount == 1)
-                {
-                    cell.NavigatorMode = NavigatorMode.HeaderGroup;
-                }
-                else
-                {
-                    cell.NavigatorMode = NavigatorMode.HeaderGroupTab;
-                }
+                cell.NavigatorMode = cell.Pages.VisibleCount == 1 ? NavigatorMode.HeaderGroup : NavigatorMode.HeaderGroupTab;
 
                 cell.Bar.BarMultiline = BarMultiline.Shrinkline;
                 cell.Bar.BarOrientation = VisualOrientation.Bottom;
@@ -506,12 +500,11 @@ namespace ComponentFactory.Krypton.Docking
         protected override void ExistingCellDetach(KryptonWorkspaceCell cell)
         {
             // Grab the per-cell cached state
-            CachedCellState cellState = _lookupCellState[cell];
 
             // Remove all those event hooks used to monitor focus changes
             FocusMonitorControl(cell, false);
 
-            // Unhook from events so the cell can be garbage colleced
+            // Unhook from events so the cell can be garbage collected
             cell.ShowContextMenu -= OnCellShowContextMenu;
             cell.SelectedPageChanged -= OnCellSelectedPageChanged;
             cell.PrimaryHeaderLeftClicked -= OnCellPrimaryHeaderLeftClicked;
@@ -550,14 +543,9 @@ namespace ComponentFactory.Krypton.Docking
                     cell.Button.ButtonSpecs.Add(cellState.DropDownButtonSpec);
                 }
 
-                if (cell.SelectedPage == null)
-                {
-                    cellState.DropDownButtonSpec.Visible = false;
-                }
-                else
-                {
-                    cellState.DropDownButtonSpec.Visible = cell.SelectedPage.AreFlagsSet(KryptonPageFlags.DockingAllowDropDown);
-                }
+                cellState.DropDownButtonSpec.Visible = cell.SelectedPage != null &&
+                                                       cell.SelectedPage.AreFlagsSet(KryptonPageFlags
+                                                           .DockingAllowDropDown);
             }
 
             if (ApplyDockingPinAction)
@@ -580,14 +568,9 @@ namespace ComponentFactory.Krypton.Docking
                 }
                 else
                 {
-                    if (AutoHiddenHost)
-                    {
-                        cellState.PinButtonSpec.Visible = cell.SelectedPage.AreFlagsSet(KryptonPageFlags.DockingAllowDocked);
-                    }
-                    else
-                    {
-                        cellState.PinButtonSpec.Visible = cell.SelectedPage.AreFlagsSet(KryptonPageFlags.DockingAllowAutoHidden);
-                    }
+                    cellState.PinButtonSpec.Visible = cell.SelectedPage.AreFlagsSet(AutoHiddenHost
+                        ? KryptonPageFlags.DockingAllowDocked
+                        : KryptonPageFlags.DockingAllowAutoHidden);
                 }
             }
 
@@ -605,14 +588,8 @@ namespace ComponentFactory.Krypton.Docking
                     cell.Button.ButtonSpecs.Add(cellState.CloseButtonSpec);
                 }
 
-                if (cell.SelectedPage == null)
-                {
-                    cellState.CloseButtonSpec.Visible = false;
-                }
-                else
-                {
-                    cellState.CloseButtonSpec.Visible = cell.SelectedPage.AreFlagsSet(KryptonPageFlags.DockingAllowClose);
-                }
+                cellState.CloseButtonSpec.Visible = cell.SelectedPage != null &&
+                                                    cell.SelectedPage.AreFlagsSet(KryptonPageFlags.DockingAllowClose);
             }
         }
         #endregion
@@ -807,7 +784,7 @@ namespace ComponentFactory.Krypton.Docking
                     // Do we need to show a context menu
                     if (!args.Cancel && CommonHelper.ValidKryptonContextMenu(args.KryptonContextMenu))
                     {
-                        args.KryptonContextMenu.Show(this, Control.MousePosition);
+                        args.KryptonContextMenu.Show(this, MousePosition);
                     }
                 }
             }

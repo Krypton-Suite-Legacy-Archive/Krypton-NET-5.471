@@ -1,11 +1,12 @@
 ﻿// *****************************************************************************
-// 
-//  © Component Factory Pty Ltd, modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2010 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//	The software and associated documentation supplied hereunder are the 
+// BSD 3-Clause License (https://github.com/ComponentFactory/Krypton/blob/master/LICENSE)
+//  © Component Factory Pty Ltd, 2006-2018, All rights reserved.
+// The software and associated documentation supplied hereunder are the 
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.7.0.0 	www.ComponentFactory.com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 
 using System;
@@ -326,14 +327,7 @@ namespace ComponentFactory.Krypton.Toolkit
 
                 if (Enabled && (ElementState == PaletteState.Disabled))
                 {
-                    if (Checked)
-                    {
-                        ElementState = PaletteState.CheckedNormal;
-                    }
-                    else
-                    {
-                        ElementState = PaletteState.Normal;
-                    }
+                    ElementState = Checked ? PaletteState.CheckedNormal : PaletteState.Normal;
                 }
 
 				// Pass on the new state to the child elements
@@ -505,18 +499,19 @@ namespace ComponentFactory.Krypton.Toolkit
 			return _drawCanvas.GetPreferredSize(context);
 		}
 
-		/// <summary>
-		/// Perform a layout of the elements.
-		/// </summary>
-		/// <param name="context">Layout context.</param>
-		public override void Layout(ViewLayoutContext context)
+	    /// <summary>
+	    /// Perform a layout of the elements.
+	    /// </summary>
+	    /// <param name="context">Layout context.</param>
+	    /// <exception cref="ArgumentNullException"></exception>
+	    public override void Layout(ViewLayoutContext context)
 		{
 			Debug.Assert(context != null);
 
             // Validate incoming reference
             if (context == null)
             {
-                throw new ArgumentNullException("context");
+                throw new ArgumentNullException(nameof(context));
             }
 
             // We take on all the available display area
@@ -530,14 +525,9 @@ namespace ComponentFactory.Krypton.Toolkit
 
             // Extend the split border so it is not restricted by the content size
             Rectangle splitClientRect = _drawSplitBorder.ClientRectangle;
-            if (_drawSplitBorder.Orientation == System.Windows.Forms.Orientation.Vertical)
-            {
-                splitClientRect = new Rectangle(splitClientRect.X, ClientRectangle.Y, splitClientRect.Width, ClientHeight);
-            }
-            else
-            {
-                splitClientRect = new Rectangle(ClientRectangle.X, splitClientRect.Y, ClientWidth, splitClientRect.Height);
-            }
+            splitClientRect = _drawSplitBorder.Orientation == System.Windows.Forms.Orientation.Vertical
+                ? new Rectangle(splitClientRect.X, ClientRectangle.Y, splitClientRect.Width, ClientHeight)
+                : new Rectangle(ClientRectangle.X, splitClientRect.Y, ClientWidth, splitClientRect.Height);
 
             _drawSplitBorder.ClientRectangle = splitClientRect;
 

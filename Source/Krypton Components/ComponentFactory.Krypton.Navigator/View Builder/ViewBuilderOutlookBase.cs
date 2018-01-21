@@ -1,11 +1,12 @@
 ﻿// *****************************************************************************
-// 
-//  © Component Factory Pty Ltd, modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2010 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//	The software and associated documentation supplied hereunder are the 
+// BSD 3-Clause License (https://github.com/ComponentFactory/Krypton/blob/master/LICENSE)
+//  © Component Factory Pty Ltd, 2006-2018, All rights reserved.
+// The software and associated documentation supplied hereunder are the 
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.7.0.0 	www.ComponentFactory.com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 
 using System;
@@ -106,17 +107,7 @@ namespace ComponentFactory.Krypton.Navigator
         /// </summary>
         public Orientation SeparatorOrientation
         {
-            get 
-            { 
-                if (Navigator.Outlook.Orientation == Orientation.Vertical)
-                {
-                    return Orientation.Horizontal;
-                }
-                else
-                {
-                    return Orientation.Vertical;
-                }
-            }
+            get => Navigator.Outlook.Orientation == Orientation.Vertical ? Orientation.Horizontal : Orientation.Vertical;
         }
 
         /// <summary>
@@ -176,17 +167,8 @@ namespace ComponentFactory.Krypton.Navigator
                         // Only interested if the button is actually visible
                         if (checkButton.Visible)
                         {
-                            int checkLength;
-
                             // Get the length of the check button
-                            if (Navigator.Outlook.Orientation == Orientation.Vertical)
-                            {
-                                checkLength = checkButton.ClientHeight;
-                            }
-                            else
-                            {
-                                checkLength = checkButton.ClientWidth;
-                            }
+                            int checkLength = Navigator.Outlook.Orientation == Orientation.Vertical ? checkButton.ClientHeight : checkButton.ClientWidth;
 
                             // If the check button border is showing
                             if (borderEdge.Visible)
@@ -250,14 +232,7 @@ namespace ComponentFactory.Krypton.Navigator
                     if (checkButton.Visible)
                     {
                         // Get the orientation specific test value
-                        if (Navigator.Outlook.Orientation == Orientation.Vertical)
-                        {
-                            checkButtonPos = checkButton.ClientHeight;
-                        }
-                        else
-                        {
-                            checkButtonPos = checkButton.ClientWidth;
-                        }
+                        checkButtonPos = Navigator.Outlook.Orientation == Orientation.Vertical ? checkButton.ClientHeight : checkButton.ClientWidth;
 
                         if (mousePos < (separatorPos - checkButtonPos))
                         {
@@ -562,21 +537,13 @@ namespace ComponentFactory.Krypton.Navigator
                 if (Navigator.SelectedPage == null)
                 {
                     // Then use the states defined in the navigator itself
-                    if (Navigator.Enabled)
-                    {
-                        buttonEdge = Navigator.StateNormal.BorderEdge;
-                    }
-                    else
-                    {
-                        buttonEdge = Navigator.StateDisabled.BorderEdge;
-                    }
+                    buttonEdge = Navigator.Enabled ? Navigator.StateNormal.BorderEdge : Navigator.StateDisabled.BorderEdge;
 
                     // Update the separator view to use the navigator state objects
                     _viewSeparator.SetPalettes(Navigator.StateDisabled.Separator, Navigator.StateNormal.Separator,
                                                Navigator.StateTracking.Separator, Navigator.StatePressed.Separator,
                                                Navigator.StateDisabled.Separator, Navigator.StateNormal.Separator,
                                                Navigator.StateTracking.Separator, Navigator.StatePressed.Separator);
-
                 }
                 else
                 {
@@ -760,15 +727,7 @@ namespace ComponentFactory.Krypton.Navigator
 
                             if (!ce.Cancel)
                             {
-                                bool changed;
-                                if (!shift)
-                                {
-                                    changed = SelectNextPage(Navigator.SelectedPage, true, true);
-                                }
-                                else
-                                {
-                                    changed = SelectPreviousPage(Navigator.SelectedPage, true, true);
-                                }
+                                bool changed = !shift ? SelectNextPage(Navigator.SelectedPage, true, true) : SelectPreviousPage(Navigator.SelectedPage, true, true);
                             }
                         }
                         return true;
@@ -1014,12 +973,7 @@ namespace ComponentFactory.Krypton.Navigator
             }
 
             // Check if any of the button specs want the point
-            if (_headerGroup.DesignerGetHitTest(pt))
-            {
-                return true;
-            }
-
-            return false;
+            return _headerGroup.DesignerGetHitTest(pt);
         }
 
         /// <summary>
@@ -2083,14 +2037,9 @@ namespace ComponentFactory.Krypton.Navigator
             switch (Navigator.Outlook.ItemOrientation)
             {
                 case ButtonOrientation.Auto:
-                    if (Navigator.Outlook.Orientation == Orientation.Vertical)
-                    {
-                        return VisualOrientation.Top;
-                    }
-                    else
-                    {
-                        return VisualOrientation.Left;
-                    }
+                    return Navigator.Outlook.Orientation == Orientation.Vertical
+                        ? VisualOrientation.Top
+                        : VisualOrientation.Left;
                 case ButtonOrientation.FixedTop:
                     return VisualOrientation.Top;
                 case ButtonOrientation.FixedBottom:
@@ -2106,19 +2055,10 @@ namespace ComponentFactory.Krypton.Navigator
             }
         }
 
-        private VisualOrientation ResolveOverflowButtonOrientation()
-        {
-            if (Navigator.Outlook.Orientation == Orientation.Vertical)
-            {
-                return VisualOrientation.Top;
-            }
-            else
-            {
-                return VisualOrientation.Left;
-            }
-        }
+        private VisualOrientation ResolveOverflowButtonOrientation() =>
+            Navigator.Outlook.Orientation == Orientation.Vertical ? VisualOrientation.Top : VisualOrientation.Left;
 
-        private ViewDrawNavCheckButtonBase GetShrinkStackItem()
+	    private ViewDrawNavCheckButtonBase GetShrinkStackItem()
         {
             // If there is a visible stack item, then we can always shrink it away
             foreach (ViewDrawNavCheckButtonBase checkButton in _pageStackLookup.Values)

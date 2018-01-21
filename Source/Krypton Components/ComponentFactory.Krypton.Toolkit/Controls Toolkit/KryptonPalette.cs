@@ -1,11 +1,12 @@
 ﻿// *****************************************************************************
-// 
-//  © Component Factory Pty Ltd, modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2010 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//	The software and associated documentation supplied hereunder are the 
+// BSD 3-Clause License (https://github.com/ComponentFactory/Krypton/blob/master/LICENSE)
+//  © Component Factory Pty Ltd, 2006-2018, All rights reserved.
+// The software and associated documentation supplied hereunder are the 
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.7.0.0 	www.ComponentFactory.com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 
 using System;
@@ -33,7 +34,7 @@ namespace ComponentFactory.Krypton.Toolkit
     [DefaultEvent("PalettePaint")]
     [DefaultProperty("BasePaletteMode")]
     [DesignerCategory("code")]
-    [Designer("ComponentFactory.Krypton.Toolkit.KryptonPaletteDesigner, ComponentFactory.Krypton.Design, Version=4.71.0.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e")]
+    [Designer("ComponentFactory.Krypton.Toolkit.KryptonPaletteDesigner, ComponentFactory.Krypton.Design, Version=4.70.0.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e")]
     [Description("Customisable palette component.")]
     [ClassInterface(ClassInterfaceType.AutoDispatch)]
     [ComVisible(true)]
@@ -169,6 +170,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// Initialize a new instance of the KryptonPalette class.
         /// </summary>
         /// <param name="container">Container that owns the component.</param>
+        /// <exception cref="ArgumentNullException"></exception>
         public KryptonPalette(IContainer container)
             : this()
         {
@@ -177,7 +179,7 @@ namespace ComponentFactory.Krypton.Toolkit
             // Validate reference parameter
             if (container == null)
             {
-                throw new ArgumentNullException("container");
+                throw new ArgumentNullException(nameof(container));
             }
 
             container.Add(this);
@@ -612,17 +614,10 @@ namespace ComponentFactory.Krypton.Toolkit
         /// Gets a value indicating if KryptonForm instances should show custom chrome.
         /// </summary>
         /// <returns>InheritBool value.</returns>
-        public InheritBool GetAllowFormChrome()
-        {
-            if (AllowFormChrome == InheritBool.Inherit)
-            {
-                return _basePalette.GetAllowFormChrome();
-            }
-            else
-            {
-                return AllowFormChrome;
-            }
-        }
+        public InheritBool GetAllowFormChrome() => AllowFormChrome == InheritBool.Inherit
+            ? _basePalette.GetAllowFormChrome()
+            : AllowFormChrome;
+
         #endregion
 
         #region IPalette Back
@@ -1658,14 +1653,7 @@ namespace ComponentFactory.Krypton.Toolkit
             }
 
             // If nothing found then use the base palette
-            if (retImage == null)
-            {
-                return _redirector.GetCheckBoxImage(enabled, checkState, tracking, pressed);
-            }
-            else
-            {
-                return retImage;
-            }
+            return retImage ?? _redirector.GetCheckBoxImage(enabled, checkState, tracking, pressed);
         }
 
         /// <summary>
@@ -1727,14 +1715,7 @@ namespace ComponentFactory.Krypton.Toolkit
             }
 
             // If nothing found then use the base palette
-            if (retImage == null)
-            {
-                return _redirector.GetRadioButtonImage(enabled, checkState, tracking, pressed);
-            }
-            else
-            {
-                return retImage;
-            }
+            return retImage ?? _redirector.GetRadioButtonImage(enabled, checkState, tracking, pressed);
         }
 
         /// <summary>
@@ -1768,14 +1749,7 @@ namespace ComponentFactory.Krypton.Toolkit
             }
 
             // If nothing found then use the base palette
-            if (retImage == null)
-            {
-                return _redirector.GetDropDownButtonImage(state);
-            }
-            else
-            {
-                return retImage;
-            }
+            return retImage ?? _redirector.GetDropDownButtonImage(state);
         }
 
         /// <summary>
@@ -1787,14 +1761,7 @@ namespace ComponentFactory.Krypton.Toolkit
             Image retImage = Images.ContextMenu.Checked;
 
             // If nothing found then use the base palette
-            if (retImage == null)
-            {
-                return _redirector.GetContextMenuCheckedImage();
-            }
-            else
-            {
-                return retImage;
-            }
+            return retImage ?? _redirector.GetContextMenuCheckedImage();
         }
 
         /// <summary>
@@ -1806,14 +1773,7 @@ namespace ComponentFactory.Krypton.Toolkit
             Image retImage = Images.ContextMenu.Indeterminate;
 
             // If nothing found then use the base palette
-            if (retImage == null)
-            {
-                return _redirector.GetContextMenuIndeterminateImage();
-            }
-            else
-            {
-                return retImage;
-            }
+            return retImage ?? _redirector.GetContextMenuIndeterminateImage();
         }
 
         /// <summary>
@@ -1825,14 +1785,7 @@ namespace ComponentFactory.Krypton.Toolkit
             Image retImage = Images.ContextMenu.SubMenu;
 
             // If nothing found then use the base palette
-            if (retImage == null)
-            {
-                return _redirector.GetContextMenuSubMenuImage();
-            }
-            else
-            {
-                return retImage;
-            }
+            return retImage ?? _redirector.GetContextMenuSubMenuImage();
         }
 
         /// <summary>
@@ -1887,14 +1840,7 @@ namespace ComponentFactory.Krypton.Toolkit
             }
 
             // If nothing found then use the base palette
-            if (retImage == null)
-            {
-                return _redirector.GetGalleryButtonImage(button, state);
-            }
-            else
-            {
-                return retImage;
-            }
+            return retImage ?? _redirector.GetGalleryButtonImage(button, state);
         }
         #endregion
 
@@ -3036,7 +2982,7 @@ namespace ComponentFactory.Krypton.Toolkit
                                 _basePaletteMode = tempMode;
                                 _basePalette = tempPalette;
 
-                                throw new ArgumentOutOfRangeException("value", "Cannot use palette that would create a circular reference");
+                                throw new ArgumentOutOfRangeException(nameof(value), "Cannot use palette that would create a circular reference");
                             }
                             else
                             {
@@ -3103,7 +3049,7 @@ namespace ComponentFactory.Krypton.Toolkit
                         _basePaletteMode = tempMode;
                         _basePalette = tempPalette;
 
-                        throw new ArgumentOutOfRangeException("value", "Cannot use palette that would create a circular reference");
+                        throw new ArgumentOutOfRangeException(nameof(value), "Cannot use palette that would create a circular reference");
                     }
                     else
                     {
@@ -3170,14 +3116,9 @@ namespace ComponentFactory.Krypton.Toolkit
                             _baseRenderMode = value;
 
                             // If inheriting then we do not need a base renderer
-                            if (value == RendererMode.Inherit)
-                            {
-                                _baseRenderer = null;
-                            }
-                            else
-                            {
-                                _baseRenderer = KryptonManager.GetRendererForMode(_baseRenderMode);
-                            }
+                            _baseRenderer = value == RendererMode.Inherit
+                                ? null
+                                : KryptonManager.GetRendererForMode(_baseRenderMode);
 
                             // Fire events to indicate a change in palette values
                             // (because renderer has changed the palette need redrawing)
@@ -3706,16 +3647,9 @@ namespace ComponentFactory.Krypton.Toolkit
                                             else
                                             {
                                                 // Have we already encountered the image?
-                                                if (imageCache.ContainsKey(valueValue))
-                                                {
-                                                    // Push the image from the cache into the property
-                                                    prop.SetValue(obj, imageCache[valueValue], null);
-                                                }
-                                                else
-                                                {
-                                                    // Cannot find image to set to empty
-                                                    prop.SetValue(obj, null, null);
-                                                }
+                                                prop.SetValue(obj,
+                                                    imageCache.ContainsKey(valueValue) ? imageCache[valueValue] : null,
+                                                    null);
                                             }
                                         }
                                         else

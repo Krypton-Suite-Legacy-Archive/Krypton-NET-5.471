@@ -1,11 +1,12 @@
 ﻿// *****************************************************************************
-// 
-//  © Component Factory Pty Ltd, modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2010 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//	The software and associated documentation supplied hereunder are the 
+// BSD 3-Clause License (https://github.com/ComponentFactory/Krypton/blob/master/LICENSE)
+//  © Component Factory Pty Ltd, 2006-2018, All rights reserved.
+// The software and associated documentation supplied hereunder are the 
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.7.0.0 	www.ComponentFactory.com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 
 using System;
@@ -188,13 +189,9 @@ namespace ComponentFactory.Krypton.Ribbon
         public ViewBase GetLastQATView()
         {
             // Last view is the extra button if defined
-            if (_extraButton != null)
-            {
-                return _extraButton;
-            }
+            return _extraButton ?? _borderContents.GetLastQATView();
 
             // Find the last qat button
-            return _borderContents.GetLastQATView();
         }
         #endregion
 
@@ -227,14 +224,7 @@ namespace ComponentFactory.Krypton.Ribbon
         public ViewBase GetPreviousQATView(ViewBase qatButton)
         {
             // If on the extra button then find the right most qat button instead
-            if (qatButton == _extraButton)
-            {
-                return _borderContents.GetLastQATView();
-            }
-            else
-            {
-                return _borderContents.GetPreviousQATView(qatButton);
-            }
+            return qatButton == _extraButton ? _borderContents.GetLastQATView() : _borderContents.GetPreviousQATView(qatButton);
         }
         #endregion
 
@@ -296,14 +286,7 @@ namespace ComponentFactory.Krypton.Ribbon
 
             // Only if border is visible do we need to find the latest overflow value
             // otherwise it must be a customization image because there are no buttons
-            if (_border.Visible)
-            {
-                _extraButton.Overflow = _borderContents.Overflow;
-            }
-            else
-            {
-                _extraButton.Overflow = false;
-            }
+            _extraButton.Overflow = _border.Visible && _borderContents.Overflow;
         }
 
         private void OnExtraButtonClick(object sender, EventHandler finishDelegate)

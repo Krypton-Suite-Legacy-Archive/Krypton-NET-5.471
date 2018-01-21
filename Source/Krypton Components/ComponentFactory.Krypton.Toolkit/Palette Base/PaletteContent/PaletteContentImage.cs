@@ -1,11 +1,12 @@
 ﻿// *****************************************************************************
-// 
-//  © Component Factory Pty Ltd, modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2010 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//	The software and associated documentation supplied hereunder are the 
+// BSD 3-Clause License (https://github.com/ComponentFactory/Krypton/blob/master/LICENSE)
+//  © Component Factory Pty Ltd, 2006-2018, All rights reserved.
+// The software and associated documentation supplied hereunder are the 
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.7.0.0 	www.ComponentFactory.com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 
 using System.Drawing;
@@ -96,19 +97,9 @@ namespace ComponentFactory.Krypton.Toolkit
 		[RefreshPropertiesAttribute(RefreshProperties.All)]
 		public PaletteRelativeAlign ImageH
 		{
-			get 
-            {
-                if (_storage == null)
-                {
-                    return PaletteRelativeAlign.Inherit;
-                }
-                else
-                {
-                    return _storage.ContentImageH;
-                }
-            }
+		    get => _storage?.ContentImageH ?? PaletteRelativeAlign.Inherit;
 
-			set
+		    set
 			{
                 if (_storage != null)
                 {
@@ -146,19 +137,9 @@ namespace ComponentFactory.Krypton.Toolkit
 		[RefreshPropertiesAttribute(RefreshProperties.All)]
 		public PaletteRelativeAlign ImageV
 		{
-            get
-            {
-                if (_storage == null)
-                {
-                    return PaletteRelativeAlign.Inherit;
-                }
-                else
-                {
-                    return _storage.ContentImageV;
-                }
-            }
+            get => _storage?.ContentImageV ?? PaletteRelativeAlign.Inherit;
 
-			set
+		    set
 			{
                 if (_storage != null)
                 {
@@ -196,19 +177,9 @@ namespace ComponentFactory.Krypton.Toolkit
 		[RefreshPropertiesAttribute(RefreshProperties.All)]
 		public PaletteImageEffect Effect
 		{
-            get
-            {
-                if (_storage == null)
-                {
-                    return PaletteImageEffect.Inherit;
-                }
-                else
-                {
-                    return _storage.ContentEffect;
-                }
-            }
+            get => _storage?.ContentEffect ?? PaletteImageEffect.Inherit;
 
-			set
+		    set
 			{
                 if (_storage != null)
                 {
@@ -246,17 +217,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [RefreshPropertiesAttribute(RefreshProperties.All)]
         public Color ImageColorMap
         {
-            get
-            {
-                if (_storage == null)
-                {
-                    return Color.Empty;
-                }
-                else
-                {
-                    return _storage.ContentImageColorMap;
-                }
-            }
+            get => _storage?.ContentImageColorMap ?? Color.Empty;
 
             set
             {
@@ -296,17 +257,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [RefreshPropertiesAttribute(RefreshProperties.All)]
         public Color ImageColorTo
         {
-            get
-            {
-                if (_storage == null)
-                {
-                    return Color.Empty;
-                }
-                else
-                {
-                    return _storage.ContentImageColorTo;
-                }
-            }
+            get => _storage?.ContentImageColorTo ?? Color.Empty;
 
             set
             {

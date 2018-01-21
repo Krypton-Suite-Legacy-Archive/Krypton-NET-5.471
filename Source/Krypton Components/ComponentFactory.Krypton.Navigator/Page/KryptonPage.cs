@@ -1,11 +1,12 @@
 ﻿// *****************************************************************************
-// 
-//  © Component Factory Pty Ltd, modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2010 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//	The software and associated documentation supplied hereunder are the 
+// BSD 3-Clause License (https://github.com/ComponentFactory/Krypton/blob/master/LICENSE)
+//  © Component Factory Pty Ltd, 2006-2018, All rights reserved.
+// The software and associated documentation supplied hereunder are the 
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.7.0.0 	www.ComponentFactory.com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 
 using System;
@@ -24,7 +25,7 @@ namespace ComponentFactory.Krypton.Navigator
     [ToolboxBitmap(typeof(KryptonPage), "ToolboxBitmaps.KryptonPage.bmp")]
     [DefaultEvent("Click")]
 	[DefaultProperty("Text")]
-    [Designer("ComponentFactory.Krypton.Navigator.KryptonPageDesigner, ComponentFactory.Krypton.Design, Version=4.71.0.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e")]
+    [Designer("ComponentFactory.Krypton.Navigator.KryptonPageDesigner, ComponentFactory.Krypton.Design, Version=4.70.0.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e")]
     [DesignerCategory("code")]
 	[DesignTimeVisible(false)]
     public class KryptonPage : VisualPanel
@@ -1266,7 +1267,7 @@ namespace ComponentFactory.Krypton.Navigator
         protected override void OnCreateControl()
         {
             base.OnCreateControl();
-            this.OnLoad(EventArgs.Empty);
+            OnLoad(EventArgs.Empty);
         }
 
         /// <summary>
@@ -1295,14 +1296,7 @@ namespace ComponentFactory.Krypton.Navigator
                     Point mousePt = new Point(PI.LOWORD(m.LParam), PI.HIWORD(m.LParam));
 
                     // If keyboard activated, the menu position is centered
-                    if (((int)((long)m.LParam)) == -1)
-                    {
-                        mousePt = new Point(Width / 2, Height / 2);
-                    }
-                    else
-                    {
-                        mousePt = PointToClient(mousePt);
-                    }
+                    mousePt = ((int)((long)m.LParam)) == -1 ? new Point(Width / 2, Height / 2) : PointToClient(mousePt);
 
                     // If the mouse posiiton is within our client area
                     if (ClientRectangle.Contains(mousePt))

@@ -1,11 +1,12 @@
 ﻿// *****************************************************************************
-// 
-//  © Component Factory Pty Ltd, modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2010 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//	The software and associated documentation supplied hereunder are the 
+// BSD 3-Clause License (https://github.com/ComponentFactory/Krypton/blob/master/LICENSE)
+//  © Component Factory Pty Ltd, 2006-2018, All rights reserved.
+// The software and associated documentation supplied hereunder are the 
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.7.0.0 	www.ComponentFactory.com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 
 using System.Drawing;
@@ -16,7 +17,7 @@ namespace ComponentFactory.Krypton.Ribbon
 {
     internal class DesignTimeDraw
     {
-        #region Statis Fields
+        #region Static Fields
 
         private const int DESIGN_FLAP_WIDTH = 12;
         private const int DESIGN_SEP_WIDTH = 6;
@@ -52,16 +53,9 @@ namespace ComponentFactory.Krypton.Ribbon
                                     Rectangle clientRect,
                                     PaletteState state)
         {
-            Color c;
-
-            if (state == PaletteState.Normal)
-            {
-                c = ribbon.StateCommon.RibbonGeneral.GetRibbonGroupSeparatorDark(PaletteState.Normal);
-            }
-            else
-            {
-                c = ribbon.StateCommon.RibbonGroupButton.Back.GetBackColor1(PaletteState.Tracking);
-            }
+            Color c = state == PaletteState.Normal
+                ? ribbon.StateCommon.RibbonGeneral.GetRibbonGroupSeparatorDark(PaletteState.Normal)
+                : ribbon.StateCommon.RibbonGroupButton.Back.GetBackColor1(PaletteState.Tracking);
 
             // Draw entire area in color
             using (SolidBrush darkBrush = new SolidBrush(c))
@@ -84,16 +78,9 @@ namespace ComponentFactory.Krypton.Ribbon
                                         Rectangle clientRect,
                                         PaletteState state)
         {
-            Color c;
-
-            if (state == PaletteState.Normal)
-            {
-                c = ControlPaint.Dark(ribbon.StateCommon.RibbonGeneral.GetRibbonGroupSeparatorDark(PaletteState.Normal));
-            }
-            else
-            {
-                c = ribbon.StateCommon.RibbonGroupButton.Back.GetBackColor1(PaletteState.Tracking);
-            }
+            Color c = state == PaletteState.Normal
+                ? ControlPaint.Dark(ribbon.StateCommon.RibbonGeneral.GetRibbonGroupSeparatorDark(PaletteState.Normal))
+                : ribbon.StateCommon.RibbonGroupButton.Back.GetBackColor1(PaletteState.Tracking);
 
             // Draw border around entire area
             Rectangle drawRect = clientRect;

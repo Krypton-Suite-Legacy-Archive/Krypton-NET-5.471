@@ -1,11 +1,12 @@
 ﻿// *****************************************************************************
-// 
-//  © Component Factory Pty Ltd, modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2010 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//	The software and associated documentation supplied hereunder are the 
+// BSD 3-Clause License (https://github.com/ComponentFactory/Krypton/blob/master/LICENSE)
+//  © Component Factory Pty Ltd, 2006-2018, All rights reserved.
+// The software and associated documentation supplied hereunder are the 
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.7.0.0 	www.ComponentFactory.com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 
 using System.Drawing;
@@ -86,14 +87,7 @@ namespace ComponentFactory.Krypton.Toolkit
         {
             PaletteBorderEdge inherit = GetInherit(state);
 
-            if (inherit != null)
-            {
-                return inherit.GetBackDraw(state);
-            }
-            else
-            {
-                return Target.GetBorderDraw(style, state);
-            }
+            return inherit?.GetBackDraw(state) ?? Target.GetBorderDraw(style, state);
         }
 
         /// <summary>
@@ -117,14 +111,7 @@ namespace ComponentFactory.Krypton.Toolkit
         {
             PaletteBorderEdge inherit = GetInherit(state);
 
-            if (inherit != null)
-            {
-                return inherit.GetBackGraphicsHint(state);
-            }
-            else
-            {
-                return Target.GetBorderGraphicsHint(style, state);
-            }
+            return inherit?.GetBackGraphicsHint(state) ?? Target.GetBorderGraphicsHint(style, state);
         }
 
         /// <summary>
@@ -137,14 +124,7 @@ namespace ComponentFactory.Krypton.Toolkit
         {
             PaletteBorderEdge inherit = GetInherit(state);
 
-            if (inherit != null)
-            {
-                return inherit.GetBackColor1(state);
-            }
-            else
-            {
-                return Target.GetBorderColor1(style, state);
-            }
+            return inherit?.GetBackColor1(state) ?? Target.GetBorderColor1(style, state);
         }
 
         /// <summary>
@@ -157,14 +137,7 @@ namespace ComponentFactory.Krypton.Toolkit
         {
             PaletteBorderEdge inherit = GetInherit(state);
 
-            if (inherit != null)
-            {
-                return inherit.GetBackColor2(state);
-            }
-            else
-            {
-                return Target.GetBorderColor2(style, state);
-            }
+            return inherit?.GetBackColor2(state) ?? Target.GetBorderColor2(style, state);
         }
 
         /// <summary>
@@ -177,14 +150,7 @@ namespace ComponentFactory.Krypton.Toolkit
         {
             PaletteBorderEdge inherit = GetInherit(state);
 
-            if (inherit != null)
-            {
-                return inherit.GetBackColorStyle(state);
-            }
-            else
-            {
-                return Target.GetBorderColorStyle(style, state);
-            }
+            return inherit?.GetBackColorStyle(state) ?? Target.GetBorderColorStyle(style, state);
         }
 
         /// <summary>
@@ -197,14 +163,7 @@ namespace ComponentFactory.Krypton.Toolkit
         {
             PaletteBorderEdge inherit = GetInherit(state);
 
-            if (inherit != null)
-            {
-                return inherit.GetBackColorAlign(state);
-            }
-            else
-            {
-                return Target.GetBorderColorAlign(style, state);
-            }
+            return inherit?.GetBackColorAlign(state) ?? Target.GetBorderColorAlign(style, state);
         }
 
         /// <summary>
@@ -217,14 +176,7 @@ namespace ComponentFactory.Krypton.Toolkit
         {
             PaletteBorderEdge inherit = GetInherit(state);
 
-            if (inherit != null)
-            {
-                return inherit.GetBackColorAngle(state);
-            }
-            else
-            {
-                return Target.GetBorderColorAngle(style, state);
-            }
+            return inherit?.GetBackColorAngle(state) ?? Target.GetBorderColorAngle(style, state);
         }
 
         /// <summary>
@@ -237,14 +189,7 @@ namespace ComponentFactory.Krypton.Toolkit
         {
             PaletteBorderEdge inherit = GetInherit(state);
 
-            if (inherit != null)
-            {
-                return inherit.GetBorderWidth(state);
-            }
-            else
-            {
-                return Target.GetBorderWidth(style, state);
-            }
+            return inherit?.GetBorderWidth(state) ?? Target.GetBorderWidth(style, state);
         }
 
         /// <summary>
@@ -268,14 +213,7 @@ namespace ComponentFactory.Krypton.Toolkit
         {
             PaletteBorderEdge inherit = GetInherit(state);
 
-            if (inherit != null)
-            {
-                return inherit.GetBackImage(state);
-            }
-            else
-            {
-                return Target.GetBorderImage(style, state);
-            }
+            return inherit?.GetBackImage(state) ?? Target.GetBorderImage(style, state);
         }
 
         /// <summary>
@@ -288,14 +226,7 @@ namespace ComponentFactory.Krypton.Toolkit
         {
             PaletteBorderEdge inherit = GetInherit(state);
 
-            if (inherit != null)
-            {
-                return inherit.GetBackImageStyle(state);
-            }
-            else
-            {
-                return Target.GetBorderImageStyle(style, state);
-            }
+            return inherit?.GetBackImageStyle(state) ?? Target.GetBorderImageStyle(style, state);
         }
 
         /// <summary>
@@ -308,14 +239,7 @@ namespace ComponentFactory.Krypton.Toolkit
         {
             PaletteBorderEdge inherit = GetInherit(state);
 
-            if (inherit != null)
-            {
-                return inherit.GetBackImageAlign(state);
-            }
-            else
-            {
-                return Target.GetBorderImageAlign(style, state);
-            }
+            return inherit?.GetBackImageAlign(state) ?? Target.GetBorderImageAlign(style, state);
         }    
         #endregion
 

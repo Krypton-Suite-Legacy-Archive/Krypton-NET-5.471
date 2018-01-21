@@ -1,11 +1,12 @@
 ﻿// *****************************************************************************
-// 
-//  © Component Factory Pty Ltd, modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2010 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//	The software and associated documentation supplied hereunder are the 
+// BSD 3-Clause License (https://github.com/ComponentFactory/Krypton/blob/master/LICENSE)
+//  © Component Factory Pty Ltd, 2006-2018, All rights reserved.
+// The software and associated documentation supplied hereunder are the 
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.7.0.0 	www.ComponentFactory.com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 
 using System;
@@ -24,7 +25,7 @@ namespace ComponentFactory.Krypton.Ribbon
     [ToolboxBitmap(typeof(KryptonGallery), "ToolboxBitmaps.KryptonGallery.bmp")]
     [DefaultEvent("SelectedIndexChanged")]
 	[DefaultProperty("SelectedIndex")]
-    [Designer("ComponentFactory.Krypton.Ribbon.KryptonGalleryDesigner, ComponentFactory.Krypton.Design, Version=4.71.0.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e")]
+    [Designer("ComponentFactory.Krypton.Ribbon.KryptonGalleryDesigner, ComponentFactory.Krypton.Design, Version=4.70.0.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e")]
     [DesignerCategory("code")]
     [Description("Select from a group of possible images.")]
     [ClassInterface(ClassInterfaceType.AutoDispatch)]
@@ -447,7 +448,7 @@ namespace ComponentFactory.Krypton.Ribbon
         public void BringIntoView(int index)
         {
             // Get number of images available
-            int images = (_imageList != null) ? _imageList.Images.Count : 0;
+            int images = _imageList?.Images.Count ?? 0;
 
             // Check the index is within range of what we actually have
             if ((index >= 0) && (index < images))
@@ -773,13 +774,9 @@ namespace ComponentFactory.Krypton.Ribbon
         internal Component DesignerComponentFromPoint(Point pt)
         {
             // Ignore call as view builder is already destructed
-            if (IsDisposed)
-            {
-                return null;
-            }
+            return IsDisposed ? null : ViewManager.ComponentFromPoint(pt);
 
             // Ask the current view for a decision
-            return ViewManager.ComponentFromPoint(pt);
         }
 
         internal void DesignerMouseLeave()
@@ -957,35 +954,14 @@ namespace ComponentFactory.Krypton.Ribbon
 
             // Find the new state of the main view element
             PaletteState state;
-            if (IsActive)
-            {
-                state = PaletteState.Tracking;
-            }
-            else
-            {
-                state = PaletteState.Normal;
-            }
+            state = IsActive ? PaletteState.Tracking : PaletteState.Normal;
 
             _drawDocker.ElementState = state;
         }
 
         private PaletteGalleryState GetGalleryState()
         {
-            if (Enabled)
-            {
-                if (IsActive)
-                {
-                    return StateActive;
-                }
-                else
-                {
-                    return StateNormal;
-                }
-            }
-            else
-            {
-                return StateDisabled;
-            }
+            return Enabled ? (IsActive ? StateActive : StateNormal) : StateDisabled;
         }
 
         private void OnTrackingTick(object sender, EventArgs e)

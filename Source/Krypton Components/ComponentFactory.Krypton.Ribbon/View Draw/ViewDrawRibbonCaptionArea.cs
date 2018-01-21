@@ -1,11 +1,12 @@
 ﻿// *****************************************************************************
-// 
-//  © Component Factory Pty Ltd, modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2010 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//	The software and associated documentation supplied hereunder are the 
+// BSD 3-Clause License (https://github.com/ComponentFactory/Krypton/blob/master/LICENSE)
+//  © Component Factory Pty Ltd, 2006-2018, All rights reserved.
+// The software and associated documentation supplied hereunder are the 
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.7.0.0 	www.ComponentFactory.com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 
 using System;
@@ -207,20 +208,8 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <summary>
         /// Get the quick access toolbar view that is currently visible
         /// </summary>
-        public ViewLayoutRibbonQATMini VisibleQAT
-        {
-            get
-            {
-                if (UsingCustomChrome)
-                {
-                    return _captionQAT;
-                }
-                else
-                {
-                    return _nonCaptionQAT;
-                }
-            }
-        }
+        public ViewLayoutRibbonQATMini VisibleQAT => UsingCustomChrome ? _captionQAT : _nonCaptionQAT;
+
         #endregion
 
         #region UpdateQAT
@@ -321,20 +310,7 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <summary>
         /// Gets the window borders of the krypton form.
         /// </summary>
-        public Padding RealWindowBorders
-        {
-            get
-            {
-                if (KryptonForm != null)
-                {
-                    return KryptonForm.RealWindowBorders;
-                }
-                else
-                {
-                    return Padding.Empty;
-                }
-            }
-        }
+        public Padding RealWindowBorders => KryptonForm?.RealWindowBorders ?? Padding.Empty;
 
         #endregion
 
@@ -414,7 +390,7 @@ namespace ComponentFactory.Krypton.Ribbon
         /// </summary>
         protected NeedPaintHandler NeedPaintDelegate
         {
-            [System.Diagnostics.DebuggerStepThrough]
+            [DebuggerStepThrough]
             get;
         }
 
@@ -475,8 +451,10 @@ namespace ComponentFactory.Krypton.Ribbon
             Add(_nonCaptionQAT, ViewDockStyle.Left);
             Add(_otherAppButton, ViewDockStyle.Left);
 
+            // ReSharper disable RedundantBaseQualifier
             // Update base class to use correct palette interface
             base.SetPalettes(_redirectCaption.PaletteBack, _redirectCaption.PaletteBorder);
+            // ReSharper restore RedundantBaseQualifier
         }
 
         private void SetupParentMonitoring()

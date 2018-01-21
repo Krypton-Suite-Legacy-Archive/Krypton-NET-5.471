@@ -1,11 +1,12 @@
 ﻿// *****************************************************************************
-// 
-//  © Component Factory Pty Ltd, modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2010 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//	The software and associated documentation supplied hereunder are the 
+// BSD 3-Clause License (https://github.com/ComponentFactory/Krypton/blob/master/LICENSE)
+//  © Component Factory Pty Ltd, 2006-2018, All rights reserved.
+// The software and associated documentation supplied hereunder are the 
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.7.0.0 	www.ComponentFactory.com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 
 using System;
@@ -69,7 +70,7 @@ namespace ComponentFactory.Krypton.Ribbon
             // Validate the parameter reference
             if (component == null)
             {
-                throw new ArgumentNullException("component");
+                throw new ArgumentNullException(nameof(component));
             }
 
             // Let base class do standard stuff
@@ -432,11 +433,11 @@ namespace ComponentFactory.Krypton.Ribbon
                     _typeSplitMenu = new ToolStripMenuItem("Split", null, OnTypeSplit);
                     _typeMenu = new ToolStripMenuItem("Type");
                     _typeMenu.DropDownItems.AddRange(new ToolStripItem[] { _typePushMenu, _typeCheckMenu, _typeDropDownMenu, _typeSplitMenu });
-                    _moveFirstMenu = new ToolStripMenuItem("Move Cluster Button First", ComponentFactory.Krypton.Design.Properties.Resources.MoveFirst, OnMoveFirst);
-                    _movePreviousMenu = new ToolStripMenuItem("Move Cluster Button Previous", ComponentFactory.Krypton.Design.Properties.Resources.MovePrevious, OnMovePrevious);
-                    _moveNextMenu = new ToolStripMenuItem("Move Cluster Button Next", ComponentFactory.Krypton.Design.Properties.Resources.MoveNext, OnMoveNext);
-                    _moveLastMenu = new ToolStripMenuItem("Move Cluster Button Last", ComponentFactory.Krypton.Design.Properties.Resources.MoveLast, OnMoveLast);
-                    _deleteButtonMenu = new ToolStripMenuItem("Delete Cluster Button", ComponentFactory.Krypton.Design.Properties.Resources.delete2, OnDeleteButton);
+                    _moveFirstMenu = new ToolStripMenuItem("Move Cluster Button First", Design.Properties.Resources.MoveFirst, OnMoveFirst);
+                    _movePreviousMenu = new ToolStripMenuItem("Move Cluster Button Previous", Design.Properties.Resources.MovePrevious, OnMovePrevious);
+                    _moveNextMenu = new ToolStripMenuItem("Move Cluster Button Next", Design.Properties.Resources.MoveNext, OnMoveNext);
+                    _moveLastMenu = new ToolStripMenuItem("Move Cluster Button Last", Design.Properties.Resources.MoveLast, OnMoveLast);
+                    _deleteButtonMenu = new ToolStripMenuItem("Delete Cluster Button", Design.Properties.Resources.delete2, OnDeleteButton);
                     _cms.Items.AddRange(new ToolStripItem[] { _toggleHelpersMenu, new ToolStripSeparator(),
                                                               _visibleMenu, _enabledMenu, _checkedMenu, _typeMenu, new ToolStripSeparator(),
                                                               _moveFirstMenu, _movePreviousMenu, _moveNextMenu, _moveLastMenu, new ToolStripSeparator(),

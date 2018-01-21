@@ -1,11 +1,12 @@
 ﻿// *****************************************************************************
-// 
-//  © Component Factory Pty Ltd, modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2010 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//	The software and associated documentation supplied hereunder are the 
+// BSD 3-Clause License (https://github.com/ComponentFactory/Krypton/blob/master/LICENSE)
+//  © Component Factory Pty Ltd, 2006-2018, All rights reserved.
+// The software and associated documentation supplied hereunder are the 
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.7.0.0 	www.ComponentFactory.com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 
 using System;
@@ -381,51 +382,21 @@ namespace ComponentFactory.Krypton.Ribbon
         /// </summary>
         /// <returns>Image value.</returns>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
-        public Image GetImage()
-        {
-            if (KryptonCommand != null)
-            {
-                return KryptonCommand.ImageSmall;
-            }
-            else
-            {
-                return Image;
-            }
-        }
+        public Image GetImage() => KryptonCommand?.ImageSmall ?? Image;
 
         /// <summary>
         /// Gets the entry text.
         /// </summary>
         /// <returns>Text value.</returns>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
-        public string GetText()
-        {
-            if (KryptonCommand != null)
-            {
-                return KryptonCommand.TextLine1;
-            }
-            else
-            {
-                return Text;
-            }
-        }
+        public string GetText() => KryptonCommand?.TextLine1 ?? Text;
 
         /// <summary>
         /// Gets the entry enabled state.
         /// </summary>
         /// <returns>Enabled value.</returns>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
-        public bool GetEnabled()
-        {
-            if (KryptonCommand != null)
-            {
-                return KryptonCommand.Enabled;
-            }
-            else
-            {
-                return Enabled;
-            }
-        }
+        public bool GetEnabled() => KryptonCommand?.Enabled ?? Enabled;
 
         /// <summary>
         /// Gets the entry shortcut keys state.

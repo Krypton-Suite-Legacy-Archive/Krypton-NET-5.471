@@ -1,11 +1,12 @@
 ﻿// *****************************************************************************
-// 
-//  © Component Factory Pty Ltd, modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2010 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//	The software and associated documentation supplied hereunder are the 
+// BSD 3-Clause License (https://github.com/ComponentFactory/Krypton/blob/master/LICENSE)
+//  © Component Factory Pty Ltd, 2006-2018, All rights reserved.
+// The software and associated documentation supplied hereunder are the 
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.7.0.0 	www.ComponentFactory.com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 
 using System;
@@ -142,10 +143,10 @@ namespace ComponentFactory.Krypton.Toolkit
                 ((m.Msg >= 0x00A0) && (m.Msg <= 0x00A9)))  
             {
                 // Discover target control for message
-                if (Control.FromHandle(m.HWnd) != null)
+                if (FromHandle(m.HWnd) != null)
                 {
                     // Find the form that the control is inside
-                    Form f = Control.FromHandle(m.HWnd).FindForm();
+                    Form f = FromHandle(m.HWnd).FindForm();
 
                     // If the message is for this dialog then let it be dispatched
                     if ((f != null) && (f == this))

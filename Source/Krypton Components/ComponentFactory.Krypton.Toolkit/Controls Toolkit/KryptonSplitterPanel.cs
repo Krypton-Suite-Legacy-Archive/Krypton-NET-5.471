@@ -1,11 +1,12 @@
 ﻿    // *****************************************************************************
-// 
-//  © Component Factory Pty Ltd, modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2010 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//	The software and associated documentation supplied hereunder are the 
+// BSD 3-Clause License (https://github.com/ComponentFactory/Krypton/blob/master/LICENSE)
+//  © Component Factory Pty Ltd, 2006-2018, All rights reserved.
+// The software and associated documentation supplied hereunder are the 
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.7.0.0 	www.ComponentFactory.com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 
 using System;
@@ -23,7 +24,7 @@ namespace ComponentFactory.Krypton.Toolkit
 	[ToolboxItem(false)]
 	[DesignerCategory("code")]
     [ToolboxBitmap(typeof(KryptonSplitterPanel), "ToolboxBitmaps.KryptonGroupPanel.bmp")]
-    [Designer("ComponentFactory.Krypton.Toolkit.KryptonSplitterPanelDesigner, ComponentFactory.Krypton.Design, Version=4.71.0.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e")]
+    [Designer("ComponentFactory.Krypton.Toolkit.KryptonSplitterPanelDesigner, ComponentFactory.Krypton.Design, Version=4.70.0.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e")]
     [Description("Enables you to group collections of controls.")]
     [Docking(DockingBehavior.Never)]
     [ClassInterface(ClassInterfaceType.AutoDispatch)]
@@ -177,19 +178,9 @@ namespace ComponentFactory.Krypton.Toolkit
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public new int Height
 		{
-			get
-			{
-				if (Collapsed)
-                {
-                    return 0;
-                }
-                else
-                {
-                    return base.Height;
-                }
-            }
+			get => Collapsed ? 0 : base.Height;
 
-			set => throw new NotSupportedException("Cannot set the Height of a KryptonSplitterPanel");
+	        set => throw new NotSupportedException("Cannot set the Height of a KryptonSplitterPanel");
 	    }
 
 		/// <summary>
@@ -262,19 +253,9 @@ namespace ComponentFactory.Krypton.Toolkit
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public new Size Size
 		{
-			get 
-			{
-				if (Collapsed)
-                {
-                    return Size.Empty;
-                }
-                else
-                {
-                    return base.Size;
-                }
-            }
+			get => Collapsed ? Size.Empty : base.Size;
 
-			set => base.Size = value;
+		    set => base.Size = value;
 		}
 
 		/// <summary>
@@ -321,19 +302,9 @@ namespace ComponentFactory.Krypton.Toolkit
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public new int Width
 		{
-			get
-			{
-				if (Collapsed)
-                {
-                    return 0;
-                }
-                else
-                {
-                    return base.Width;
-                }
-            }
+			get => Collapsed ? 0 : base.Width;
 
-			set => throw new NotSupportedException("Cannot set the Width of a KryptonSplitterPanel");
+		    set => throw new NotSupportedException("Cannot set the Width of a KryptonSplitterPanel");
 		}
 
 		#endregion

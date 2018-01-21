@@ -1,11 +1,12 @@
 ﻿// *****************************************************************************
-// 
-//  © Component Factory Pty Ltd, modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2010 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//	The software and associated documentation supplied hereunder are the 
+// BSD 3-Clause License (https://github.com/ComponentFactory/Krypton/blob/master/LICENSE)
+//  © Component Factory Pty Ltd, 2006-2018, All rights reserved.
+// The software and associated documentation supplied hereunder are the 
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.7.0.0 	www.ComponentFactory.com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 
 using System;
@@ -240,20 +241,7 @@ namespace ComponentFactory.Krypton.Ribbon
         #endregion
 
         #region Implementation
-        private bool Active
-        {
-            get
-            {
-                if (OwnerForm != null)
-                {
-                    return OwnerForm.WindowActive;
-                }
-                else
-                {
-                    return true;
-                }
-            }
-        }
+        private bool Active => OwnerForm == null || OwnerForm.WindowActive;
 
         private Padding BarPadding
         {
@@ -267,44 +255,18 @@ namespace ComponentFactory.Krypton.Ribbon
                     }
                     else
                     {
-                        if (OverlapAppButton)
-                        {
-                            return _minibarBorderPaddingOverlap;
-                        }
-                        else
-                        {
-                            return _minibarBorderPaddingNoOverlap;
-                        }
+                        return OverlapAppButton ? _minibarBorderPaddingOverlap : _minibarBorderPaddingNoOverlap;
                     }
                 }
                 else
                 {
-                    if (_ribbon.RibbonShape == PaletteRibbonShape.Office2010)
-                    {
-                        return _fullbarBorderPadding_2010;
-                    }
-                    else
-                    {
-                        return _fullbarBorderPadding_2007;
-                    }
+                    return _ribbon.RibbonShape == PaletteRibbonShape.Office2010 ? _fullbarBorderPadding_2010 : _fullbarBorderPadding_2007;
                 }
             }
         }
 
-        private int BarHeight
-        {
-            get
-            {
-                if (_minibar)
-                {
-                    return QAT_HEIGHT_MINI;
-                }
-                else
-                {
-                    return QAT_HEIGHT_FULL;
-                }
-            }
-        }
+        private int BarHeight => _minibar ? QAT_HEIGHT_MINI : QAT_HEIGHT_FULL;
+
         #endregion
     }
 }

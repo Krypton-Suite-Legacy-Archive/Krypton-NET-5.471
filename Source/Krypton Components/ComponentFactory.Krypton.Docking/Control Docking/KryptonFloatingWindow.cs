@@ -1,11 +1,12 @@
 ﻿// *****************************************************************************
-// 
-//  © Component Factory Pty Ltd, modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2010 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//	The software and associated documentation supplied hereunder are the 
+// BSD 3-Clause License (https://github.com/ComponentFactory/Krypton/blob/master/LICENSE)
+//  © Component Factory Pty Ltd, 2006-2018, All rights reserved.
+// The software and associated documentation supplied hereunder are the 
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.7.0.0 	www.ComponentFactory.com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 
 using System;
@@ -105,7 +106,7 @@ namespace ComponentFactory.Krypton.Docking
                 case PI.WM_NCLBUTTONDOWN:
                     {
                         // Perform a hit test to determine which area the mouse press is over at the moment
-                        uint result = PI.SendMessage(this.Handle, (int)PI.WM_NCHITTEST, 0, (uint)m.LParam);
+                        uint result = PI.SendMessage(Handle, (int)PI.WM_NCHITTEST, 0, (uint)m.LParam);
 
                         // Only want to override the behaviour of moving the window via the caption bar
                         if (result == PI.HITTEST_CAPTION)
@@ -273,14 +274,7 @@ namespace ComponentFactory.Krypton.Docking
                 if (FloatspaceControl.CellVisibleCount <= 1)
                 {
                     // Cell display mode depends on the number of tabs in the cell
-                    if (cell.Pages.VisibleCount == 1)
-                    {
-                        cell.NavigatorMode = NavigatorMode.HeaderGroup;
-                    }
-                    else
-                    {
-                        cell.NavigatorMode = NavigatorMode.HeaderGroupTab;
-                    }
+                    cell.NavigatorMode = cell.Pages.VisibleCount == 1 ? NavigatorMode.HeaderGroup : NavigatorMode.HeaderGroupTab;
                 }
                 else
                 {

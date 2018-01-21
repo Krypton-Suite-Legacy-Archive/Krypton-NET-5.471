@@ -1,11 +1,12 @@
 ﻿// *****************************************************************************
-// 
-//  © Component Factory Pty Ltd, modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2010 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//	The software and associated documentation supplied hereunder are the 
+// BSD 3-Clause License (https://github.com/ComponentFactory/Krypton/blob/master/LICENSE)
+//  © Component Factory Pty Ltd, 2006-2018, All rights reserved.
+// The software and associated documentation supplied hereunder are the 
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.7.0.0 	www.ComponentFactory.com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 
 using System;
@@ -64,7 +65,7 @@ namespace ComponentFactory.Krypton.Ribbon
             // Validate the parameter reference
             if (component == null)
             {
-                throw new ArgumentNullException("component");
+                throw new ArgumentNullException(nameof(component));
             }
 
             // Let base class do standard stuff
@@ -453,11 +454,11 @@ namespace ComponentFactory.Krypton.Ribbon
                     _cms = new ContextMenuStrip();
                     _toggleHelpersMenu = new ToolStripMenuItem("Design Helpers", null, OnToggleHelpers);
                     _visibleMenu = new ToolStripMenuItem("Visible", null, OnVisible);
-                    _moveFirstMenu = new ToolStripMenuItem("Move TextBox First", ComponentFactory.Krypton.Design.Properties.Resources.MoveFirst, OnMoveFirst);
-                    _movePreviousMenu = new ToolStripMenuItem("Move TextBox Previous", ComponentFactory.Krypton.Design.Properties.Resources.MovePrevious, OnMovePrevious);
-                    _moveNextMenu = new ToolStripMenuItem("Move TextBox Next", ComponentFactory.Krypton.Design.Properties.Resources.MoveNext, OnMoveNext);
-                    _moveLastMenu = new ToolStripMenuItem("Move TextBox Last", ComponentFactory.Krypton.Design.Properties.Resources.MoveLast, OnMoveLast);
-                    _deleteTextBoxMenu = new ToolStripMenuItem("Delete TextBox", ComponentFactory.Krypton.Design.Properties.Resources.delete2, OnDeleteTextBox);
+                    _moveFirstMenu = new ToolStripMenuItem("Move TextBox First", Design.Properties.Resources.MoveFirst, OnMoveFirst);
+                    _movePreviousMenu = new ToolStripMenuItem("Move TextBox Previous", Design.Properties.Resources.MovePrevious, OnMovePrevious);
+                    _moveNextMenu = new ToolStripMenuItem("Move TextBox Next", Design.Properties.Resources.MoveNext, OnMoveNext);
+                    _moveLastMenu = new ToolStripMenuItem("Move TextBox Last", Design.Properties.Resources.MoveLast, OnMoveLast);
+                    _deleteTextBoxMenu = new ToolStripMenuItem("Delete TextBox", Design.Properties.Resources.delete2, OnDeleteTextBox);
                     _cms.Items.AddRange(new ToolStripItem[] { _toggleHelpersMenu, new ToolStripSeparator(),
                                                               _visibleMenu, new ToolStripSeparator(),
                                                               _moveFirstMenu, _movePreviousMenu, _moveNextMenu, _moveLastMenu, new ToolStripSeparator(),

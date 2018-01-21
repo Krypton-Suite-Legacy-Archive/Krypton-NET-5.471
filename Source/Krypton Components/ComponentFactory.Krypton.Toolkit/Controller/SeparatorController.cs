@@ -1,11 +1,12 @@
 ﻿// *****************************************************************************
-// 
-//  © Component Factory Pty Ltd, modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2010 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//	The software and associated documentation supplied hereunder are the 
+// BSD 3-Clause License (https://github.com/ComponentFactory/Krypton/blob/master/LICENSE)
+//  © Component Factory Pty Ltd, 2006-2018, All rights reserved.
+// The software and associated documentation supplied hereunder are the 
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.7.0.0 	www.ComponentFactory.com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 
 using System;
@@ -88,6 +89,7 @@ namespace ComponentFactory.Krypton.Toolkit
         #region Instance Fields
 
         private readonly bool _splitCursors;
+        private bool _drawIndicator;
         private Point _downPosition;
         private Point _movementPoint;
         private int _separatorIncrements;
@@ -118,11 +120,23 @@ namespace ComponentFactory.Krypton.Toolkit
             _source = source;
             _splitCursors = splitCursors;
             DrawMoveIndicator = drawIndicator;
-		}
 
-		/// <summary>
-		/// Dispose of object resources.
-		/// </summary>
+            // Temporary fix for screen tearing artifact courtesy of Cocotteseb
+
+            if (Environment.OSVersion.Version.Major >= 10)
+            {
+                // Unless it flickers on Win10 : https://github.com/ComponentFactory/Krypton/issues/79
+                _drawIndicator = false;
+            }
+            else
+            {
+                _drawIndicator = drawIndicator;
+            }
+        }
+
+        /// <summary>
+        /// Dispose of object resources.
+        /// </summary>
         public void Dispose()
         {
             UnregisterFilter();
@@ -133,17 +147,28 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Gets and sets the drawing of the movement indicator.
         /// </summary>
-        public bool DrawMoveIndicator { get; set; }
+        public bool DrawMoveIndicator
+        {
+            get
+            {
+                return _drawIndicator;
+            }
+
+            set
+            {
+                _drawIndicator = value;
+            }
+        }
 
         #endregion
 
-        #region Mouse Notifications
-        /// <summary>
-		/// Mouse has moved inside the view.
-		/// </summary>
-        /// <param name="c">Reference to the source control instance.</param>
-        /// <param name="pt">Mouse position relative to control.</param>
-		public override void MouseMove(Control c, Point pt)
+            #region Mouse Notifications
+            /// <summary>
+            /// Mouse has moved inside the view.
+            /// </summary>
+            /// <param name="c">Reference to the source control instance.</param>
+            /// <param name="pt">Mouse position relative to control.</param>
+        public override void MouseMove(Control c, Point pt)
 		{
             // If the separator is allowed to be moved by the user
             if (_source.SeparatorCanMove)
@@ -298,6 +323,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="c">Reference to the source control instance.</param>
         /// <param name="e">A KeyEventArgs that contains the event data.</param>
+        /// <exception cref="ArgumentNullException"></exception>
         /// <returns>True if capturing input; otherwise false.</returns>
         public override bool KeyUp(Control c, KeyEventArgs e)
         {
@@ -306,7 +332,7 @@ namespace ComponentFactory.Krypton.Toolkit
             // Validate reference parameter
             if (e == null)
             {
-                throw new ArgumentNullException("e");
+                throw new ArgumentNullException(nameof(e));
             }
 
             // If the user pressed the escape key
@@ -555,31 +581,15 @@ namespace ComponentFactory.Krypton.Toolkit
             _movementPoint = newPoint;
         }
 
-        private Rectangle SplitRectangleFromPoint(Point pt)
-        {
-            if (_separatorOrientation == Orientation.Vertical)
-            {
-                return SplitRectangleFromPoint(pt, Target.ClientWidth);
-            }
-            else
-            {
-                return SplitRectangleFromPoint(pt, Target.ClientHeight);
-            }
-        }
+        private Rectangle SplitRectangleFromPoint(Point pt) => SplitRectangleFromPoint(pt,
+            _separatorOrientation == Orientation.Vertical ? Target.ClientWidth : Target.ClientHeight);
 
         private Rectangle SplitRectangleFromPoint(Point pt, int length)
         {
-            Rectangle splitRectangle;
-
             // Find the splitter rectangle based on the orientation
-            if (_separatorOrientation == Orientation.Vertical)
-            {
-                splitRectangle = new Rectangle(pt.X, _separatorBox.Y, length, Target.ClientHeight);
-            }
-            else
-            {
-                splitRectangle = new Rectangle(_separatorBox.X, pt.Y, Target.ClientWidth, length);
-            }
+            Rectangle splitRectangle = _separatorOrientation == Orientation.Vertical
+                ? new Rectangle(pt.X, _separatorBox.Y, length, Target.ClientHeight)
+                : new Rectangle(_separatorBox.X, pt.Y, Target.ClientWidth, length);
 
             return _source.SeparatorControl.RectangleToScreen(splitRectangle);
         }

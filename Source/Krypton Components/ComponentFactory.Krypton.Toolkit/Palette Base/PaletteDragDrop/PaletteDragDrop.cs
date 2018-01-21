@@ -1,11 +1,12 @@
 ﻿// *****************************************************************************
-// 
-//  © Component Factory Pty Ltd, modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2010 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//	The software and associated documentation supplied hereunder are the 
+// BSD 3-Clause License (https://github.com/ComponentFactory/Krypton/blob/master/LICENSE)
+//  © Component Factory Pty Ltd, 2006-2018, All rights reserved.
+// The software and associated documentation supplied hereunder are the 
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.7.0.0 	www.ComponentFactory.com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 
 using System.Drawing;
@@ -136,17 +137,9 @@ namespace ComponentFactory.Krypton.Toolkit
         /// Gets the feedback drawing method used.
         /// </summary>
         /// <returns>Color value.</returns>
-        public PaletteDragFeedback GetDragDropFeedback()
-        {
-            if (Feedback != PaletteDragFeedback.Inherit)
-            {
-                return Feedback;
-            }
-            else
-            {
-                return _inherit.GetDragDropFeedback();
-            }
-        }
+        public PaletteDragFeedback GetDragDropFeedback() =>
+            Feedback != PaletteDragFeedback.Inherit ? Feedback : _inherit.GetDragDropFeedback();
+
         #endregion
 
         #region SolidBack
@@ -175,26 +168,14 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Resets the SolidBack property to its default value.
         /// </summary>
-        public void ResetSolidBack()
-        {
-            SolidBack = Color.Empty;
-        }
+        public void ResetSolidBack() => SolidBack = Color.Empty;
 
         /// <summary>
         /// Gets the background color for a solid drag drop area.
         /// </summary>
         /// <returns>Color value.</returns>
-        public Color GetDragDropSolidBack()
-        {
-            if (SolidBack != Color.Empty)
-            {
-                return SolidBack;
-            }
-            else
-            {
-                return _inherit.GetDragDropSolidBack();
-            }
-        }
+        public Color GetDragDropSolidBack() => SolidBack != Color.Empty ? SolidBack : _inherit.GetDragDropSolidBack();
+
         #endregion
 
         #region SolidBorder
@@ -223,26 +204,15 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Resets the SolidBorder property to its default value.
         /// </summary>
-        public void ResetSolidBorder()
-        {
-            SolidBorder = Color.Empty;
-        }
+        public void ResetSolidBorder() => SolidBorder = Color.Empty;
 
         /// <summary>
         /// Gets the border color for a solid drag drop area.
         /// </summary>
         /// <returns>Color value.</returns>
-        public Color GetDragDropSolidBorder()
-        {
-            if (SolidBorder != Color.Empty)
-            {
-                return SolidBorder;
-            }
-            else
-            {
-                return _inherit.GetDragDropSolidBorder();
-            }
-        }
+        public Color GetDragDropSolidBorder() =>
+            SolidBorder != Color.Empty ? SolidBorder : _inherit.GetDragDropSolidBorder();
+
         #endregion
 
         #region SolidOpacity
@@ -271,26 +241,14 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Resets the SolidOpacity property to its default value.
         /// </summary>
-        public void ResetSolidOpacity()
-        {
-            SolidOpacity = -1.0f;
-        }
+        public void ResetSolidOpacity() => SolidOpacity = -1.0f;
 
         /// <summary>
         /// Gets the opacity of the solid area.
         /// </summary>
         /// <returns>Opacity ranging from 0 to 1.</returns>
-        public virtual float GetDragDropSolidOpacity()
-        {
-            if (SolidOpacity >= 0.0f)
-            {
-                return SolidOpacity;
-            }
-            else
-            {
-                return _inherit.GetDragDropSolidOpacity();
-            }
-        }
+        public virtual float GetDragDropSolidOpacity() => SolidOpacity >= 0.0f ? SolidOpacity : _inherit.GetDragDropSolidOpacity();
+
         #endregion
 
         #region DropDockBack
@@ -319,27 +277,16 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Resets the DropDockBack property to its default value.
         /// </summary>
-        public void ResetDropDockBack()
-        {
-            DropDockBack = Color.Empty;
-        }
+        public void ResetDropDockBack() => DropDockBack = Color.Empty;
 
 
         /// <summary>
         /// Gets the background color for the docking indicators area.
         /// </summary>
         /// <returns>Color value.</returns>
-        public Color GetDragDropDockBack()
-        {
-            if (DropDockBack != Color.Empty)
-            {
-                return DropDockBack;
-            }
-            else
-            {
-                return _inherit.GetDragDropDockBack();
-            }
-        }
+        public Color GetDragDropDockBack() =>
+            DropDockBack != Color.Empty ? DropDockBack : _inherit.GetDragDropDockBack();
+
         #endregion
 
         #region DropDockBorder
@@ -368,26 +315,15 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Resets the DropDockBorder property to its default value.
         /// </summary>
-        public void ResetDropDockBorder()
-        {
-            DropDockBorder = Color.Empty;
-        }
+        public void ResetDropDockBorder() => DropDockBorder = Color.Empty;
 
         /// <summary>
         /// Gets the border color for the docking indicators area.
         /// </summary>
         /// <returns>Color value.</returns>
-        public Color GetDragDropDockBorder()
-        {
-            if (DropDockBorder != Color.Empty)
-            {
-                return DropDockBorder;
-            }
-            else
-            {
-                return _inherit.GetDragDropDockBorder();
-            }
-        }
+        public Color GetDragDropDockBorder() =>
+            DropDockBorder != Color.Empty ? DropDockBorder : _inherit.GetDragDropDockBorder();
+
         #endregion
 
         #region DropDockActive
@@ -416,26 +352,15 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Resets the DropDockActive property to its default value.
         /// </summary>
-        public void ResetDropDockActive()
-        {
-            DropDockActive = Color.Empty;
-        }
+        public void ResetDropDockActive() => DropDockActive = Color.Empty;
 
         /// <summary>
         /// Gets the active color for docking indicators.
         /// </summary>
         /// <returns>Color value.</returns>
-        public Color GetDragDropDockActive()
-        {
-            if (DropDockActive != Color.Empty)
-            {
-                return DropDockActive;
-            }
-            else
-            {
-                return _inherit.GetDragDropDockActive();
-            }
-        }
+        public Color GetDragDropDockActive() =>
+            DropDockActive != Color.Empty ? DropDockActive : _inherit.GetDragDropDockActive();
+
         #endregion
 
         #region DropDockInactive
@@ -464,26 +389,14 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Resets the DropDockInactive property to its default value.
         /// </summary>
-        public void ResetDropDockInactive()
-        {
-            DropDockInactive = Color.Empty;
-        }
+        public void ResetDropDockInactive() => DropDockInactive = Color.Empty;
 
         /// <summary>
         /// Gets the inactive color for docking indicators.
         /// </summary>
         /// <returns>Color value.</returns>
-        public Color GetDragDropDockInactive()
-        {
-            if (DropDockInactive != Color.Empty)
-            {
-                return DropDockInactive;
-            }
-            else
-            {
-                return _inherit.GetDragDropDockInactive();
-            }
-        }
+        public Color GetDragDropDockInactive() => DropDockInactive != Color.Empty ? DropDockInactive : _inherit.GetDragDropDockInactive();
+
         #endregion
     }
 }

@@ -1,11 +1,12 @@
 ﻿// *****************************************************************************
-// 
-//  © Component Factory Pty Ltd, modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2010 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//	The software and associated documentation supplied hereunder are the 
+// BSD 3-Clause License (https://github.com/ComponentFactory/Krypton/blob/master/LICENSE)
+//  © Component Factory Pty Ltd, 2006-2018, All rights reserved.
+// The software and associated documentation supplied hereunder are the 
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.7.0.0 	www.ComponentFactory.com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 
 using System;
@@ -207,7 +208,7 @@ namespace ComponentFactory.Krypton.Ribbon
             Size preferredSize = Size.Empty;
 
             // Find total width and maximum height across all child elements
-            for (int i = 0; i < this.Count; i++)
+            for (int i = 0; i < Count; i++)
             {
                 ViewBase child = this[i];
 
@@ -287,10 +288,10 @@ namespace ComponentFactory.Krypton.Ribbon
             Overflow = false;
 
             // Are there any children to layout?
-            if (this.Count > 0)
+            if (Count > 0)
             {
                 // Position each item from left to right taking up entire height
-                for (int i = 0; i < this.Count; i++)
+                for (int i = 0; i < Count; i++)
                 {
                     ViewBase child = this[i];
 
@@ -382,17 +383,9 @@ namespace ComponentFactory.Krypton.Ribbon
         /// </summary>
         /// <param name="qatButton"></param>
         /// <returns>Element that matches button; otherwise null</returns>
-        public ViewBase ViewForButton(IQuickAccessToolbarButton qatButton)
-        {
-            if (_qatButtonToView.ContainsKey(qatButton))
-            {
-                return _qatButtonToView[qatButton];
-            }
-            else
-            {
-                return null;
-            }
-        }
+        public ViewBase ViewForButton(IQuickAccessToolbarButton qatButton) =>
+            _qatButtonToView.ContainsKey(qatButton) ? _qatButtonToView[qatButton] : null;
+
         #endregion
 
         #region GetFirstQATView

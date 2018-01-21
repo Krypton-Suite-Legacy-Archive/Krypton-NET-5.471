@@ -1,11 +1,12 @@
 ﻿// *****************************************************************************
-// 
-//  © Component Factory Pty Ltd, modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2010 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//	The software and associated documentation supplied hereunder are the 
+// BSD 3-Clause License (https://github.com/ComponentFactory/Krypton/blob/master/LICENSE)
+//  © Component Factory Pty Ltd, 2006-2018, All rights reserved.
+// The software and associated documentation supplied hereunder are the 
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.7.0.0 	www.ComponentFactory.com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 
 using System;
@@ -292,6 +293,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Background style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>PaletteGraphicsHint value.</returns>
         public override PaletteGraphicsHint GetBackGraphicsHint(PaletteBackStyle style, PaletteState state)
         {
@@ -381,7 +383,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 case PaletteBackStyle.GridDataCellCustom1:
                     return PaletteGraphicsHint.None;
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -390,6 +392,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Background style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>Color value.</returns>
         public override Color GetBackColor1(PaletteBackStyle style, PaletteState state)
         {
@@ -448,14 +451,7 @@ namespace ComponentFactory.Krypton.Toolkit
                     }
                 case PaletteBackStyle.GridDataCellList:
                 case PaletteBackStyle.GridDataCellCustom1:
-                    if (state == PaletteState.CheckedNormal)
-                    {
-                        return _ribbonColors[(int)SchemeOfficeColors.GridDataCellSelected];
-                    }
-                    else
-                    {
-                        return SystemColors.Window;
-                    }
+                    return state == PaletteState.CheckedNormal ? _ribbonColors[(int)SchemeOfficeColors.GridDataCellSelected] : SystemColors.Window;
 
                 case PaletteBackStyle.GridDataCellSheet:
                     if (state == PaletteState.CheckedNormal)
@@ -536,7 +532,7 @@ namespace ComponentFactory.Krypton.Toolkit
                             }
 
                         default:
-                            throw new ArgumentOutOfRangeException("state");
+                            throw new ArgumentOutOfRangeException(nameof(state));
                     }
                 case PaletteBackStyle.TabDock:
                 case PaletteBackStyle.TabDockAutoHidden:
@@ -552,7 +548,7 @@ namespace ComponentFactory.Krypton.Toolkit
                         case PaletteState.Tracking:
                             return SystemColors.Window;
                         default:
-                            throw new ArgumentOutOfRangeException("state");
+                            throw new ArgumentOutOfRangeException(nameof(state));
                     }
                 case PaletteBackStyle.HeaderForm:
                     if (state == PaletteState.Disabled)
@@ -713,7 +709,7 @@ namespace ComponentFactory.Krypton.Toolkit
                         case PaletteState.CheckedPressed:
                             return _buttonBackColors[4];
                         default:
-                            throw new ArgumentOutOfRangeException("state");
+                            throw new ArgumentOutOfRangeException(nameof(state));
                     }
                 case PaletteBackStyle.ButtonForm:
                 case PaletteBackStyle.ButtonFormClose:
@@ -733,7 +729,7 @@ namespace ComponentFactory.Krypton.Toolkit
                         case PaletteState.CheckedPressed:
                             return _ribbonColors[(int)SchemeOfficeColors.FormButtonBack1Pressed];
                         default:
-                            throw new ArgumentOutOfRangeException("state");
+                            throw new ArgumentOutOfRangeException(nameof(state));
                     }
                 case PaletteBackStyle.ButtonStandalone:
                 case PaletteBackStyle.ButtonAlternate:
@@ -805,10 +801,10 @@ namespace ComponentFactory.Krypton.Toolkit
                             }
 
                         default:
-                            throw new ArgumentOutOfRangeException("state");
+                            throw new ArgumentOutOfRangeException(nameof(state));
                     }
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -817,6 +813,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Background style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>Color value.</returns>
         public override Color GetBackColor2(PaletteBackStyle style, PaletteState state)
         {
@@ -939,7 +936,7 @@ namespace ComponentFactory.Krypton.Toolkit
                         case PaletteState.CheckedTracking:
                             return SystemColors.Window;
                         default:
-                            throw new ArgumentOutOfRangeException("state");
+                            throw new ArgumentOutOfRangeException(nameof(state));
                     }
                 case PaletteBackStyle.TabDock:
                     switch (state)
@@ -956,7 +953,7 @@ namespace ComponentFactory.Krypton.Toolkit
                         case PaletteState.CheckedTracking:
                             return SystemColors.Window;
                         default:
-                            throw new ArgumentOutOfRangeException("state");
+                            throw new ArgumentOutOfRangeException(nameof(state));
                     }
                 case PaletteBackStyle.TabDockAutoHidden:
                     switch (state)
@@ -972,7 +969,7 @@ namespace ComponentFactory.Krypton.Toolkit
                         case PaletteState.CheckedPressed:
                             return _buttonBackColors[3];
                         default:
-                            throw new ArgumentOutOfRangeException("state");
+                            throw new ArgumentOutOfRangeException(nameof(state));
                     }
                 case PaletteBackStyle.HeaderForm:
                     if (state == PaletteState.Disabled)
@@ -1131,7 +1128,7 @@ namespace ComponentFactory.Krypton.Toolkit
                         case PaletteState.CheckedPressed:
                             return _buttonBackColors[4];
                         default:
-                            throw new ArgumentOutOfRangeException("state");
+                            throw new ArgumentOutOfRangeException(nameof(state));
                     }
                 case PaletteBackStyle.ButtonForm:
                 case PaletteBackStyle.ButtonFormClose:
@@ -1151,7 +1148,7 @@ namespace ComponentFactory.Krypton.Toolkit
                         case PaletteState.CheckedPressed:
                             return _ribbonColors[(int)SchemeOfficeColors.FormButtonBack2Pressed];
                         default:
-                            throw new ArgumentOutOfRangeException("state");
+                            throw new ArgumentOutOfRangeException(nameof(state));
                     }
                 case PaletteBackStyle.ButtonStandalone:
                 case PaletteBackStyle.ButtonAlternate:
@@ -1235,10 +1232,10 @@ namespace ComponentFactory.Krypton.Toolkit
                             }
 
                         default:
-                            throw new ArgumentOutOfRangeException("state");
+                            throw new ArgumentOutOfRangeException(nameof(state));
                     }
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -1247,6 +1244,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Background style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>Color drawing style.</returns>
         public override PaletteColorStyle GetBackColorStyle(PaletteBackStyle style, PaletteState state)
         {
@@ -1382,7 +1380,7 @@ namespace ComponentFactory.Krypton.Toolkit
                         case PaletteState.CheckedPressed:
                             return PaletteColorStyle.GlassBottom;
                         default:
-                            throw new ArgumentOutOfRangeException("state");
+                            throw new ArgumentOutOfRangeException(nameof(state));
                     }
                 case PaletteBackStyle.ButtonGallery:
                     switch (state)
@@ -1399,7 +1397,7 @@ namespace ComponentFactory.Krypton.Toolkit
                         case PaletteState.CheckedPressed:
                             return PaletteColorStyle.GlassPressedFull;
                         default:
-                            throw new ArgumentOutOfRangeException("state");
+                            throw new ArgumentOutOfRangeException(nameof(state));
                     }
                 case PaletteBackStyle.ButtonAlternate:
                     switch (state)
@@ -1417,7 +1415,7 @@ namespace ComponentFactory.Krypton.Toolkit
                         case PaletteState.CheckedTracking:
                             return PaletteColorStyle.GlassCheckedTrackingStump;
                         default:
-                            throw new ArgumentOutOfRangeException("state");
+                            throw new ArgumentOutOfRangeException(nameof(state));
                     }
                 case PaletteBackStyle.ButtonStandalone:
                 case PaletteBackStyle.ButtonLowProfile:
@@ -1453,7 +1451,7 @@ namespace ComponentFactory.Krypton.Toolkit
                         case PaletteState.CheckedTracking:
                             return PaletteColorStyle.GlassCheckedTrackingFull;
                         default:
-                            throw new ArgumentOutOfRangeException("state");
+                            throw new ArgumentOutOfRangeException(nameof(state));
                     }
                 case PaletteBackStyle.ContextMenuItemImage:
                     return PaletteColorStyle.Solid;
@@ -1475,7 +1473,7 @@ namespace ComponentFactory.Krypton.Toolkit
                         case PaletteState.CheckedTracking:
                             return PaletteColorStyle.GlassCheckedTrackingSimple;
                         default:
-                            throw new ArgumentOutOfRangeException("state");
+                            throw new ArgumentOutOfRangeException(nameof(state));
                     }
                 case PaletteBackStyle.ButtonNavigatorMini:
                     switch (state)
@@ -1486,7 +1484,7 @@ namespace ComponentFactory.Krypton.Toolkit
                             return PaletteColorStyle.Solid;
                     }
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -1495,6 +1493,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Background style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>Color alignment style.</returns>
         public override PaletteRectangleAlign GetBackColorAlign(PaletteBackStyle style, PaletteState state)
         {
@@ -1585,7 +1584,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 case PaletteBackStyle.ContextMenuItemImageColumn:
                     return PaletteRectangleAlign.Local;
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -1594,6 +1593,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Background style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>Angle used for color drawing.</returns>
         public override float GetBackColorAngle(PaletteBackStyle style, PaletteState state)
         {
@@ -1683,7 +1683,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 case PaletteBackStyle.GridDataCellCustom1:
                     return 90f;
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -1692,6 +1692,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Background style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>Image instance.</returns>
         public override Image GetBackImage(PaletteBackStyle style, PaletteState state)
         {
@@ -1781,7 +1782,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 case PaletteBackStyle.GridDataCellCustom1:
                     return null;
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -1790,6 +1791,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Background style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>Image style value.</returns>
         public override PaletteImageStyle GetBackImageStyle(PaletteBackStyle style, PaletteState state)
         {
@@ -1879,7 +1881,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 case PaletteBackStyle.GridDataCellCustom1:
                     return PaletteImageStyle.Tile;
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -1888,6 +1890,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Background style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>Image alignment style.</returns>
         public override PaletteRectangleAlign GetBackImageAlign(PaletteBackStyle style, PaletteState state)
         {
@@ -1977,17 +1980,19 @@ namespace ComponentFactory.Krypton.Toolkit
                 case PaletteBackStyle.GridDataCellCustom1:
                     return PaletteRectangleAlign.Local;
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
         #endregion
 
         #region Border
+
         /// <summary>
         /// Gets a value indicating if border should be drawn.
         /// </summary>
         /// <param name="style">Border style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>InheritBool value.</returns>
         public override InheritBool GetBorderDraw(PaletteBorderStyle style, PaletteState state)
         {
@@ -2097,7 +2102,7 @@ namespace ComponentFactory.Krypton.Toolkit
                             return InheritBool.True;
                     }
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -2106,6 +2111,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Border style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>PaletteDrawBorders value.</returns>
         public override PaletteDrawBorders GetBorderDrawBorders(PaletteBorderStyle style, PaletteState state)
         {
@@ -2193,7 +2199,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 case PaletteBorderStyle.ContextMenuInner:
                     return PaletteDrawBorders.None;
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -2202,6 +2208,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Border style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>PaletteGraphicsHint value.</returns>
         public override PaletteGraphicsHint GetBorderGraphicsHint(PaletteBorderStyle style, PaletteState state)
         {
@@ -2284,7 +2291,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 case PaletteBorderStyle.GridDataCellCustom1:
                     return PaletteGraphicsHint.AntiAlias;
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -2293,6 +2300,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Border style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>Color value.</returns>
         public override Color GetBorderColor1(PaletteBorderStyle style, PaletteState state)
         {
@@ -2355,7 +2363,7 @@ namespace ComponentFactory.Krypton.Toolkit
                         case PaletteState.CheckedTracking:
                             return _ribbonColors[(int)SchemeOfficeColors.ControlBorder];
                         default:
-                            throw new ArgumentOutOfRangeException("state");
+                            throw new ArgumentOutOfRangeException(nameof(state));
                     }
                 case PaletteBorderStyle.TabDock:
                     switch (state)
@@ -2372,7 +2380,7 @@ namespace ComponentFactory.Krypton.Toolkit
                         case PaletteState.CheckedTracking:
                             return _ribbonColors[(int)SchemeOfficeColors.ControlBorder];
                         default:
-                            throw new ArgumentOutOfRangeException("state");
+                            throw new ArgumentOutOfRangeException(nameof(state));
                     }
                 case PaletteBorderStyle.TabDockAutoHidden:
                     switch (state)
@@ -2388,7 +2396,7 @@ namespace ComponentFactory.Krypton.Toolkit
                         case PaletteState.CheckedPressed:
                             return _buttonBorderColors[2];
                         default:
-                            throw new ArgumentOutOfRangeException("state");
+                            throw new ArgumentOutOfRangeException(nameof(state));
                     }
                 case PaletteBorderStyle.HeaderCalendar:
                     if (state == PaletteState.Disabled)
@@ -2541,7 +2549,7 @@ namespace ComponentFactory.Krypton.Toolkit
                         case PaletteState.CheckedPressed:
                             return _ribbonColors[(int)SchemeOfficeColors.FormButtonBorderPressed];
                         default:
-                            throw new ArgumentOutOfRangeException("state");
+                            throw new ArgumentOutOfRangeException(nameof(state));
                     }
                 case PaletteBorderStyle.ButtonGallery:
                     switch (state)
@@ -2559,7 +2567,7 @@ namespace ComponentFactory.Krypton.Toolkit
                         case PaletteState.CheckedPressed:
                             return _buttonBorderColors[3];
                         default:
-                            throw new ArgumentOutOfRangeException("state");
+                            throw new ArgumentOutOfRangeException(nameof(state));
                     }
                 case PaletteBorderStyle.ButtonStandalone:
                 case PaletteBorderStyle.ButtonAlternate:
@@ -2624,7 +2632,7 @@ namespace ComponentFactory.Krypton.Toolkit
                         case PaletteState.CheckedTracking:
                             return _buttonBorderColors[3];
                         default:
-                            throw new ArgumentOutOfRangeException("state");
+                            throw new ArgumentOutOfRangeException(nameof(state));
                     }
                 case PaletteBorderStyle.ButtonCalendarDay:
                     switch (state)
@@ -2645,10 +2653,10 @@ namespace ComponentFactory.Krypton.Toolkit
                         case PaletteState.CheckedTracking:
                             return _buttonBackColors[8];
                         default:
-                            throw new ArgumentOutOfRangeException("state");
+                            throw new ArgumentOutOfRangeException(nameof(state));
                     }
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -2657,6 +2665,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Border style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>Color value.</returns>
         public override Color GetBorderColor2(PaletteBorderStyle style, PaletteState state)
         {
@@ -2719,7 +2728,7 @@ namespace ComponentFactory.Krypton.Toolkit
                         case PaletteState.CheckedTracking:
                             return _ribbonColors[(int)SchemeOfficeColors.ControlBorder];
                         default:
-                            throw new ArgumentOutOfRangeException("state");
+                            throw new ArgumentOutOfRangeException(nameof(state));
                     }
                 case PaletteBorderStyle.TabDock:
                     switch (state)
@@ -2736,7 +2745,7 @@ namespace ComponentFactory.Krypton.Toolkit
                         case PaletteState.CheckedTracking:
                             return _ribbonColors[(int)SchemeOfficeColors.ControlBorder];
                         default:
-                            throw new ArgumentOutOfRangeException("state");
+                            throw new ArgumentOutOfRangeException(nameof(state));
                     }
                 case PaletteBorderStyle.TabDockAutoHidden:
                     switch (state)
@@ -2752,7 +2761,7 @@ namespace ComponentFactory.Krypton.Toolkit
                         case PaletteState.CheckedPressed:
                             return _buttonBorderColors[2];
                         default:
-                            throw new ArgumentOutOfRangeException("state");
+                            throw new ArgumentOutOfRangeException(nameof(state));
                     }
                 case PaletteBorderStyle.HeaderForm:
                     if (state == PaletteState.Disabled)
@@ -2905,7 +2914,7 @@ namespace ComponentFactory.Krypton.Toolkit
                         case PaletteState.CheckedPressed:
                             return _ribbonColors[(int)SchemeOfficeColors.FormButtonBorderPressed];
                         default:
-                            throw new ArgumentOutOfRangeException("state");
+                            throw new ArgumentOutOfRangeException(nameof(state));
                     }
                 case PaletteBorderStyle.ButtonGallery:
                     switch (state)
@@ -2923,7 +2932,7 @@ namespace ComponentFactory.Krypton.Toolkit
                         case PaletteState.CheckedPressed:
                             return _buttonBorderColors[3];
                         default:
-                            throw new ArgumentOutOfRangeException("state");
+                            throw new ArgumentOutOfRangeException(nameof(state));
                     }
                 case PaletteBorderStyle.ButtonStandalone:
                 case PaletteBorderStyle.ButtonAlternate:
@@ -2975,7 +2984,7 @@ namespace ComponentFactory.Krypton.Toolkit
                         case PaletteState.CheckedTracking:
                             return _buttonBorderColors[4];
                         default:
-                            throw new ArgumentOutOfRangeException("state");
+                            throw new ArgumentOutOfRangeException(nameof(state));
                     }
                 case PaletteBorderStyle.ButtonCalendarDay:
                     switch (state)
@@ -2996,10 +3005,10 @@ namespace ComponentFactory.Krypton.Toolkit
                         case PaletteState.CheckedTracking:
                             return _buttonBackColors[8];
                         default:
-                            throw new ArgumentOutOfRangeException("state");
+                            throw new ArgumentOutOfRangeException(nameof(state));
                     }
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -3008,6 +3017,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Border style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>Color drawing style.</returns>
         public override PaletteColorStyle GetBorderColorStyle(PaletteBorderStyle style, PaletteState state)
         {
@@ -3141,7 +3151,7 @@ namespace ComponentFactory.Krypton.Toolkit
                             return PaletteColorStyle.Sigma;
                     }
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -3150,6 +3160,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Border style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>Color alignment style.</returns>
         public override PaletteRectangleAlign GetBorderColorAlign(PaletteBorderStyle style, PaletteState state)
         {
@@ -3233,7 +3244,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 case PaletteBorderStyle.ContextMenuItemSplit:
                     return PaletteRectangleAlign.Local;
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -3242,6 +3253,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Border style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>Angle used for color drawing.</returns>
         public override float GetBorderColorAngle(PaletteBorderStyle style, PaletteState state)
         {
@@ -3324,7 +3336,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 case PaletteBorderStyle.GridDataCellCustom1:
                     return 90f;
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -3333,6 +3345,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Border style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>Integer width.</returns>
         public override int GetBorderWidth(PaletteBorderStyle style, PaletteState state)
         {
@@ -3416,7 +3429,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 case PaletteBorderStyle.GridDataCellCustom1:
                     return 1;
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -3425,6 +3438,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Border style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>Integer rounding.</returns>
         public override int GetBorderRounding(PaletteBorderStyle style, PaletteState state)
         {
@@ -3511,7 +3525,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 case PaletteBorderStyle.FormCustom1:
                     return 5;
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -3520,6 +3534,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Border style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>Image instance.</returns>
         public override Image GetBorderImage(PaletteBorderStyle style, PaletteState state)
         {
@@ -3602,7 +3617,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 case PaletteBorderStyle.GridDataCellCustom1:
                     return null;
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -3611,6 +3626,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Border style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>Image style value.</returns>
         public override PaletteImageStyle GetBorderImageStyle(PaletteBorderStyle style, PaletteState state)
         {
@@ -3693,7 +3709,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 case PaletteBorderStyle.GridDataCellCustom1:
                     return PaletteImageStyle.Tile;
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -3702,6 +3718,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Border style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>Image alignment style.</returns>
         public override PaletteRectangleAlign GetBorderImageAlign(PaletteBorderStyle style, PaletteState state)
         {
@@ -3784,7 +3801,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 case PaletteBorderStyle.GridDataCellCustom1:
                     return PaletteRectangleAlign.Local;
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
         #endregion
@@ -3838,6 +3855,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Content style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>RelativeAlignment value.</returns>
         public override PaletteRelativeAlign GetContentImageH(PaletteContentStyle style, PaletteState state)
         {
@@ -3921,7 +3939,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 case PaletteContentStyle.ButtonInputControl:
                     return PaletteRelativeAlign.Center;
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -3930,6 +3948,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Content style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>RelativeAlignment value.</returns>
         public override PaletteRelativeAlign GetContentImageV(PaletteContentStyle style, PaletteState state)
         {
@@ -4011,7 +4030,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 case PaletteContentStyle.GridDataCellCustom1:
                     return PaletteRelativeAlign.Center;
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -4020,6 +4039,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Content style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>PaletteImageEffect value.</returns>
         public override PaletteImageEffect GetContentImageEffect(PaletteContentStyle style, PaletteState state)
         {
@@ -4109,7 +4129,7 @@ namespace ComponentFactory.Krypton.Toolkit
                     }
 
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -4118,6 +4138,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Content style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>Color value.</returns>
         public override Color GetContentImageColorMap(PaletteContentStyle style, PaletteState state)
         {
@@ -4199,7 +4220,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 case PaletteContentStyle.GridDataCellCustom1:
                     return Color.Empty;
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -4208,6 +4229,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Content style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>Color value.</returns>
         public override Color GetContentImageColorTo(PaletteContentStyle style, PaletteState state)
         {
@@ -4289,7 +4311,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 case PaletteContentStyle.GridDataCellCustom1:
                     return Color.Empty;
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -4298,6 +4320,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Content style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>Color value.</returns>
         public override Color GetContentImageColorTransparent(PaletteContentStyle style, PaletteState state)
         {
@@ -4379,7 +4402,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 case PaletteContentStyle.GridDataCellCustom1:
                     return Color.Empty;
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -4388,6 +4411,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Content style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>Font value.</returns>
         public override Font GetContentShortTextFont(PaletteContentStyle style, PaletteState state)
         {
@@ -4496,7 +4520,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 case PaletteContentStyle.ButtonCalendarDay:
                     return _calendarFont;
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -4517,6 +4541,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Content style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>PaletteTextHint value.</returns>
         public override PaletteTextHint GetContentShortTextHint(PaletteContentStyle style, PaletteState state)
         {
@@ -4598,7 +4623,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 case PaletteContentStyle.GridDataCellCustom1:
                     return PaletteTextHint.ClearTypeGridFit;
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -4607,6 +4632,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Content style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>PaletteTextPrefix value.</returns>
         public override PaletteTextHotkeyPrefix GetContentShortTextPrefix(PaletteContentStyle style, PaletteState state)
         {
@@ -4689,7 +4715,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 case PaletteContentStyle.ContextMenuItemShortcutText:
                     return PaletteTextHotkeyPrefix.None;
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -4698,6 +4724,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Content style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>InheritBool value.</returns>
         public override InheritBool GetContentShortTextMultiLine(PaletteContentStyle style, PaletteState state)
         {
@@ -4779,7 +4806,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 case PaletteContentStyle.GridDataCellCustom1:
                     return InheritBool.True;
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -4788,6 +4815,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Content style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>PaletteTextTrim value.</returns>
         public override PaletteTextTrim GetContentShortTextTrim(PaletteContentStyle style, PaletteState state)
         {
@@ -4869,7 +4897,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 case PaletteContentStyle.GridDataCellCustom1:
                     return PaletteTextTrim.EllipsisCharacter;
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -4878,6 +4906,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Content style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>RelativeAlignment value.</returns>
         public override PaletteRelativeAlign GetContentShortTextH(PaletteContentStyle style, PaletteState state)
         {
@@ -4962,7 +4991,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 case PaletteContentStyle.ContextMenuItemShortcutText:
                     return PaletteRelativeAlign.Far;
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -4971,6 +5000,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Content style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>RelativeAlignment value.</returns>
         public override PaletteRelativeAlign GetContentShortTextV(PaletteContentStyle style, PaletteState state)
         {
@@ -5053,7 +5083,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 case PaletteContentStyle.LabelSuperTip:
                     return PaletteRelativeAlign.Near;
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -5062,6 +5092,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Content style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>RelativeAlignment value.</returns>
         public override PaletteRelativeAlign GetContentShortTextMultiLineH(PaletteContentStyle style, PaletteState state)
         {
@@ -5143,7 +5174,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 case PaletteContentStyle.GridDataCellCustom1:
                     return PaletteRelativeAlign.Near;
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -5152,6 +5183,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Content style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>Color value.</returns>
         public override Color GetContentShortTextColor1(PaletteContentStyle style, PaletteState state)
         {
@@ -5369,7 +5401,7 @@ namespace ComponentFactory.Krypton.Toolkit
                     }
 
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -5378,6 +5410,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Content style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>Color value.</returns>
         public override Color GetContentShortTextColor2(PaletteContentStyle style, PaletteState state)
         {
@@ -5557,7 +5590,7 @@ namespace ComponentFactory.Krypton.Toolkit
                     }
 
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -5566,6 +5599,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Content style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>Color drawing style.</returns>
         public override PaletteColorStyle GetContentShortTextColorStyle(PaletteContentStyle style, PaletteState state)
         {
@@ -5647,7 +5681,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 case PaletteContentStyle.GridDataCellCustom1:
                     return PaletteColorStyle.Solid;
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -5656,6 +5690,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Content style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>Color alignment style.</returns>
         public override PaletteRectangleAlign GetContentShortTextColorAlign(PaletteContentStyle style, PaletteState state)
         {
@@ -5737,7 +5772,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 case PaletteContentStyle.GridDataCellCustom1:
                     return PaletteRectangleAlign.Local;
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -5746,6 +5781,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Content style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>Angle used for color drawing.</returns>
         public override float GetContentShortTextColorAngle(PaletteContentStyle style, PaletteState state)
         {
@@ -5827,7 +5863,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 case PaletteContentStyle.GridDataCellCustom1:
                     return 90f;
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -5836,6 +5872,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Content style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>Image instance.</returns>
         public override Image GetContentShortTextImage(PaletteContentStyle style, PaletteState state)
         {
@@ -5917,7 +5954,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 case PaletteContentStyle.GridDataCellCustom1:
                     return null;
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -5926,6 +5963,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Content style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>Image style value.</returns>
         public override PaletteImageStyle GetContentShortTextImageStyle(PaletteContentStyle style, PaletteState state)
         {
@@ -6007,7 +6045,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 case PaletteContentStyle.GridDataCellCustom1:
                     return PaletteImageStyle.TileFlipXY;
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -6016,6 +6054,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Content style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>Image alignment style.</returns>
         public override PaletteRectangleAlign GetContentShortTextImageAlign(PaletteContentStyle style, PaletteState state)
         {
@@ -6097,7 +6136,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 case PaletteContentStyle.GridDataCellCustom1:
                     return PaletteRectangleAlign.Local;
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -6106,6 +6145,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Content style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>Font value.</returns>
         public override Font GetContentLongTextFont(PaletteContentStyle style, PaletteState state)
         {
@@ -6207,7 +6247,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 case PaletteContentStyle.ButtonInputControl:
                     return _buttonFont;
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -6228,6 +6268,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Content style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>PaletteTextHint value.</returns>
         public override PaletteTextHint GetContentLongTextHint(PaletteContentStyle style, PaletteState state)
         {
@@ -6309,7 +6350,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 case PaletteContentStyle.GridDataCellCustom1:
                     return PaletteTextHint.ClearTypeGridFit;
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -6318,6 +6359,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Content style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>InheritBool value.</returns>
         public override InheritBool GetContentLongTextMultiLine(PaletteContentStyle style, PaletteState state)
         {
@@ -6399,7 +6441,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 case PaletteContentStyle.GridDataCellCustom1:
                     return InheritBool.True;
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -6408,6 +6450,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Content style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>PaletteTextTrim value.</returns>
         public override PaletteTextTrim GetContentLongTextTrim(PaletteContentStyle style, PaletteState state)
         {
@@ -6489,7 +6532,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 case PaletteContentStyle.GridDataCellCustom1:
                     return PaletteTextTrim.EllipsisCharacter;
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -6498,6 +6541,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Content style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>PaletteTextPrefix value.</returns>
         public override PaletteTextHotkeyPrefix GetContentLongTextPrefix(PaletteContentStyle style, PaletteState state)
         {
@@ -6580,7 +6624,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 case PaletteContentStyle.GridDataCellCustom1:
                     return PaletteTextHotkeyPrefix.None;
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -6589,6 +6633,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Content style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>RelativeAlignment value.</returns>
         public override PaletteRelativeAlign GetContentLongTextH(PaletteContentStyle style, PaletteState state)
         {
@@ -6673,7 +6718,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 case PaletteContentStyle.ButtonCalendarDay:
                     return PaletteRelativeAlign.Far;
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -6682,6 +6727,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Content style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>RelativeAlignment value.</returns>
         public override PaletteRelativeAlign GetContentLongTextV(PaletteContentStyle style, PaletteState state)
         {
@@ -6765,7 +6811,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 case PaletteContentStyle.LabelSuperTip:
                     return PaletteRelativeAlign.Center;
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -6857,7 +6903,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 case PaletteContentStyle.ContextMenuItemShortcutText:
                     return PaletteRelativeAlign.Far;
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -6866,6 +6912,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Content style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>Color value.</returns>
         public override Color GetContentLongTextColor1(PaletteContentStyle style, PaletteState state)
         {
@@ -7035,7 +7082,7 @@ namespace ComponentFactory.Krypton.Toolkit
                     }
 
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -7044,6 +7091,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Content style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>Color value.</returns>
         public override Color GetContentLongTextColor2(PaletteContentStyle style, PaletteState state)
         {
@@ -7213,7 +7261,7 @@ namespace ComponentFactory.Krypton.Toolkit
                     }
 
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -7222,6 +7270,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Content style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>Color drawing style.</returns>
         public override PaletteColorStyle GetContentLongTextColorStyle(PaletteContentStyle style, PaletteState state)
         {
@@ -7303,7 +7352,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 case PaletteContentStyle.GridDataCellCustom1:
                     return PaletteColorStyle.Solid;
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -7312,6 +7361,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Content style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>Color alignment style.</returns>
         public override PaletteRectangleAlign GetContentLongTextColorAlign(PaletteContentStyle style, PaletteState state)
         {
@@ -7393,7 +7443,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 case PaletteContentStyle.GridDataCellCustom1:
                     return PaletteRectangleAlign.Local;
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -7402,6 +7452,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Content style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>Angle used for color drawing.</returns>
         public override float GetContentLongTextColorAngle(PaletteContentStyle style, PaletteState state)
         {
@@ -7483,7 +7534,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 case PaletteContentStyle.GridDataCellCustom1:
                     return 90f;
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -7492,6 +7543,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Content style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>Image instance.</returns>
         public override Image GetContentLongTextImage(PaletteContentStyle style, PaletteState state)
         {
@@ -7573,7 +7625,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 case PaletteContentStyle.GridDataCellCustom1:
                     return null;
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -7582,6 +7634,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Content style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>Image style value.</returns>
         public override PaletteImageStyle GetContentLongTextImageStyle(PaletteContentStyle style, PaletteState state)
         {
@@ -7663,7 +7716,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 case PaletteContentStyle.GridDataCellCustom1:
                     return PaletteImageStyle.TileFlipXY;
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -7672,6 +7725,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Content style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>Image alignment style.</returns>
         public override PaletteRectangleAlign GetContentLongTextImageAlign(PaletteContentStyle style, PaletteState state)
         {
@@ -7753,7 +7807,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 case PaletteContentStyle.GridDataCellCustom1:
                     return PaletteRectangleAlign.Local;
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -7762,6 +7816,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Content style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>Padding value.</returns>
         public override Padding GetContentPadding(PaletteContentStyle style, PaletteState state)
         {
@@ -7869,7 +7924,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 case PaletteContentStyle.TabDockAutoHidden:
                     return _contentPaddingButton7;
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -7878,6 +7933,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="style">Content style.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>Integer value.</returns>
         public override int GetContentAdjacentGap(PaletteContentStyle style, PaletteState state)
         {
@@ -7960,7 +8016,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 case PaletteContentStyle.LabelSuperTip:
                     return 5;
                 default:
-                    throw new ArgumentOutOfRangeException("style");
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
         #endregion
@@ -9873,6 +9929,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="element">Element for which color is required.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>Color value.</returns>
         public override Color GetElementColor2(PaletteElement element, PaletteState state)
         {
@@ -9899,7 +9956,7 @@ namespace ComponentFactory.Krypton.Toolkit
                         case PaletteState.Pressed:
                             return _buttonBorderColors[3];
                         default:
-                            throw new ArgumentOutOfRangeException("state");
+                            throw new ArgumentOutOfRangeException(nameof(state));
                     }
                 default:
                     // Should never happen!
@@ -9915,6 +9972,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="element">Element for which color is required.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>Color value.</returns>
         public override Color GetElementColor3(PaletteElement element, PaletteState state)
         {
@@ -9941,7 +9999,7 @@ namespace ComponentFactory.Krypton.Toolkit
                         case PaletteState.Pressed:
                             return ControlPaint.Light(_buttonBackColors[4]);
                         default:
-                            throw new ArgumentOutOfRangeException("state");
+                            throw new ArgumentOutOfRangeException(nameof(state));
                     }
 
                 default:
@@ -9958,6 +10016,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="element">Element for which color is required.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>Color value.</returns>
         public override Color GetElementColor4(PaletteElement element, PaletteState state)
         {
@@ -9995,7 +10054,7 @@ namespace ComponentFactory.Krypton.Toolkit
                         case PaletteState.Pressed:
                             return _buttonBackColors[4];
                         default:
-                            throw new ArgumentOutOfRangeException("state");
+                            throw new ArgumentOutOfRangeException(nameof(state));
                     }
                 default:
                     // Should never happen!
@@ -10011,6 +10070,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="element">Element for which color is required.</param>
         /// <param name="state">Palette value should be applicable to this state.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>Color value.</returns>
         public override Color GetElementColor5(PaletteElement element, PaletteState state)
         {
@@ -10048,7 +10108,7 @@ namespace ComponentFactory.Krypton.Toolkit
                         case PaletteState.Pressed:
                             return _buttonBackColors[5];
                         default:
-                            throw new ArgumentOutOfRangeException("state");
+                            throw new ArgumentOutOfRangeException(nameof(state));
                     }
                 default:
                     // Should never happen!
@@ -10064,10 +10124,8 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Gets access to the color table instance.
         /// </summary>
-        public override KryptonColorTable ColorTable
-        {
-            get { return _table ?? (_table = new KryptonColorTable2007(_ribbonColors, InheritBool.True, this)); }
-        }
+        public override KryptonColorTable ColorTable => _table ?? (_table = new KryptonColorTable2007(_ribbonColors, InheritBool.True, this));
+
         #endregion
 
         #region Public

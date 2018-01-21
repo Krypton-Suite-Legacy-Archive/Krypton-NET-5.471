@@ -1,11 +1,12 @@
 ﻿// *****************************************************************************
-// 
-//  © Component Factory Pty Ltd, modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2010 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//	The software and associated documentation supplied hereunder are the 
+// BSD 3-Clause License (https://github.com/ComponentFactory/Krypton/blob/master/LICENSE)
+//  © Component Factory Pty Ltd, 2006-2018, All rights reserved.
+// The software and associated documentation supplied hereunder are the 
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.7.0.0 	www.ComponentFactory.com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 
 using System;
@@ -31,7 +32,7 @@ namespace ComponentFactory.Krypton.Workspace
     [ToolboxBitmap(typeof(KryptonWorkspace), "ToolboxBitmaps.KryptonWorkspace.bmp")]
     [DefaultEvent("WorkspaceCellAdded")]
     [DefaultProperty("Root")]
-    [Designer("ComponentFactory.Krypton.Workspace.KryptonWorkspaceDesigner, ComponentFactory.Krypton.Design, Version=4.71.0.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e")]
+    [Designer("ComponentFactory.Krypton.Workspace.KryptonWorkspaceDesigner, ComponentFactory.Krypton.Design, Version=4.70.0.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e")]
     [DesignerCategory("code")]
     [Description("Layout a hierarchy of KryptonNavigator instances.")]
     [Docking(DockingBehavior.Ask)]
@@ -407,7 +408,7 @@ namespace ComponentFactory.Krypton.Workspace
         [Browsable(false)]
         [Bindable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public new Control.ControlCollection Controls => base.Controls;
+        public new ControlCollection Controls => base.Controls;
 
         /// <summary>
         /// Gets and sets the active cell.
@@ -1885,14 +1886,7 @@ namespace ComponentFactory.Krypton.Workspace
                 xmlWriter.WriteAttributeString("V", "1");
 
                 // Remember which page was the active one
-                if (ActivePage != null)
-                {
-                    xmlWriter.WriteAttributeString("A", ActivePage.UniqueName);
-                }
-                else
-                {
-                    xmlWriter.WriteAttributeString("A", "(null)");
-                }
+                xmlWriter.WriteAttributeString("A", ActivePage != null ? ActivePage.UniqueName : "(null)");
 
                 // Give event handlers chance to embed custom data
                 xmlWriter.WriteStartElement("CGD");
@@ -2155,14 +2149,7 @@ namespace ComponentFactory.Krypton.Workspace
             CommonHelper.TextToXmlAttribute(xmlWriter, "MAXS", CommonHelper.SizeToString(cell.MaximumSize), "0, 0");
 
             // Remember which page was the active one
-            if (cell.SelectedPage != null)
-            {
-                xmlWriter.WriteAttributeString("SP", cell.SelectedPage.UniqueName);
-            }
-            else
-            {
-                xmlWriter.WriteAttributeString("SP", "(null)");
-            }
+            xmlWriter.WriteAttributeString("SP", cell.SelectedPage != null ? cell.SelectedPage.UniqueName : "(null)");
         }
 
         /// <summary>
@@ -2439,14 +2426,7 @@ namespace ComponentFactory.Krypton.Workspace
         {
             if (sender is KryptonWorkspaceCell cell)
             {
-                if (MaximizedCell == cell)
-                {
-                    MaximizedCell = null;
-                }
-                else
-                {
-                    MaximizedCell = cell;
-                }
+                MaximizedCell = MaximizedCell == cell ? null : cell;
             }
         }
         #endregion
@@ -2574,14 +2554,7 @@ namespace ComponentFactory.Krypton.Workspace
         protected override void OnEnabledChanged(EventArgs e)
         {
             // Push correct palettes into the view
-            if (Enabled)
-            {
-                _drawPanel.SetPalettes(StateNormal.Back);
-            }
-            else
-            {
-                _drawPanel.SetPalettes(StateDisabled.Back);
-            }
+            _drawPanel.SetPalettes(Enabled ? StateNormal.Back : StateDisabled.Back);
 
             _drawPanel.Enabled = Enabled;
 
@@ -2984,10 +2957,10 @@ namespace ComponentFactory.Krypton.Workspace
                 if (offset != 0)
                 {
                     // Update the sizing value for each item in the sequence
-                    for (int i = 0; i < parentSequence.Children.Count; i++)
+                    foreach (Component child in parentSequence.Children)
                     {
                         // Can only process IWorkspaceItem items
-                        if (parentSequence.Children[i] is IWorkspaceItem item)
+                        if (child is IWorkspaceItem item)
                         {
                             // Get direction specific numbers
                             int directionActualSize;
@@ -3251,14 +3224,9 @@ namespace ComponentFactory.Krypton.Workspace
                         else
                         {
                             // Otherwise we get the preferred size of the item in sequence orientation
-                            if (seq.Orientation == Orientation.Vertical)
-                            {
-                                displaySpace = info[i].WorkspaceItem.WorkspacePreferredSize.Height;
-                            }
-                            else
-                            {
-                                displaySpace = info[i].WorkspaceItem.WorkspacePreferredSize.Width;
-                            }
+                            displaySpace = seq.Orientation == Orientation.Vertical
+                                ? info[i].WorkspaceItem.WorkspacePreferredSize.Height
+                                : info[i].WorkspaceItem.WorkspacePreferredSize.Width;
                         }
 
                         info[i].DisplaySpace = displaySpace;
@@ -3427,14 +3395,9 @@ namespace ComponentFactory.Krypton.Workspace
                         }
 
                         // Calculate the display rect for the item
-                        if (seq.Orientation == Orientation.Vertical)
-                        {
-                            info[i].DisplayRect = new Rectangle(client.X, client.Y + offset, client.Width, info[i].DisplaySpace);
-                        }
-                        else
-                        {
-                            info[i].DisplayRect = new Rectangle(client.X + offset, client.Y, info[i].DisplaySpace, client.Height);
-                        }
+                        info[i].DisplayRect = seq.Orientation == Orientation.Vertical
+                            ? new Rectangle(client.X, client.Y + offset, client.Width, info[i].DisplaySpace)
+                            : new Rectangle(client.X + offset, client.Y, info[i].DisplaySpace, client.Height);
 
                         // Move over the cell
                         offset += info[i].DisplaySpace;
@@ -3512,10 +3475,10 @@ namespace ComponentFactory.Krypton.Workspace
         private void LayoutSequenceIsHidden(KryptonWorkspaceSequence sequence, ControlList controls)
         {
             // Process all children of the sequence
-            for (int i = 0; i < sequence.Children.Count; i++)
+            foreach (Component child in sequence.Children)
             {
                 // Is the child an actual control
-                switch (sequence.Children[i])
+                switch (child)
                 {
                     case Control control:
                         // Note that this control is still needed

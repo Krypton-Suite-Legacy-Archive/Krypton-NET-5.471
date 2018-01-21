@@ -1,11 +1,12 @@
 ﻿// *****************************************************************************
-// 
-//  © Component Factory Pty Ltd, modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2010 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//	The software and associated documentation supplied hereunder are the 
+// BSD 3-Clause License (https://github.com/ComponentFactory/Krypton/blob/master/LICENSE)
+//  © Component Factory Pty Ltd, 2006-2018, All rights reserved.
+// The software and associated documentation supplied hereunder are the 
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.7.0.0 	www.ComponentFactory.com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 
 using System;
@@ -25,7 +26,7 @@ namespace ComponentFactory.Krypton.Toolkit
     [ToolboxBitmap(typeof(KryptonColorButton), "ToolboxBitmaps.KryptonColorButton.bmp")]
     [DefaultEvent("SelectedColorChanged")]
     [DefaultProperty("SelectedColor")]
-    [Designer("ComponentFactory.Krypton.Toolkit.KryptonColorButtonDesigner, ComponentFactory.Krypton.Design, Version=4.71.0.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e")]
+    [Designer("ComponentFactory.Krypton.Toolkit.KryptonColorButtonDesigner, ComponentFactory.Krypton.Design, Version=4.70.0.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e")]
     [DesignerCategory("code")]
     [Description("Raises an event when the user clicks it.")]
     [ClassInterface(ClassInterfaceType.AutoDispatch)]
@@ -845,68 +846,37 @@ namespace ComponentFactory.Krypton.Toolkit
 			get => base.ImeMode;
 		    set => base.ImeMode = value;
 		}
-		#endregion
+        #endregion
 
         #region IContentValues
         /// <summary>
         /// Gets the content short text.
         /// </summary>
         /// <returns>String value.</returns>
-        public string GetShortText()
-        {
-            if (KryptonCommand != null)
-            {
-                return KryptonCommand.Text;
-            }
-            else
-            {
-                return Values.GetShortText();
-            }
-        }
+        public string GetShortText() => KryptonCommand?.Text ?? Values.GetShortText();
 
         /// <summary>
         /// Gets the content long text.
         /// </summary>
         /// <returns>String value.</returns>
-        public string GetLongText()
-        {
-            if (KryptonCommand != null)
-            {
-                return KryptonCommand.ExtraText;
-            }
-            else
-            {
-                return Values.GetLongText();
-            }
-        }
+        public string GetLongText() => KryptonCommand?.ExtraText ?? Values.GetLongText();
 
-        /// <summary>
+	    /// <summary>
         /// Gets the content image.
         /// </summary>
         /// <param name="state">The state for which the image is needed.</param>
         /// <returns>Image value.</returns>
-        public Image GetImage(PaletteState state)
-        {
-            return Values.GetImage(state);
-        }
+        public Image GetImage(PaletteState state) => Values.GetImage(state);
 
-        /// <summary>
+	    /// <summary>
         /// Gets the image color that should be transparent.
         /// </summary>
         /// <param name="state">The state for which the image is needed.</param>
         /// <returns>Color value.</returns>
-        public Color GetImageTransparentColor(PaletteState state)
-        {
-            if (KryptonCommand != null)
-            {
-                return KryptonCommand.ImageTransparentColor;
-            }
-            else
-            {
-                return Values.GetImageTransparentColor(state);
-            }
-        }
-        #endregion
+        public Color GetImageTransparentColor(PaletteState state) =>
+	        KryptonCommand?.ImageTransparentColor ?? Values.GetImageTransparentColor(state);
+
+	    #endregion
         
         #region Protected Overrides
 		/// <summary>
@@ -1011,7 +981,7 @@ namespace ComponentFactory.Krypton.Toolkit
 			if (UseMnemonic && CanProcessMnemonic())
 			{
                 // Does the color button primary text contain the mnemonic?
-				if (Control.IsMnemonic(charCode, Values.Text))
+				if (IsMnemonic(charCode, Values.Text))
 				{
                     if (!Splitter)
                     {
@@ -1033,10 +1003,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Called when a context menu has just been closed.
         /// </summary>
-        protected override void ContextMenuClosed()
-        {
-            _buttonController.RemoveFixed();
-        }
+        protected override void ContextMenuClosed() => _buttonController.RemoveFixed();
 
         /// <summary>
         /// Process Windows-based messages.
@@ -1057,37 +1024,25 @@ namespace ComponentFactory.Krypton.Toolkit
         /// Raises the DropDown event.
         /// </summary>
         /// <param name="e">An ContextPositionMenuArgs containing the event data.</param>
-        protected virtual void OnDropDown(ContextPositionMenuArgs e)
-        {
-            DropDown?.Invoke(this, e);
-        }
+        protected virtual void OnDropDown(ContextPositionMenuArgs e) => DropDown?.Invoke(this, e);
 
         /// <summary>
         /// Raises the SelectedColorChanged event.
         /// </summary>
         /// <param name="selectedColor">New selected color.</param>
-        protected virtual void OnSelectedColorChanged(Color selectedColor)
-        {
-            SelectedColorChanged?.Invoke(this, new ColorEventArgs(selectedColor));
-        }
+        protected virtual void OnSelectedColorChanged(Color selectedColor) => SelectedColorChanged?.Invoke(this, new ColorEventArgs(selectedColor));
 
         /// <summary>
         /// Raises the TrackingColor event.
         /// </summary>
         /// <param name="e">An ColorEventArgs that contains the event data.</param>
-        protected virtual void OnTrackingColor(ColorEventArgs e)
-        {
-            TrackingColor?.Invoke(this, e);
-        }
+        protected virtual void OnTrackingColor(ColorEventArgs e) => TrackingColor?.Invoke(this, e);
 
         /// <summary>
         /// Raises the MoreColors event.
         /// </summary>
         /// <param name="e">An CancelEventArgs that contains the event data.</param>
-        protected virtual void OnMoreColors(CancelEventArgs e)
-        {
-            MoreColors?.Invoke(this, e);
-        }
+        protected virtual void OnMoreColors(CancelEventArgs e) => MoreColors?.Invoke(this, e);
 
         /// <summary>
         /// Raises the KryptonCommandChanged event.
@@ -1148,23 +1103,17 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <returns>Set of color button values.</returns>
         /// <param name="needPaint">Delegate for notifying paint requests.</param>
-        protected virtual ColorButtonValues CreateButtonValues(NeedPaintHandler needPaint)
-        {
-            return new ColorButtonValues(needPaint);
-        }
+        protected virtual ColorButtonValues CreateButtonValues(NeedPaintHandler needPaint) => new ColorButtonValues(needPaint);
 
-        /// <summary>
+	    /// <summary>
         /// Gets access to the view element for the color button.
         /// </summary>
         protected virtual ViewDrawButton ViewDrawButton => _drawButton;
 
-	    #endregion
+        #endregion
 
         #region Implementation
-        private void OnButtonTextChanged(object sender, EventArgs e)
-        {
-            OnTextChanged(EventArgs.Empty);
-        }
+        private void OnButtonTextChanged(object sender, EventArgs e) => OnTextChanged(EventArgs.Empty);
 
         private void OnButtonClick(object sender, MouseEventArgs e)
 		{
@@ -1302,10 +1251,7 @@ namespace ComponentFactory.Krypton.Toolkit
             }
         }
 
-        private void OnContextMenuClosed(object sender, EventArgs e)
-        {
-            ContextMenuClosed();
-        }
+        private void OnContextMenuClosed(object sender, EventArgs e) => ContextMenuClosed();
 
         private void OnKryptonContextMenuClosed(object sender, EventArgs e)
         {
@@ -1483,20 +1429,11 @@ namespace ComponentFactory.Krypton.Toolkit
             visible.Visible = previous;
         }
 
-        private void OnColumnsTrackingColor(object sender, ColorEventArgs e)
-        {
-            OnTrackingColor(new ColorEventArgs(e.Color));
-        }
+        private void OnColumnsTrackingColor(object sender, ColorEventArgs e) => OnTrackingColor(new ColorEventArgs(e.Color));
 
-        private void OnColumnsSelectedColorChanged(object sender, ColorEventArgs e)
-        {
-            SelectedColor = e.Color;
-        }
+        private void OnColumnsSelectedColorChanged(object sender, ColorEventArgs e) => SelectedColor = e.Color;
 
-        private void OnClickNoColor(object sender, EventArgs e)
-        {
-            SelectedColor = Color.Empty;
-        }
+        private void OnClickNoColor(object sender, EventArgs e) => SelectedColor = Color.Empty;
 
         private void OnClickMoreColors(object sender, EventArgs e)
         {

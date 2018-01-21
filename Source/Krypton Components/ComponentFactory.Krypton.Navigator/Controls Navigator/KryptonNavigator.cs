@@ -1,11 +1,12 @@
 ﻿// *****************************************************************************
-// 
-//  © Component Factory Pty Ltd, modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2010 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//	The software and associated documentation supplied hereunder are the 
+// BSD 3-Clause License (https://github.com/ComponentFactory/Krypton/blob/master/LICENSE)
+//  © Component Factory Pty Ltd, 2006-2018, All rights reserved.
+// The software and associated documentation supplied hereunder are the 
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.7.0.0 	www.ComponentFactory.com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 
 using System;
@@ -28,7 +29,7 @@ namespace ComponentFactory.Krypton.Navigator
 	[ToolboxBitmap(typeof(KryptonNavigator), "ToolboxBitmaps.KryptonNavigator.bmp")]
 	[DefaultEvent("SelectedIndexChanged")]
 	[DefaultProperty("Pages")]
-    [Designer("ComponentFactory.Krypton.Navigator.KryptonNavigatorDesigner, ComponentFactory.Krypton.Design, Version=4.71.0.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e")]
+    [Designer("ComponentFactory.Krypton.Navigator.KryptonNavigatorDesigner, ComponentFactory.Krypton.Design, Version=4.70.0.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e")]
     [DesignerCategory("code")]
     [Description("Allows navigation between pages.")]
     [Docking(DockingBehavior.Ask)]
@@ -368,7 +369,7 @@ namespace ComponentFactory.Krypton.Navigator
 		[Category("Visuals")]
 		[Description("Collection of pages in the navigator control.")]
 		[MergableProperty(false)]
-        [Editor("ComponentFactory.Krypton.Navigator.NavigatorPageCollectionEditor, ComponentFactory.Krypton.Design, Version=4.71.0.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e", typeof(UITypeEditor))]
+        [Editor("ComponentFactory.Krypton.Navigator.NavigatorPageCollectionEditor, ComponentFactory.Krypton.Design, Version=4.70.0.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e", typeof(UITypeEditor))]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 		public KryptonPageCollection Pages { get; private set; }
 
@@ -378,7 +379,7 @@ namespace ComponentFactory.Krypton.Navigator
 		[Browsable(false)]
 		[Bindable(false)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-		public new Control.ControlCollection Controls => base.Controls;
+		public new ControlCollection Controls => base.Controls;
 
         /// <summary>
 		/// Gets or sets the index of the currently-selected page.
@@ -416,13 +417,13 @@ namespace ComponentFactory.Krypton.Navigator
 				    // Range check the index
 					if ((value < 0) || (value >= Pages.Count))
 					{
-					    throw new ArgumentOutOfRangeException("value", "Index out of range");
+					    throw new ArgumentOutOfRangeException(nameof(value), "Index out of range");
 					}
 
 				    // Can only select a page that is visible
                     if (!Pages[value].LastVisibleSet)
                     {
-                        throw new ArgumentNullException("value", "Cannot select a page that is not visible");
+                        throw new ArgumentNullException(nameof(value), "Cannot select a page that is not visible");
                     }
 
 				    // Request the change by changing the SelectedPage
@@ -455,7 +456,7 @@ namespace ComponentFactory.Krypton.Navigator
 				    // You cannot remove the selection entirely by using null
 					if (value == null)
 					{
-					    throw new ArgumentOutOfRangeException("value", "Value cannot be null");
+					    throw new ArgumentOutOfRangeException(nameof(value), "Value cannot be null");
 					}
 
 				    // Check the page is in the pages collection
@@ -464,7 +465,7 @@ namespace ComponentFactory.Krypton.Navigator
                         // Can only select a page that is visible
                         if (!value.LastVisibleSet)
                         {
-                            throw new ArgumentNullException("value", "Cannot select a page that is not visible");
+                            throw new ArgumentNullException(nameof(value), "Cannot select a page that is not visible");
                         }
 
                         // Change of selected page means we get rid of any showing popup page
@@ -1127,13 +1128,9 @@ namespace ComponentFactory.Krypton.Navigator
         public bool DesignerGetHitTest(Point pt)
         {
             // Ignore call as view builder is already destructed
-            if (IsDisposed)
-            {
-                return false;
-            }
+            return !IsDisposed && ViewBuilder.DesignerGetHitTest(pt);
 
             // Ask the current view for a decision
-            return ViewBuilder.DesignerGetHitTest(pt);
         }
 
         /// <summary>
@@ -1145,13 +1142,9 @@ namespace ComponentFactory.Krypton.Navigator
         public Component DesignerComponentFromPoint(Point pt)
         {
             // Ignore call as view builder is already destructed
-            if (IsDisposed)
-            {
-                return null;
-            }
+            return IsDisposed ? null : ViewManager.ComponentFromPoint(pt);
 
             // Ask the current view for a decision
-            return ViewManager.ComponentFromPoint(pt);
         }
 
         /// <summary>
@@ -1402,14 +1395,7 @@ namespace ComponentFactory.Krypton.Navigator
             }
 
             // If we did not handle the key then give it to the base class
-            if (handled)
-            {
-                return handled;
-            }
-            else
-            {
-                return base.ProcessDialogKey(keyData);
-            }
+            return handled || base.ProcessDialogKey(keyData);
         }
 
         /// <summary>

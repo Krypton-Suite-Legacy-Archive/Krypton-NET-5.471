@@ -1,11 +1,12 @@
 ﻿// *****************************************************************************
-// 
-//  © Component Factory Pty Ltd, modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2010 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//	The software and associated documentation supplied hereunder are the 
+// BSD 3-Clause License (https://github.com/ComponentFactory/Krypton/blob/master/LICENSE)
+//  © Component Factory Pty Ltd, 2006-2018, All rights reserved.
+// The software and associated documentation supplied hereunder are the 
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.7.0.0 	www.ComponentFactory.com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 
 using System;
@@ -36,21 +37,14 @@ namespace ComponentFactory.Krypton.Toolkit
             // Assuming we were correctly passed an actual component...
             if (_checkButton != null)
             {
-                // Get access to the actual Orientation propertry
+                // Get access to the actual Orientation property
                 PropertyDescriptor checkedProp = TypeDescriptor.GetProperties(_checkButton)["Checked"];
 
                 // If we succeeded in getting the property
                 if (checkedProp != null)
                 {
                     // Decide on the next action to take given the current setting
-                    if ((bool)checkedProp.GetValue(_checkButton))
-                    {
-                        _action = "Uncheck the button";
-                    }
-                    else
-                    {
-                        _action = "Check the button";
-                    }
+                    _action = (bool) checkedProp.GetValue(_checkButton) ? "Uncheck the button" : "Check the button";
                 }
             }
 
@@ -120,16 +114,9 @@ namespace ComponentFactory.Krypton.Toolkit
                 bool isChecked = verb.Text.Equals("Uncheck the button");
 
                 // Decide on the next action to take given the new setting
-                if (isChecked)
-                {
-                    _action = "Uncheck the button";
-                }
-                else
-                {
-                    _action = "Check the button";
-                }
+                _action = isChecked ? "Uncheck the button" : "Check the button";
 
-                // Get access to the actual Orientation propertry
+                // Get access to the actual Orientation property
                 PropertyDescriptor checkedProp = TypeDescriptor.GetProperties(_checkButton)["Checked"];
 
                 // If we succeeded in getting the property

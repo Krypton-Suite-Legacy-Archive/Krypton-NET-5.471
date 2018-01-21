@@ -1,11 +1,12 @@
 ﻿// *****************************************************************************
-// 
-//  © Component Factory Pty Ltd, modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2010 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//	The software and associated documentation supplied hereunder are the 
+// BSD 3-Clause License (https://github.com/ComponentFactory/Krypton/blob/master/LICENSE)
+//  © Component Factory Pty Ltd, 2006-2018, All rights reserved.
+// The software and associated documentation supplied hereunder are the 
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.7.0.0 	www.ComponentFactory.com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 
 using System;
@@ -248,14 +249,7 @@ namespace ComponentFactory.Krypton.Navigator
                 if (Navigator.SelectedPage == null)
                 {
                     // Then use the states defined in the navigator itself
-                    if (Navigator.Enabled)
-                    {
-                        buttonEdge = Navigator.StateNormal.BorderEdge;
-                    }
-                    else
-                    {
-                        buttonEdge = Navigator.StateDisabled.BorderEdge;
-                    }
+                    buttonEdge = Navigator.Enabled ? Navigator.StateNormal.BorderEdge : Navigator.StateDisabled.BorderEdge;
                 }
                 else
                 {
@@ -401,15 +395,7 @@ namespace ComponentFactory.Krypton.Navigator
 
                             if (!ce.Cancel)
                             {
-                                bool changed;
-                                if (!shift)
-                                {
-                                    changed = SelectNextPage(Navigator.SelectedPage, true, true);
-                                }
-                                else
-                                {
-                                    changed = SelectPreviousPage(Navigator.SelectedPage, true, true);
-                                }
+                                bool changed = !shift ? SelectNextPage(Navigator.SelectedPage, true, true) : SelectPreviousPage(Navigator.SelectedPage, true, true);
                             }
                         }
                         return true;
@@ -945,14 +931,9 @@ namespace ComponentFactory.Krypton.Navigator
             switch (Navigator.Stack.ItemOrientation)
             {
                 case ButtonOrientation.Auto:
-                    if (Navigator.Stack.StackOrientation == Orientation.Vertical)
-                    {
-                        return VisualOrientation.Top;
-                    }
-                    else
-                    {
-                        return VisualOrientation.Left;
-                    }
+                    return Navigator.Stack.StackOrientation == Orientation.Vertical
+                        ? VisualOrientation.Top
+                        : VisualOrientation.Left;
                 case ButtonOrientation.FixedTop:
                     return VisualOrientation.Top;
                 case ButtonOrientation.FixedBottom:

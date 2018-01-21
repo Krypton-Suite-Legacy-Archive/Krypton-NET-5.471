@@ -1,11 +1,12 @@
 ﻿// *****************************************************************************
-// 
-//  © Component Factory Pty Ltd, modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2010 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//	The software and associated documentation supplied hereunder are the 
+// BSD 3-Clause License (https://github.com/ComponentFactory/Krypton/blob/master/LICENSE)
+//  © Component Factory Pty Ltd, 2006-2018, All rights reserved.
+// The software and associated documentation supplied hereunder are the 
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.7.0.0 	www.ComponentFactory.com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 
 using System;
@@ -108,7 +109,7 @@ namespace ComponentFactory.Krypton.Ribbon
             // Validate incoming reference
             if (context == null)
             {
-                throw new ArgumentNullException("context");
+                throw new ArgumentNullException(nameof(context));
             }
 
             // A change in state always causes a size and layout calculation
@@ -221,45 +222,29 @@ namespace ComponentFactory.Krypton.Ribbon
         /// </summary>
         /// <param name="state">Tab state.</param>
         /// <returns>Image.</returns>
-        public Image GetImage(PaletteState state)
-        {
-            return null;
-        }
+        public Image GetImage(PaletteState state) => null;
 
         /// <summary>
         /// Gets the image color that should be interpreted as transparent.
         /// </summary>
         /// <param name="state">Tab state.</param>
         /// <returns>Transparent Color.</returns>
-        public Color GetImageTransparentColor(PaletteState state)
-        {
-            return Color.Empty;
-        }
+        public Color GetImageTransparentColor(PaletteState state) => Color.Empty;
 
         /// <summary>
         /// Gets the short text used as the main ribbon title.
         /// </summary>
         /// <returns>Title string.</returns>
-        public string GetShortText()
-        {
-            if (_ribbonButton.KryptonCommand != null)
-            {
-                return _ribbonButton.KryptonCommand.TextLine1;
-            }
-            else
-            {
-                return _ribbonButton.TextLine;
-            }
-        }
+        public string GetShortText() => _ribbonButton.KryptonCommand != null
+            ? _ribbonButton.KryptonCommand.TextLine1
+            : _ribbonButton.TextLine;
 
         /// <summary>
         /// Gets the long text used as the secondary ribbon title.
         /// </summary>
         /// <returns>Title string.</returns>
-        public string GetLongText()
-        {
-            return string.Empty;
-        }
+        public string GetLongText() => string.Empty;
+
         #endregion
     }
 }

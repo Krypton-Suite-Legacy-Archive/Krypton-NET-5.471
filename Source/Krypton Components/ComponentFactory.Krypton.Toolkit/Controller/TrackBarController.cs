@@ -1,11 +1,12 @@
 ﻿// *****************************************************************************
-// 
-//  © Component Factory Pty Ltd, modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2010 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//	The software and associated documentation supplied hereunder are the 
+// BSD 3-Clause License (https://github.com/ComponentFactory/Krypton/blob/master/LICENSE)
+//  © Component Factory Pty Ltd, 2006-2018, All rights reserved.
+// The software and associated documentation supplied hereunder are the 
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.7.0.0 	www.ComponentFactory.com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 
 using System;
@@ -65,7 +66,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 if (_drawTB.ClientRectangle.Contains(pt))
                 {
                     // Ignore multiple calls with the same point
-                    if ((_lastMovePt == null) || (_lastMovePt != pt))
+                    if (_lastMovePt != pt)
                     {
                         _lastMovePt = pt;
 
@@ -186,12 +187,14 @@ namespace ComponentFactory.Krypton.Toolkit
 	    #endregion
 
         #region Key Notifications
-        /// <summary>
-        /// Key has been pressed down.
-        /// </summary>
-        /// <param name="c">Reference to the source control instance.</param>
-        /// <param name="e">A KeyEventArgs that contains the event data.</param>
-        public virtual void KeyDown(Control c, KeyEventArgs e)
+
+	    /// <summary>
+	    /// Key has been pressed down.
+	    /// </summary>
+	    /// <param name="c">Reference to the source control instance.</param>
+	    /// <param name="e">A KeyEventArgs that contains the event data.</param>
+	    /// <exception cref="ArgumentNullException"></exception>
+	    public virtual void KeyDown(Control c, KeyEventArgs e)
         {
             Debug.Assert(c != null);
             Debug.Assert(e != null);
@@ -199,82 +202,66 @@ namespace ComponentFactory.Krypton.Toolkit
             // Validate incoming references
             if (c == null)
             {
-                throw new ArgumentNullException("c");
+                throw new ArgumentNullException(nameof(c));
             }
 
             if (e == null)
             {
-                throw new ArgumentNullException("e");
+                throw new ArgumentNullException(nameof(e));
             }
 
             switch (e.KeyCode)
             {
                 case Keys.Left:
                 case Keys.Up:
-                    if (_drawTB.ViewDrawTrackBar.Orientation == Orientation.Horizontal)
-                    {
-                        _drawTB.ViewDrawTrackBar.ScrollValue = Math.Max(_drawTB.ViewDrawTrackBar.Minimum, Math.Min(_drawTB.ViewDrawTrackBar.Value -_drawTB.ViewDrawTrackBar.SmallChange, _drawTB.ViewDrawTrackBar.Maximum));
-                    }
-                    else
-                    {
-                        _drawTB.ViewDrawTrackBar.ScrollValue = Math.Max(_drawTB.ViewDrawTrackBar.Minimum, Math.Min(_drawTB.ViewDrawTrackBar.Value + _drawTB.ViewDrawTrackBar.SmallChange, _drawTB.ViewDrawTrackBar.Maximum));
-                    }
+                    _drawTB.ViewDrawTrackBar.ScrollValue = Math.Max(_drawTB.ViewDrawTrackBar.Minimum,
+                        _drawTB.ViewDrawTrackBar.Orientation == Orientation.Horizontal
+                            ? Math.Min(_drawTB.ViewDrawTrackBar.Value - _drawTB.ViewDrawTrackBar.SmallChange,
+                                _drawTB.ViewDrawTrackBar.Maximum)
+                            : Math.Min(_drawTB.ViewDrawTrackBar.Value + _drawTB.ViewDrawTrackBar.SmallChange,
+                                _drawTB.ViewDrawTrackBar.Maximum));
 
                     break;
                 case Keys.Right:
                 case Keys.Down:
-                    if (_drawTB.ViewDrawTrackBar.Orientation == Orientation.Horizontal)
-                    {
-                        _drawTB.ViewDrawTrackBar.ScrollValue = Math.Max(_drawTB.ViewDrawTrackBar.Minimum, Math.Min(_drawTB.ViewDrawTrackBar.Value + _drawTB.ViewDrawTrackBar.SmallChange, _drawTB.ViewDrawTrackBar.Maximum));
-                    }
-                    else
-                    {
-                        _drawTB.ViewDrawTrackBar.ScrollValue = Math.Max(_drawTB.ViewDrawTrackBar.Minimum, Math.Min(_drawTB.ViewDrawTrackBar.Value - _drawTB.ViewDrawTrackBar.SmallChange, _drawTB.ViewDrawTrackBar.Maximum));
-                    }
+                    _drawTB.ViewDrawTrackBar.ScrollValue = Math.Max(_drawTB.ViewDrawTrackBar.Minimum,
+                        _drawTB.ViewDrawTrackBar.Orientation == Orientation.Horizontal
+                            ? Math.Min(_drawTB.ViewDrawTrackBar.Value + _drawTB.ViewDrawTrackBar.SmallChange,
+                                _drawTB.ViewDrawTrackBar.Maximum)
+                            : Math.Min(_drawTB.ViewDrawTrackBar.Value - _drawTB.ViewDrawTrackBar.SmallChange,
+                                _drawTB.ViewDrawTrackBar.Maximum));
 
                     break;
                 case Keys.Home:
-                    if (_drawTB.ViewDrawTrackBar.Orientation == Orientation.Horizontal)
-                    {
-                        _drawTB.ViewDrawTrackBar.ScrollValue = _drawTB.ViewDrawTrackBar.Minimum;
-                    }
-                    else
-                    {
-                        _drawTB.ViewDrawTrackBar.ScrollValue = _drawTB.ViewDrawTrackBar.Maximum;
-                    }
+                    _drawTB.ViewDrawTrackBar.ScrollValue =
+                        _drawTB.ViewDrawTrackBar.Orientation == Orientation.Horizontal
+                            ? _drawTB.ViewDrawTrackBar.Minimum
+                            : _drawTB.ViewDrawTrackBar.Maximum;
 
                     break;
                 case Keys.End:
-                    if (_drawTB.ViewDrawTrackBar.Orientation == Orientation.Horizontal)
-                    {
-                        _drawTB.ViewDrawTrackBar.ScrollValue = _drawTB.ViewDrawTrackBar.Maximum;
-                    }
-                    else
-                    {
-                        _drawTB.ViewDrawTrackBar.ScrollValue = _drawTB.ViewDrawTrackBar.Minimum;
-                    }
+                    _drawTB.ViewDrawTrackBar.ScrollValue =
+                        _drawTB.ViewDrawTrackBar.Orientation == Orientation.Horizontal
+                            ? _drawTB.ViewDrawTrackBar.Maximum
+                            : _drawTB.ViewDrawTrackBar.Minimum;
 
                     break;
                 case Keys.PageDown:
-                    if (_drawTB.ViewDrawTrackBar.Orientation == Orientation.Horizontal)
-                    {
-                        _drawTB.ViewDrawTrackBar.ScrollValue = Math.Max(_drawTB.ViewDrawTrackBar.Minimum, Math.Min(_drawTB.ViewDrawTrackBar.Value + _drawTB.ViewDrawTrackBar.LargeChange, _drawTB.ViewDrawTrackBar.Maximum));
-                    }
-                    else
-                    {
-                        _drawTB.ViewDrawTrackBar.ScrollValue = Math.Max(_drawTB.ViewDrawTrackBar.Minimum, Math.Min(_drawTB.ViewDrawTrackBar.Value - _drawTB.ViewDrawTrackBar.LargeChange, _drawTB.ViewDrawTrackBar.Maximum));
-                    }
+                    _drawTB.ViewDrawTrackBar.ScrollValue = Math.Max(_drawTB.ViewDrawTrackBar.Minimum,
+                        _drawTB.ViewDrawTrackBar.Orientation == Orientation.Horizontal
+                            ? Math.Min(_drawTB.ViewDrawTrackBar.Value + _drawTB.ViewDrawTrackBar.LargeChange,
+                                _drawTB.ViewDrawTrackBar.Maximum)
+                            : Math.Min(_drawTB.ViewDrawTrackBar.Value - _drawTB.ViewDrawTrackBar.LargeChange,
+                                _drawTB.ViewDrawTrackBar.Maximum));
 
                     break;
                 case Keys.PageUp:
-                    if (_drawTB.ViewDrawTrackBar.Orientation == Orientation.Horizontal)
-                    {
-                        _drawTB.ViewDrawTrackBar.ScrollValue = Math.Max(_drawTB.ViewDrawTrackBar.Minimum, Math.Min(_drawTB.ViewDrawTrackBar.Value - _drawTB.ViewDrawTrackBar.LargeChange, _drawTB.ViewDrawTrackBar.Maximum));
-                    }
-                    else
-                    {
-                        _drawTB.ViewDrawTrackBar.ScrollValue = Math.Max(_drawTB.ViewDrawTrackBar.Minimum, Math.Min(_drawTB.ViewDrawTrackBar.Value + _drawTB.ViewDrawTrackBar.LargeChange, _drawTB.ViewDrawTrackBar.Maximum));
-                    }
+                    _drawTB.ViewDrawTrackBar.ScrollValue = Math.Max(_drawTB.ViewDrawTrackBar.Minimum,
+                        _drawTB.ViewDrawTrackBar.Orientation == Orientation.Horizontal
+                            ? Math.Min(_drawTB.ViewDrawTrackBar.Value - _drawTB.ViewDrawTrackBar.LargeChange,
+                                _drawTB.ViewDrawTrackBar.Maximum)
+                            : Math.Min(_drawTB.ViewDrawTrackBar.Value + _drawTB.ViewDrawTrackBar.LargeChange,
+                                _drawTB.ViewDrawTrackBar.Maximum));
 
                     break;
             }
@@ -289,13 +276,14 @@ namespace ComponentFactory.Krypton.Toolkit
         {
         }
 
-        /// <summary>
-        /// Key has been released.
-        /// </summary>
-        /// <param name="c">Reference to the source control instance.</param>
-        /// <param name="e">A KeyEventArgs that contains the event data.</param>
-        /// <returns>True if capturing input; otherwise false.</returns>
-        public virtual bool KeyUp(Control c, KeyEventArgs e)
+	    /// <summary>
+	    /// Key has been released.
+	    /// </summary>
+	    /// <param name="c">Reference to the source control instance.</param>
+	    /// <param name="e">A KeyEventArgs that contains the event data.</param>
+	    /// <exception cref="ArgumentNullException"></exception>
+	    /// <returns>True if capturing input; otherwise false.</returns>
+	    public virtual bool KeyUp(Control c, KeyEventArgs e)
         {
             Debug.Assert(c != null);
             Debug.Assert(e != null);
@@ -303,12 +291,12 @@ namespace ComponentFactory.Krypton.Toolkit
             // Validate incoming references
             if (c == null)
             {
-                throw new ArgumentNullException("c");
+                throw new ArgumentNullException(nameof(c));
             }
 
             if (e == null)
             {
-                throw new ArgumentNullException("e");
+                throw new ArgumentNullException(nameof(e));
             }
 
             return _captured;
@@ -324,18 +312,19 @@ namespace ComponentFactory.Krypton.Toolkit
         {
         }
 
-        /// <summary>
-        /// Source control has lost the focus.
-        /// </summary>
-        /// <param name="c">Reference to the source control instance.</param>
-        public virtual void LostFocus(Control c)
+	    /// <summary>
+	    /// Source control has lost the focus.
+	    /// </summary>
+	    /// <param name="c">Reference to the source control instance.</param>
+	    /// <exception cref="ArgumentNullException"></exception>
+	    public virtual void LostFocus(Control c)
         {
             Debug.Assert(c != null);
 
             // Validate incoming references
             if (c == null)
             {
-                throw new ArgumentNullException("c");
+                throw new ArgumentNullException(nameof(c));
             }
 
             // If we are capturing mouse input
@@ -361,14 +350,9 @@ namespace ComponentFactory.Krypton.Toolkit
             int current = _drawTB.ViewDrawTrackBar.Value;
             if (current != _targetValue)
             {
-                if (current < _targetValue)
-                {
-                    _drawTB.ViewDrawTrackBar.ScrollValue = Math.Min(_targetValue, current + _drawTB.ViewDrawTrackBar.LargeChange);
-                }
-                else
-                {
-                    _drawTB.ViewDrawTrackBar.ScrollValue = Math.Max(_targetValue, current - _drawTB.ViewDrawTrackBar.LargeChange);
-                }
+                _drawTB.ViewDrawTrackBar.ScrollValue = current < _targetValue
+                    ? Math.Min(_targetValue, current + _drawTB.ViewDrawTrackBar.LargeChange)
+                    : Math.Max(_targetValue, current - _drawTB.ViewDrawTrackBar.LargeChange);
             }
         }
         #endregion

@@ -1,11 +1,12 @@
 ﻿// *****************************************************************************
-// 
-//  © Component Factory Pty Ltd, modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2010 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//	The software and associated documentation supplied hereunder are the 
+// BSD 3-Clause License (https://github.com/ComponentFactory/Krypton/blob/master/LICENSE)
+//  © Component Factory Pty Ltd, 2006-2018, All rights reserved.
+// The software and associated documentation supplied hereunder are the 
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.7.0.0 	www.ComponentFactory.com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 
 using System;
@@ -36,21 +37,16 @@ namespace ComponentFactory.Krypton.Toolkit
             // Assuming we were correctly passed an actual component...
             if (_trackBar != null)
             {
-                // Get access to the actual Orientation propertry
+                // Get access to the actual Orientation property
                 PropertyDescriptor orientationProp = TypeDescriptor.GetProperties(_trackBar)["Orientation"];
 
                 // If we succeeded in getting the property
                 if (orientationProp != null)
                 {
                     // Decide on the next action to take given the current setting
-                    if ((Orientation)orientationProp.GetValue(_trackBar) == Orientation.Vertical)
-                    {
-                        _action = "Horizontal orientation";
-                    }
-                    else
-                    {
-                        _action = "Vertical orientation";
-                    }
+                    _action = (Orientation) orientationProp.GetValue(_trackBar) == Orientation.Vertical
+                        ? "Horizontal orientation"
+                        : "Vertical orientation";
                 }
             }
 
@@ -223,16 +219,9 @@ namespace ComponentFactory.Krypton.Toolkit
                 Orientation orientation = verb.Text.Equals("Horizontal orientation") ? Orientation.Horizontal : Orientation.Vertical;
 
                 // Decide on the next action to take given the new setting
-                if (orientation == Orientation.Vertical)
-                {
-                    _action = "Horizontal orientation";
-                }
-                else
-                {
-                    _action = "Vertical orientation";
-                }
+                _action = orientation == Orientation.Vertical ? "Horizontal orientation" : "Vertical orientation";
 
-                // Get access to the actual Orientation propertry
+                // Get access to the actual Orientation property
                 PropertyDescriptor orientationProp = TypeDescriptor.GetProperties(_trackBar)["Orientation"];
 
                 // If we succeeded in getting the property

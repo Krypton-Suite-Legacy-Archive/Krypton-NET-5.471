@@ -1,11 +1,12 @@
 ﻿// *****************************************************************************
-// 
-//  © Component Factory Pty Ltd, modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2010 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//	The software and associated documentation supplied hereunder are the 
+// BSD 3-Clause License (https://github.com/ComponentFactory/Krypton/blob/master/LICENSE)
+//  © Component Factory Pty Ltd, 2006-2018, All rights reserved.
+// The software and associated documentation supplied hereunder are the 
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.7.0.0 	www.ComponentFactory.com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 
 using System;
@@ -24,7 +25,7 @@ namespace ComponentFactory.Krypton.Toolkit
     [ToolboxBitmap(typeof(KryptonButton), "ToolboxBitmaps.KryptonButton.bmp")]
     [DefaultEvent("Click")]
 	[DefaultProperty("Text")]
-    [Designer("ComponentFactory.Krypton.Toolkit.KryptonButtonDesigner, ComponentFactory.Krypton.Design, Version=4.71.0.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e")]
+    [Designer("ComponentFactory.Krypton.Toolkit.KryptonButtonDesigner, ComponentFactory.Krypton.Design, Version=4.70.0.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e")]
     [DesignerCategory("code")]
     [Description("Raises an event when the user clicks it.")]
     [ClassInterface(ClassInterfaceType.AutoDispatch)]
@@ -469,74 +470,35 @@ namespace ComponentFactory.Krypton.Toolkit
         /// Gets the content short text.
         /// </summary>
         /// <returns>String value.</returns>
-        public string GetShortText()
-        {
-            if (KryptonCommand != null)
-            {
-                return KryptonCommand.Text;
-            }
-            else
-            {
-                return Values.GetShortText();
-            }
-        }
+        public string GetShortText() => KryptonCommand?.Text ?? Values.GetShortText();
 
         /// <summary>
         /// Gets the content long text.
         /// </summary>
         /// <returns>String value.</returns>
-        public string GetLongText()
-        {
-            if (KryptonCommand != null)
-            {
-                return KryptonCommand.ExtraText;
-            }
-            else
-            {
-                return Values.GetLongText();
-            }
-        }
+        public string GetLongText() => KryptonCommand?.ExtraText ?? Values.GetLongText();
 
         /// <summary>
         /// Gets the content image.
         /// </summary>
         /// <param name="state">The state for which the image is needed.</param>
         /// <returns>Image value.</returns>
-        public Image GetImage(PaletteState state)
-        {
-            if (KryptonCommand != null)
-            {
-                return KryptonCommand.ImageSmall;
-            }
-            else
-            {
-                return Values.GetImage(state);
-            }
-        }
+        public Image GetImage(PaletteState state) => KryptonCommand?.ImageSmall ?? Values.GetImage(state);
 
         /// <summary>
         /// Gets the image color that should be transparent.
         /// </summary>
         /// <param name="state">The state for which the image is needed.</param>
         /// <returns>Color value.</returns>
-        public Color GetImageTransparentColor(PaletteState state)
-        {
-            if (KryptonCommand != null)
-            {
-                return KryptonCommand.ImageTransparentColor;
-            }
-            else
-            {
-                return Values.GetImageTransparentColor(state);
-            }
-        }
+        public Color GetImageTransparentColor(PaletteState state) =>
+            KryptonCommand?.ImageTransparentColor ?? Values.GetImageTransparentColor(state);
         #endregion
-        
+
         #region Protected Overrides
-		/// <summary>
-		/// Gets the default size of the control.
-		/// </summary>
-		protected override Size DefaultSize => new Size(90, 25);
+        /// <summary>
+        /// Gets the default size of the control.
+        /// </summary>
+        protected override Size DefaultSize => new Size(90, 25);
 
 	    /// <summary>
 		/// Gets the default Input Method Editor (IME) mode supported by this control.
@@ -632,7 +594,7 @@ namespace ComponentFactory.Krypton.Toolkit
 			if (UseMnemonic && CanProcessMnemonic())
 			{
 				// Does the button primary text contain the mnemonic?
-				if (Control.IsMnemonic(charCode, Values.Text))
+				if (IsMnemonic(charCode, Values.Text))
 				{
 					// Perform default action for a button, click it!
 					PerformClick();

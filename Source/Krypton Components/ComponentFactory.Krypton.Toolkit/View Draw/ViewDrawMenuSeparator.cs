@@ -1,11 +1,12 @@
 ﻿// *****************************************************************************
-// 
-//  © Component Factory Pty Ltd, modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2010 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//	The software and associated documentation supplied hereunder are the 
+// BSD 3-Clause License (https://github.com/ComponentFactory/Krypton/blob/master/LICENSE)
+//  © Component Factory Pty Ltd, 2006-2018, All rights reserved.
+// The software and associated documentation supplied hereunder are the 
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.7.0.0 	www.ComponentFactory.com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 
 using System.Diagnostics;
@@ -37,14 +38,7 @@ namespace ComponentFactory.Krypton.Toolkit
             // Give the separator object the redirector to use when inheriting values
             separator.SetPaletteRedirect(palette);
 
-            if (separator.Horizontal)
-            {
-                Orientation = VisualOrientation.Top;
-            }
-            else
-            {
-                Orientation = VisualOrientation.Left;
-            }
+            Orientation = separator.Horizontal ? VisualOrientation.Top : VisualOrientation.Left;
 
             // We need to be big enough to contain 1 pixel square spacer
             Add(new ViewLayoutSeparator(1));

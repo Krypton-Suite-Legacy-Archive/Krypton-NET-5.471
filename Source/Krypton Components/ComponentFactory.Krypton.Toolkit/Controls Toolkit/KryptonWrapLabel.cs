@@ -1,11 +1,12 @@
 ﻿// *****************************************************************************
-// 
-//  © Component Factory Pty Ltd, modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2010 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//	The software and associated documentation supplied hereunder are the 
+// BSD 3-Clause License (https://github.com/ComponentFactory/Krypton/blob/master/LICENSE)
+//  © Component Factory Pty Ltd, 2006-2018, All rights reserved.
+// The software and associated documentation supplied hereunder are the 
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.7.0.0 	www.ComponentFactory.com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 
 using System;
@@ -25,7 +26,7 @@ namespace ComponentFactory.Krypton.Toolkit
     [ToolboxBitmap(typeof(KryptonWrapLabel), "ToolboxBitmaps.KryptonWrapLabel.bmp")]
 	[DefaultProperty("Text")]
     [DefaultBindingProperty("Text")]
-    [Designer("ComponentFactory.Krypton.Toolkit.KryptonWrapLabelDesigner, ComponentFactory.Krypton.Design, Version=4.71.0.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e")]
+    [Designer("ComponentFactory.Krypton.Toolkit.KryptonWrapLabelDesigner, ComponentFactory.Krypton.Design, Version=4.70.0.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e")]
     [DesignerCategory("code")]
     [Description("Displays descriptive information.")]
     [ClassInterface(ClassInterfaceType.AutoDispatch)]
@@ -219,10 +220,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public PaletteWrapLabel StateCommon { get; }
 
-        private bool ShouldSerializeStateCommon()
-        {
-            return !StateCommon.IsDefault;
-        }
+        private bool ShouldSerializeStateCommon() => !StateCommon.IsDefault;
 
         /// <summary>
         /// Gets access to the disabled wrap label appearance.
@@ -232,10 +230,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public PaletteWrapLabel StateDisabled { get; }
 
-        private bool ShouldSerializeStateDisabled()
-        {
-            return !StateDisabled.IsDefault;
-        }
+        private bool ShouldSerializeStateDisabled() => !StateDisabled.IsDefault;
 
         /// <summary>
         /// Gets access to the normal wrap label appearance.
@@ -245,10 +240,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public PaletteWrapLabel StateNormal { get; }
 
-        private bool ShouldSerializeStateNormal()
-        {
-            return !StateNormal.IsDefault;
-        }
+        private bool ShouldSerializeStateNormal() => !StateNormal.IsDefault;
 
 
         /// <summary>
@@ -271,15 +263,9 @@ namespace ComponentFactory.Krypton.Toolkit
             }
         }
 
-        private bool ShouldSerializeLabelStyle()
-        {
-            return (LabelStyle != LabelStyle.NormalControl);
-        }
+        private bool ShouldSerializeLabelStyle() => (LabelStyle != LabelStyle.NormalControl);
 
-        private void ResetLabelStyle()
-        {
-            LabelStyle = LabelStyle.NormalControl;
-        }
+        private void ResetLabelStyle() => LabelStyle = LabelStyle.NormalControl;
 
         /// <summary>
         /// Gets or sets the palette to be applied.
@@ -295,7 +281,7 @@ namespace ComponentFactory.Krypton.Toolkit
             {
                 if (_paletteMode != value)
                 {
-                    // Action despends on new value
+                    // Action depends on new value
                     switch (value)
                     {
                         case PaletteMode.Custom:
@@ -319,18 +305,12 @@ namespace ComponentFactory.Krypton.Toolkit
             }
         }
 
-        private bool ShouldSerializePaletteMode()
-        {
-            return (PaletteMode != PaletteMode.Global);
-        }
+        private bool ShouldSerializePaletteMode() => (PaletteMode != PaletteMode.Global);
 
         /// <summary>
         /// Resets the PaletteMode property to its default value.
         /// </summary>
-        public void ResetPaletteMode()
-        {
-            PaletteMode = PaletteMode.Global;
-        }
+        public void ResetPaletteMode() => PaletteMode = PaletteMode.Global;
 
         /// <summary>
         /// Gets and sets the custom palette implementation.
@@ -371,7 +351,7 @@ namespace ComponentFactory.Krypton.Toolkit
                         _paletteMode = PaletteMode.Custom;
                     }
 
-                    // If real change has occured
+                    // If real change has occurred
                     if (old != _localPalette)
                     {
                         // Raise the change event
@@ -385,10 +365,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Resets the Palette property to its default value.
         /// </summary>
-        public void ResetPalette()
-        {
-            PaletteMode = PaletteMode.Global;
-        }
+        public void ResetPalette() => PaletteMode = PaletteMode.Global;
 
         /// <summary>
         /// Gets and sets the KryptonContextMenu to show when right clicked.
@@ -426,10 +403,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public IPalette GetResolvedPalette()
-        {
-            return _palette;
-        }
+        public IPalette GetResolvedPalette() => _palette;
 
         /// <summary>
         /// Gets access to the current renderer.
@@ -449,10 +423,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Advanced)]
-        public ToolStripRenderer CreateToolStripRenderer()
-        {
-            return Renderer.RenderToolStrip(GetResolvedPalette());
-        }
+        public ToolStripRenderer CreateToolStripRenderer() => Renderer.RenderToolStrip(GetResolvedPalette());
 
         /// <summary>
         /// Update the font property.
@@ -789,16 +760,10 @@ namespace ComponentFactory.Krypton.Toolkit
             }
         }
 
-        private void OnPaletteNeedPaint(object sender, NeedLayoutEventArgs e)
-        {
-            NeedPaint(e);
-        }
+        private void OnPaletteNeedPaint(object sender, NeedLayoutEventArgs e) => NeedPaint(e);
 
-        private void OnBaseChanged(object sender, EventArgs e)
-        {
-            // Change in base renderer or base palette require we fetch the latest renderer
-            Renderer = _palette.GetRenderer();
-        }
+        // Change in base renderer or base palette require we fetch the latest renderer
+        private void OnBaseChanged(object sender, EventArgs e) => Renderer = _palette.GetRenderer();
 
         private void OnGlobalPaletteChanged(object sender, EventArgs e)
         {
@@ -818,15 +783,14 @@ namespace ComponentFactory.Krypton.Toolkit
             }
         }
 
-        private void OnUserPreferenceChanged(object sender, UserPreferenceChangedEventArgs e)
-        {
-            NeedPaint(true);
-        }
+        private void OnUserPreferenceChanged(object sender, UserPreferenceChangedEventArgs e) => NeedPaint(true);
 
         private void OnContextMenuStripOpening(object sender, CancelEventArgs e)
         {
             // Get the actual strip instance
+            // ReSharper disable RedundantBaseQualifier
             ContextMenuStrip cms = base.ContextMenuStrip;
+            // ReSharper restore RedundantBaseQualifier
 
             // Make sure it has the correct renderer
             cms.Renderer = CreateToolStripRenderer();
@@ -840,15 +804,9 @@ namespace ComponentFactory.Krypton.Toolkit
             KryptonContextMenu = null;
         }
 
-        private void OnContextMenuClosed(object sender, ToolStripDropDownClosedEventArgs e)
-        {
-            ContextMenuClosed();
-        }
+        private void OnContextMenuClosed(object sender, ToolStripDropDownClosedEventArgs e) => ContextMenuClosed();
 
-        private void NeedPaint(bool layout)
-        {
-            NeedPaint(new NeedLayoutEventArgs(layout));
-        }
+        private void NeedPaint(bool layout) => NeedPaint(new NeedLayoutEventArgs(layout));
 
         private void NeedPaint(NeedLayoutEventArgs e)
         {

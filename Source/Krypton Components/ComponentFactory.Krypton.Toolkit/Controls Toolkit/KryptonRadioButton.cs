@@ -1,11 +1,12 @@
 ﻿// *****************************************************************************
-// 
-//  © Component Factory Pty Ltd, modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2010 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//	The software and associated documentation supplied hereunder are the 
+// BSD 3-Clause License (https://github.com/ComponentFactory/Krypton/blob/master/LICENSE)
+//  © Component Factory Pty Ltd, 2006-2018, All rights reserved.
+// The software and associated documentation supplied hereunder are the 
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.7.0.0 	www.ComponentFactory.com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 
 using System;
@@ -25,7 +26,7 @@ namespace ComponentFactory.Krypton.Toolkit
     [DefaultEvent("CheckedChanged")]
 	[DefaultProperty("Text")]
     [DefaultBindingProperty("Checked")]
-    [Designer("ComponentFactory.Krypton.Toolkit.KryptonRadioButtonDesigner, ComponentFactory.Krypton.Design, Version=4.71.0.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e")]
+    [Designer("ComponentFactory.Krypton.Toolkit.KryptonRadioButtonDesigner, ComponentFactory.Krypton.Design, Version=4.70.0.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e")]
     [DesignerCategory("code")]
     [Description("Allow user to set or clear the associated option.")]
     [ClassInterface(ClassInterfaceType.AutoDispatch)]
@@ -617,7 +618,7 @@ namespace ComponentFactory.Krypton.Toolkit
             if (UseMnemonic && AutoCheck && CanProcessMnemonic())
             {
                 // Does the button primary text contain the mnemonic?
-                if (Control.IsMnemonic(charCode, Values.Text))
+                if (IsMnemonic(charCode, Values.Text))
                 {
                     // If we don't have the focus, then take it
                     if (!ContainsFocus)
@@ -740,25 +741,11 @@ namespace ComponentFactory.Krypton.Toolkit
                     {
                         default:
                         case VisualOrientation.Top:
-                            if (RightToLeft == RightToLeft.Yes)
-                            {
-                                dockStyle = ViewDockStyle.Right;
-                            }
-                            else
-                            {
-                                dockStyle = ViewDockStyle.Left;
-                            }
+                            dockStyle = RightToLeft == RightToLeft.Yes ? ViewDockStyle.Right : ViewDockStyle.Left;
 
                             break;
                         case VisualOrientation.Bottom:
-                            if (RightToLeft == RightToLeft.Yes)
-                            {
-                                dockStyle = ViewDockStyle.Left;
-                            }
-                            else
-                            {
-                                dockStyle = ViewDockStyle.Right;
-                            }
+                            dockStyle = RightToLeft == RightToLeft.Yes ? ViewDockStyle.Left : ViewDockStyle.Right;
 
                             break;
                         case VisualOrientation.Left:
@@ -774,25 +761,11 @@ namespace ComponentFactory.Krypton.Toolkit
                     {
                         default:
                         case VisualOrientation.Top:
-                            if (RightToLeft == RightToLeft.Yes)
-                            {
-                                dockStyle = ViewDockStyle.Left;
-                            }
-                            else
-                            {
-                                dockStyle = ViewDockStyle.Right;
-                            }
+                            dockStyle = RightToLeft == RightToLeft.Yes ? ViewDockStyle.Left : ViewDockStyle.Right;
 
                             break;
                         case VisualOrientation.Bottom:
-                            if (RightToLeft == RightToLeft.Yes)
-                            {
-                                dockStyle = ViewDockStyle.Right;
-                            }
-                            else
-                            {
-                                dockStyle = ViewDockStyle.Left;
-                            }
+                            dockStyle = RightToLeft == RightToLeft.Yes ? ViewDockStyle.Right : ViewDockStyle.Left;
 
                             break;
                         case VisualOrientation.Left:

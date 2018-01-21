@@ -1,11 +1,12 @@
 ﻿// *****************************************************************************
-// 
-//  © Component Factory Pty Ltd, modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2010 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//	The software and associated documentation supplied hereunder are the 
+// BSD 3-Clause License (https://github.com/ComponentFactory/Krypton/blob/master/LICENSE)
+//  © Component Factory Pty Ltd, 2006-2018, All rights reserved.
+// The software and associated documentation supplied hereunder are the 
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.7.0.0 	www.ComponentFactory.com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 
 using System.Drawing;
@@ -131,27 +132,16 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Reset the BackColor1 to the default value.
         /// </summary>
-        public void ResetBackColor1()
-        {
-            BackColor1 = Color.Empty;
-        }
+        public void ResetBackColor1() => BackColor1 = Color.Empty;
 
         /// <summary>
         /// Gets the first background color for the ribbon item.
         /// </summary>
         /// <param name="state">Palette value should be applicable to this state.</param>
         /// <returns>Color value.</returns>
-        public Color GetRibbonBackColor1(PaletteState state)
-        {
-            if (BackColor1 != Color.Empty)
-            {
-                return BackColor1;
-            }
-            else
-            {
-                return _inheritBack.GetRibbonBackColor1(state);
-            }
-        }
+        public Color GetRibbonBackColor1(PaletteState state) =>
+            BackColor1 != Color.Empty ? BackColor1 : _inheritBack.GetRibbonBackColor1(state);
+
         #endregion
 
         #region BackColor2
@@ -180,27 +170,16 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Reset the BackColor2 to the default value.
         /// </summary>
-        public void ResetBackColor2()
-        {
-            BackColor2 = Color.Empty;
-        }
+        public void ResetBackColor2() => BackColor2 = Color.Empty;
 
         /// <summary>
         /// Gets the second background color for the ribbon item.
         /// </summary>
         /// <param name="state">Palette value should be applicable to this state.</param>
         /// <returns>Color value.</returns>
-        public Color GetRibbonBackColor2(PaletteState state)
-        {
-            if (BackColor2 != Color.Empty)
-            {
-                return BackColor2;
-            }
-            else
-            {
-                return _inheritBack.GetRibbonBackColor2(state);
-            }
-        }
+        public Color GetRibbonBackColor2(PaletteState state) =>
+            BackColor2 != Color.Empty ? BackColor2 : _inheritBack.GetRibbonBackColor2(state);
+
         #endregion
 
         #region BackColor3
@@ -229,27 +208,16 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Reset the BackColor3 to the default value.
         /// </summary>
-        public void ResetBackColor3()
-        {
-            BackColor3 = Color.Empty;
-        }
+        public void ResetBackColor3() => BackColor3 = Color.Empty;
 
         /// <summary>
         /// Gets the third background color for the ribbon item.
         /// </summary>
         /// <param name="state">Palette value should be applicable to this state.</param>
         /// <returns>Color value.</returns>
-        public Color GetRibbonBackColor3(PaletteState state)
-        {
-            if (BackColor3 != Color.Empty)
-            {
-                return BackColor3;
-            }
-            else
-            {
-                return _inheritBack.GetRibbonBackColor3(state);
-            }
-        }
+        public Color GetRibbonBackColor3(PaletteState state) =>
+            BackColor3 != Color.Empty ? BackColor3 : _inheritBack.GetRibbonBackColor3(state);
+
         #endregion
 
         #region BackColor4
@@ -278,27 +246,16 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Reset the BackColor4 to the default value.
         /// </summary>
-        public void ResetBackColor4()
-        {
-            BackColor4 = Color.Empty;
-        }
+        public void ResetBackColor4() => BackColor4 = Color.Empty;
 
         /// <summary>
         /// Gets the fourth background color for the ribbon item.
         /// </summary>
         /// <param name="state">Palette value should be applicable to this state.</param>
         /// <returns>Color value.</returns>
-        public Color GetRibbonBackColor4(PaletteState state)
-        {
-            if (BackColor4 != Color.Empty)
-            {
-                return BackColor4;
-            }
-            else
-            {
-                return _inheritBack.GetRibbonBackColor4(state);
-            }
-        }
+        public Color GetRibbonBackColor4(PaletteState state) =>
+            BackColor4 != Color.Empty ? BackColor4 : _inheritBack.GetRibbonBackColor4(state);
+
         #endregion
 
         #region BackColor5
@@ -327,27 +284,16 @@ namespace ComponentFactory.Krypton.Toolkit
         /// <summary>
         /// Reset the BackColor5 to the default value.
         /// </summary>
-        public void ResetBackColor5()
-        {
-            BackColor5 = Color.Empty;
-        }
+        public void ResetBackColor5() => BackColor5 = Color.Empty;
 
         /// <summary>
         /// Gets the fifth background color for the ribbon item.
         /// </summary>
         /// <param name="state">Palette value should be applicable to this state.</param>
         /// <returns>Color value.</returns>
-        public Color GetRibbonBackColor5(PaletteState state)
-        {
-            if (BackColor5 != Color.Empty)
-            {
-                return BackColor5;
-            }
-            else
-            {
-                return _inheritBack.GetRibbonBackColor5(state);
-            }
-        }
+        public Color GetRibbonBackColor5(PaletteState state) =>
+            BackColor5 != Color.Empty ? BackColor5 : _inheritBack.GetRibbonBackColor5(state);
+
         #endregion
     }
 }

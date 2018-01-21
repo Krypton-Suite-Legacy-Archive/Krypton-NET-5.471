@@ -1,11 +1,12 @@
 ﻿// *****************************************************************************
-// 
-//  © Component Factory Pty Ltd, modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2010 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//	The software and associated documentation supplied hereunder are the 
+// BSD 3-Clause License (https://github.com/ComponentFactory/Krypton/blob/master/LICENSE)
+//  © Component Factory Pty Ltd, 2006-2018, All rights reserved.
+// The software and associated documentation supplied hereunder are the 
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.7.0.0 	www.ComponentFactory.com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 
 using System;
@@ -24,7 +25,7 @@ namespace ComponentFactory.Krypton.Toolkit
     [ToolboxBitmap(typeof(KryptonGroupBox), "ToolboxBitmaps.KryptonGroupBox.bmp")]
     [DefaultEvent("Paint")]
 	[DefaultProperty("ValuesPrimary")]
-    [Designer("ComponentFactory.Krypton.Toolkit.KryptonGroupBoxDesigner, ComponentFactory.Krypton.Design, Version=4.71.0.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e")]
+    [Designer("ComponentFactory.Krypton.Toolkit.KryptonGroupBoxDesigner, ComponentFactory.Krypton.Design, Version=4.70.0.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e")]
     [DesignerCategory("code")]
     [Description("Display frame around a group of related controls with an optional caption.")]
     [Docking(DockingBehavior.Ask)]
@@ -185,13 +186,17 @@ namespace ComponentFactory.Krypton.Toolkit
         [DefaultValue(typeof(AutoSizeMode), "GrowAndShrink")]
         public AutoSizeMode AutoSizeMode
         {
+            // ReSharper disable RedundantBaseQualifier
             get => base.GetAutoSizeMode();
+            // ReSharper restore RedundantBaseQualifier
 
             set
             {
+                // ReSharper disable RedundantBaseQualifier
                 if (value != base.GetAutoSizeMode())
                 {
                     base.SetAutoSizeMode(value);
+                    // ReSharper restore RedundantBaseQualifier
 
                     // Only perform an immediate layout if
                     // currently performing auto size operations
@@ -214,20 +219,14 @@ namespace ComponentFactory.Krypton.Toolkit
 		    set => Values.Heading = value;
 		}
 
-		private bool ShouldSerializeText()
-		{
-			// Never serialize, let the values serialize instead
-			return false;
-		}
+        // Never serialize, let the values serialize instead
+		private bool ShouldSerializeText() => false;
 
-		/// <summary>
-		/// Resets the Text property to its default value.
-		/// </summary>
-		public override void ResetText()
-		{
-			// Map onto the heading property from the values
-			Values.ResetHeading();
-		}
+        /// <summary>
+        /// Resets the Text property to its default value.
+        /// </summary>
+        // Map onto the heading property from the values
+        public override void ResetText() => Values.ResetHeading();
 
         /// <summary>
         /// Gets access to the internal panel that contains group content.
@@ -313,20 +312,14 @@ namespace ComponentFactory.Krypton.Toolkit
 			}
 		}
 
-        private void ResetGroupBackStyle()
-        {
-            GroupBackStyle = PaletteBackStyle.ControlGroupBox;
-        }
+        private void ResetGroupBackStyle() => GroupBackStyle = PaletteBackStyle.ControlGroupBox;
 
-        private bool ShouldSerializeGroupBackStyle()
-        {
-            return (GroupBackStyle != PaletteBackStyle.ControlGroupBox);
-        }
-        
+        private bool ShouldSerializeGroupBackStyle() => (GroupBackStyle != PaletteBackStyle.ControlGroupBox);
+
         /// <summary>
-		/// Gets and sets the caption style.
-		/// </summary>
-		[Category("Visuals")]
+        /// Gets and sets the caption style.
+        /// </summary>
+        [Category("Visuals")]
 		[Description("Caption style.")]
         [DefaultValue(typeof(LabelStyle), "GroupBoxCaption")]
         public LabelStyle CaptionStyle
@@ -344,20 +337,14 @@ namespace ComponentFactory.Krypton.Toolkit
 			}
 		}
 
-        private void ResetCaptionStyle()
-        {
-            CaptionStyle = LabelStyle.GroupBoxCaption;
-        }
+        private void ResetCaptionStyle() => CaptionStyle = LabelStyle.GroupBoxCaption;
 
-        private bool ShouldSerializeCaptionStyle()
-        {
-            return (CaptionStyle != LabelStyle.GroupBoxCaption);
-        }
-        
-		/// <summary>
+        private bool ShouldSerializeCaptionStyle() => (CaptionStyle != LabelStyle.GroupBoxCaption);
+
+        /// <summary>
         /// Gets and sets the position of the caption.
-		/// </summary>
-		[Category("Visuals")]
+        /// </summary>
+        [Category("Visuals")]
 		[Description("Edge position of the caption.")]
 		[DefaultValue(typeof(VisualOrientation), "Top")]
 		public VisualOrientation CaptionEdge
@@ -490,11 +477,8 @@ namespace ComponentFactory.Krypton.Toolkit
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public PaletteGroupBoxRedirect StateCommon { get; }
 
-        private bool ShouldSerializeStateCommon()
-        {
-            return !StateCommon.IsDefault;
-        }
-        
+        private bool ShouldSerializeStateCommon() => !StateCommon.IsDefault;
+
         /// <summary>
 		/// Gets access to the disabled header group appearance entries.
 		/// </summary>
@@ -503,12 +487,9 @@ namespace ComponentFactory.Krypton.Toolkit
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public PaletteGroupBox StateDisabled { get; }
 
-        private bool ShouldSerializeStateDisabled()
-		{
-			return !StateDisabled.IsDefault;
-		}
+        private bool ShouldSerializeStateDisabled() => !StateDisabled.IsDefault;
 
-		/// <summary>
+        /// <summary>
 		/// Gets access to the normal header group appearance entries.
 		/// </summary>
 		[Category("Visuals")]
@@ -516,12 +497,9 @@ namespace ComponentFactory.Krypton.Toolkit
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public PaletteGroupBox StateNormal { get; }
 
-        private bool ShouldSerializeStateNormal()
-		{
-			return !StateNormal.IsDefault;
-		}
+        private bool ShouldSerializeStateNormal() => !StateNormal.IsDefault;
 
-		/// <summary>
+        /// <summary>
 		/// Gets access to the caption content.
 		/// </summary>
 		[Category("Visuals")]
@@ -529,10 +507,7 @@ namespace ComponentFactory.Krypton.Toolkit
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 		public CaptionValues Values { get; }
 
-        private bool ShouldSerializeValuesPrimary()
-		{
-			return !Values.IsDefault;
-		}
+        private bool ShouldSerializeValuesPrimary() => !Values.IsDefault;
 
         /// <summary>
         /// Get the preferred size of the control based on a proposed size.
@@ -631,10 +606,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <returns>A new instance of Control.ControlCollection assigned to the control.</returns>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
-        protected override Control.ControlCollection CreateControlsInstance()
-        {
-            return new KryptonReadOnlyControls(this);
-        }
+        protected override ControlCollection CreateControlsInstance() => new KryptonReadOnlyControls(this);
 
         /// <summary>
         /// Raises the HandleCreated event.
@@ -797,33 +769,21 @@ namespace ComponentFactory.Krypton.Toolkit
         internal Component DesignerComponentFromPoint(Point pt)
         {
             // Ignore call as view builder is already destructed
-            if (IsDisposed)
-            {
-                return null;
-            }
+            return IsDisposed ? null : ViewManager.ComponentFromPoint(pt);
 
             // Ask the current view for a decision
-            return ViewManager.ComponentFromPoint(pt);
         }
 
-        internal void DesignerMouseLeave()
-        {
-            // Simulate the mouse leaving the control so that the tracking
-            // element that thinks it has the focus is informed it does not
-            OnMouseLeave(EventArgs.Empty);
-        }
+        // Simulate the mouse leaving the control so that the tracking
+        // element that thinks it has the focus is informed it does not
+        internal void DesignerMouseLeave() => OnMouseLeave(EventArgs.Empty);
+
         #endregion
 
-		#region Implementation
-        private void OnRemoveObscurer(object sender, EventArgs e)
-        {
-            _obscurer?.Uncover();
-        }
+        #region Implementation
+        private void OnRemoveObscurer(object sender, EventArgs e) => _obscurer?.Uncover();
 
-        private void OnValuesTextChanged(object sender, EventArgs e)
-        {
-            OnTextChanged(EventArgs.Empty);
-        }
+        private void OnValuesTextChanged(object sender, EventArgs e) => OnTextChanged(EventArgs.Empty);
 
         private void OnGroupPanelPaint(object sender, NeedLayoutEventArgs e)
         {
@@ -836,10 +796,7 @@ namespace ComponentFactory.Krypton.Toolkit
             }
         }
 
-        private void ReapplyVisible()
-        {
-            _drawContent.Visible = _captionVisible;
-        }
+        private void ReapplyVisible() => _drawContent.Visible = _captionVisible;
         #endregion
 
         #region Implementation Static

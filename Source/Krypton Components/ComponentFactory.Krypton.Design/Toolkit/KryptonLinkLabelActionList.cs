@@ -1,11 +1,12 @@
 ﻿// *****************************************************************************
-// 
-//  © Component Factory Pty Ltd, modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2010 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//	The software and associated documentation supplied hereunder are the 
+// BSD 3-Clause License (https://github.com/ComponentFactory/Krypton/blob/master/LICENSE)
+//  © Component Factory Pty Ltd, 2006-2018, All rights reserved.
+// The software and associated documentation supplied hereunder are the 
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.7.0.0 	www.ComponentFactory.com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 
 using System;
@@ -37,14 +38,7 @@ namespace ComponentFactory.Krypton.Toolkit
             if (_linkLabel != null)
             {
                 // Decide on the next action to take given the current setting
-                if (_linkLabel.LinkVisited)
-                {
-                    _action = "Link has not been visited";
-                }
-                else
-                {
-                    _action = "Link has been visited";
-                }
+                _action = _linkLabel.LinkVisited ? "Link has not been visited" : "Link has been visited";
             }
 
             // Cache service used to notify when a property has changed
@@ -227,20 +221,13 @@ namespace ComponentFactory.Krypton.Toolkit
             // Cast to the correct type
 
             // Double check the source is the expected type
-            if (sender is DesignerVerb verb)
+            if (sender is DesignerVerb)
             {
                 // Invert the visited setting
                 _linkLabel.LinkVisited = !_linkLabel.LinkVisited;
 
                 // Decide on the next action to take given the new setting
-                if (_linkLabel.LinkVisited)
-                {
-                    _action = "Link has not been visited";
-                }
-                else
-                {
-                    _action = "Link has been visited";
-                }
+                _action = _linkLabel.LinkVisited ? "Link has not been visited" : "Link has been visited";
 
                 // Get the user interface service associated with actions
 

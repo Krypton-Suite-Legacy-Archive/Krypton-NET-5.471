@@ -1,11 +1,12 @@
 ﻿// *****************************************************************************
-// 
-//  © Component Factory Pty Ltd, modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2010 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//	The software and associated documentation supplied hereunder are the 
+// BSD 3-Clause License (https://github.com/ComponentFactory/Krypton/blob/master/LICENSE)
+//  © Component Factory Pty Ltd, 2006-2018, All rights reserved.
+// The software and associated documentation supplied hereunder are the 
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.7.0.0 	www.ComponentFactory.com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 
 using System;
@@ -59,12 +60,7 @@ namespace ComponentFactory.Krypton.Toolkit
             }
 
             // Has the minimize/maximize buttons been turned off?
-            if (!KryptonForm.MinimizeBox && !KryptonForm.MaximizeBox)
-            {
-                return false;
-            }
-
-            return true;
+            return KryptonForm.MinimizeBox || KryptonForm.MaximizeBox;
         }
 
         /// <summary>
@@ -75,12 +71,7 @@ namespace ComponentFactory.Krypton.Toolkit
         public override ButtonEnabled GetEnabled(IPalette palette)
         {
             // Has the maximize buttons been turned off?
-            if (!KryptonForm.MaximizeBox)
-            {
-                return ButtonEnabled.False;
-            }
-
-            return ButtonEnabled.True;
+            return !KryptonForm.MaximizeBox ? ButtonEnabled.False : ButtonEnabled.True;
         }
 
         /// <summary>
@@ -113,14 +104,9 @@ namespace ComponentFactory.Krypton.Toolkit
                     if (GetView().ClientRectangle.Contains(mea.Location))
                     {
                         // Toggle between maximized and restored
-                        if (KryptonForm.WindowState == FormWindowState.Maximized)
-                        {
-                            KryptonForm.SendSysCommand(PI.SC_RESTORE);
-                        }
-                        else
-                        {
-                            KryptonForm.SendSysCommand(PI.SC_MAXIMIZE);
-                        }
+                        KryptonForm.SendSysCommand(KryptonForm.WindowState == FormWindowState.Maximized
+                            ? PI.SC_RESTORE
+                            : PI.SC_MAXIMIZE);
 
                         // Let base class fire any other attached events
                         base.OnClick(e);

@@ -1,11 +1,12 @@
 ﻿// *****************************************************************************
-// 
-//  © Component Factory Pty Ltd, modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2010 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//	The software and associated documentation supplied hereunder are the 
+// BSD 3-Clause License (https://github.com/ComponentFactory/Krypton/blob/master/LICENSE)
+//  © Component Factory Pty Ltd, 2006-2018, All rights reserved.
+// The software and associated documentation supplied hereunder are the 
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.7.0.0 	www.ComponentFactory.com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 
 using System.Drawing;
@@ -119,15 +120,9 @@ namespace ComponentFactory.Krypton.Ribbon
                 if (_ribbon.RibbonShape == PaletteRibbonShape.Office2010)
                 {
                     //Adjust Color of the gradient
-                    Color gradientColor;
-                    if (KryptonManager.CurrentGlobalPalette == KryptonManager.PaletteOffice2010Black)
-                    {
-                        gradientColor = Color.FromArgb(39, 39, 39);
-                    }
-                    else
-                    {
-                        gradientColor = Color.White;
-                    }
+                    Color gradientColor = KryptonManager.CurrentGlobalPalette == KryptonManager.PaletteOffice2010Black
+                        ? Color.FromArgb(39, 39, 39)
+                        : Color.White;
 
                     using (LinearGradientBrush backBrush = new LinearGradientBrush(new Rectangle(rect.X, rect.Y - 1, rect.Width, rect.Height + 1), Color.Transparent, gradientColor, 90f))
                     {
@@ -147,20 +142,8 @@ namespace ComponentFactory.Krypton.Ribbon
         #endregion
 
         #region Implementation
-        private bool DrawOnComposition
-        {
-            get
-            {
-                if (_ribbon != null)
-                {
-                    return _ribbon.CaptionArea.DrawCaptionOnComposition;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-        }
+        private bool DrawOnComposition => _ribbon != null && _ribbon.CaptionArea.DrawCaptionOnComposition;
+
         #endregion
     }
 }

@@ -1,11 +1,12 @@
 ﻿// *****************************************************************************
-// 
-//  © Component Factory Pty Ltd, modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2010 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//	The software and associated documentation supplied hereunder are the 
+// BSD 3-Clause License (https://github.com/ComponentFactory/Krypton/blob/master/LICENSE)
+//  © Component Factory Pty Ltd, 2006-2018, All rights reserved.
+// The software and associated documentation supplied hereunder are the 
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.7.0.0 	www.ComponentFactory.com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 
 using System;
@@ -210,8 +211,6 @@ namespace ComponentFactory.Krypton.Ribbon
         public void ShowCalculatingSize(ViewDrawRibbonGroup parentGroup,
                                         Rectangle parentScreenRect)
         {
-            Size popupSize;
-
             // Prevent ribbon from laying out the same group as we are
             // about to get the preferred size from. This reentrancy can
             // happen if the group has a custom control that is then moved
@@ -223,6 +222,7 @@ namespace ComponentFactory.Krypton.Ribbon
             try
             {
                 // Find the size the group requests to be
+                Size popupSize;
                 using (ViewLayoutContext context = new ViewLayoutContext(this, Renderer))
                 {
                     popupSize = ViewGroup.GetPreferredSize(context);
@@ -289,14 +289,7 @@ namespace ComponentFactory.Krypton.Ribbon
                     int spareBelow = workingArea.Bottom - parentScreenRect.Bottom;
 
                     // Place it in the area with the most space
-                    if (spareAbove > spareBelow)
-                    {
-                        popupLocation.Y = workingArea.Top;
-                    }
-                    else
-                    {
-                        popupLocation.Y = parentScreenRect.Bottom;
-                    }
+                    popupLocation.Y = spareAbove > spareBelow ? workingArea.Top : parentScreenRect.Bottom;
                 }
             }
 
@@ -386,9 +379,6 @@ namespace ComponentFactory.Krypton.Ribbon
         /// <returns>True is handled; otherwise false.</returns>
         protected override bool ProcessDialogKey(Keys keyData)
         {
-            // Grab the controlling control that is a parent
-            Control c = _ribbon.GetControllerControl(this);
-
             // Grab the view manager handling the focus view
             ViewBase focusView = ((ViewRibbonPopupGroupManager)GetViewManager()).FocusView;
 

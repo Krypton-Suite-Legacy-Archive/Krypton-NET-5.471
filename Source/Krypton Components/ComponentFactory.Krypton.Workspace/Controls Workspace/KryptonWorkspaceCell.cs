@@ -1,11 +1,12 @@
 ﻿// *****************************************************************************
-// 
-//  © Component Factory Pty Ltd, modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2010 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//	The software and associated documentation supplied hereunder are the 
+// BSD 3-Clause License (https://github.com/ComponentFactory/Krypton/blob/master/LICENSE)
+//  © Component Factory Pty Ltd, 2006-2018, All rights reserved.
+// The software and associated documentation supplied hereunder are the 
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.7.0.0 	www.ComponentFactory.com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 
 using System;
@@ -24,7 +25,7 @@ namespace ComponentFactory.Krypton.Workspace
     /// </summary>
     [ToolboxItem(false)]
     [ToolboxBitmap(typeof(KryptonWorkspaceCell), "ToolboxBitmaps.KryptonWorkspaceCell.bmp")]
-    [Designer("ComponentFactory.Krypton.Workspace.KryptonWorkspaceCellDesigner, ComponentFactory.Krypton.Design, Version=4.71.0.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e")]
+    [Designer("ComponentFactory.Krypton.Workspace.KryptonWorkspaceCellDesigner, ComponentFactory.Krypton.Design, Version=4.70.0.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e")]
     [DesignerCategory("code")]
     [DesignTimeVisible(false)]
     [DefaultProperty("Pages")]
@@ -355,7 +356,7 @@ namespace ComponentFactory.Krypton.Workspace
         [DefaultValue(true)]
         public bool AllowDroppingPages
         {
-            get { return _allowDroppingPages; }
+            get => _allowDroppingPages;
 
             set
             {
@@ -409,7 +410,7 @@ namespace ComponentFactory.Krypton.Workspace
 
 
         /// <summary>
-        /// Gets access to the maxmize/restore button spec.
+        /// Gets access to the maximize/restore button spec.
         /// </summary>
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -621,46 +622,36 @@ namespace ComponentFactory.Krypton.Workspace
         /// </summary>
         /// <param name="pt">Point to be tested.</param>
         /// <returns>True if a hit otherwise false.</returns>
-        protected internal bool CellDesignerGetHitTest(Point pt)
-        {
-            return DesignerGetHitTest(pt);
-        }
+        protected internal bool CellDesignerGetHitTest(Point pt) => DesignerGetHitTest(pt);
 
         /// <summary>
         /// Called by the designer to get the component associated with the point.
         /// </summary>
         /// <param name="pt">Point to be tested.</param>
         /// <returns>Component associated with point or null.</returns>
-        protected internal Component CellDesignerComponentFromPoint(Point pt)
-        {
-            return DesignerComponentFromPoint(pt);
-        }
+        protected internal Component CellDesignerComponentFromPoint(Point pt) => DesignerComponentFromPoint(pt);
 
         /// <summary>
         /// Called by the designer to indicate that the mouse has left the control.
         /// </summary>
         protected internal void CellDesignerMouseLeave()
         {
+            // ReSharper disable RedundantBaseQualifier
             base.DesignerMouseLeave();
+            // ReSharper restore RedundantBaseQualifier
         }
 
         /// <summary>
         /// Raises the PropertyChanged event.
         /// </summary>
         /// <param name="property">Name of property that has changed.</param>
-        protected virtual void OnPropertyChanged(string property)
-        {
-            OnPropertyChanged(new PropertyChangedEventArgs(property));
-        }
+        protected virtual void OnPropertyChanged(string property) => OnPropertyChanged(new PropertyChangedEventArgs(property));
 
         /// <summary>
         /// Raises the PropertyChanged event.
         /// </summary>
         /// <param name="e">A PropertyChangedEventArgs containing the event data.</param>
-        protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
-        {
-            PropertyChanged?.Invoke(this, e);
-        }
+        protected virtual void OnPropertyChanged(PropertyChangedEventArgs e) => PropertyChanged?.Invoke(this, e);
         #endregion
 
         #region Implementation
@@ -674,10 +665,7 @@ namespace ComponentFactory.Krypton.Workspace
             }
         }
 
-        private void OnMaximizeRestoreButtonClicked(object sender, EventArgs e)
-        {
-            MaximizeRestoreClicked?.Invoke(this, EventArgs.Empty);
-        }
+        private void OnMaximizeRestoreButtonClicked(object sender, EventArgs e) => MaximizeRestoreClicked?.Invoke(this, EventArgs.Empty);
         #endregion
     }
 

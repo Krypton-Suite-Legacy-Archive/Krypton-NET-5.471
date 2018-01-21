@@ -1,11 +1,12 @@
 ﻿// *****************************************************************************
-// 
-//  © Component Factory Pty Ltd, modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2010 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//	The software and associated documentation supplied hereunder are the 
+// BSD 3-Clause License (https://github.com/ComponentFactory/Krypton/blob/master/LICENSE)
+//  © Component Factory Pty Ltd, 2006-2018, All rights reserved.
+// The software and associated documentation supplied hereunder are the 
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.7.0.0 	www.ComponentFactory.com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 
 using System;
@@ -16,7 +17,7 @@ using ComponentFactory.Krypton.Toolkit;
 namespace ComponentFactory.Krypton.Ribbon
 {
     /// <summary>
-    /// Provide application button button functionality.
+    /// Provide application button functionality.
     /// </summary>
     internal class AppButtonController : GlobalId,
                                          IMouseController,
@@ -302,20 +303,11 @@ namespace ComponentFactory.Krypton.Ribbon
                         if (e.KeyData != Keys.Left)
                         {
                             // Get the last control on the selected tab
-                            newView = ribbon.GroupsArea.ViewGroups.GetLastFocusItem();
-
-                            // Get the currently selected tab page
-                            if (newView == null)
-                            {
-                                if (ribbon.SelectedTab != null)
-                                {
-                                    newView = ribbon.TabsArea.LayoutTabs.GetViewForRibbonTab(ribbon.SelectedTab);
-                                }
-                                else
-                                {
-                                    newView = ribbon.TabsArea.LayoutTabs.GetViewForLastRibbonTab();
-                                }
-                            }
+                            newView = ribbon.GroupsArea.ViewGroups.GetLastFocusItem() ?? 
+                                      (ribbon.SelectedTab != null   // Get the currently selected tab page
+                                          ? ribbon.TabsArea.LayoutTabs.GetViewForRibbonTab(ribbon.SelectedTab)
+                                          : ribbon.TabsArea.LayoutTabs.GetViewForLastRibbonTab());
+                           
                         }
                         else
                         {

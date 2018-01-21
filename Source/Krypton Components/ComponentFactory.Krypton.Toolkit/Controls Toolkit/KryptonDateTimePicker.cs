@@ -1,11 +1,12 @@
 ﻿// *****************************************************************************
-// 
-//  © Component Factory Pty Ltd, modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2010 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//	The software and associated documentation supplied hereunder are the 
+// BSD 3-Clause License (https://github.com/ComponentFactory/Krypton/blob/master/LICENSE)
+//  © Component Factory Pty Ltd, 2006-2018, All rights reserved.
+// The software and associated documentation supplied hereunder are the 
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.7.0.0 	www.ComponentFactory.com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 
 using System;
@@ -24,7 +25,7 @@ namespace ComponentFactory.Krypton.Toolkit
     [DefaultEvent("ValueChanged")]
 	[DefaultProperty("Value")]
     [DefaultBindingProperty("Value")]
-    [Designer("ComponentFactory.Krypton.Toolkit.KryptonDateTimePickerDesigner, ComponentFactory.Krypton.Design, Version=4.71.0.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e")]
+    [Designer("ComponentFactory.Krypton.Toolkit.KryptonDateTimePickerDesigner, ComponentFactory.Krypton.Design, Version=4.70.0.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e")]
     [DesignerCategory("code")]
     [Description("Enables the user to select a date and time, and to display that date and time in a specified format.")]
     [ClassInterface(ClassInterfaceType.AutoDispatch)]
@@ -195,7 +196,7 @@ namespace ComponentFactory.Krypton.Toolkit
             _userSetDateTime = false;
             _customFormat = string.Empty;
             _customNullText = string.Empty;
-            CalendarTodayFormat = "d";
+            CalendarTodayFormat = @"d";
             _dateTime = DateTime.Now;
             _rawDateTime = _dateTime;
             _todayDate = DateTime.Now.Date;
@@ -1604,14 +1605,7 @@ namespace ComponentFactory.Krypton.Toolkit
             }
 
             // Check if any of the button specs want the point
-            if ((_buttonManager != null) && _buttonManager.DesignerGetHitTest(pt))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return (_buttonManager != null) && _buttonManager.DesignerGetHitTest(pt);
         }
 
         /// <summary>
@@ -1623,13 +1617,9 @@ namespace ComponentFactory.Krypton.Toolkit
         public Component DesignerComponentFromPoint(Point pt)
         {
             // Ignore call as view builder is already destructed
-            if (IsDisposed)
-            {
-                return null;
-            }
+            return IsDisposed ? null : ViewManager.ComponentFromPoint(pt);
 
             // Ask the current view for a decision
-            return ViewManager.ComponentFromPoint(pt);
         }
 
         /// <summary>
@@ -2132,29 +2122,15 @@ namespace ComponentFactory.Krypton.Toolkit
 	    internal bool IsFixedActive => (_fixedActive != null);
 
 	    internal DateTime EffectiveMaxDate(DateTime maxDate)
-        {
-            DateTime maximumDateTime = DateTimePicker.MaximumDateTime;
-            if (maxDate > maximumDateTime)
-            {
-                return maximumDateTime;
-            }
-            else
-            {
-                return maxDate;
-            }
-        }
+	    {
+	        DateTime maximumDateTime = DateTimePicker.MaximumDateTime;
+	        return maxDate > maximumDateTime ? maximumDateTime : maxDate;
+	    }
 
         internal DateTime EffectiveMinDate(DateTime minDate)
         {
             DateTime minimumDateTime = DateTimePicker.MinimumDateTime;
-            if (minDate < minimumDateTime)
-            {
-                return minimumDateTime;
-            }
-            else
-            {
-                return minDate;
-            }
+            return minDate < minimumDateTime ? minimumDateTime : minDate;
         }
         #endregion
 
@@ -2181,39 +2157,14 @@ namespace ComponentFactory.Krypton.Toolkit
             _drawDockerOuter.Enabled = Enabled;
 
             // Find the new state of the main view element
-            PaletteState state;
-            if (IsActive)
-            {
-                state = PaletteState.Tracking;
-            }
-            else
-            {
-                state = PaletteState.Normal;
-            }
+            PaletteState state = IsActive ? PaletteState.Tracking : PaletteState.Normal;
 
             _drawDockerOuter.ElementState = state;
         }
 
-        private IPaletteTriple GetTripleState()
-        {
-            if (Enabled)
-            {
-                if (IsActive)
-                {
-                    return StateActive;
-                }
-                else
-                {
-                    return StateNormal;
-                }
-            }
-            else
-            {
-                return StateDisabled;
-            }
-        }
+        private IPaletteTriple GetTripleState() => Enabled ? (IsActive ? StateActive : StateNormal) : StateDisabled;
 
-        private void CheckActiveFragment()
+	    private void CheckActiveFragment()
         {
             if (_lastActiveFragment != ActiveFragment)
             {

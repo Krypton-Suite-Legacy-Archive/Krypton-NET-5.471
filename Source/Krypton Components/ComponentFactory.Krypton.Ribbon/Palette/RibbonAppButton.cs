@@ -1,11 +1,12 @@
 ﻿// *****************************************************************************
-// 
-//  © Component Factory Pty Ltd, modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2010 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//	The software and associated documentation supplied hereunder are the 
+// BSD 3-Clause License (https://github.com/ComponentFactory/Krypton/blob/master/LICENSE)
+//  © Component Factory Pty Ltd, 2006-2018, All rights reserved.
+// The software and associated documentation supplied hereunder are the 
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.7.0.0 	www.ComponentFactory.com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 
 using System.Drawing;
@@ -250,7 +251,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [Category("Values")]
         [Description("Context menu items for the application button.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        [Editor("ComponentFactory.Krypton.Toolkit.KryptonContextMenuItemCollectionEditor, ComponentFactory.Krypton.Design, Version=4.71.0.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e", typeof(UITypeEditor))]
+        [Editor("ComponentFactory.Krypton.Toolkit.KryptonContextMenuItemCollectionEditor, ComponentFactory.Krypton.Design, Version=4.70.0.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e", typeof(UITypeEditor))]
         public virtual KryptonContextMenuItemCollection AppButtonMenuItems => _appButtonMenuItems.Items;
 
         #endregion
@@ -262,7 +263,7 @@ namespace ComponentFactory.Krypton.Ribbon
         [Category("Values")]
         [Description("Recent document entries for the application buttton.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        [Editor("ComponentFactory.Krypton.Ribbon.KryptonRibbonRecentDocCollectionEditor, ComponentFactory.Krypton.Design, Version=4.71.0.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e", typeof(UITypeEditor))]
+        [Editor("ComponentFactory.Krypton.Ribbon.KryptonRibbonRecentDocCollectionEditor, ComponentFactory.Krypton.Design, Version=4.70.0.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e", typeof(UITypeEditor))]
         public virtual KryptonRibbonRecentDocCollection AppButtonRecentDocs { get; }
 
         #endregion

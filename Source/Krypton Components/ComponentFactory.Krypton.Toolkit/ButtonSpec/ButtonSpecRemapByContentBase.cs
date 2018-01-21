@@ -1,11 +1,12 @@
 ﻿// *****************************************************************************
-// 
-//  © Component Factory Pty Ltd, modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2010 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//	The software and associated documentation supplied hereunder are the 
+// BSD 3-Clause License (https://github.com/ComponentFactory/Krypton/blob/master/LICENSE)
+//  © Component Factory Pty Ltd, 2006-2018, All rights reserved.
+// The software and associated documentation supplied hereunder are the 
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.7.0.0 	www.ComponentFactory.com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 
 using System.Drawing;
@@ -159,14 +160,18 @@ namespace ComponentFactory.Krypton.Toolkit
                 if ((state == PaletteState.Normal) ||
                     (state == PaletteState.Disabled))
                 {
+                    // ReSharper disable RedundantBaseQualifier
                     // Get the color map from the button spec
                     Color mapColor = _buttonSpec.GetColorMap(base.Target);
+                    // ReSharper restore RedundantBaseQualifier
 
                     // If we are supposed to remap a color
                     if (mapColor != Color.Empty)
                     {
+                        // ReSharper disable RedundantBaseQualifier
                         // Get the button style requested
                         ButtonStyle buttonStyle = _buttonSpec.GetStyle(base.Target);
+                        // ReSharper restore RedundantBaseQualifier
 
                         // Only for ButtonSpec do we use the palette value
                         if (buttonStyle == ButtonStyle.ButtonSpec)
@@ -185,8 +190,10 @@ namespace ComponentFactory.Krypton.Toolkit
             // We are only interested in overriding the disabled or normal colors
             if (state == PaletteState.Normal)
             {
+                // ReSharper disable RedundantBaseQualifier
                 // Get the button style requested
                 ButtonStyle buttonStyle = _buttonSpec.GetStyle(base.Target);
+                // ReSharper restore RedundantBaseQualifier
 
                 // If we are checking for button styles of ButtonSpec only, then do so
                 if (buttonStyle == ButtonStyle.ButtonSpec)

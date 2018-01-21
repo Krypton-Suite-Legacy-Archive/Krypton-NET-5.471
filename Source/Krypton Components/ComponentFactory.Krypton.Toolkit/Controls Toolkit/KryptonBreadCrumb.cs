@@ -1,11 +1,12 @@
 ﻿// *****************************************************************************
-// 
-//  © Component Factory Pty Ltd, modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2010 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//	The software and associated documentation supplied hereunder are the 
+// BSD 3-Clause License (https://github.com/ComponentFactory/Krypton/blob/master/LICENSE)
+//  © Component Factory Pty Ltd, 2006-2018, All rights reserved.
+// The software and associated documentation supplied hereunder are the 
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.7.0.0 	www.ComponentFactory.com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 
 using System;
@@ -23,7 +24,7 @@ namespace ComponentFactory.Krypton.Toolkit
     [ToolboxBitmap(typeof(KryptonBreadCrumb), "ToolboxBitmaps.KryptonBreadCrumb.bmp")]
     [DefaultEvent("SelectedItemChanged")]
     [DefaultProperty("RootItem")]
-    [Designer("ComponentFactory.Krypton.Toolkit.KryptonBreadCrumbDesigner, ComponentFactory.Krypton.Design, Version=4.71.0.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e")]
+    [Designer("ComponentFactory.Krypton.Toolkit.KryptonBreadCrumbDesigner, ComponentFactory.Krypton.Design, Version=4.70.0.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e")]
     [DesignerCategory("code")]
     [Description("Flat navigation of hierarchical data.")]
     [ClassInterface(ClassInterfaceType.AutoDispatch)]
@@ -422,7 +423,8 @@ namespace ComponentFactory.Krypton.Toolkit
 
                     if ((value != null) && (temp == null))
                     {
-                        throw new ArgumentOutOfRangeException("value", "Item must be inside the RootItem hierarchy.");
+                        throw new ArgumentOutOfRangeException(nameof(value),
+                            @"Item must be inside the RootItem hierarchy.");
                     }
 
                     _selectedItem = value;
@@ -529,14 +531,7 @@ namespace ComponentFactory.Krypton.Toolkit
             }
 
             // Check if any of the button specs want the point
-            if ((_buttonManager != null) && _buttonManager.DesignerGetHitTest(pt))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return (_buttonManager != null) && _buttonManager.DesignerGetHitTest(pt);
         }
 
         /// <summary>
@@ -548,13 +543,9 @@ namespace ComponentFactory.Krypton.Toolkit
         public Component DesignerComponentFromPoint(Point pt)
         {
             // Ignore call as view builder is already destructed
-            if (IsDisposed)
-            {
-                return null;
-            }
+            return IsDisposed ? null : ViewManager.ComponentFromPoint(pt);
 
             // Ask the current view for a decision
-            return ViewManager.ComponentFromPoint(pt);
         }
 
         /// <summary>

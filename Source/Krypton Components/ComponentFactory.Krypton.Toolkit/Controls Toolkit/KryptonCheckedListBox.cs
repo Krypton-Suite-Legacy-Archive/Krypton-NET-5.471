@@ -1,11 +1,12 @@
 ﻿// *****************************************************************************
-// 
-//  © Component Factory Pty Ltd, modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2010 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//	The software and associated documentation supplied hereunder are the 
+// BSD 3-Clause License (https://github.com/ComponentFactory/Krypton/blob/master/LICENSE)
+//  © Component Factory Pty Ltd, 2006-2018, All rights reserved.
+// The software and associated documentation supplied hereunder are the 
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.7.0.0 	www.ComponentFactory.com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 
 using System;
@@ -27,7 +28,7 @@ namespace ComponentFactory.Krypton.Toolkit
     [DefaultEvent("SelectedIndexChanged")]
     [DefaultProperty("Items")]
     [DefaultBindingProperty("SelectedValue")]
-    [Designer("ComponentFactory.Krypton.Toolkit.KryptonCheckedListBoxDesigner, ComponentFactory.Krypton.Design, Version=4.71.0.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e")]
+    [Designer("ComponentFactory.Krypton.Toolkit.KryptonCheckedListBoxDesigner, ComponentFactory.Krypton.Design, Version=4.70.0.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e")]
     [DesignerCategory("code")]
     [Description("Represents a checked list box control that allows single or multiple item selection.")]
     [ClassInterface(ClassInterfaceType.AutoDispatch)]
@@ -79,7 +80,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 int count = _owner.CheckedItems.Count;
                 for (int i = 0; i < count; i++)
                 {
-                    array.SetValue(this[i], (int)(i + index));
+                    array.SetValue(this[i], i + index);
                 }
             }
 
@@ -118,7 +119,7 @@ namespace ComponentFactory.Krypton.Toolkit
             {
                 if (item is int i)
                 {
-                    return this.IndexOf(i);
+                    return IndexOf(i);
                 }
                 else
                 {
@@ -145,7 +146,7 @@ namespace ComponentFactory.Krypton.Toolkit
             {
                 get
                 {
-                    object entryObject = InnerArrayGetEntryObject(index, KryptonCheckedListBox.CheckedItemCollection._anyItemMask);
+                    object entryObject = InnerArrayGetEntryObject(index, CheckedItemCollection._anyItemMask);
                     return InnerArrayIndexOfIdentifier(entryObject, 0);
                 }
 
@@ -154,30 +155,15 @@ namespace ComponentFactory.Krypton.Toolkit
             #endregion
 
             #region Private
-            int IList.Add(object value)
-            {
-                throw new NotSupportedException("Read Only Collection");
-            }
+            int IList.Add(object value) => throw new NotSupportedException("Read Only Collection");
 
-            void IList.Clear()
-            {
-                throw new NotSupportedException("Read Only Collection");
-            }
+            void IList.Clear() => throw new NotSupportedException("Read Only Collection");
 
-            void IList.Insert(int index, object value)
-            {
-                throw new NotSupportedException("Read Only Collection");
-            }
+            void IList.Insert(int index, object value) => throw new NotSupportedException("Read Only Collection");
 
-            void IList.Remove(object value)
-            {
-                throw new NotSupportedException("Read Only Collection");
-            }
+            void IList.Remove(object value) => throw new NotSupportedException("Read Only Collection");
 
-            void IList.RemoveAt(int index)
-            {
-                throw new NotSupportedException("Read Only Collection");
-            }
+            void IList.RemoveAt(int index) => throw new NotSupportedException("Read Only Collection");
 
             bool ICollection.IsSynchronized => false;
 
@@ -209,7 +195,7 @@ namespace ComponentFactory.Krypton.Toolkit
             #endregion
 
             #region Instance Fields
-            private KryptonCheckedListBox _owner;
+
             private readonly InternalCheckedListBox _internalListBox;
             #endregion
 
@@ -227,7 +213,6 @@ namespace ComponentFactory.Krypton.Toolkit
             /// <param name="owner">Reference to owning control.</param>
             internal CheckedItemCollection(KryptonCheckedListBox owner)
             {
-                _owner = owner;
                 _internalListBox = (InternalCheckedListBox)owner.ListBox;
             }
             #endregion
@@ -253,7 +238,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 int count = InnerArrayGetCount(_anyItemMask);
                 for (int i = 0; i < count; i++)
                 {
-                    array.SetValue(InnerArrayGetItem(i, _anyItemMask), (int)(i + index));
+                    array.SetValue(InnerArrayGetItem(i, _anyItemMask), i + index);
                 }
             }
 
@@ -317,12 +302,7 @@ namespace ComponentFactory.Krypton.Toolkit
                     return CheckState.Indeterminate;
                 }
 
-                if (state)
-                {
-                    return CheckState.Checked;
-                }
-
-                return CheckState.Unchecked;
+                return state ? CheckState.Checked : CheckState.Unchecked;
             }
 
             internal void SetCheckedState(int index, CheckState value)
@@ -352,30 +332,15 @@ namespace ComponentFactory.Krypton.Toolkit
             #endregion
 
             #region Private
-            int IList.Add(object value)
-            {
-                throw new NotSupportedException("Read Only Collection");
-            }
+            int IList.Add(object value) => throw new NotSupportedException("Read Only Collection");
 
-            void IList.Clear()
-            {
-                throw new NotSupportedException("Read Only Collection");
-            }
+            void IList.Clear() => throw new NotSupportedException("Read Only Collection");
 
-            void IList.Insert(int index, object value)
-            {
-                throw new NotSupportedException("Read Only Collection");
-            }
+            void IList.Insert(int index, object value) => throw new NotSupportedException("Read Only Collection");
 
-            void IList.Remove(object value)
-            {
-                throw new NotSupportedException("Read Only Collection");
-            }
+            void IList.Remove(object value) => throw new NotSupportedException("Read Only Collection");
 
-            void IList.RemoveAt(int index)
-            {
-                throw new NotSupportedException("Read Only Collection");
-            }
+            void IList.RemoveAt(int index) => throw new NotSupportedException("Read Only Collection");
 
             bool ICollection.IsSynchronized => false;
 
@@ -529,11 +494,13 @@ namespace ComponentFactory.Krypton.Toolkit
                 _viewManager = new ViewManager(this, ViewDrawPanel);
 
                 // Set required properties to act as an owner draw list box
+                // ReSharper disable RedundantBaseQualifier
                 base.Size = Size.Empty;
                 base.BorderStyle = BorderStyle.None;
                 base.IntegralHeight = false;
                 base.MultiColumn = false;
                 base.DrawMode = DrawMode.OwnerDrawVariable;
+                // ReSharper restore RedundantBaseQualifier
 
                 // We need to create and cache a device context compatible with the display
                 _screenDC = PI.CreateCompatibleDC(IntPtr.Zero);
@@ -703,7 +670,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 {
                     int index = (int)m.WParam.ToInt64();
                     int lParam = (int)m.LParam;
-                    if (((index < 0) || (index >= this.Items.Count)) || ((lParam != 1) && (lParam != 0)))
+                    if (((index < 0) || (index >= Items.Count)) || ((lParam != 1) && (lParam != 0)))
                     {
                         m.Result = IntPtr.Zero;
                     }
@@ -829,7 +796,7 @@ namespace ComponentFactory.Krypton.Toolkit
                     // First time around we need to use reflection to grab inner array
                     if (_innerArray == null)
                     {
-                        PropertyInfo pi = typeof(ListBox.ObjectCollection).GetProperty("InnerArray",
+                        PropertyInfo pi = typeof(ObjectCollection).GetProperty("InnerArray",
                                                                                         BindingFlags.Instance |
                                                                                         BindingFlags.NonPublic |
                                                                                         BindingFlags.GetField);
@@ -925,18 +892,10 @@ namespace ComponentFactory.Krypton.Toolkit
             #region Private
             private void WmPaint(ref Message m)
             {
-                IntPtr hdc;
                 PI.PAINTSTRUCT ps = new PI.PAINTSTRUCT();
 
                 // Do we need to BeginPaint or just take the given HDC?
-                if (m.WParam == IntPtr.Zero)
-                {
-                    hdc = PI.BeginPaint(Handle, ref ps);
-                }
-                else
-                {
-                    hdc = m.WParam;
-                }
+                IntPtr hdc = m.WParam == IntPtr.Zero ? PI.BeginPaint(Handle, ref ps) : m.WParam;
 
                 // Create bitmap that all drawing occurs onto, then we can blit it later to remove flicker
                 Rectangle realRect = CommonHelper.RealClientRectangle(Handle);
@@ -1319,7 +1278,9 @@ namespace ComponentFactory.Krypton.Toolkit
 
         private void OnCheckedListClick(object sender, EventArgs e)
         {
+            // ReSharper disable RedundantBaseQualifier
             base.OnClick(e);
+            // ReSharper restore RedundantBaseQualifier
         }
 
         /// <summary>
@@ -1625,14 +1586,14 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public KryptonCheckedListBox.CheckedItemCollection CheckedItems { get; }
+        public CheckedItemCollection CheckedItems { get; }
 
         /// <summary>
         /// Collection of checked indexes in this KryptonCheckedListBox.
         /// </summary>
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public KryptonCheckedListBox.CheckedIndexCollection CheckedIndices { get; }
+        public CheckedIndexCollection CheckedIndices { get; }
 
         /// <summary>
         /// Gets or sets the format specifier characters that indicate how a value is to be displayed.
@@ -1903,13 +1864,14 @@ namespace ComponentFactory.Krypton.Toolkit
         /// Returns a value indicating the check state of the current item.
         /// </summary>
         /// <param name="index">The index of the item to get the checked value of.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>One of the CheckState values.</returns>
         public CheckState GetItemCheckState(int index)
         {
             // Check index actually exists
             if ((index < 0) || (index >= Items.Count))
             {
-                throw new ArgumentOutOfRangeException("index", "index out of range");
+                throw new ArgumentOutOfRangeException(nameof(index), "index out of range");
             }
 
             return CheckedItems.GetCheckedState(index);
@@ -1930,12 +1892,13 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="index">The index of the item to set the state for.</param>
         /// <param name="value">One of the CheckState values.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         public void SetItemCheckState(int index, CheckState value)
         {
             // Check index actually exists
             if ((index < 0) || (index >= Items.Count))
             {
-                throw new ArgumentOutOfRangeException("index", "index out of range");
+                throw new ArgumentOutOfRangeException(nameof(index), "index out of range");
             }
 
             // Is the new state different from the current checked state?
@@ -2117,25 +2080,12 @@ namespace ComponentFactory.Krypton.Toolkit
         /// Sets input focus to the control.
         /// </summary>
         /// <returns>true if the input focus request was successful; otherwise, false.</returns>
-        public new bool Focus()
-        {
-            if (ListBox != null)
-            {
-                return ListBox.Focus();
-            }
-            else
-            {
-                return false;
-            }
-        }
+        public new bool Focus() => ListBox != null && ListBox.Focus();
 
         /// <summary>
         /// Activates the control.
         /// </summary>
-        public new void Select()
-        {
-            ListBox?.Select();
-        }
+        public new void Select() => ListBox?.Select();
         #endregion
 
         #region Protected
@@ -2158,64 +2108,43 @@ namespace ComponentFactory.Krypton.Toolkit
         /// Raises the SelectedIndexChanged event.
         /// </summary>
         /// <param name="e">An EventArgs containing the event data.</param>
-        protected virtual void OnSelectedIndexChanged(EventArgs e)
-        {
-            SelectedIndexChanged?.Invoke(this, e);
-        }
+        protected virtual void OnSelectedIndexChanged(EventArgs e) => SelectedIndexChanged?.Invoke(this, e);
 
         /// <summary>
         /// Raises the SelectedValueChanged event.
         /// </summary>
         /// <param name="e">An EventArgs containing the event data.</param>
-        protected virtual void OnSelectedValueChanged(EventArgs e)
-        {
-            SelectedValueChanged?.Invoke(this, e);
-        }
+        protected virtual void OnSelectedValueChanged(EventArgs e) => SelectedValueChanged?.Invoke(this, e);
 
         /// <summary>
         /// Raises the ItemCheck event.
         /// </summary>
         /// <param name="e">An ItemCheckEventArgs containing the event data.</param>
-        protected virtual void OnItemCheck(ItemCheckEventArgs e)
-        {
-            ItemCheck?.Invoke(this, e);
-        }
+        protected virtual void OnItemCheck(ItemCheckEventArgs e) => ItemCheck?.Invoke(this, e);
 
         /// <summary>
         /// Raises the Format event.
         /// </summary>
         /// <param name="e">An EventArgs containing the event data.</param>
-        protected virtual void OnFormat(ListControlConvertEventArgs e)
-        {
-            Format?.Invoke(this, e);
-        }
+        protected virtual void OnFormat(ListControlConvertEventArgs e) => Format?.Invoke(this, e);
 
         /// <summary>
         /// Raises the FormatInfoChanged event.
         /// </summary>
         /// <param name="e">An EventArgs containing the event data.</param>
-        protected virtual void OnFormatInfoChanged(EventArgs e)
-        {
-            FormatInfoChanged?.Invoke(this, e);
-        }
+        protected virtual void OnFormatInfoChanged(EventArgs e) => FormatInfoChanged?.Invoke(this, e);
 
         /// <summary>
         /// Raises the FormatStringChanged event.
         /// </summary>
         /// <param name="e">An EventArgs containing the event data.</param>
-        protected virtual void OnFormatStringChanged(EventArgs e)
-        {
-            FormatStringChanged?.Invoke(this, e);
-        }
+        protected virtual void OnFormatStringChanged(EventArgs e) => FormatStringChanged?.Invoke(this, e);
 
         /// <summary>
         /// Raises the FormattingEnabledChanged event.
         /// </summary>
         /// <param name="e">An EventArgs containing the event data.</param>
-        protected virtual void OnFormattingEnabledChanged(EventArgs e)
-        {
-            FormattingEnabledChanged?.Invoke(this, e);
-        }
+        protected virtual void OnFormattingEnabledChanged(EventArgs e) => FormattingEnabledChanged?.Invoke(this, e);
         #endregion
 
         #region Protected Overrides
@@ -2224,10 +2153,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <returns>A new instance of Control.ControlCollection assigned to the control.</returns>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
-        protected override Control.ControlCollection CreateControlsInstance()
-        {
-            return new KryptonReadOnlyControls(this);
-        }
+        protected override ControlCollection CreateControlsInstance() => new KryptonReadOnlyControls(this);
 
         /// <summary>
         /// Raises the PaletteChanged event.
@@ -2270,46 +2196,31 @@ namespace ComponentFactory.Krypton.Toolkit
         /// Raises the BackColorChanged event.
         /// </summary>
         /// <param name="e">An EventArgs that contains the event data.</param>
-        protected override void OnBackColorChanged(EventArgs e)
-        {
-            BackColorChanged?.Invoke(this, e);
-        }
+        protected override void OnBackColorChanged(EventArgs e) => BackColorChanged?.Invoke(this, e);
 
         /// <summary>
         /// Raises the BackgroundImageChanged event.
         /// </summary>
         /// <param name="e">An EventArgs that contains the event data.</param>
-        protected override void OnBackgroundImageChanged(EventArgs e)
-        {
-            BackgroundImageChanged?.Invoke(this, e);
-        }
+        protected override void OnBackgroundImageChanged(EventArgs e) => BackgroundImageChanged?.Invoke(this, e);
 
         /// <summary>
         /// Raises the BackgroundImageLayoutChanged event.
         /// </summary>
         /// <param name="e">An EventArgs that contains the event data.</param>
-        protected override void OnBackgroundImageLayoutChanged(EventArgs e)
-        {
-            BackgroundImageLayoutChanged?.Invoke(this, e);
-        }
+        protected override void OnBackgroundImageLayoutChanged(EventArgs e) => BackgroundImageLayoutChanged?.Invoke(this, e);
 
         /// <summary>
         /// Raises the ForeColorChanged event.
         /// </summary>
         /// <param name="e">An EventArgs that contains the event data.</param>
-        protected override void OnForeColorChanged(EventArgs e)
-        {
-            ForeColorChanged?.Invoke(this, e);
-        }
+        protected override void OnForeColorChanged(EventArgs e) => ForeColorChanged?.Invoke(this, e);
 
         /// <summary>
         /// Raises the PaddingChanged event.
         /// </summary>
         /// <param name="e">An EventArgs that contains the event data.</param>
-        protected override void OnPaddingChanged(EventArgs e)
-        {
-            PaddingChanged?.Invoke(this, e);
-        }
+        protected override void OnPaddingChanged(EventArgs e) => PaddingChanged?.Invoke(this, e);
 
         /// <summary>
         /// Raises the TabStop event.
@@ -2346,28 +2257,19 @@ namespace ComponentFactory.Krypton.Toolkit
         /// Raises the TextChanged event.
         /// </summary>
         /// <param name="e">An PaintEventArgs that contains the event data.</param>
-        protected override void OnTextChanged(EventArgs e)
-        {
-            TextChanged?.Invoke(this, e);
-        }
+        protected override void OnTextChanged(EventArgs e) => TextChanged?.Invoke(this, e);
 
         /// <summary>
         /// Raises the TrackMouseEnter event.
         /// </summary>
         /// <param name="e">An EventArgs containing the event data.</param>
-        protected virtual void OnTrackMouseEnter(EventArgs e)
-        {
-            TrackMouseEnter?.Invoke(this, e);
-        }
+        protected virtual void OnTrackMouseEnter(EventArgs e) => TrackMouseEnter?.Invoke(this, e);
 
         /// <summary>
         /// Raises the TrackMouseLeave event.
         /// </summary>
         /// <param name="e">An EventArgs containing the event data.</param>
-        protected virtual void OnTrackMouseLeave(EventArgs e)
-        {
-            TrackMouseLeave?.Invoke(this, e);
-        }
+        protected virtual void OnTrackMouseLeave(EventArgs e) => TrackMouseLeave?.Invoke(this, e);
 
         /// <summary>
         /// Raises the HandleCreated event.
@@ -2473,14 +2375,7 @@ namespace ComponentFactory.Krypton.Toolkit
                 }
                 else
                 {
-                    if (Enabled)
-                    {
-                        state = PaletteState.Normal;
-                    }
-                    else
-                    {
-                        state = PaletteState.Disabled;
-                    }
+                    state = Enabled ? PaletteState.Normal : PaletteState.Disabled;
                 }
 
                 _listBox.ViewDrawPanel.ElementState = state;
@@ -2492,14 +2387,7 @@ namespace ComponentFactory.Krypton.Toolkit
         {
             if (Enabled)
             {
-                if (IsActive)
-                {
-                    return StateActive;
-                }
-                else
-                {
-                    return StateNormal;
-                }
+                return IsActive ? StateActive : StateNormal;
             }
             else
             {
@@ -2554,12 +2442,8 @@ namespace ComponentFactory.Krypton.Toolkit
                 }
 
                 // Do we need to show item as having the focus
-                bool hasFocus = false;
-                if (((e.State & DrawItemState.Focus) == DrawItemState.Focus) &&
-                    ((e.State & DrawItemState.NoFocusRect) != DrawItemState.NoFocusRect))
-                {
-                    hasFocus = true;
-                }
+                bool hasFocus = ((e.State & DrawItemState.Focus) == DrawItemState.Focus) &&
+                                ((e.State & DrawItemState.NoFocusRect) != DrawItemState.NoFocusRect);
 
                 _overrideNormal.Apply = hasFocus;
                 _overrideTracking.Apply = hasFocus;
@@ -2681,30 +2565,15 @@ namespace ComponentFactory.Krypton.Toolkit
             OnSelectedValueChanged(e);
         }
 
-        private void OnListBoxItemCheck(object sender, ItemCheckEventArgs e)
-        {
-            OnItemCheck(e);
-        }
+        private void OnListBoxItemCheck(object sender, ItemCheckEventArgs e) => OnItemCheck(e);
 
-        private void OnListBoxFormat(object sender, ListControlConvertEventArgs e)
-        {
-            OnFormat(e);
-        }
+        private void OnListBoxFormat(object sender, ListControlConvertEventArgs e) => OnFormat(e);
 
-        private void OnListBoxFormatInfoChanged(object sender, EventArgs e)
-        {
-            OnFormatInfoChanged(e);
-        }
+        private void OnListBoxFormatInfoChanged(object sender, EventArgs e) => OnFormatInfoChanged(e);
 
-        private void OnListBoxFormatStringChanged(object sender, EventArgs e)
-        {
-            OnFormatStringChanged(e);
-        }
+        private void OnListBoxFormatStringChanged(object sender, EventArgs e) => OnFormatStringChanged(e);
 
-        private void OnListBoxFormattingEnabledChanged(object sender, EventArgs e)
-        {
-            OnFormattingEnabledChanged(e);
-        }
+        private void OnListBoxFormattingEnabledChanged(object sender, EventArgs e) => OnFormattingEnabledChanged(e);
 
         private void OnListBoxGotFocus(object sender, EventArgs e)
         {
@@ -2722,35 +2591,17 @@ namespace ComponentFactory.Krypton.Toolkit
             OnLostFocus(e);
         }
 
-        private void OnListBoxKeyPress(object sender, KeyPressEventArgs e)
-        {
-            OnKeyPress(e);
-        }
+        private void OnListBoxKeyPress(object sender, KeyPressEventArgs e) => OnKeyPress(e);
 
-        private void OnListBoxKeyUp(object sender, KeyEventArgs e)
-        {
-            OnKeyUp(e);
-        }
+        private void OnListBoxKeyUp(object sender, KeyEventArgs e) => OnKeyUp(e);
 
-        private void OnListBoxKeyDown(object sender, KeyEventArgs e)
-        {
-            OnKeyDown(e);
-        }
+        private void OnListBoxKeyDown(object sender, KeyEventArgs e) => OnKeyDown(e);
 
-        private void OnListBoxValidated(object sender, EventArgs e)
-        {
-            OnValidated(e);
-        }
+        private void OnListBoxValidated(object sender, EventArgs e) => OnValidated(e);
 
-        private void OnListBoxValidating(object sender, CancelEventArgs e)
-        {
-            OnValidating(e);
-        }
+        private void OnListBoxValidating(object sender, CancelEventArgs e) => OnValidating(e);
 
-        private void OnListBoxPreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
-        {
-            OnPreviewKeyDown(e);
-        }
+        private void OnListBoxPreviewKeyDown(object sender, PreviewKeyDownEventArgs e) => OnPreviewKeyDown(e);
 
         private void OnListBoxMouseChange(object sender, EventArgs e)
         {

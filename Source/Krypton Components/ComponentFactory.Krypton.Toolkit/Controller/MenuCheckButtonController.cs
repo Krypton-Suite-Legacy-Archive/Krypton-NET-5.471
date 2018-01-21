@@ -1,11 +1,12 @@
 ﻿// *****************************************************************************
-// 
-//  © Component Factory Pty Ltd, modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2010 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//	The software and associated documentation supplied hereunder are the 
+// BSD 3-Clause License (https://github.com/ComponentFactory/Krypton/blob/master/LICENSE)
+//  © Component Factory Pty Ltd, 2006-2018, All rights reserved.
+// The software and associated documentation supplied hereunder are the 
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.7.0.0 	www.ComponentFactory.com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 
 using System;
@@ -112,14 +113,7 @@ namespace ComponentFactory.Krypton.Toolkit
         public bool MatchMnemonic(char charCode)
         {
             // Only interested in enabled items
-            if (_menuCheckButton.ItemEnabled)
-            {
-                return Control.IsMnemonic(charCode, _menuCheckButton.ItemText);
-            }
-            else
-            {
-                return false;
-            }
+            return _menuCheckButton.ItemEnabled && Control.IsMnemonic(charCode, _menuCheckButton.ItemText);
         }
 
         /// <summary>
@@ -257,12 +251,14 @@ namespace ComponentFactory.Krypton.Toolkit
 	    #endregion
 
         #region Key Notifications
-        /// <summary>
-        /// Key has been pressed down.
-        /// </summary>
-        /// <param name="c">Reference to the source control instance.</param>
-        /// <param name="e">A KeyEventArgs that contains the event data.</param>
-        public virtual void KeyDown(Control c, KeyEventArgs e)
+
+	    /// <summary>
+	    /// Key has been pressed down.
+	    /// </summary>
+	    /// <param name="c">Reference to the source control instance.</param>
+	    /// <param name="e">A KeyEventArgs that contains the event data.</param>
+	    /// <exception cref="ArgumentNullException"></exception>
+	    public virtual void KeyDown(Control c, KeyEventArgs e)
         {
             Debug.Assert(c != null);
             Debug.Assert(e != null);
@@ -270,12 +266,12 @@ namespace ComponentFactory.Krypton.Toolkit
             // Validate incoming references
             if (c == null)
             {
-                throw new ArgumentNullException("c");
+                throw new ArgumentNullException(nameof(c));
             }
 
             if (e == null)
             {
-                throw new ArgumentNullException("e");
+                throw new ArgumentNullException(nameof(e));
             }
 
             switch (e.KeyCode)
@@ -313,12 +309,13 @@ namespace ComponentFactory.Krypton.Toolkit
             }
         }
 
-        /// <summary>
-        /// Key has been pressed.
-        /// </summary>
-        /// <param name="c">Reference to the source control instance.</param>
-        /// <param name="e">A KeyPressEventArgs that contains the event data.</param>
-        public virtual void KeyPress(Control c, KeyPressEventArgs e)
+	    /// <summary>
+	    /// Key has been pressed.
+	    /// </summary>
+	    /// <param name="c">Reference to the source control instance.</param>
+	    /// <param name="e">A KeyPressEventArgs that contains the event data.</param>
+	    /// <exception cref="ArgumentNullException"></exception>
+	    public virtual void KeyPress(Control c, KeyPressEventArgs e)
         {
             Debug.Assert(c != null);
             Debug.Assert(e != null);
@@ -326,24 +323,25 @@ namespace ComponentFactory.Krypton.Toolkit
             // Validate incoming references
             if (c == null)
             {
-                throw new ArgumentNullException("c");
+                throw new ArgumentNullException(nameof(c));
             }
 
             if (e == null)
             {
-                throw new ArgumentNullException("e");
+                throw new ArgumentNullException(nameof(e));
             }
 
             ViewManager.KeyMnemonic(e.KeyChar);
         }
 
-        /// <summary>
-        /// Key has been released.
-        /// </summary>
-        /// <param name="c">Reference to the source control instance.</param>
-        /// <param name="e">A KeyEventArgs that contains the event data.</param>
-        /// <returns>True if capturing input; otherwise false.</returns>
-        public virtual bool KeyUp(Control c, KeyEventArgs e)
+	    /// <summary>
+	    /// Key has been released.
+	    /// </summary>
+	    /// <param name="c">Reference to the source control instance.</param>
+	    /// <param name="e">A KeyEventArgs that contains the event data.</param>
+	    /// <exception cref="ArgumentNullException"></exception>
+	    /// <returns>True if capturing input; otherwise false.</returns>
+	    public virtual bool KeyUp(Control c, KeyEventArgs e)
         {
             Debug.Assert(c != null);
             Debug.Assert(e != null);
@@ -351,12 +349,12 @@ namespace ComponentFactory.Krypton.Toolkit
             // Validate incoming references
             if (c == null)
             {
-                throw new ArgumentNullException("c");
+                throw new ArgumentNullException(nameof(c));
             }
 
             if (e == null)
             {
-                throw new ArgumentNullException("e");
+                throw new ArgumentNullException(nameof(e));
             }
 
             return false;
@@ -442,9 +440,8 @@ namespace ComponentFactory.Krypton.Toolkit
             if (_menuCheckButton.KryptonContextMenuCheckButton.AutoCheck)
             {
                 // Get the current checked state
-                bool checkState = (_menuCheckButton.KryptonContextMenuCheckButton.KryptonCommand == null ?
-                                   _menuCheckButton.KryptonContextMenuCheckButton.Checked :
-                                   _menuCheckButton.KryptonContextMenuCheckButton.KryptonCommand.Checked);
+                bool checkState = _menuCheckButton.KryptonContextMenuCheckButton.KryptonCommand?.Checked ??
+                                  _menuCheckButton.KryptonContextMenuCheckButton.Checked;
 
                 // Invert state
                 checkState = !checkState;
@@ -492,14 +489,7 @@ namespace ComponentFactory.Krypton.Toolkit
             PaletteState state = (_menuCheckButton.ItemEnabled ? PaletteState.Normal : PaletteState.Disabled);
             if (_mouseOver)
             {
-                if (_mouseDown)
-                {
-                    state = PaletteState.Pressed;
-                }
-                else
-                {
-                    state = PaletteState.Tracking;
-                }
+                state = _mouseDown ? PaletteState.Pressed : PaletteState.Tracking;
             }
 
             // Should the state be modified to reflect checked state?

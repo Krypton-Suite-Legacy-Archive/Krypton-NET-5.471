@@ -1,11 +1,12 @@
 ﻿// *****************************************************************************
-// 
-//  © Component Factory Pty Ltd, modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2010 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//	The software and associated documentation supplied hereunder are the 
+// BSD 3-Clause License (https://github.com/ComponentFactory/Krypton/blob/master/LICENSE)
+//  © Component Factory Pty Ltd, 2006-2018, All rights reserved.
+// The software and associated documentation supplied hereunder are the 
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.7.0.0 	www.ComponentFactory.com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 
 using System;
@@ -111,7 +112,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public IPaletteBack PaletteBack
         {
-            [System.Diagnostics.DebuggerStepThrough]
+            [DebuggerStepThrough]
             get { return _paletteBack; }
         }
         #endregion
@@ -122,7 +123,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public IPaletteBorder PaletteBorder
         {
-            [System.Diagnostics.DebuggerStepThrough]
+            [DebuggerStepThrough]
             get { return _paletteBorder; }
         }
         #endregion
@@ -133,7 +134,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public IPaletteMetric PaletteMetric
         {
-            [System.Diagnostics.DebuggerStepThrough]
+            [DebuggerStepThrough]
             get { return _paletteMetric; }
         }
         #endregion
@@ -187,7 +188,7 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// </summary>
 		public VisualOrientation Orientation
 		{
-		    [System.Diagnostics.DebuggerStepThrough]
+		    [DebuggerStepThrough]
 		    get;
 		    set;
 	    }
@@ -376,18 +377,20 @@ namespace ComponentFactory.Krypton.Toolkit
         #endregion
 
 		#region Layout
-		/// <summary>
-		/// Discover the preferred size of the element.
-		/// </summary>
-		/// <param name="context">Layout context.</param>
-		public override Size GetPreferredSize(ViewLayoutContext context)
+
+	    /// <summary>
+	    /// Discover the preferred size of the element.
+	    /// </summary>
+	    /// <param name="context">Layout context.</param>
+	    /// <exception cref="ArgumentNullException"></exception>
+	    public override Size GetPreferredSize(ViewLayoutContext context)
 		{
 			Debug.Assert(context != null);
 
             // Validate incoming reference
             if (context == null)
             {
-                throw new ArgumentNullException("context");
+                throw new ArgumentNullException(nameof(context));
             }
 
             // Ensure any content children have correct composition setting
@@ -404,16 +407,13 @@ namespace ComponentFactory.Krypton.Toolkit
             Size preferredSize = base.GetPreferredSize(context);
 
 			// Apply space the border takes up
-            if (DrawTabBorder)
-            {
-                preferredSize = CommonHelper.ApplyPadding(Orientation, preferredSize, context.Renderer.RenderTabBorder.GetTabBorderDisplayPadding(context, _paletteBorder, State, Orientation, TabBorderStyle));
-            }
-            else
-            {
-                preferredSize = CommonHelper.ApplyPadding(Orientation, preferredSize, context.Renderer.RenderStandardBorder.GetBorderDisplayPadding(_paletteBorder, State, Orientation));
-            }
+		    preferredSize = CommonHelper.ApplyPadding(Orientation, preferredSize,
+		        DrawTabBorder
+		            ? context.Renderer.RenderTabBorder.GetTabBorderDisplayPadding(context, _paletteBorder, State, Orientation,
+		                TabBorderStyle)
+		            : context.Renderer.RenderStandardBorder.GetBorderDisplayPadding(_paletteBorder, State, Orientation));
 
-            // Do we have a metric source for additional padding?
+		    // Do we have a metric source for additional padding?
             if (_paletteMetric != null)
 			{
 				// Apply padding needed outside the border of the canvas
@@ -423,18 +423,19 @@ namespace ComponentFactory.Krypton.Toolkit
             return preferredSize;
 		}
 
-		/// <summary>
-		/// Perform a layout of the elements.
-		/// </summary>
-		/// <param name="context">Layout context.</param>
-		public override void Layout(ViewLayoutContext context)
+	    /// <summary>
+	    /// Perform a layout of the elements.
+	    /// </summary>
+	    /// <param name="context">Layout context.</param>
+	    /// <exception cref="ArgumentNullException"></exception>
+	    public override void Layout(ViewLayoutContext context)
 		{
 			Debug.Assert(context != null);
 
             // Validate incoming reference
             if (context == null)
             {
-                throw new ArgumentNullException("context");
+                throw new ArgumentNullException(nameof(context));
             }
 
             // We take on all the available display area
@@ -450,17 +451,11 @@ namespace ComponentFactory.Krypton.Toolkit
                 ClientRectangle = CommonHelper.ApplyPadding(Orientation, ClientRectangle, outerPadding);
 			}
 
-            Padding padding;
-
-            // Calculate how much space the border takes up
-            if (DrawTabBorder)
-            {
-                padding = context.Renderer.RenderTabBorder.GetTabBorderDisplayPadding(context, _paletteBorder, State, Orientation, TabBorderStyle);
-            }
-            else
-            {
-                padding = context.Renderer.RenderStandardBorder.GetBorderDisplayPadding(_paletteBorder, State, Orientation);
-            }
+		    // Calculate how much space the border takes up
+            Padding padding = DrawTabBorder
+                ? context.Renderer.RenderTabBorder.GetTabBorderDisplayPadding(context, _paletteBorder, State,
+                    Orientation, TabBorderStyle)
+                : context.Renderer.RenderStandardBorder.GetBorderDisplayPadding(_paletteBorder, State, Orientation);
 
             // Apply the padding to the client rectangle
             context.DisplayRectangle = CommonHelper.ApplyPadding(Orientation, ClientRectangle, padding);
@@ -488,18 +483,20 @@ namespace ComponentFactory.Krypton.Toolkit
 		#endregion
 
 		#region Paint
-		/// <summary>
-		/// Perform rendering before child elements are rendered.
-		/// </summary>
-		/// <param name="context">Rendering context.</param>
-		public override void RenderBefore(RenderContext context) 
+
+	    /// <summary>
+	    /// Perform rendering before child elements are rendered.
+	    /// </summary>
+	    /// <param name="context">Rendering context.</param>
+	    /// <exception cref="ArgumentNullException"></exception>
+	    public override void RenderBefore(RenderContext context) 
 		{
 			Debug.Assert(context != null);
 
             // Validate incoming reference
             if (context == null)
             {
-                throw new ArgumentNullException("context");
+                throw new ArgumentNullException(nameof(context));
             }
 
             // Do we need to draw the background?
@@ -545,16 +542,12 @@ namespace ComponentFactory.Krypton.Toolkit
                     // Remember the current clipping region
                     _clipRegion = context.Graphics.Clip.Clone();
 
-                    GraphicsPath borderPath;
-
                     // Restrict the clipping to the area inside the canvas border
-                    if (DrawTabBorder)
+                    GraphicsPath borderPath = DrawTabBorder ? context.Renderer.RenderTabBorder.GetTabBorderPath(context, ClientRectangle, _paletteBorder, Orientation, State, TabBorderStyle) : context.Renderer.RenderStandardBorder.GetBorderPath(context, ClientRectangle, _paletteBorder, Orientation, State);
+
+                    if (borderPath == null)
                     {
-                        borderPath = context.Renderer.RenderTabBorder.GetTabBorderPath(context, ClientRectangle, _paletteBorder, Orientation, State, TabBorderStyle);
-                    }
-                    else
-                    {
-                        borderPath = context.Renderer.RenderStandardBorder.GetBorderPath(context, ClientRectangle, _paletteBorder, Orientation, State);
+                        throw new ArgumentNullException(nameof(borderPath));
                     }
 
                     // Create a new region the same as the existing clipping region
@@ -569,18 +562,19 @@ namespace ComponentFactory.Krypton.Toolkit
             }
 		}
 
-		/// <summary>
-		/// Perform rendering after child elements are rendered.
-		/// </summary>
-		/// <param name="context">Rendering context.</param>
-		public override void RenderAfter(RenderContext context)
+	    /// <summary>
+	    /// Perform rendering after child elements are rendered.
+	    /// </summary>
+	    /// <param name="context">Rendering context.</param>
+	    /// <exception cref="ArgumentNullException"></exception>
+	    public override void RenderAfter(RenderContext context)
 		{
             Debug.Assert(context != null);
 
             // Validate incoming reference
             if (context == null)
             {
-                throw new ArgumentNullException("context");
+                throw new ArgumentNullException(nameof(context));
             }
 
             if (DrawCanvas && (_paletteBorder != null))

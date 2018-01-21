@@ -1,5 +1,61 @@
 ﻿# Krypton-NET-4.7.1
 
+=======
+
+## 2018-01-21 Nuget package update
+* Fixed Nuget package specification to show the true file assembly number, i.e 4.71.533.0 (build date January 21st, 2018) 
+* All new releases of packages will no longer have a dedicated changelog. Instead, it will point users back to [this repository](https://github.com/Wagnerp/Krypton-NET-4.7.1) for more information.
+* All new releases of packages will no longer ship with the '.chm' help file. This is to reduce file size from 70+ MB to 5 - 6 MB. If the help file is needed, then please refer to [this link](https://github.com/Wagnerp/Krypton-NET-4.7.1/raw/master/Help/KryptonHelp.chm) to download it.
+* New versions of Nuget packages can be obtained via [this link](https://www.nuget.org/packages/KryptonToolkitSuite471/) or via your package manager with the following command 'Install-Package KryptonToolkitSuite47 -Version 4.70.xxx' (replace the x's with version number) or by searching KryptonToolkitSuite47 in your package manager.
+
+=======
+
+## 2018-01-15 Minor changes
+* Renamed 'GetCreateParams()' method to 'DrawDropShadow()' in 'KryptonForm.cs' to avoid confusion
+* Added/update documentation/comments for drop shadow methods in 'KryptonForm.cs' to make functions clearer
+
+=======
+
+## 2018-01-14 Toolkit Solution changes
+* Convert to `'?:` expression
+  * `null-coalescing` if applicable
+  * Then to `Expression body` if simplified enough
+* Fix some spelling mistakes along the way
+* Add Ctrl+c text to `KryptonCommand`
+
+=======
+
+## 2018-01-13 Minor changes in 'SeparatorController.cs'
+* Fixed bug [Screen artifact, #79](https://github.com/ComponentFactory/Krypton/issues/79) courtesy of Cocotteseb
+
+=======
+
+## 2018-01-12 Master branch changes
+* Removed binaries due to merge issues
+* Attempt at including drop shadow around the form
+* Begin work on fixing bug [Screen artifact, #79](https://github.com/ComponentFactory/Krypton/issues/79)
+* Groundwork for Visual Studio project & item templates
+
+=======
+
+## 2018-01-11a Fix the KryptonMessageBox clipping
+* Fix `AssemblyCopyright` information date ranges
+* Create a Test project demonstrating MessageBox usage
+  * Fix Mangled Caption that may contain carriage returns
+  * Fix Box clipping on long and short text combinations
+  * Add Extra text showing that Ctrl+C works in a `KryptonMessageBox`
+
+=======
+  
+## 2018-01-11 Fix the Code Header and __nameof__ in Exceptions
+* Code Headers changed:
+  * Add correct license term and date range for ComponentFactory
+  * Moved Wagnerp and Smurf-IV to later
+* Use `nameof` for exception parameter references
+* Add /// comments (on some public API's) stating that an exception can be returned if it explicitly __throws new__
+
+=======
+
 ## 2018-10-10 Assembly values modifications
 * Updated values 
 * Refreshed Nuget package data to reflect changes
@@ -45,6 +101,8 @@
 * Update a few test to use Office 2013 palettes
 * Remove Binaries from Git
 
+=======
+
 ## 2018-01-06 Toolkit solution and Examples II changes:
 * Remove "redundant delegate constructors" for callbacks
 * Fix "OnClick" routing for 
@@ -56,12 +114,16 @@
 * Set some private fields to "readonly"
 * Fix AddToWorkspace in KryptonDockingManager
 
+=======
+
 ## 2017-11-12 Toolkit Examples II solution changes:
 * Work out why clipping is the default for "DrawText" 
   - Applies to buttons, lLabels, Form Titles
   - Create test project - has theme selection, for type testing
 * Remove 'Severity Code Description Project File Line Suppression State' Warning CS0618 'SecurityAction.RequestMinimum' is obsolete: 'Assembly level declarative security is obsolete and is no longer enforced by the CLR by default. See http://go.microsoft.com/fwlink/?LinkID=155570 for more information.' Basic Events 2015 [Source Path]\Krypton-NET-4.7.1\Source\Krypton Navigator Examples\Basic Events\Properties\AssemblyInfo.cs 35 Active
+
 =======
+
 ## 2017-10-17 Commits are:
 * An update to Component factory's KryptonToolkit to support the .NET 4.7.1 framework.
 * Add generic c# .gitignore
@@ -69,15 +131,20 @@
 * Change Test apps to use .Net 4.7.1 Target framework
 * Add designer dll to test apps to allow visual design and testing without GAC'ing
 
+=======
 
 ## 2017-11-12 Toolkit solution changes:
 * Change Get Set functions to be inlined
 * Merge Sequential Checks
 * Clarify precedence with brackets
-+
-+ ## 2017-11-05 Commits:
-+* Pre-compiled binaries for use in projects
-+
+
+=======
+
+## 2017-11-05 Commits:
+* Pre-compiled binaries for use in projects
+
+=======
+
 ## 2017-11-04 Toolkit solution only:
 * Add braces to if statements
 * Use explicit types instead of "vars"
@@ -92,6 +159,7 @@
 * Local Variable can be const (And rename to upper case to follow the rest of the codebase.)
 * ﻿Join declaration and assignment
 
+=======
 
 ## 2017-10-17 Commits are:
 * An update to Component factory's KryptonToolkit to support the .NET 4.7.1 framework.
@@ -101,14 +169,18 @@
 * Add designer Dll to test apps to allow visual design and testing without GAC'ing
 
 =======
+
 ## 2017-11-05 Commits:
 * Pre-compiled binaries for use in projects
 
+=======
 
 ## 2017-11-12 am Toolkit solution changes:
 * Change Get Set functions to be inlined
 * Merge Sequential Checks
 * Clarify precedence with brackets
+
+=======
 
 ## 2017-11-12 pm Toolkit solution changes:
 * Work out why clipping is the default for "DrawText" 
@@ -116,4 +188,4 @@
   - Create test project - has theme selection, for type testing
 * Remove Severity Code Description Project File Line Suppression State Warning CS0618 'SecurityAction.RequestMinimum' is obsolete: 'Assembly level declarative security is obsolete and is no longer enforced by the CLR by default. See http://go.microsoft.com/fwlink/?LinkID=155570 for more information.' Basic Events 2015 [Source Path]\Krypton-NET-4.7.1\Source\Krypton Navigator Examples\Basic Events\Properties\AssemblyInfo.cs 35 Active
 
-## NOTE: This is a mirror of the Krypton-NET-4.7.1 repository, therefore it may take a day or two to update this repository with the .NET 4.7.1 framework. Thank you for your patience. 
+## NOTE: This is a mirror of the Krypton-NET-4.7 repository, therefore it may take a day or two to update this repository with the .NET 4.7.1 framework. Thank you for your patience. 

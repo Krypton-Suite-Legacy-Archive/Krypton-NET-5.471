@@ -1,11 +1,12 @@
 ﻿// *****************************************************************************
-// 
-//  © Component Factory Pty Ltd, modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2010 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//	The software and associated documentation supplied hereunder are the 
+// BSD 3-Clause License (https://github.com/ComponentFactory/Krypton/blob/master/LICENSE)
+//  © Component Factory Pty Ltd, 2006-2018, All rights reserved.
+// The software and associated documentation supplied hereunder are the 
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.7.0.0 	www.ComponentFactory.com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 
 using System;
@@ -190,7 +191,7 @@ namespace ComponentFactory.Krypton.Toolkit
         internal static extern short VkKeyScan(char ch);
         
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        internal static extern IntPtr WindowFromPoint(PI.POINT pt);
+        internal static extern IntPtr WindowFromPoint(POINT pt);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         internal static extern uint GetWindowLong(IntPtr hWnd, int nIndex);
@@ -217,7 +218,7 @@ namespace ComponentFactory.Krypton.Toolkit
         internal static extern bool RedrawWindow(IntPtr hWnd, IntPtr rectUpdate, IntPtr hRgnUpdate, uint uFlags);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        internal static extern bool RedrawWindow(IntPtr hWnd, ref PI.RECT rectUpdate, IntPtr hRgnUpdate, uint uFlags);
+        internal static extern bool RedrawWindow(IntPtr hWnd, ref RECT rectUpdate, IntPtr hRgnUpdate, uint uFlags);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         internal static extern bool TrackMouseEvent(ref TRACKMOUSEEVENTS tme);
@@ -244,7 +245,7 @@ namespace ComponentFactory.Krypton.Toolkit
         internal static extern void AdjustWindowRectEx(ref RECT rect, int dwStyle, bool hasMenu, int dwExSytle);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        internal static extern int MapWindowPoints(IntPtr hWndFrom, IntPtr hWndTo, [In, Out]PI.POINTC pt, int cPoints);
+        internal static extern int MapWindowPoints(IntPtr hWndFrom, IntPtr hWndTo, [In, Out]POINTC pt, int cPoints);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         internal static extern bool TranslateMessage([In] ref MSG lpMsg);
@@ -253,10 +254,10 @@ namespace ComponentFactory.Krypton.Toolkit
         internal static extern int GetClassName(IntPtr hWnd, StringBuilder lpClassName,int nMaxCount);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        internal static extern  IntPtr BeginPaint(IntPtr hwnd, ref PI.PAINTSTRUCT ps);
+        internal static extern  IntPtr BeginPaint(IntPtr hwnd, ref PAINTSTRUCT ps);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        internal static extern bool EndPaint(IntPtr hwnd, ref PI.PAINTSTRUCT ps);
+        internal static extern bool EndPaint(IntPtr hwnd, ref PAINTSTRUCT ps);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         internal static extern bool GetClientRect(IntPtr hWnd, out RECT lpRect);

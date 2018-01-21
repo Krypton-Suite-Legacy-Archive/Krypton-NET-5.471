@@ -1,11 +1,12 @@
 ﻿// *****************************************************************************
-// 
-//  © Component Factory Pty Ltd, modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2010 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//	The software and associated documentation supplied hereunder are the 
+// BSD 3-Clause License (https://github.com/ComponentFactory/Krypton/blob/master/LICENSE)
+//  © Component Factory Pty Ltd, 2006-2018, All rights reserved.
+// The software and associated documentation supplied hereunder are the 
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.7.0.0 	www.ComponentFactory.com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 
 using System;
@@ -169,7 +170,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         public override ContextMenuStrip ContextMenuStrip
         {
-            [System.Diagnostics.DebuggerStepThrough]
+            [DebuggerStepThrough]
             get { return base.ContextMenuStrip; }
 
             set 
@@ -274,7 +275,7 @@ namespace ComponentFactory.Krypton.Toolkit
 		[Description("Palette applied to drawing.")]
 		public PaletteMode PaletteMode
 		{
-            [System.Diagnostics.DebuggerStepThrough]
+            [DebuggerStepThrough]
             get { return _paletteMode; }
 
 			set
@@ -328,7 +329,7 @@ namespace ComponentFactory.Krypton.Toolkit
 		[DefaultValue(null)]
 		public IPalette Palette
 		{
-            [System.Diagnostics.DebuggerStepThrough]
+            [DebuggerStepThrough]
             get { return _localPalette; }
 
 			set
@@ -388,7 +389,7 @@ namespace ComponentFactory.Krypton.Toolkit
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IRenderer Renderer
         {
-            [System.Diagnostics.DebuggerStepThrough]
+            [DebuggerStepThrough]
             get;
             private set;
 	    }
@@ -489,7 +490,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         protected ViewManager ViewManager
         {
-            [System.Diagnostics.DebuggerStepThrough]
+            [DebuggerStepThrough]
             get;
             set;
 	    }
@@ -499,7 +500,7 @@ namespace ComponentFactory.Krypton.Toolkit
 		/// </summary>
 		protected PaletteRedirect Redirector
 	    {
-	        [System.Diagnostics.DebuggerStepThrough]
+	        [DebuggerStepThrough]
 	        get;
 	    }
 
@@ -623,16 +624,7 @@ namespace ComponentFactory.Krypton.Toolkit
         protected virtual bool EvalTransparentPaint()
         {
             // Do we have a manager to use for asking about painting?
-            if (ViewManager != null)
-            {
-                // Ask the view if it needs to paint transparent areas
-                return ViewManager.EvalTransparentPaint(Renderer);
-            }
-            else
-            {
-                // If there is no view then do not transparent paint
-                return false;
-            }
+            return ViewManager != null && ViewManager.EvalTransparentPaint(Renderer);
         }
 
         /// <summary>
@@ -646,18 +638,19 @@ namespace ComponentFactory.Krypton.Toolkit
         protected virtual Control TransparentParent => Parent;
 
 	    /// <summary>
-        /// Processes a notification from palette storage of a button spec change.
-        /// </summary>
-        /// <param name="sender">Source of notification.</param>
-        /// <param name="e">An EventArgs containing event data.</param>
-        protected virtual void OnButtonSpecChanged(object sender, EventArgs e)
+	    /// Processes a notification from palette storage of a button spec change.
+	    /// </summary>
+	    /// <param name="sender">Source of notification.</param>
+	    /// <param name="e">An EventArgs containing event data.</param>
+	    /// <exception cref="ArgumentNullException"></exception>
+	    protected virtual void OnButtonSpecChanged(object sender, EventArgs e)
         {
             Debug.Assert(e != null);
 
             // Validate incoming reference
             if (e == null)
             {
-                throw new ArgumentNullException("e");
+                throw new ArgumentNullException(nameof(e));
             }
         }
 
@@ -691,19 +684,20 @@ namespace ComponentFactory.Krypton.Toolkit
             OnNeedPaint(sender, e);
         }
 
-        /// <summary>
-        /// Processes a notification from palette storage of a paint and optional layout required.
-        /// </summary>
-        /// <param name="sender">Source of notification.</param>
-        /// <param name="e">An NeedLayoutEventArgs containing event data.</param>
-        protected virtual void OnNeedPaint(object sender, NeedLayoutEventArgs e)
+	    /// <summary>
+	    /// Processes a notification from palette storage of a paint and optional layout required.
+	    /// </summary>
+	    /// <param name="sender">Source of notification.</param>
+	    /// <param name="e">An NeedLayoutEventArgs containing event data.</param>
+	    /// <exception cref="ArgumentNullException"></exception>
+	    protected virtual void OnNeedPaint(object sender, NeedLayoutEventArgs e)
         {
             Debug.Assert(e != null);
 
             // Validate incoming reference
             if (e == null)
             {
-                throw new ArgumentNullException("e");
+                throw new ArgumentNullException(nameof(e));
             }
 
             // Never try and redraw or layout when disposed are trying to dispose
@@ -925,7 +919,7 @@ namespace ComponentFactory.Krypton.Toolkit
             if (!IsDisposed && !Disposing)
             {
                 // Do we have a manager for processing mouse messages?
-                ViewManager?.DoubleClick(this.PointToClient(Control.MousePosition));
+                ViewManager?.DoubleClick(PointToClient(MousePosition));
             }
 
             // Let base class fire events

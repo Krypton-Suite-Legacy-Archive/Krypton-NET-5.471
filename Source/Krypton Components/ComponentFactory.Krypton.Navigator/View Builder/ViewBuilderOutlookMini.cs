@@ -1,11 +1,12 @@
 ﻿// *****************************************************************************
-// 
-//  © Component Factory Pty Ltd, modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2010 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//	The software and associated documentation supplied hereunder are the 
+// BSD 3-Clause License (https://github.com/ComponentFactory/Krypton/blob/master/LICENSE)
+//  © Component Factory Pty Ltd, 2006-2018, All rights reserved.
+// The software and associated documentation supplied hereunder are the 
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.7.0.0 	www.ComponentFactory.com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 
 using System.Drawing;
@@ -46,16 +47,7 @@ namespace ComponentFactory.Krypton.Navigator
         public override void SelectedPageChanged()
         {
             // If there is a selected page
-            if (Navigator.SelectedPage != null)
-            {
-                // Remove any focus the mini button might have
-                _selectedButton.HasFocus = false;
-            }
-            else
-            {
-                // If the navigator has focus then put it on the mini button
-                _selectedButton.HasFocus = HasFocus;
-            }
+            _selectedButton.HasFocus = Navigator.SelectedPage == null && HasFocus;
 
             // Update the selected button to show details of the newly selected page
             _selectedButton.Page = Navigator.SelectedPage;
@@ -67,17 +59,10 @@ namespace ComponentFactory.Krypton.Navigator
         /// Gets the appropriate popup page position for the current mode.
         /// </summary>
         /// <returns>Calculated PopupPagePosition</returns>
-        public override PopupPagePosition GetPopupPagePosition()
-        {
-            if (Navigator.Outlook.Orientation == Orientation.Vertical)
-            {
-                return PopupPagePosition.FarTop;
-            }
-            else
-            {
-                return PopupPagePosition.BelowNear;
-            }
-        }
+        public override PopupPagePosition GetPopupPagePosition() =>
+            Navigator.Outlook.Orientation == Orientation.Vertical
+            ? PopupPagePosition.FarTop
+            : PopupPagePosition.BelowNear;
 
         /// <summary>
         /// Process a dialog key in a manner appropriate for the view.

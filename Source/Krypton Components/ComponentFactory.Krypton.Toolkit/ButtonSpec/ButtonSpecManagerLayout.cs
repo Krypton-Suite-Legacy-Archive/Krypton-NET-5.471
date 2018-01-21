@@ -1,11 +1,12 @@
 ﻿// *****************************************************************************
-// 
-//  © Component Factory Pty Ltd, modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2010 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//	The software and associated documentation supplied hereunder are the 
+// BSD 3-Clause License (https://github.com/ComponentFactory/Krypton/blob/master/LICENSE)
+//  © Component Factory Pty Ltd, 2006-2018, All rights reserved.
+// The software and associated documentation supplied hereunder are the 
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.7.0.0 	www.ComponentFactory.com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 
 using System.Windows.Forms;
@@ -117,44 +118,22 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <param name="i">Index.</param>
         /// <returns>View docker reference; otherwise null.</returns>
-        protected override ViewBase IndexDocker(int i)
-        {
-            if (_viewDockers.Length > i)
-            {
-                return _viewDockers[i];
-            }
-            else
-            {
-                return null;
-            }
-        }
+        protected override ViewBase IndexDocker(int i) => _viewDockers.Length > i ? _viewDockers[i] : null;
 
         /// <summary>
         /// Gets the orientation of the docker at the specified index.
         /// </summary>
         /// <param name="i">Index.</param>
         /// <returns>VisualOrientation value.</returns>
-        protected override VisualOrientation DockerOrientation(int i)
-        {
-            if (_viewDockers.Length > i)
-            {
-                return _viewDockers[i].Orientation;
-            }
-            else
-            {
-                return VisualOrientation.Top;
-            }
-        }
+        protected override VisualOrientation DockerOrientation(int i) =>
+            _viewDockers.Length > i ? _viewDockers[i].Orientation : VisualOrientation.Top;
 
         /// <summary>
         /// Gets the element that represents the foreground color.
         /// </summary>
         /// <param name="i">Index.</param>
         /// <returns>View content instance.</returns>
-        protected override ViewDrawContent GetDockerForeground(int i)
-        {
-            return null;
-        }
+        protected override ViewDrawContent GetDockerForeground(int i) => null;
 
         /// <summary>
         /// Add a view element to a docker.

@@ -1,11 +1,12 @@
 ﻿// *****************************************************************************
-// 
-//  © Component Factory Pty Ltd, modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2010 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//	The software and associated documentation supplied hereunder are the 
+// BSD 3-Clause License (https://github.com/ComponentFactory/Krypton/blob/master/LICENSE)
+//  © Component Factory Pty Ltd, 2006-2018, All rights reserved.
+// The software and associated documentation supplied hereunder are the 
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.7.0.0 	www.ComponentFactory.com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 
 using System;
@@ -76,7 +77,7 @@ namespace ComponentFactory.Krypton.Ribbon
             // Validate the parameter reference
             if (component == null)
             {
-                throw new ArgumentNullException("component");
+                throw new ArgumentNullException(nameof(component));
             }
 
             // Let base class do standard stuff
@@ -599,17 +600,17 @@ namespace ComponentFactory.Krypton.Ribbon
                     _visibleMenu = new ToolStripMenuItem("Visible", null, OnVisible);
                     _collapsableMenu = new ToolStripMenuItem("Allow Collapsed", null, OnCollapsable);
                     _dialogLauncherMenu = new ToolStripMenuItem("Dialog Launcher", null, OnDialogLauncher);
-                    _moveFirstMenu = new ToolStripMenuItem("Move Group First", ComponentFactory.Krypton.Design.Properties.Resources.MoveFirst, OnMoveFirst);
-                    _movePreviousMenu = new ToolStripMenuItem("Move Group Previous", ComponentFactory.Krypton.Design.Properties.Resources.MovePrevious, OnMovePrevious);
-                    _moveNextMenu = new ToolStripMenuItem("Move Group Next", ComponentFactory.Krypton.Design.Properties.Resources.MoveNext, OnMoveNext);
-                    _moveLastMenu = new ToolStripMenuItem("Move Group Last", ComponentFactory.Krypton.Design.Properties.Resources.MoveLast, OnMoveLast);
+                    _moveFirstMenu = new ToolStripMenuItem("Move Group First", Design.Properties.Resources.MoveFirst, OnMoveFirst);
+                    _movePreviousMenu = new ToolStripMenuItem("Move Group Previous", Design.Properties.Resources.MovePrevious, OnMovePrevious);
+                    _moveNextMenu = new ToolStripMenuItem("Move Group Next", Design.Properties.Resources.MoveNext, OnMoveNext);
+                    _moveLastMenu = new ToolStripMenuItem("Move Group Last", Design.Properties.Resources.MoveLast, OnMoveLast);
                     _moveToTabMenu = new ToolStripMenuItem("Move Group To Tab");
-                    _addTripleMenu = new ToolStripMenuItem("Add Triple", ComponentFactory.Krypton.Design.Properties.Resources.KryptonRibbonGroupTriple, OnAddTriple);
-                    _addLinesMenu = new ToolStripMenuItem("Add Lines", ComponentFactory.Krypton.Design.Properties.Resources.KryptonRibbonGroupLines, OnAddLines);
-                    _addSeparatorMenu = new ToolStripMenuItem("Add Separator", ComponentFactory.Krypton.Design.Properties.Resources.KryptonRibbonGroupSeparator, OnAddSep);
-                    _addGalleryMenu = new ToolStripMenuItem("Add Gallery", ComponentFactory.Krypton.Design.Properties.Resources.KryptonGallery, OnAddGallery);
+                    _addTripleMenu = new ToolStripMenuItem("Add Triple", Design.Properties.Resources.KryptonRibbonGroupTriple, OnAddTriple);
+                    _addLinesMenu = new ToolStripMenuItem("Add Lines", Design.Properties.Resources.KryptonRibbonGroupLines, OnAddLines);
+                    _addSeparatorMenu = new ToolStripMenuItem("Add Separator", Design.Properties.Resources.KryptonRibbonGroupSeparator, OnAddSep);
+                    _addGalleryMenu = new ToolStripMenuItem("Add Gallery", Design.Properties.Resources.KryptonGallery, OnAddGallery);
                     _clearItemsMenu = new ToolStripMenuItem("Clear Items", null, OnClearItems);
-                    _deleteGroupMenu = new ToolStripMenuItem("Delete Group", ComponentFactory.Krypton.Design.Properties.Resources.delete2, OnDeleteGroup);
+                    _deleteGroupMenu = new ToolStripMenuItem("Delete Group", Design.Properties.Resources.delete2, OnDeleteGroup);
                     _cms.Items.AddRange(new ToolStripItem[] { _toggleHelpersMenu, new ToolStripSeparator(),
                                                               _visibleMenu, _collapsableMenu, _dialogLauncherMenu, new ToolStripSeparator(),
                                                               _moveFirstMenu, _movePreviousMenu, _moveNextMenu, _moveLastMenu, new ToolStripSeparator(),

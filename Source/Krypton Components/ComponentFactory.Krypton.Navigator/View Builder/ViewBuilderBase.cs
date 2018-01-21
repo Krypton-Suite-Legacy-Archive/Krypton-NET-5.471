@@ -1,11 +1,12 @@
 ﻿// *****************************************************************************
-// 
-//  © Component Factory Pty Ltd, modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2010 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//	The software and associated documentation supplied hereunder are the 
+// BSD 3-Clause License (https://github.com/ComponentFactory/Krypton/blob/master/LICENSE)
+//  © Component Factory Pty Ltd, 2006-2018, All rights reserved.
+// The software and associated documentation supplied hereunder are the 
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.7.0.0 	www.ComponentFactory.com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 
 using System;
@@ -49,7 +50,7 @@ namespace ComponentFactory.Krypton.Navigator
 		/// </summary>
 		public KryptonNavigator Navigator
 		{
-		    [System.Diagnostics.DebuggerStepThrough]
+		    [DebuggerStepThrough]
 		    get;
 		    private set;
 	    }
@@ -59,7 +60,7 @@ namespace ComponentFactory.Krypton.Navigator
 		/// </summary>
 		public ViewManager ViewManager
 	    {
-	        [System.Diagnostics.DebuggerStepThrough]
+	        [DebuggerStepThrough]
 	        get;
 	        private set;
 	    }
@@ -69,7 +70,7 @@ namespace ComponentFactory.Krypton.Navigator
 		/// </summary>
 		public PaletteRedirect Redirector
 	    {
-	        [System.Diagnostics.DebuggerStepThrough]
+	        [DebuggerStepThrough]
 	        get;
 	        private set;
 	    }
@@ -496,14 +497,7 @@ namespace ComponentFactory.Krypton.Navigator
         public virtual bool SelectNextPage(bool wrap)
         {
             // A page must be selected in order to find the previous one
-            if (Navigator.SelectedPage != null)
-            {
-                return SelectNextPage(Navigator.SelectedPage, wrap, false);
-            }
-            else
-            {
-                return false;
-            }
+            return Navigator.SelectedPage != null && SelectNextPage(Navigator.SelectedPage, wrap, false);
         }
 
         /// <summary>
@@ -604,14 +598,7 @@ namespace ComponentFactory.Krypton.Navigator
         public virtual bool SelectPreviousPage(bool wrap)
         {
             // A page must be selected in order to find the previous one
-            if (Navigator.SelectedPage != null)
-            {
-                return SelectPreviousPage(Navigator.SelectedPage, wrap, false);
-            }
-            else
-            {
-                return false;
-            }
+            return Navigator.SelectedPage != null && SelectPreviousPage(Navigator.SelectedPage, wrap, false);
         }
 
         /// <summary>
@@ -711,7 +698,7 @@ namespace ComponentFactory.Krypton.Navigator
         /// </summary>
         protected NeedPaintHandler NeedPaintDelegate
         {
-            [System.Diagnostics.DebuggerStepThrough]
+            [DebuggerStepThrough]
             get
             {
                 // Only create the delegate when it is first needed
@@ -840,7 +827,7 @@ namespace ComponentFactory.Krypton.Navigator
                 default:
 					// Should never happen!
 					Debug.Assert(false);
-					throw new ArgumentOutOfRangeException("mode");
+					throw new ArgumentOutOfRangeException(nameof(mode));
 			}
 		}
 		#endregion

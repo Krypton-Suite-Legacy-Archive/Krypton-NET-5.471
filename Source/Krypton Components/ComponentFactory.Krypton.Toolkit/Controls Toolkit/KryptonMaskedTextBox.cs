@@ -1,11 +1,12 @@
 ﻿// *****************************************************************************
-// 
-//  © Component Factory Pty Ltd, modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2010 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//	The software and associated documentation supplied hereunder are the 
+// BSD 3-Clause License (https://github.com/ComponentFactory/Krypton/blob/master/LICENSE)
+//  © Component Factory Pty Ltd, 2006-2018, All rights reserved.
+// The software and associated documentation supplied hereunder are the 
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.7.0.0 	www.ComponentFactory.com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 
 using System;
@@ -26,7 +27,7 @@ namespace ComponentFactory.Krypton.Toolkit
     [DefaultEvent("MaskInputRejected")]
 	[DefaultProperty("Mask")]
     [DefaultBindingProperty("Text")]
-    [Designer("ComponentFactory.Krypton.Toolkit.KryptonMaskedTextBoxDesigner, ComponentFactory.Krypton.Design, Version=4.71.0.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e")]
+    [Designer("ComponentFactory.Krypton.Toolkit.KryptonMaskedTextBoxDesigner, ComponentFactory.Krypton.Design, Version=4.70.0.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e")]
     [DesignerCategory("code")]
     [Description("Uses a mask to distinguish between proper and improper user input.")]
     [ClassInterface(ClassInterfaceType.AutoDispatch)]
@@ -194,25 +195,15 @@ namespace ComponentFactory.Krypton.Toolkit
                                     switch (_kryptonMaskedTextBox.TextAlign)
                                     {
                                         case HorizontalAlignment.Left:
-                                            if (RightToLeft == RightToLeft.Yes)
-                                            {
-                                                stringFormat.Alignment = StringAlignment.Far;
-                                            }
-                                            else
-                                            {
-                                                stringFormat.Alignment = StringAlignment.Near;
-                                            }
+                                            stringFormat.Alignment = RightToLeft == RightToLeft.Yes
+                                                ? StringAlignment.Far
+                                                : StringAlignment.Near;
 
                                             break;
                                         case HorizontalAlignment.Right:
-                                            if (RightToLeft == RightToLeft.Yes)
-                                            {
-                                                stringFormat.Alignment = StringAlignment.Near;
-                                            }
-                                            else
-                                            {
-                                                stringFormat.Alignment = StringAlignment.Far;
-                                            }
+                                            stringFormat.Alignment = RightToLeft == RightToLeft.Yes
+                                                ? StringAlignment.Near
+                                                : StringAlignment.Far;
 
                                             break;
                                         case HorizontalAlignment.Center:
@@ -224,7 +215,7 @@ namespace ComponentFactory.Krypton.Toolkit
                                     stringFormat.HotkeyPrefix = System.Drawing.Text.HotkeyPrefix.None;
 
                                     // Draw using a solid brush
-                                    string drawText = (MaskedTextProvider == null ? Text : MaskedTextProvider.ToDisplayString());
+                                    string drawText = MaskedTextProvider?.ToDisplayString() ?? Text;
                                     try
                                     {
                                         using (SolidBrush foreBrush = new SolidBrush(ForeColor))
@@ -1331,25 +1322,12 @@ namespace ComponentFactory.Krypton.Toolkit
         /// Sets input focus to the control.
         /// </summary>
         /// <returns>true if the input focus request was successful; otherwise, false.</returns>
-        public new bool Focus()
-        {
-            if (MaskedTextBox != null)
-            {
-                return MaskedTextBox.Focus();
-            }
-            else
-            {
-                return false;
-            }
-        }
+        public new bool Focus() => MaskedTextBox != null && MaskedTextBox.Focus();
 
         /// <summary>
         /// Activates the control.
         /// </summary>
-        public new void Select()
-        {
-            MaskedTextBox?.Select();
-        }
+        public new void Select() => MaskedTextBox?.Select();
 
         /// <summary>
         /// Get the preferred size of the control based on a proposed size.
@@ -1434,14 +1412,7 @@ namespace ComponentFactory.Krypton.Toolkit
             }
 
             // Check if any of the button specs want the point
-            if ((_buttonManager != null) && _buttonManager.DesignerGetHitTest(pt))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return (_buttonManager != null) && _buttonManager.DesignerGetHitTest(pt);
         }
 
         /// <summary>
@@ -1453,13 +1424,9 @@ namespace ComponentFactory.Krypton.Toolkit
         public Component DesignerComponentFromPoint(Point pt)
         {
             // Ignore call as view builder is already destructed
-            if (IsDisposed)
-            {
-                return null;
-            }
+            return IsDisposed ? null : ViewManager.ComponentFromPoint(pt);
 
             // Ask the current view for a decision
-            return ViewManager.ComponentFromPoint(pt);
         }
 
         /// <summary>
@@ -1585,7 +1552,7 @@ namespace ComponentFactory.Krypton.Toolkit
         /// </summary>
         /// <returns>A new instance of Control.ControlCollection assigned to the control.</returns>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
-        protected override Control.ControlCollection CreateControlsInstance()
+        protected override ControlCollection CreateControlsInstance()
         {
             return new KryptonReadOnlyControls(this);
         }
@@ -1896,37 +1863,12 @@ namespace ComponentFactory.Krypton.Toolkit
             _drawDockerOuter.Enabled = Enabled;
 
             // Find the new state of the main view element
-            PaletteState state;
-            if (IsActive)
-            {
-                state = PaletteState.Tracking;
-            }
-            else
-            {
-                state = PaletteState.Normal;
-            }
+            PaletteState state = IsActive ? PaletteState.Tracking : PaletteState.Normal;
 
             _drawDockerOuter.ElementState = state;
         }
 
-        internal IPaletteTriple GetTripleState()
-        {
-            if (Enabled)
-            {
-                if (IsActive)
-                {
-                    return StateActive;
-                }
-                else
-                {
-                    return StateNormal;
-                }
-            }
-            else
-            {
-                return StateDisabled;
-            }
-        }
+        internal IPaletteTriple GetTripleState() => Enabled ? (IsActive ? StateActive : StateNormal) : StateDisabled;
 
         private int PreferredHeight
         {
@@ -1945,14 +1887,7 @@ namespace ComponentFactory.Krypton.Toolkit
             // If any of the vertical edges are anchored then we might need to ignore the call
             if (!ignoreAnchored || ((Anchor & (AnchorStyles.Bottom | AnchorStyles.Top)) != (AnchorStyles.Bottom | AnchorStyles.Top)))
             {
-                if (_autoSize)
-                {
-                    Height = PreferredHeight;
-                }
-                else
-                {
-                    Height = _cachedHeight;
-                }
+                Height = _autoSize ? PreferredHeight : _cachedHeight;
             }
         }
 
