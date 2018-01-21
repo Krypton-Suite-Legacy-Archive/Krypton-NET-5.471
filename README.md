@@ -6,7 +6,7 @@
 * Fixed Nuget package specification to show the true file assembly number, i.e 4.71.533.0 (build date January 21st, 2018) 
 * All new releases of packages will no longer have a dedicated changelog. Instead, it will point users back to [this repository](https://github.com/Wagnerp/Krypton-NET-4.7.1) for more information.
 * All new releases of packages will no longer ship with the '.chm' help file. This is to reduce file size from 70+ MB to 5 - 6 MB. If the help file is needed, then please refer to [this link](https://github.com/Wagnerp/Krypton-NET-4.7.1/raw/master/Help/KryptonHelp.chm) to download it.
-* New versions of Nuget packages can be obtained via [this link](https://www.nuget.org/packages/KryptonToolkitSuite471/) or via your package manager with the following command 'Install-Package KryptonToolkitSuite47 -Version 4.70.xxx' (replace the x's with version number) or by searching KryptonToolkitSuite47 in your package manager.
+* New versions of Nuget packages can be obtained via [this link](https://www.nuget.org/packages/KryptonToolkitSuite471/) or via your package manager with the following command 'Install-Package KryptonToolkitSuite471 -Version 4.71.xxx' (replace the x's with version number) or by searching KryptonToolkitSuite471 in your package manager.
 
 =======
 
