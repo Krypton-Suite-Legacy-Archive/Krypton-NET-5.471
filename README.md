@@ -2,6 +2,16 @@
 
 =======
 
+## NOTE: In order to use this toolkit, please ensure that you reference 'ComponentFactory.Krypton.Design.dll' in ALL of your projects at ALL times!
+
+=======
+
+## 2018-01-24 Designer bug fix
+* Fixed bug with ComponentFactory.Krypton.Design.dll to version 4.71.0.0 due to hard coded values in toolkit code. Thanks to Smurf-IV for pointing this out to me.
+* New Nuget package, version 4.71.533a (build date January 24th, 2018) will be uploaded to incorporate this fix.
+
+=======
+
 ## 2018-01-21 Nuget package update
 * Fixed Nuget package specification to show the true file assembly number, i.e 4.71.533.0 (build date January 21st, 2018) 
 * All new releases of packages will no longer have a dedicated changelog. Instead, it will point users back to [this repository](https://github.com/Wagnerp/Krypton-NET-4.7.1) for more information.
