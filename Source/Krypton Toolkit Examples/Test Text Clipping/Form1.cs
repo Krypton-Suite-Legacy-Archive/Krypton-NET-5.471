@@ -146,5 +146,16 @@ namespace ThreePaneApplication
                 kryptonManager.GlobalPaletteMode = PaletteModeManager.Office2013White;
             }
         }
+
+        private void InnerControl_MouseEnter(object sender, EventArgs e)
+        {
+            kryptonListBox1.Items.Add($"MouseEnter- {sender}");
+        }
+
+        private void InnerControl_MouseLeave(object sender, EventArgs e)
+        {
+            kryptonListBox1.Items.Add("MouseLeave");
+
+        }
     }
 }

@@ -2,7 +2,12 @@
 
 =======
 
-## NOTE: In order to use this toolkit, please ensure that you reference 'ComponentFactory.Krypton.Design.dll' in ALL of your projects at ALL times!
+## NOTE: In order to **design** within the IDE with this toolkit, please ensure that you reference the `ComponentFactory.Krypton.Design.dll` in ALL of your projects at ALL times!
+
+=======
+## 2018-02-16 New Nuget package release
+* Build 554 (build date 16th February, 2018) has been released.
+* Palette designer has been included with this release and future releases.
 
 =======
 
