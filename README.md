@@ -1,8 +1,35 @@
-﻿# Krypton-NET-4.7.1
+# ![Krypton](/help/logo.png)-NET-4.7.1
 
 =======
 
 ## NOTE: In order to **design** within the IDE with this toolkit, please ensure that you reference the `ComponentFactory.Krypton.Design.dll` in ALL of your projects at ALL times!
+
+# ["Toolkit help index"](https://rawgit.com/Wagnerp/Krypton-NET-4.7/master/Help/Output/index.html)
+
+=======
+
+## 2018-03-26 Version 561
+* Build 561 (build date Monday 26th March, 2018) is now available from the **releases** tab.
+* Make the Help relevant to the Actual Code #17
+* Change `bmp`'s to `png`'s
+* Fix location of source for Help
+* Change output to be clearer
+* Remove previous output *leftovers*
+* Add instructions on how to generate
+* MessageBox taking a Null window owner (via default API's / null start / No KryptonManager loaded)
+* Sort out the Toolkit examples to use the new dll locations
+* Remove `BootstrapperPackage` .Net 3.5 nonsense from projects
+* Remove hard coded build `Output Paths`
+* The palette upgrade tool is now back! Enhancements over previous commercial version 4.4.0 include:
+- Ability to export upgraded palette XML files
+- Check to see if the output palette file is not saved before closing
+* Exploration into a console version is in the works
+* Changed some classes from `internal` to `public` for easier accessibility for the **Extended Toolkit**
+* All AMD64/x64 solutions should now build into correct directories
+* TODO: Rework Krypton Explorer (x64 and Any CPU) code to launch correct binaries
+* Renamed everything labeled `2015` to `2018`
+* Each solution now has its own binary folder
+* Groundwork for supporting AMD64/x64, x86 and 'Any CPU' architectures
 
 =======
 ## 2018-02-16 New Nuget package release
