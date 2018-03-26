@@ -79,7 +79,7 @@ namespace PaletteUpgradeTool.Properties {
         ///    &lt;xsl:comment&gt;WARNING: Modifying this file may render it invalid for importing.&lt;/xsl:comment&gt;
         ///    &lt;KryptonPalette Version=&quot;6&quot;&gt;
         ///      &lt;xsl:attribute name=&quot;Generated&quot;&gt;
-        ///  [rest of string was truncated]&quot;;.
+        ///        &lt; [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string v2to6 {
             get {
@@ -96,7 +96,7 @@ namespace PaletteUpgradeTool.Properties {
         ///    &lt;xsl:comment&gt;WARNING: Modifying this file may render it invalid for importing.&lt;/xsl:comment&gt;
         ///    &lt;KryptonPalette Version=&quot;18&quot;&gt;
         ///      &lt;xsl:attribute name=&quot;Generated&quot;&gt;
-        /// [rest of string was truncated]&quot;;.
+        ///         [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string v6to18 {
             get {
