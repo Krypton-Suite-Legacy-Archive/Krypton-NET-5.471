@@ -1,4 +1,6 @@
-# ![Krypton](/help/logo.png)-NET-4.7.1
+# ![Krypton](/help/logo.png)-NET-4.71
+
+# NOTE: This project is **NOT** dead, and will be updated shortly.
 
 =======
 
