@@ -19,7 +19,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyVersion("4.71.572.0")]
 [assembly: AssemblyFileVersion("4.71.572.0")]
 [assembly: AssemblyCopyright("© Component Factory Pty Ltd, 2006-2018. Then modifications by Peter Wagner (aka Wagnerp) & Simon Coghlan (aka Smurf-IV) 2017-2018. All rights reserved.")]
-[assembly: AssemblyInformationalVersion("4.71.570.0")]
+[assembly: AssemblyInformationalVersion("4.71.573.0")]
 [assembly: AssemblyProduct("Krypton Toolkit")]
 [assembly: AssemblyDefaultAlias("ComponentFactory.Krypton.Toolkit.dll")]
 [assembly: AssemblyTitle("ComponentFactory.Krypton.Toolkit")]
