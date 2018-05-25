@@ -165,9 +165,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.kryptonPanelFill)).BeginInit();
             this.kryptonPanelFill.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.kryptonNavigator)).BeginInit();
+            this.kryptonNavigator.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.kryptonPageToolkit)).BeginInit();
             this.kryptonPageToolkit.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.kryptonNavigatorToolkit)).BeginInit();
+            this.kryptonNavigatorToolkit.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.kryptonPage1)).BeginInit();
             this.kryptonPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.kryptonPage2)).BeginInit();
@@ -1831,10 +1833,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.kryptonPanelFill)).EndInit();
             this.kryptonPanelFill.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.kryptonNavigator)).EndInit();
+            this.kryptonNavigator.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.kryptonPageToolkit)).EndInit();
             this.kryptonPageToolkit.ResumeLayout(false);
             this.kryptonPageToolkit.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.kryptonNavigatorToolkit)).EndInit();
+            this.kryptonNavigatorToolkit.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.kryptonPage1)).EndInit();
             this.kryptonPage1.ResumeLayout(false);
             this.kryptonPage1.PerformLayout();
