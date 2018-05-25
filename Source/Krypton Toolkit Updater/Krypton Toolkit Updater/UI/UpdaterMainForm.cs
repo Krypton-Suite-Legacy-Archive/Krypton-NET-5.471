@@ -37,7 +37,19 @@ namespace KryptonToolkitUpdater.UI
 
         private void kbtnCancel_Click(object sender, EventArgs e)
         {
+            if (_checkingForUpdates)
+            {
+                DialogResult result = KryptonMessagebox.Show("You are currently checking for updates.\nQuit now?", "Update in progress", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
+                if (result == DialogResult.Yes)
+                {
+                    Application.Exit();
+                }
+            }
+            else
+            {
+                Application.Exit();
+            }
         }
 
         private void kbtnCheckForUpdates_Click(object sender, EventArgs e)

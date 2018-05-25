@@ -12,6 +12,15 @@
 
 =======
 
+## 2018-05-25 Version 593
+* Build 593 (build date Friday 25th May 2018) is now available through the `releases` tab.
+* Remove the Designer dll (Project / code moved in Git)
+* Place designers into actual dlls (Small size increase)
+* Fix fallout from Designer dll removal from other projects
+  * Fix build path output, and Demo Apps Ref path import and Output
+
+=======
+
 ## 2018-05-01 Version 573
 * Build 573 (build date Tuesday 1st May 2018) is now available through the `releases` tab. A installable version will be made available shortly, once testing has been completed.
 * Fixed `4.70` references as noted by Smurf-IV in [#3](https://github.com/Wagnerp/Krypton-NET-4.71/issues/3)
