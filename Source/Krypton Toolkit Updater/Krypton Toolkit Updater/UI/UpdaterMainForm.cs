@@ -35,23 +35,21 @@ namespace KryptonToolkitUpdater.UI
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Handles the Click event of the kbtnCancel control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void kbtnCancel_Click(object sender, EventArgs e)
         {
-            if (_checkingForUpdates)
-            {
-                DialogResult result = KryptonMessagebox.Show("You are currently checking for updates.\nQuit now?", "Update in progress", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-                if (result == DialogResult.Yes)
-                {
-                    Application.Exit();
-                }
-            }
-            else
-            {
-                Application.Exit();
-            }
+            CloseUpdater(CheckingForUpdates);
         }
 
+        /// <summary>
+        /// Handles the Click event of the kbtnCheckForUpdates control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void kbtnCheckForUpdates_Click(object sender, EventArgs e)
         {
             CheckForUpdates("https://github.com/Wagnerp/Krypton-NET-4.71/blob/master/Updates/update.xml");
@@ -69,12 +67,21 @@ namespace KryptonToolkitUpdater.UI
 
         }
 
+        /// <summary>
+        /// Handles the FormClosing event of the UpdaterMainForm control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="FormClosingEventArgs"/> instance containing the event data.</param>
         private void UpdaterMainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-
+            CloseUpdater(CheckingForUpdates);
         }
 
         #region Methods
+        /// <summary>
+        /// Checks for updates.
+        /// </summary>
+        /// <param name="updateXMLPath">The update XML path.</param>
         private void CheckForUpdates(string updateXMLPath)
         {
             try
@@ -97,6 +104,27 @@ namespace KryptonToolkitUpdater.UI
             catch (Exception exc)
             {
                 KryptonMessageBox.Show($"Error: { exc.Message }", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// Closes the updater.
+        /// </summary>
+        /// <param name="isUpdating">if set to <c>true</c> [is updating].</param>
+        private void CloseUpdater(bool isUpdating)
+        {
+            if (isUpdating)
+            {
+                DialogResult result = KryptonMessageBox.Show("You are currently checking for updates.\nQuit now?", "Update in progress", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes)
+                {
+                    Application.Exit();
+                }
+            }
+            else
+            {
+                Application.Exit();
             }
         }
         #endregion
