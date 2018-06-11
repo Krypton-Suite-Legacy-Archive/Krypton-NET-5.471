@@ -35,24 +35,31 @@ namespace KryptonToolkitUpdater.UI
             InitializeComponent();
         }
 
-        /// <summary>
-        /// Handles the Click event of the kbtnCancel control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void kbtnCancel_Click(object sender, EventArgs e)
         {
-            CloseUpdater(CheckingForUpdates);
+            ExitApplication();
         }
 
-        /// <summary>
-        /// Handles the Click event of the kbtnCheckForUpdates control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        private void ExitApplication()
+        {
+            if (_checkingForUpdates)
+            {
+                DialogResult result = KryptonMessageBox.Show("Checking for updates. Do you want to quit now?", "Update in Progress", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes)
+                {
+                    Application.Exit();
+                }
+            }
+            else
+            {
+                Application.Exit();
+            }
+        }
+
         private void kbtnCheckForUpdates_Click(object sender, EventArgs e)
         {
-            CheckForUpdates("https://github.com/Wagnerp/Krypton-NET-4.71/blob/master/Updates/update.xml");
+            CheckForUpdates("https://github.com/Wagnerp/Krypton-NET-4.70/blob/master/Updates/update.xml");
         }
 
         private void kbtnOptions_Click(object sender, EventArgs e)
@@ -67,21 +74,12 @@ namespace KryptonToolkitUpdater.UI
 
         }
 
-        /// <summary>
-        /// Handles the FormClosing event of the UpdaterMainForm control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="FormClosingEventArgs"/> instance containing the event data.</param>
         private void UpdaterMainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            CloseUpdater(CheckingForUpdates);
+
         }
 
         #region Methods
-        /// <summary>
-        /// Checks for updates.
-        /// </summary>
-        /// <param name="updateXMLPath">The update XML path.</param>
         private void CheckForUpdates(string updateXMLPath)
         {
             try
@@ -104,27 +102,6 @@ namespace KryptonToolkitUpdater.UI
             catch (Exception exc)
             {
                 KryptonMessageBox.Show($"Error: { exc.Message }", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        /// <summary>
-        /// Closes the updater.
-        /// </summary>
-        /// <param name="isUpdating">if set to <c>true</c> [is updating].</param>
-        private void CloseUpdater(bool isUpdating)
-        {
-            if (isUpdating)
-            {
-                DialogResult result = KryptonMessageBox.Show("You are currently checking for updates.\nQuit now?", "Update in progress", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-                if (result == DialogResult.Yes)
-                {
-                    Application.Exit();
-                }
-            }
-            else
-            {
-                Application.Exit();
             }
         }
         #endregion
@@ -151,7 +128,7 @@ namespace KryptonToolkitUpdater.UI
 
         private void kllHelp_LinkClicked(object sender, System.EventArgs e)
         {
-            KryptonMessageBox.Show("This utility will enable you to check for and download updates for Krypton .NET 4.71.", "Help", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            KryptonMessageBox.Show("This utility will enable you to check for and download updates for Krypton .NET 4.70.", "Help", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void kbtnDownloadUpdate_Click(object sender, EventArgs e)

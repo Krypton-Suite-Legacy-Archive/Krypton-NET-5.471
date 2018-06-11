@@ -2,13 +2,20 @@
 
 =======
 
-## NOTE: In order to **design** within the IDE with this toolkit, please ensure that you reference the `ComponentFactory.Krypton.Design.dll` in ALL of your projects at ALL times!
-
 # ["Toolkit help index"](https://rawgit.com/Wagnerp/Krypton-NET-4.7/master/Help/Output/index.html)
 
 =======
 
 ## NOTE: With the advent of Windows 10 1803 being released to the general public, I am pleased to announce the availability of a 4.72 release that will support the .NET 4.7.2 framework. You can follow the project [here](https://github.com/Wagnerp/Krypton-NET-4.72). 
+
+=======
+
+## 2018-06-11 Version 620
+* Build 620 (build date Monday 11th June 2018) is now obtainable through the `releases` tab.
+* Fixed references that blocked demo applications from launching.
+* Start work on getting the system themes to display the extras. 
+  * Not perfect but at least the "Chrome" displays the intended buttons and text(s).
+* Removal of "not needed" casts.
 
 =======
 
