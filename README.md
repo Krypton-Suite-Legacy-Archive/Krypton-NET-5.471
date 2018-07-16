@@ -10,6 +10,15 @@
 
 =======
 
+## 2018-07-16 Build 633
+* Build 633 (released Monday 16th July, 2018) is now available through the **releases** tab
+* Fix KryptonForm does not respect Minimum Size set in designer #57
+  * And sort out some spelling mistakes in the `VisualForm.cs`
+* `SeparatorController.cs` & `DragObject` bug fix, #79
+  * Fix for bug Issue, #79, courtesy of [James Simms](https://github.com/jwsimms)
+
+=======
+
 ## 2018-06-15 Palette Example Application
 * Now you can export your custom palette creation in the `Krypton Palette Example` application.
 
