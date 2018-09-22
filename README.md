@@ -1,4 +1,4 @@
-# <img src="https://rawgit.com/Wagnerp/Krypton-NET-4.7/master/Help/Output/Logo.PNG">-NET-4.71
+# <img src="https://github.com/Wagnerp/Krypton-NET-4.71/blob/master/Assets/PNG/Square%20Design/Main%20Icon/64%20x%2064/Square%20Design%2064%20x%2064%20New%20Green.png">-NET-4.71
 
 =======
 
@@ -7,6 +7,16 @@
 =======
 
 ## NOTE: With the advent of Windows 10 1803 being released to the general public, I am pleased to announce the availability of a 4.72 release that will support the .NET 4.7.2 framework. You can follow the project [here](https://github.com/Wagnerp/Krypton-NET-4.72). 
+
+=======
+
+## 2018-07-23 Build 642
+* Namespaces are now simplified from `ComponentFactory.Krypton.xx` to `Krypton.xx` to align properly with **DLL** file names
+* The `Import()` and `Export()` methods will now use the native `KryptonMessageBox` instead of a system one
+* Removed the phantom `KryptonPalette` component
+* Now you can access the full `FilePath` of the loaded palette XML file
+* New icon (not propagated through all the example applications yet)
+* General bugfixes
 
 =======
 

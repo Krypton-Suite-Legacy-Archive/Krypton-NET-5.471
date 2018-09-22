@@ -28,7 +28,6 @@ namespace NavigatorToolTips
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.groupBoxTooltipProperties = new System.Windows.Forms.GroupBox();
             this.checkAllowButtonSpecTooltips = new System.Windows.Forms.CheckBox();
@@ -40,13 +39,13 @@ namespace NavigatorToolTips
             this.labelMapExtraText = new System.Windows.Forms.Label();
             this.labelMapText = new System.Windows.Forms.Label();
             this.panel = new System.Windows.Forms.Panel();
-            this.kryptonNavigator = new ComponentFactory.Krypton.Navigator.KryptonNavigator();
-            this.kryptonPage1 = new ComponentFactory.Krypton.Navigator.KryptonPage();
-            this.kryptonPage2 = new ComponentFactory.Krypton.Navigator.KryptonPage();
-            this.kryptonPage3 = new ComponentFactory.Krypton.Navigator.KryptonPage();
-            this.kryptonPage4 = new ComponentFactory.Krypton.Navigator.KryptonPage();
+            this.kryptonNavigator = new  Krypton.Navigator.KryptonNavigator();
+            this.kryptonPage1 = new  Krypton.Navigator.KryptonPage();
+            this.kryptonPage2 = new  Krypton.Navigator.KryptonPage();
+            this.kryptonPage3 = new  Krypton.Navigator.KryptonPage();
+            this.kryptonPage4 = new  Krypton.Navigator.KryptonPage();
             this.buttonClose = new System.Windows.Forms.Button();
-            this.kryptonManager1 = new ComponentFactory.Krypton.Toolkit.KryptonManager(this.components);
+            this.kryptonManager1 = new  Krypton.Toolkit.KryptonManager();
             this.groupBoxTooltipProperties.SuspendLayout();
             this.panel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.kryptonNavigator)).BeginInit();
@@ -155,9 +154,9 @@ namespace NavigatorToolTips
             // 
             // panel
             // 
-            this.panel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panel.Controls.Add(this.kryptonNavigator);
             this.panel.Location = new System.Drawing.Point(351, 18);
             this.panel.Name = "panel";
@@ -169,7 +168,7 @@ namespace NavigatorToolTips
             this.kryptonNavigator.Dock = System.Windows.Forms.DockStyle.Fill;
             this.kryptonNavigator.Location = new System.Drawing.Point(0, 0);
             this.kryptonNavigator.Name = "kryptonNavigator";
-            this.kryptonNavigator.Pages.AddRange(new ComponentFactory.Krypton.Navigator.KryptonPage[] {
+            this.kryptonNavigator.Pages.AddRange(new  Krypton.Navigator.KryptonPage[] {
             this.kryptonPage1,
             this.kryptonPage2,
             this.kryptonPage3,
@@ -191,13 +190,13 @@ namespace NavigatorToolTips
             this.kryptonPage1.LastVisibleSet = true;
             this.kryptonPage1.MinimumSize = new System.Drawing.Size(50, 50);
             this.kryptonPage1.Name = "kryptonPage1";
-            this.kryptonPage1.Size = new System.Drawing.Size(311, 145);
+            this.kryptonPage1.Size = new System.Drawing.Size(311, 144);
             this.kryptonPage1.Text = "Page 1";
             this.kryptonPage1.TextDescription = "Description of page 1";
             this.kryptonPage1.TextTitle = "Page Title 1";
             this.kryptonPage1.ToolTipBody = "This is a long description of \r\npage 1 which covers several\r\nlines of text.";
             this.kryptonPage1.ToolTipImage = ((System.Drawing.Image)(resources.GetObject("kryptonPage1.ToolTipImage")));
-            this.kryptonPage1.ToolTipStyle = ComponentFactory.Krypton.Toolkit.LabelStyle.SuperTip;
+            this.kryptonPage1.ToolTipStyle =  Krypton.Toolkit.LabelStyle.SuperTip;
             this.kryptonPage1.ToolTipTitle = "Page 1 SuperTip";
             this.kryptonPage1.UniqueName = "A2A9C435C1E1424FA2A9C435C1E1424F";
             // 
@@ -217,7 +216,7 @@ namespace NavigatorToolTips
             this.kryptonPage2.TextTitle = "Page Title 2";
             this.kryptonPage2.ToolTipBody = "Information about the second page\r\nalso covers more than a single line\r\nof text.";
             this.kryptonPage2.ToolTipImage = ((System.Drawing.Image)(resources.GetObject("kryptonPage2.ToolTipImage")));
-            this.kryptonPage2.ToolTipStyle = ComponentFactory.Krypton.Toolkit.LabelStyle.SuperTip;
+            this.kryptonPage2.ToolTipStyle =  Krypton.Toolkit.LabelStyle.SuperTip;
             this.kryptonPage2.ToolTipTitle = "Page 2 SuperTip";
             this.kryptonPage2.UniqueName = "9A45A535BEE6487F9A45A535BEE6487F";
             // 
@@ -266,6 +265,10 @@ namespace NavigatorToolTips
             this.buttonClose.UseVisualStyleBackColor = true;
             this.buttonClose.Click += new System.EventHandler(this.buttonClose_Click);
             // 
+            // kryptonManager1
+            // 
+            this.kryptonManager1.GlobalPaletteMode =  Krypton.Toolkit.PaletteModeManager.ProfessionalSystem;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -296,11 +299,11 @@ namespace NavigatorToolTips
         #endregion
 
         private System.Windows.Forms.Panel panel;
-        private ComponentFactory.Krypton.Navigator.KryptonNavigator kryptonNavigator;
-        private ComponentFactory.Krypton.Navigator.KryptonPage kryptonPage1;
-        private ComponentFactory.Krypton.Navigator.KryptonPage kryptonPage2;
-        private ComponentFactory.Krypton.Navigator.KryptonPage kryptonPage3;
-        private ComponentFactory.Krypton.Navigator.KryptonPage kryptonPage4;
+        private  Krypton.Navigator.KryptonNavigator kryptonNavigator;
+        private  Krypton.Navigator.KryptonPage kryptonPage1;
+        private  Krypton.Navigator.KryptonPage kryptonPage2;
+        private  Krypton.Navigator.KryptonPage kryptonPage3;
+        private  Krypton.Navigator.KryptonPage kryptonPage4;
         private System.Windows.Forms.GroupBox groupBoxTooltipProperties;
         private System.Windows.Forms.Label labelMapText;
         private System.Windows.Forms.Label labelMapExtraText;
@@ -311,7 +314,7 @@ namespace NavigatorToolTips
         private System.Windows.Forms.Button buttonClose;
         private System.Windows.Forms.CheckBox checkAllowButtonSpecTooltips;
         private System.Windows.Forms.CheckBox checkAllowPageTooltips;
-        private ComponentFactory.Krypton.Toolkit.KryptonManager kryptonManager1;
+        private  Krypton.Toolkit.KryptonManager kryptonManager1;
     }
 }
 

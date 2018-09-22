@@ -6,7 +6,7 @@
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
 //  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//  Version 4.7.0.0  www.ComponentFactory.com
+//  Version 4.7.0.0  www.com
 // *****************************************************************************
 
 using System;
@@ -3600,7 +3600,7 @@ namespace Krypton.Toolkit
 
                 // Add a comment about the source of the document
                 doc.AppendChild(doc.CreateComment("Created by exporting the settings of a KryptonPalette instance."));
-                doc.AppendChild(doc.CreateComment("For more information about Krypton visit www.ComponentFactory.com"));
+                doc.AppendChild(doc.CreateComment("For more information about Krypton visit www.com"));
                 doc.AppendChild(doc.CreateComment("WARNING: Modifying this file may render it invalid for importing."));
 
                 // Create a root node with version and the date information, by 

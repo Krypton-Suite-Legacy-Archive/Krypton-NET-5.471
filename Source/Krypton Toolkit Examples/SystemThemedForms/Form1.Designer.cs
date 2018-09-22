@@ -28,7 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.buttonSpecAny1 = new ComponentFactory.Krypton.Toolkit.ButtonSpecAny();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            this.buttonSpecAny1 = new  Krypton.Toolkit.ButtonSpecAny();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
@@ -42,8 +43,10 @@
             // buttonSpecAny1
             // 
             this.buttonSpecAny1.ExtraText = "ExtraButton";
+            this.buttonSpecAny1.Style =  Krypton.Toolkit.PaletteButtonStyle.Inherit;
             this.buttonSpecAny1.Text = "Button";
-            this.buttonSpecAny1.Type = ComponentFactory.Krypton.Toolkit.PaletteButtonSpecStyle.Next;
+            this.buttonSpecAny1.ToolTipStyle =  Krypton.Toolkit.LabelStyle.ToolTip;
+            this.buttonSpecAny1.Type =  Krypton.Toolkit.PaletteButtonSpecStyle.Next;
             this.buttonSpecAny1.UniqueName = "16A6E91058454CD77C97174C1594D930";
             // 
             // button1
@@ -125,7 +128,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ButtonSpecs.AddRange(new ComponentFactory.Krypton.Toolkit.ButtonSpecAny[] {
+            this.ButtonSpecs.AddRange(new  Krypton.Toolkit.ButtonSpecAny[] {
             this.buttonSpecAny1});
             this.ClientSize = new System.Drawing.Size(606, 260);
             this.Controls.Add(this.button8);
@@ -136,10 +139,11 @@
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
-            this.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Silver;
+            this.PaletteMode =  Krypton.Toolkit.PaletteMode.Office2007Silver;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.StateCommon.OverlayHeaders = ComponentFactory.Krypton.Toolkit.InheritBool.True;
+            this.StateCommon.OverlayHeaders =  Krypton.Toolkit.InheritBool.True;
             this.Text = "Test \"SystemThemed\" TitleBar Extras ->";
             this.TextExtra = "ExtraText Here";
             this.ResumeLayout(false);
@@ -148,7 +152,7 @@
 
         #endregion
 
-        private ComponentFactory.Krypton.Toolkit.ButtonSpecAny buttonSpecAny1;
+        private  Krypton.Toolkit.ButtonSpecAny buttonSpecAny1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;

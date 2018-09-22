@@ -30,11 +30,11 @@ namespace OrientationPlusAlignment
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.kryptonNavigator1 = new ComponentFactory.Krypton.Navigator.KryptonNavigator();
-            this.kryptonPage1 = new ComponentFactory.Krypton.Navigator.KryptonPage();
-            this.kryptonPage2 = new ComponentFactory.Krypton.Navigator.KryptonPage();
-            this.kryptonPage3 = new ComponentFactory.Krypton.Navigator.KryptonPage();
-            this.kryptonPage4 = new ComponentFactory.Krypton.Navigator.KryptonPage();
+            this.kryptonNavigator1 = new  Krypton.Navigator.KryptonNavigator();
+            this.kryptonPage1 = new  Krypton.Navigator.KryptonPage();
+            this.kryptonPage2 = new  Krypton.Navigator.KryptonPage();
+            this.kryptonPage3 = new  Krypton.Navigator.KryptonPage();
+            this.kryptonPage4 = new  Krypton.Navigator.KryptonPage();
             this.groupBoxBarOrientation = new System.Windows.Forms.GroupBox();
             this.radioOrientationRight = new System.Windows.Forms.RadioButton();
             this.radioOrientationLeft = new System.Windows.Forms.RadioButton();
@@ -73,7 +73,7 @@ namespace OrientationPlusAlignment
             this.radioModeRibbonTabs = new System.Windows.Forms.RadioButton();
             this.radioModesCheckButton = new System.Windows.Forms.RadioButton();
             this.radioModeTabs = new System.Windows.Forms.RadioButton();
-            this.kryptonManager1 = new ComponentFactory.Krypton.Toolkit.KryptonManager(this.components);
+            this.kryptonManager1 = new  Krypton.Toolkit.KryptonManager(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.kryptonNavigator1)).BeginInit();
             this.kryptonNavigator1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.kryptonPage1)).BeginInit();
@@ -96,33 +96,36 @@ namespace OrientationPlusAlignment
             // 
             // kryptonNavigator1
             // 
-            this.kryptonNavigator1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.kryptonNavigator1.Bar.TabBorderStyle = ComponentFactory.Krypton.Toolkit.TabBorderStyle.RoundedEqualMedium;
-            this.kryptonNavigator1.Button.ButtonDisplayLogic = ComponentFactory.Krypton.Navigator.ButtonDisplayLogic.None;
-            this.kryptonNavigator1.Button.CloseButtonDisplay = ComponentFactory.Krypton.Navigator.ButtonDisplay.Hide;
+            this.kryptonNavigator1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.kryptonNavigator1.Bar.TabBorderStyle =  Krypton.Toolkit.TabBorderStyle.RoundedEqualMedium;
+            this.kryptonNavigator1.Button.ButtonDisplayLogic =  Krypton.Navigator.ButtonDisplayLogic.None;
+            this.kryptonNavigator1.Button.CloseButtonDisplay =  Krypton.Navigator.ButtonDisplay.Hide;
             this.kryptonNavigator1.Location = new System.Drawing.Point(166, 18);
             this.kryptonNavigator1.Name = "kryptonNavigator1";
-            this.kryptonNavigator1.Pages.AddRange(new ComponentFactory.Krypton.Navigator.KryptonPage[] {
+            this.kryptonNavigator1.Pages.AddRange(new  Krypton.Navigator.KryptonPage[] {
             this.kryptonPage1,
             this.kryptonPage2,
             this.kryptonPage3,
             this.kryptonPage4});
             this.kryptonNavigator1.SelectedIndex = 3;
             this.kryptonNavigator1.Size = new System.Drawing.Size(383, 338);
-            this.kryptonNavigator1.StateCommon.CheckButton.Content.Image.ImageH = ComponentFactory.Krypton.Toolkit.PaletteRelativeAlign.Center;
-            this.kryptonNavigator1.StateCommon.CheckButton.Content.Image.ImageV = ComponentFactory.Krypton.Toolkit.PaletteRelativeAlign.Center;
-            this.kryptonNavigator1.StateCommon.CheckButton.Content.ShortText.TextH = ComponentFactory.Krypton.Toolkit.PaletteRelativeAlign.Center;
-            this.kryptonNavigator1.StateCommon.CheckButton.Content.ShortText.TextV = ComponentFactory.Krypton.Toolkit.PaletteRelativeAlign.Far;
+            this.kryptonNavigator1.StateCommon.CheckButton.Content.Image.ImageH =  Krypton.Toolkit.PaletteRelativeAlign.Center;
+            this.kryptonNavigator1.StateCommon.CheckButton.Content.Image.ImageV =  Krypton.Toolkit.PaletteRelativeAlign.Center;
+            this.kryptonNavigator1.StateCommon.CheckButton.Content.ShortText.TextH =  Krypton.Toolkit.PaletteRelativeAlign.Center;
+            this.kryptonNavigator1.StateCommon.CheckButton.Content.ShortText.TextV =  Krypton.Toolkit.PaletteRelativeAlign.Far;
             this.kryptonNavigator1.TabIndex = 0;
             this.kryptonNavigator1.Text = "kryptonNavigator1";
             // 
             // kryptonPage1
             // 
+            this.kryptonPage1.AutoHiddenSlideSize = new System.Drawing.Size(200, 200);
+            this.kryptonPage1.Flags = 65534;
             this.kryptonPage1.ImageLarge = ((System.Drawing.Image)(resources.GetObject("kryptonPage1.ImageLarge")));
             this.kryptonPage1.ImageMedium = ((System.Drawing.Image)(resources.GetObject("kryptonPage1.ImageMedium")));
             this.kryptonPage1.ImageSmall = ((System.Drawing.Image)(resources.GetObject("kryptonPage1.ImageSmall")));
+            this.kryptonPage1.LastVisibleSet = true;
             this.kryptonPage1.MinimumSize = new System.Drawing.Size(50, 50);
             this.kryptonPage1.Name = "kryptonPage1";
             this.kryptonPage1.Size = new System.Drawing.Size(381, 298);
@@ -132,9 +135,12 @@ namespace OrientationPlusAlignment
             // 
             // kryptonPage2
             // 
+            this.kryptonPage2.AutoHiddenSlideSize = new System.Drawing.Size(200, 200);
+            this.kryptonPage2.Flags = 65534;
             this.kryptonPage2.ImageLarge = ((System.Drawing.Image)(resources.GetObject("kryptonPage2.ImageLarge")));
             this.kryptonPage2.ImageMedium = ((System.Drawing.Image)(resources.GetObject("kryptonPage2.ImageMedium")));
             this.kryptonPage2.ImageSmall = ((System.Drawing.Image)(resources.GetObject("kryptonPage2.ImageSmall")));
+            this.kryptonPage2.LastVisibleSet = true;
             this.kryptonPage2.MinimumSize = new System.Drawing.Size(50, 50);
             this.kryptonPage2.Name = "kryptonPage2";
             this.kryptonPage2.Size = new System.Drawing.Size(381, 298);
@@ -144,9 +150,12 @@ namespace OrientationPlusAlignment
             // 
             // kryptonPage3
             // 
+            this.kryptonPage3.AutoHiddenSlideSize = new System.Drawing.Size(200, 200);
+            this.kryptonPage3.Flags = 65534;
             this.kryptonPage3.ImageLarge = ((System.Drawing.Image)(resources.GetObject("kryptonPage3.ImageLarge")));
             this.kryptonPage3.ImageMedium = ((System.Drawing.Image)(resources.GetObject("kryptonPage3.ImageMedium")));
             this.kryptonPage3.ImageSmall = ((System.Drawing.Image)(resources.GetObject("kryptonPage3.ImageSmall")));
+            this.kryptonPage3.LastVisibleSet = true;
             this.kryptonPage3.MinimumSize = new System.Drawing.Size(50, 50);
             this.kryptonPage3.Name = "kryptonPage3";
             this.kryptonPage3.Size = new System.Drawing.Size(381, 298);
@@ -156,9 +165,12 @@ namespace OrientationPlusAlignment
             // 
             // kryptonPage4
             // 
+            this.kryptonPage4.AutoHiddenSlideSize = new System.Drawing.Size(200, 200);
+            this.kryptonPage4.Flags = 65534;
             this.kryptonPage4.ImageLarge = ((System.Drawing.Image)(resources.GetObject("kryptonPage4.ImageLarge")));
             this.kryptonPage4.ImageMedium = ((System.Drawing.Image)(resources.GetObject("kryptonPage4.ImageMedium")));
             this.kryptonPage4.ImageSmall = ((System.Drawing.Image)(resources.GetObject("kryptonPage4.ImageSmall")));
+            this.kryptonPage4.LastVisibleSet = true;
             this.kryptonPage4.MinimumSize = new System.Drawing.Size(50, 50);
             this.kryptonPage4.Name = "kryptonPage4";
             this.kryptonPage4.Size = new System.Drawing.Size(381, 298);
@@ -710,6 +722,10 @@ namespace OrientationPlusAlignment
             this.radioModeTabs.UseVisualStyleBackColor = true;
             this.radioModeTabs.CheckedChanged += new System.EventHandler(this.radioModeTabs_CheckedChanged);
             // 
+            // kryptonManager1
+            // 
+            this.kryptonManager1.GlobalPaletteMode =  Krypton.Toolkit.PaletteModeManager.ProfessionalSystem;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -761,8 +777,8 @@ namespace OrientationPlusAlignment
 
         #endregion
 
-        private ComponentFactory.Krypton.Navigator.KryptonNavigator kryptonNavigator1;
-        private ComponentFactory.Krypton.Navigator.KryptonPage kryptonPage1;
+        private  Krypton.Navigator.KryptonNavigator kryptonNavigator1;
+        private  Krypton.Navigator.KryptonPage kryptonPage1;
         private System.Windows.Forms.GroupBox groupBoxBarOrientation;
         private System.Windows.Forms.RadioButton radioOrientationRight;
         private System.Windows.Forms.RadioButton radioOrientationLeft;
@@ -789,9 +805,9 @@ namespace OrientationPlusAlignment
         private System.Windows.Forms.Label labelMinItemSize;
         private System.Windows.Forms.NumericUpDown numericUpDownMinItemSizeX;
         private System.Windows.Forms.Button buttonClose;
-        private ComponentFactory.Krypton.Navigator.KryptonPage kryptonPage2;
-        private ComponentFactory.Krypton.Navigator.KryptonPage kryptonPage3;
-        private ComponentFactory.Krypton.Navigator.KryptonPage kryptonPage4;
+        private  Krypton.Navigator.KryptonPage kryptonPage2;
+        private  Krypton.Navigator.KryptonPage kryptonPage3;
+        private  Krypton.Navigator.KryptonPage kryptonPage4;
         private System.Windows.Forms.NumericUpDown numericUpDownBarMinHeight;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label labelMaxSizeComma;
@@ -801,7 +817,7 @@ namespace OrientationPlusAlignment
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.RadioButton radioModesCheckButton;
         private System.Windows.Forms.RadioButton radioModeTabs;
-        private ComponentFactory.Krypton.Toolkit.KryptonManager kryptonManager1;
+        private  Krypton.Toolkit.KryptonManager kryptonManager1;
         private System.Windows.Forms.NumericUpDown numericUpDownBarFirstItemInset;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.RadioButton radioModeRibbonTabs;
