@@ -10,7 +10,7 @@
 
 =======
 
-## 2018-07-23 Build 642
+## 2018-09-23 Build 642
 * Namespaces are now simplified from `ComponentFactory.Krypton.xx` to `Krypton.xx` to align properly with **DLL** file names
 * The `Import()` and `Export()` methods will now use the native `KryptonMessageBox` instead of a system one
 * Removed the phantom `KryptonPalette` component
