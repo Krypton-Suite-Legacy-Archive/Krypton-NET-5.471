@@ -5,7 +5,7 @@
 //  proprietary information of Component Factory Pty Ltd, PO Box 1504, 
 //  Glen Waverley, Vic 3150, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.71.0.0 	www.com
+//  Version 4.71.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
 using System;
@@ -16,9 +16,9 @@ using System.Windows.Forms;
 using System.ComponentModel;
 using System.Collections.Generic;
 using Microsoft.Win32;
-using Krypton.Toolkit;
-using Krypton.Navigator;
-using Krypton.Workspace;
+using ComponentFactory.Krypton.Toolkit;
+using ComponentFactory.Krypton.Navigator;
+using ComponentFactory.Krypton.Workspace;
 
 namespace CellMaximizeAndRestore
 {

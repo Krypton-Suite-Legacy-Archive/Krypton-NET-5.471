@@ -1,4 +1,4 @@
-﻿using Krypton.Toolkit;
+﻿using ComponentFactory.Krypton.Toolkit;
 using KryptonToolkitHub.Classes;
 using System;
 using System.Drawing;

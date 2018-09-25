@@ -5,11 +5,11 @@
 //  proprietary information of Component Factory Pty Ltd, PO Box 1504, 
 //  Glen Waverley, Vic 3150, Australia and are supplied subject to licence terms.
 // 
-//  Version 4.71.0.0 	www. com
+//  Version 4.71.0.0 	www.ComponentFactory.com
 // *****************************************************************************
 
-using  Krypton.Ribbon;
-using  Krypton.Toolkit;
+using ComponentFactory.Krypton.Ribbon;
+using ComponentFactory.Krypton.Toolkit;
 using System;
 using System.Drawing;
 using System.Windows.Forms;

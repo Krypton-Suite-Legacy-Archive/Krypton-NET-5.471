@@ -1,4 +1,4 @@
-﻿using Krypton.Toolkit;
+﻿using ComponentFactory.Krypton.Toolkit;
 using KryptonToolkitHub.Properties;
 using System.Windows.Forms;
 

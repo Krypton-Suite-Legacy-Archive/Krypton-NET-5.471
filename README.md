@@ -10,8 +10,9 @@
 
 =======
 
-## 2018-09-23 Build 642
-* Namespaces are now simplified from `ComponentFactory.Krypton.xx` to `Krypton.xx` to align properly with **DLL** file names
+## 2018-09-25 Build 643
+* Build 643 (build date Tuesday 25th September, 2018) is now available through the **releases** tab
+* Allow the developer to override the `Ctrl+c to copy` text in the Caption
 * The `Import()` and `Export()` methods will now use the native `KryptonMessageBox` instead of a system one
 * Removed the phantom `KryptonPalette` component
 * Now you can access the full `FilePath` of the loaded palette XML file

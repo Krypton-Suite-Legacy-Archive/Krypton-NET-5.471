@@ -1,4 +1,4 @@
-﻿using  Krypton.Toolkit;
+﻿using ComponentFactory.Krypton.Toolkit;
 using System;
 using System.Windows.Forms;
 
@@ -14,8 +14,8 @@ namespace TestMessageBoxClipping
 //  proprietary information of Component Factory Pty Ltd, 13 Swallows Close, 
 //  Mornington, Vic 3931, Australia and are supplied subject to licence terms.
 // 
-//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.7)
-//  Version 4.7.0.0  www. com
+//  Modifications by Peter Wagner(aka Wagnerp) & Simon Coghlan(aka Smurf-IV) 2017 - 2018. All rights reserved. (https://github.com/Wagnerp/Krypton-NET-4.71)
+//  Version 4.7.0.0  www.ComponentFactory.com
 // *****************************************************************************
 ";
         public Form1()
