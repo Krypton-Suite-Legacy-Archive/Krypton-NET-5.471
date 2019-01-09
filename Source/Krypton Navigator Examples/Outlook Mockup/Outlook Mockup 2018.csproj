@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{9497EDA8-5D49-4708-825D-FA52C6FDB962}</ProjectGuid>
+    <ProjectGuid>{9497EDA8-5D49-4718-825D-FA52C6FDB962}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>OutlookMockup</RootNamespace>
@@ -17,7 +17,7 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>3.5</OldToolsVersion>
-    <TargetFrameworkVersion>v4.7.1.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -55,19 +55,19 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Krypton Docking, Version=5.471.591.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e, processorArchitecture=MSIL">
-      <HintPath>..\packages\KryptonToolkitSuite5471.5.471.700\lib\net471\Krypton Docking.dll</HintPath>
+      <HintPath>..\packages\KryptonToolkitSuite5471.5.471.700\lib\net47\Krypton Docking.dll</HintPath>
     </Reference>
     <Reference Include="Krypton Navigator, Version=5.471.590.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e, processorArchitecture=MSIL">
-      <HintPath>..\packages\KryptonToolkitSuite5471.5.471.700\lib\net471\Krypton Navigator.dll</HintPath>
+      <HintPath>..\packages\KryptonToolkitSuite5471.5.471.700\lib\net47\Krypton Navigator.dll</HintPath>
     </Reference>
     <Reference Include="Krypton Ribbon, Version=5.471.591.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e, processorArchitecture=MSIL">
-      <HintPath>..\packages\KryptonToolkitSuite5471.5.471.700\lib\net471\Krypton Ribbon.dll</HintPath>
+      <HintPath>..\packages\KryptonToolkitSuite5471.5.471.700\lib\net47\Krypton Ribbon.dll</HintPath>
     </Reference>
     <Reference Include="Krypton Toolkit, Version=5.471.700.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e, processorArchitecture=MSIL">
-      <HintPath>..\packages\KryptonToolkitSuite5471.5.471.700\lib\net471\Krypton Toolkit.dll</HintPath>
+      <HintPath>..\packages\KryptonToolkitSuite5471.5.471.700\lib\net47\Krypton Toolkit.dll</HintPath>
     </Reference>
     <Reference Include="Krypton Workspace, Version=5.471.592.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e, processorArchitecture=MSIL">
-      <HintPath>..\packages\KryptonToolkitSuite5471.5.471.700\lib\net471\Krypton Workspace.dll</HintPath>
+      <HintPath>..\packages\KryptonToolkitSuite5471.5.471.700\lib\net47\Krypton Workspace.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
