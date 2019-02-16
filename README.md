@@ -10,23 +10,29 @@
 
 =======
 
+## 2019-02-16 Build 720 - Fix for drop shadow while using the ribbon component
+* Fix for [#56](https://github.com/Wagnerp/Krypton-NET-5.470/issues/56) courtesy of [richterAI](https://github.com/richterAl)
+* Build 720 (build date Saturday 16th February, 2019) is now available on NuGet
+
+=======
+
 ## 2019-01-29 **`AccurateText.cs`** - Issue #75
-* Bugfix for [#75](https://github.com/Wagnerp/Krypton-NET-5.470/issues/75) courtesy of [nickfinch71](https://github.com/nickfinch71)
-* For more information about this issue on NT 6.0 systems, please read thread [#75](https://github.com/Wagnerp/Krypton-NET-5.470/issues/75)
+* Bugfix for [#75](https://github.com/Wagnerp/Krypton-NET-5.471/issues/75) courtesy of [nickfinch71](https://github.com/nickfinch71)
+* For more information about this issue on NT 6.0 systems, please read thread [#75](https://github.com/Wagnerp/Krypton-NET-5.471/issues/75)
 * NuGet package build 717 (build date Tuesday 29th January, 2019) will be made available
 
 =======
 
 ## 2019-01-03 Year Change
 * Changed `2018` to `2019` in code
-* Code parity with version `5.470`
+* Code parity with version `5.471`
 
 =======
 
 ## 2018-09-28 Version **`4`** now becomes version **`5`**
 * Major version number changed from `4` to `5` after experimenting successfuly with NuGet packages
 - Known bug if installing via NuGet, ToolBox images will not be displayed properly
-* A new NuGet package can be obtained [here](https://www.nuget.org/packages/KryptonToolkitSuite5470/5.471.700) or by typing `KryptonToolkitSuite5471` in the package manager
+* A new NuGet package can be obtained [here](https://www.nuget.org/packages/KryptonToolkitSuite5471/5.471.700) or by typing `KryptonToolkitSuite5471` in the package manager
 * Build 700 (build date Saturday 29th September, 2018) is now available through the **releases** tab
 * Repository name change to reflect version changes
 
