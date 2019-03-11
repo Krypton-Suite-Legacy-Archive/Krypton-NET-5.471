@@ -110,7 +110,7 @@
     <None Include="Resources\flag_wales.png" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="KryptonToolkitSuite5471">
+    <PackageReference Include="KryptonToolkitSuite5470">
       <Version>5.471.720</Version>
     </PackageReference>
   </ItemGroup>

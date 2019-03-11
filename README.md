@@ -6,7 +6,17 @@
 
 =======
 
-## NOTE: With the advent of Windows 10 1803 being released to the general public, I am pleased to announce the availability of a 5.472 release that will support the .NET 4.7.2 framework. You can follow the project [here](https://github.com/Wagnerp/Krypton-NET-5.472). 
+## NOTE: With the advent of Windows 10 1803 being released to the general public, I am pleased to announce the availability of a 5.472 release that will support the .NET 4.7.2 framework. You can follow the project [here](https://github.com/Wagnerp/Krypton-NET-5.472).
+
+=======
+
+## 2019-03-11 Build 791
+* Fix for [#39](https://github.com/Wagnerp/Krypton-NET-5.470/issues/39)
+* Fix for [#74](https://github.com/Wagnerp/Krypton-NET-5.470/issues/74)
+* Fix for [#93](https://github.com/Wagnerp/Krypton-NET-5.470/issues/93)
+* Fix for [#97](https://github.com/Wagnerp/Krypton-NET-5.470/issues/97)
+* Now you are required to accept the license agreement when downloading new NuGet package versions
+* Build 791 (build date Monday 11th March, 2019) is now available on NuGet
 
 =======
 
