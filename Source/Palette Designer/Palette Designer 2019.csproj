@@ -173,7 +173,7 @@
     <None Include="Resources\environment.png" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="KryptonToolkitSuite5470">
+    <PackageReference Include="KryptonToolkitSuite5471">
       <Version>5.471.720</Version>
     </PackageReference>
   </ItemGroup>
