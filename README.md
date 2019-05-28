@@ -28,7 +28,9 @@
 
 =======
 
-## 2019-05-20 Build 1104 - Bugfixes
+# See [this](https://wagnerp.github.io/Krypton-NET-5.470/) for latest changes
+
+<!--## 2019-05-20 Build 1104 - Bugfixes
 * Fixed issue [#179](https://github.com/Wagnerp/Krypton-NET-5.470/issues/179), KryptonTreeView with CheckBox and Image does not leave a "Gap"
 * Fixed issue [#176](https://github.com/Wagnerp/Krypton-NET-5.470/issues/176), Can not hide checkboxes for nodes in KryptonTreeView
 * Fixed issue [#148](https://github.com/Wagnerp/Krypton-NET-5.470/issues/148), Remove license demos & installer
@@ -455,3 +457,4 @@
 * Remove Severity Code Description Project File Line Suppression State Warning CS0618 'SecurityAction.RequestMinimum' is obsolete: 'Assembly level declarative security is obsolete and is no longer enforced by the CLR by default. See http://go.microsoft.com/fwlink/?LinkID=155570 for more information.' Basic Events 2015 [Source Path]\Krypton-NET-4.7.1\Source\Krypton Navigator Examples\Basic Events\Properties\AssemblyInfo.cs 35 Active
 
 ## NOTE: This is a mirror of the Krypton-NET-4.70 repository, therefore it may take a day or two to update this repository with the .NET 4.7.1 framework. Thank you for your patience. 
+-->
