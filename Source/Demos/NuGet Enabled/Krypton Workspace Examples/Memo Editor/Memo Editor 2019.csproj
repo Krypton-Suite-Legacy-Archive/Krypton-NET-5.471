@@ -130,6 +130,20 @@
     <None Include="Resources\close32.gif" />
     <None Include="Resources\close16.gif" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="KryptonToolkitSuite5471CoreModule">
+      <Version>5.471.1300</Version>
+    </PackageReference>
+    <PackageReference Include="KryptonToolkitSuite5471NavigatorModule">
+      <Version>5.471.772</Version>
+    </PackageReference>
+    <PackageReference Include="KryptonToolkitSuite5471RibbonModule">
+      <Version>5.471.826</Version>
+    </PackageReference>
+    <PackageReference Include="KryptonToolkitSuite5471WorkspaceModule">
+      <Version>5.471.719</Version>
+    </PackageReference>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(TargetDir)*.*" "$(ProjectDir)..\..\..\Binaries\" /D /R /Y /S</PostBuildEvent>
