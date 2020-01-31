@@ -16,6 +16,14 @@
 
 =======
 
+# Future support for versions `400` to `480`
+
+Later this year, the repositories for versions `400` to `480` **will** be archived. This will mean no new features, updates etc will be uploaded. We strongly suggest that you migrate to the packages as stated in [this repository](https://github.com/Wagnerp/Krypton-Toolkit-Suite-NET-Core) for future updates.
+
+Thank you for all your support!
+
+=======
+
 # <img src="https://github.com/Wagnerp/Krypton-NET-Version-Dashboard/blob/master/Assets/Icons/PNG/KR%2064%20%20x%2064%20Purple.png" /><a href="https://github.com/Wagnerp/Krypton-NET-Version-Dashboard"> <img src="https://img.shields.io/badge/GitHub-Krypton%20Releases-blueviolet.svg" alt="Krypton Releases" /></a>
 
 =======
